@@ -4,7 +4,7 @@ StudyNest is a modern, premium academic preparation portal tailored for universi
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 *   **Syllabus & Course Manager:** Full curriculum organization across multiple engineering branches (**Computer Science (CSE)**, **Electronics (ECE)**, **Mechanical (ME)**, **Civil (CE)**, and **Electrical (EE)**) and their respective semesters.
 *   **AI Study Partner:** 
@@ -16,7 +16,7 @@ StudyNest is a modern, premium academic preparation portal tailored for universi
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 *   **Framework:** React 18 (Vite-powered for rapid development and builds)
 *   **Styling:** Tailwind CSS (configured with class-based dark mode, custom mesh grids, and high-fidelity OKLCH color spaces)
@@ -26,7 +26,7 @@ StudyNest is a modern, premium academic preparation portal tailored for universi
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 studynest/
@@ -56,7 +56,7 @@ studynest/
 
 ---
 
-## ⚡ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -89,7 +89,7 @@ studynest/
 
 ---
 
-## 🔑 AI Configurations & API Key
+## AI Configurations & API Key
 
 To activate live AI generation of study summaries and quizzes:
 1.  Open the application and select your branch and semester.
