@@ -7,6 +7,7 @@ import SubjectDetailView from './SubjectDetailView'
 import UnitDetailView from './UnitDetailView'
 import QuizView from './QuizView'
 import SettingsModal from './SettingsModal'
+import AnalyticsDashboard from './AnalyticsDashboard'
 
 const viewVariants = {
   hidden: { opacity: 0, x: 20 },
@@ -100,6 +101,13 @@ export default function AppShell({ context }) {
             }}
           />
         )
+      case 'analytics':
+        return (
+          <AnalyticsDashboard
+            key="analytics"
+            context={{ ...context, navigateTo }}
+          />
+        )
       default:
         return <HomeView key="home" context={{ ...context, navigateTo, goHome }} />
     }
@@ -123,10 +131,10 @@ export default function AppShell({ context }) {
           </button>
 
           <nav className="hidden md:flex items-center gap-1">
-            {['home', 'subjects'].map((view) => (
+            {['home', 'subjects', 'analytics'].map((view) => (
               <button
                 key={view}
-                onClick={() => view === 'home' ? goHome() : navigateTo('subjects')}
+                onClick={() => view === 'home' ? goHome() : navigateTo(view)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   currentView === view
                     ? 'bg-primary/10 text-primary'
