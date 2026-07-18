@@ -121,8 +121,10 @@ export default function SubjectDetailView({ context }) {
     >
       <motion.button
         onClick={() => navigateTo('subjects')}
-        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
         variants={itemVariants}
+        whileHover={{ x: -4 }}
+        whileTap={{ scale: 0.92 }}
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Subjects

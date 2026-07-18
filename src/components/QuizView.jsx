@@ -117,9 +117,14 @@ export default function QuizView({ context }) {
   return (
     <motion.div className="space-y-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
-        <button onClick={goToSubjectDetail} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+        <motion.button 
+          onClick={goToSubjectDetail} 
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
+          whileHover={{ x: -4 }}
+          whileTap={{ scale: 0.92 }}
+        >
           <ArrowLeft className="w-4 h-4" /> Back
-        </button>
+        </motion.button>
         <div className="text-sm text-muted-foreground">
           {quizState.currentIndex + 1} / {questions.length}
         </div>
