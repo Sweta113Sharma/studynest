@@ -73,31 +73,29 @@ export default function LoginScreen({ onLogin }) {
           className="glass-card rounded-2xl p-8 md:p-10 relative overflow-hidden"
           variants={itemVariants}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-warning/5" />
           
           <motion.div 
             className="relative z-10 text-center mb-8"
             variants={itemVariants}
           >
             <motion.div
-              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+              className="inline-flex items-center justify-center w-28 h-28 rounded-full mb-6 bg-white overflow-hidden border-2 border-white/20 p-1.5"
               style={{
-                background: 'linear-gradient(135deg, oklch(0.6 0.15 250), oklch(0.7 0.18 280))',
-                boxShadow: '0 8px 32px rgba(99, 102, 241, 0.3)'
+                boxShadow: '0 8px 32px rgba(168, 85, 247, 0.3)'
               }}
-              variants={glowVariants}
-              initial="initial"
-              animate="animate"
+              variants={itemVariants}
             >
-              <span className="text-3xl">⚡</span>
+              <img 
+                src="/logo.png" 
+                alt="StudyNest Logo" 
+                className="w-full h-full object-contain"
+              />
             </motion.div>
             
             <h1 className="text-3xl font-display font-bold mb-2">
-              Study<span className="text-gradient">Nest</span>
+              Study<span className="text-primary">Nest</span>
             </h1>
-            <p className="text-muted-foreground text-sm">
-              Your personalized engineering study companion
-            </p>
           </motion.div>
 
           <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
@@ -148,7 +146,7 @@ export default function LoginScreen({ onLogin }) {
                 </motion.div>
               )}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-primary to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 bg-gradient-to-r from-primary to-warning opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ zIndex: -1 }}
               />
             </motion.button>
@@ -162,29 +160,6 @@ export default function LoginScreen({ onLogin }) {
           </motion.p>
         </motion.div>
 
-        <motion.div 
-          className="mt-8 flex justify-center gap-6"
-          variants={itemVariants}
-        >
-          {[
-            { icon: '✨', label: 'AI Notes' },
-            { icon: '📚', label: 'Quizzes' },
-            { icon: '📺', label: 'Videos' }
-          ].map((feature, i) => (
-            <motion.div
-              key={feature.label}
-              className="flex flex-col items-center gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 + i * 0.1 }}
-            >
-              <div className="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-lg">
-                {feature.icon}
-              </div>
-              <span className="text-xs text-muted-foreground">{feature.label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
       </motion.div>
     </motion.div>
   )

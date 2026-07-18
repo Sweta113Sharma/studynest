@@ -92,7 +92,7 @@ export default function HomeView({ context }) {
               </div>
               <div className="text-sm text-muted-foreground">Year</div>
               <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-warning/5 opacity-0 group-hover:opacity-100 transition-opacity"
               />
             </motion.button>
           ))}
@@ -106,7 +106,7 @@ export default function HomeView({ context }) {
           exit={{ opacity: 0, height: 0 }}
         >
           <h2 className="text-xl font-display font-semibold mb-4 flex items-center gap-2">
-            <span className="w-1 h-6 rounded-full bg-purple-500" />
+            <span className="w-1 h-6 rounded-full bg-primary" />
             Select Your Branch
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -144,7 +144,7 @@ export default function HomeView({ context }) {
 
       <motion.div variants={itemVariants}>
         <h2 className="text-xl font-display font-semibold mb-4 flex items-center gap-2">
-          <span className="w-1 h-6 rounded-full bg-emerald-500" />
+          <span className="w-1 h-6 rounded-full bg-primary" />
           Features
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

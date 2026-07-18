@@ -116,10 +116,16 @@ export default function AppShell({ context }) {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <button
             onClick={goHome}
-            className="flex items-center gap-2 text-xl font-display font-bold hover:opacity-80 transition-opacity"
+            className="flex items-center gap-3 text-xl font-display font-bold hover:opacity-80 transition-opacity"
           >
-            <span className="text-2xl">⚡</span>
-            <span>Study<span className="text-gradient">Nest</span></span>
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden border border-white/20 p-0.5">
+              <img 
+                src="/logo.png" 
+                alt="StudyNest Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span>Study<span className="text-primary">Nest</span></span>
           </button>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -127,10 +133,10 @@ export default function AppShell({ context }) {
               <button
                 key={view}
                 onClick={() => view === 'home' ? goHome() : navigateTo('subjects')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   currentView === view
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {view.charAt(0).toUpperCase() + view.slice(1)}

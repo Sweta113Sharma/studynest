@@ -220,6 +220,116 @@ Answer: Paging divides memory into fixed-size blocks (pages/frames), while segme
       }
     }
 
+    if (userMessage.includes('matrices') || userMessage.includes('math')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Engineering Mathematics (Matrices)
+Matrices represent systems of linear equations and linear transformations.
+
+**Key Units & Concepts:**
+1. **Rank of a Matrix**: Maximum number of linearly independent rows or columns.
+2. **Cayley-Hamilton Theorem**: Every square matrix satisfies its own characteristic equation: |A - λI| = 0. Useful for calculating matrix inverses and higher powers of a matrix.
+3. **Eigenvalues & Eigenvectors**: Roots of the characteristic polynomial, essential for stability analysis, engineering mechanics, and structural systems.
+4. **Diagonalization**: Transforming a square matrix into a diagonal matrix using its eigenvalues, simplifying linear operations.
+
+**Important Formulas:**
+- Characteristic Equation: det(A - λI) = 0.
+- Inverse via Cayley-Hamilton: A^-1 = P(A) where P is a polynomial of degree n-1.
+
+**Exam Strategy:**
+Master calculation steps for eigenvalues of 3x3 matrices. Diagonalization proofs and Cayley-Hamilton inverse verifications appear in every sessional and final paper.`;
+      }
+      if (systemPrompt.includes('notes')) {
+        return `### Revision Notes: Matrices
+- **Symmetric Matrix**: A^T = A.
+- **Skew-Symmetric**: A^T = -A (all diagonal entries must be 0).
+- **Orthogonal**: A * A^T = I (transpose is equal to the inverse).
+- **Inverse Calculation**: A^-1 = Adj(A) / det(A).
+- **Linear Independence**: A set of vectors is linearly independent if no vector can be written as a linear combination of the others.`;
+      }
+      if (systemPrompt.includes('qa pairs')) {
+        return `Q1: State the Cayley-Hamilton Theorem.
+Answer: The Cayley-Hamilton theorem states that every square matrix A satisfies its own characteristic equation, i.e., if p(λ) = det(A - λI) = 0, then p(A) = 0.
+
+Q2: What is the rank of an identity matrix of size n?
+Answer: The rank is n, as all n rows are linearly independent and the determinant of any submatrix of size n is non-zero (det(I) = 1).
+
+Q3: When is a matrix diagonalizable?
+Answer: A matrix of size n is diagonalizable if and only if it has n linearly independent eigenvectors.`;
+      }
+      if (systemPrompt.includes('multiple-choice questions')) {
+        const isSubject = systemPrompt.includes('comprehensive');
+        const count = isSubject ? 10 : 5;
+        const baseMcqs = [
+          { "question": "What is the rank of a 3x3 null matrix?", "options": ["0", "1", "2", "3"], "correctAnswer": 0, "explanation": "A null matrix has no linearly independent rows, so its rank is 0." },
+          { "question": "The eigenvalues of a real symmetric matrix are always:", "options": ["Complex", "Real", "Zero", "Imaginary"], "correctAnswer": 1, "explanation": "Real symmetric matrices always have real eigenvalues." },
+          { "question": "If det(A) = 0, then the rank of an n x n matrix A is:", "options": ["Equal to n", "Less than n", "Greater than n", "Always 0"], "correctAnswer": 1, "explanation": "A determinant of 0 means the rows are linearly dependent, so rank is strictly less than n." },
+          { "question": "The trace of a square matrix is the:", "options": ["Product of eigenvalues", "Sum of eigenvalues", "Determinant", "Rank"], "correctAnswer": 1, "explanation": "The sum of the diagonal elements (trace) of a matrix is equal to the sum of its eigenvalues." },
+          { "question": "Which theorem states that a matrix satisfies its own characteristic equation?", "options": ["Rolle's Theorem", "Lagrange's Theorem", "Cayley-Hamilton Theorem", "Taylor's Theorem"], "correctAnswer": 2, "explanation": "The Cayley-Hamilton theorem states that substituting the matrix into its characteristic equation yields the zero matrix." },
+          { "question": "For any orthogonal matrix A, det(A) is:", "options": ["0", "1 or -1", "Always 2", "Infinity"], "correctAnswer": 1, "explanation": "Since A * A^T = I, det(A)^2 = 1, giving det(A) = ±1." },
+          { "question": "If λ is an eigenvalue of A, then the eigenvalue of A^2 is:", "options": ["λ", "λ^2", "2λ", "1/λ"], "correctAnswer": 1, "explanation": "Applying A * x = λ * x twice gives A^2 * x = λ^2 * x." },
+          { "question": "The determinant of a diagonal matrix is the:", "options": ["Sum of diagonal elements", "Product of diagonal elements", "Trace", "Rank"], "correctAnswer": 1, "explanation": "The determinant of a diagonal matrix is simply the product of its diagonal values." },
+          { "question": "A square matrix is invertible if and only if its determinant is:", "options": ["0", "Non-zero", "1", "Positive"], "correctAnswer": 1, "explanation": "An invertible matrix must have a non-zero determinant to avoid division by zero in the inverse formula." },
+          { "question": "Which of the following matrices is always symmetric?", "options": ["A * A^T", "A - A^T", "A + B", "A * B"], "correctAnswer": 0, "explanation": "Taking the transpose of (A * A^T) yields (A^T)^T * A^T = A * A^T, which matches the original matrix." }
+        ];
+        return JSON.stringify(baseMcqs.slice(0, count));
+      }
+    }
+
+    if (userMessage.includes('optics') || userMessage.includes('physics')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Engineering Physics (Wave Optics)
+Wave Optics details the wave nature of light, explaining phenomena like interference, diffraction, and polarization.
+
+**Key Units & Concepts:**
+1. **Interference**: Superposition of coherent light waves creating bright and dark fringes. Examined via Young's double slit and thin films.
+2. **Diffraction**: Bending of light waves around obstacles or slits (divided into Fresnel and Fraunhofer diffraction).
+3. **Polarization**: Restricting transverse wave vibrations to a single plane (unpolarized light to polarized).
+4. **Newton's Rings**: Circular interference pattern formed due to a thin air film of varying thickness between a lens and glass plate.
+
+**Important Formulas:**
+- Brewster's Law: tan(i_p) = μ (where i_p is the polarizing angle, μ is refractive index).
+- Grating Equation: (e + d) sin(θ) = nλ.
+- Fringes Width: β = λD/d.
+
+**Exam Strategy:**
+Master derivations for thin-film constructive/destructive interference. Resolving power of grating numericals are high-scoring and standard.`;
+      }
+      if (systemPrompt.includes('notes')) {
+        return `### Revision Notes: Wave Optics
+- **Coherent Sources**: Emit waves with a constant phase relationship and identical frequency. Essential for steady interference.
+- **Brewster's Law**: When light is incident at polarizing angle, reflected light is completely polarized and perpendicular to refracted light.
+- **Fraunhofer Diffraction**: Slit and screen are at infinite distances from source (parallel rays).
+- **Double Refraction**: Unpolarized ray splits into Ordinary (O-ray) and Extraordinary (E-ray) rays upon entering anisotropic crystals like calcite.`;
+      }
+      if (systemPrompt.includes('qa pairs')) {
+        return `Q1: Why is the center of Newton's rings dark in reflected light?
+Answer: The wave reflected from the lower glass plate undergoes a phase change of π (corresponding to path difference of λ/2) upon reflection at the denser medium. This creates destructive interference at the contact point.
+
+Q2: Distinguish between Interference and Diffraction.
+Answer: Interference is the superposition of light waves originating from two separate coherent sources. Diffraction is the superposition of wavelets originating from different parts of the same wavefront.
+
+Q3: What is a quarter-wave plate?
+Answer: A quarter-wave plate is a double-refracting crystal plate that introduces a phase difference of π/2 (path difference of λ/4) between ordinary and extraordinary rays.`;
+      }
+      if (systemPrompt.includes('multiple-choice questions')) {
+        const isSubject = systemPrompt.includes('comprehensive');
+        const count = isSubject ? 10 : 5;
+        const baseMcqs = [
+          { "question": "In Newton's rings, the central spot is always:", "options": ["Bright", "Dark", "Colored", "Blue"], "correctAnswer": 1, "explanation": "Reflected light at the contact point undergoes a phase change of π, leading to destructive interference (dark center)." },
+          { "question": "Which phenomenon demonstrates the transverse wave nature of light?", "options": ["Interference", "Diffraction", "Polarization", "Refraction"], "correctAnswer": 2, "explanation": "Only transverse waves can be polarized; longitudinal waves (like sound) cannot." },
+          { "question": "Brewster's Law is mathematically expressed as:", "options": ["μ = sin(i_p)", "μ = cos(i_p)", "μ = tan(i_p)", "μ = cot(i_p)"], "correctAnswer": 2, "explanation": "Brewster's Law states that the refractive index is the tangent of the polarizing angle (μ = tan(i_p))." },
+          { "question": "To observe interference, the two light sources must be:", "options": ["Intense", "Coherent", "Monochromatic only", "Close to each other"], "correctAnswer": 1, "explanation": "Coherent sources maintain a constant phase relationship, which is required to obtain a stationary interference pattern." },
+          { "question": "Double refraction is observed in which type of crystals?", "options": ["Isotropic", "Anisotropic", "Amorphous", "Liquids"], "correctAnswer": 1, "explanation": "Anisotropic crystals (like calcite or quartz) exhibit double refraction due to differing light speeds in different directions." },
+          { "question": "In Fraunhofer diffraction, the wavefront incident on the slit is:", "options": ["Spherical", "Cylindrical", "Plane", "Elliptical"], "correctAnswer": 2, "explanation": "Since sources are at infinity, the incident light rays are parallel, forming a plane wavefront." },
+          { "question": "Which plate introduces a path difference of λ/2 between O-ray and E-ray?", "options": ["Quarter-wave plate", "Half-wave plate", "Full-wave plate", "Polarizer"], "correctAnswer": 1, "explanation": "A half-wave plate introduces a phase difference of π, which corresponds to a path difference of λ/2." },
+          { "question": "Bending of light waves around the edges of an obstacle is called:", "options": ["Interference", "Diffraction", "Dispersion", "Scattering"], "correctAnswer": 1, "explanation": "Diffraction is the term used to describe the bending of waves around obstacles or slits." },
+          { "question": "If film thickness increases, thin film interference colors:", "options": ["Get brighter", "Change or disappear", "Stay identical", "Turn black"], "correctAnswer": 1, "explanation": "As thickness increases, interference fringes overlap and eventually wash out, returning to white light." },
+          { "question": "Light waves are:", "options": ["Electromagnetic and Longitudinal", "Electromagnetic and Transverse", "Mechanical and Transverse", "Mechanical and Longitudinal"], "correctAnswer": 1, "explanation": "Light waves are transverse electromagnetic waves that do not require a medium to travel." }
+        ];
+        return JSON.stringify(baseMcqs.slice(0, count));
+      }
+    }
+
     if (!this.apiKey) {
       throw new Error('API key not configured');
     }

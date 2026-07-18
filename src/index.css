@@ -2,21 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Light Mode Palette (Temporary) */
+  --bg-page: #F3F4F6;
+  --text-page: #1F2937;
+  --bg-card: #FFFFFF;
+  --text-card: #111827;
+  --border-card: #E5E7EB;
+  --bg-input: #F3F4F6;
+  --text-input: #000000;
+  --accent: #F59E0B;
+  --button-primary-bg: #111827;
+  --button-primary-text: #FFFFFF;
+  --button-primary-hover-bg: #F59E0B;
+  --button-primary-hover-text: #000000;
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-text: #1F2937;
+  --button-secondary-border: #D1D5DB;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --grid-line: rgba(0, 0, 0, 0.02);
+  --orb-1-color: rgba(245, 158, 11, 0.08);
+  --orb-2-color: rgba(0, 0, 0, 0.03);
+  --orb-3-color: rgba(245, 158, 11, 0.04);
+}
+
+.dark {
+  /* Dark Mode Palette (The reference design scheme) */
+  --bg-page: #EBEBEB;
+  --text-page: #0B0B0B;
+  --bg-card: rgba(11, 11, 15, 0.96);
+  --text-card: #FFFFFF;
+  --border-card: rgba(255, 255, 255, 0.06);
+  --bg-input: #FFFFFF;
+  --text-input: #000000;
+  --accent: #F59E0B;
+  --button-primary-bg: #F59E0B;
+  --button-primary-text: #000000;
+  --button-primary-hover-bg: #FFFFFF;
+  --button-primary-hover-text: #000000;
+  --button-secondary-bg: rgba(255, 255, 255, 0.04);
+  --button-secondary-text: #FFFFFF;
+  --button-secondary-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.16);
+  --card-shadow-hover: 0 15px 45px rgba(0, 0, 0, 0.24);
+  --grid-line: rgba(0, 0, 0, 0.03);
+  --orb-1-color: rgba(245, 158, 11, 0.25);
+  --orb-2-color: rgba(0, 0, 0, 0.12);
+  --orb-3-color: rgba(245, 158, 11, 0.12);
+}
+
 @layer base {
   * {
-    border-color: oklch(0.3 0.015 285);
+    border-color: var(--border-card);
   }
 
   body {
-    background: oklch(0.145 0.015 285);
-    color: oklch(0.97 0.002 285);
+    background: var(--bg-page);
+    color: var(--text-page);
     font-family: Outfit, Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+      radial-gradient(ellipse at 20% 0%, var(--orb-1-color) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, var(--orb-2-color) 0%, transparent 60%);
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -24,38 +75,44 @@
   .glass-card {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
-    background: rgba(28, 28, 40, 0.5);
+    border: 1px solid var(--border-card);
+    box-shadow: var(--card-shadow);
+    background: var(--bg-card);
+    color: var(--text-card);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 
   .glass-card-hover {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
-    background: rgba(28, 28, 40, 0.5);
-    transition: all 0.3s;
+    border: 1px solid var(--border-card);
+    box-shadow: var(--card-shadow);
+    background: var(--bg-card);
+    color: var(--text-card);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-card-hover:hover {
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
+    border-color: rgba(245, 158, 11, 0.25);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-3px);
   }
 
   .btn-primary {
-    padding: 0.625rem 1.25rem;
-    border-radius: 0.5rem;
-    background: oklch(0.6 0.15 250);
-    color: oklch(0.98 0.005 285);
-    font-weight: 500;
-    transition: all 0.2s;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    font-weight: 600;
+    transition: all 0.25s ease-in-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .btn-primary:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+    background: var(--button-primary-hover-bg);
+    color: var(--button-primary-hover-text);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+    transform: translateY(-1px);
   }
 
   .btn-primary:active {
@@ -63,17 +120,18 @@
   }
 
   .btn-secondary {
-    padding: 0.625rem 1.25rem;
-    border-radius: 0.5rem;
-    border: 1px solid oklch(0.3 0.015 285);
-    color: oklch(0.95 0.005 285);
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--button-secondary-border);
+    color: var(--button-secondary-text);
     font-weight: 500;
-    transition: all 0.2s;
-    background: rgba(40, 40, 60, 0.5);
+    transition: all 0.2s ease-in-out;
+    background: var(--button-secondary-bg);
   }
 
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 
   .btn-secondary:active {
@@ -82,38 +140,38 @@
 
   .btn-ghost {
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    color: oklch(0.65 0.015 285);
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.6);
     transition: all 0.2s;
   }
 
   .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: oklch(0.95 0.005 285);
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
   }
 
   .input-field {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid oklch(0.3 0.015 285);
-    color: oklch(0.97 0.002 285);
-    background: rgba(28, 28, 40, 0.5);
-    transition: all 0.2s;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-input);
+    background: var(--bg-input);
+    transition: all 0.2s ease-in-out;
   }
 
   .input-field::placeholder {
-    color: oklch(0.65 0.015 285);
+    color: rgba(0, 0, 0, 0.4);
   }
 
   .input-field:focus {
     outline: none;
-    border-color: oklch(0.6 0.15 250);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
   }
 
   .text-gradient {
-    background: linear-gradient(to right, oklch(0.6 0.15 250), oklch(0.7 0.18 280), oklch(0.6 0.15 250));
+    background: linear-gradient(to right, #F59E0B, #FFFFFF, #F59E0B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -122,7 +180,7 @@
   }
 
   .animated-gradient {
-    background: linear-gradient(-45deg, oklch(0.6 0.15 250), oklch(0.7 0.18 280), oklch(0.6 0.15 320), oklch(0.7 0.18 280));
+    background: linear-gradient(-45deg, #F59E0B, #FFFFFF, #E5E7EB, #F59E0B);
     background-size: 400% 400%;
     animation: gradient 8s ease infinite;
   }
@@ -152,8 +210,8 @@
 
   .grid-bg {
     background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
@@ -161,14 +219,14 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
   }
 
   .orb-1 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent);
+    background: radial-gradient(circle, var(--orb-1-color), transparent);
     top: -100px;
     right: -100px;
     animation: float 15s ease-in-out infinite;
@@ -177,7 +235,7 @@
   .orb-2 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent);
+    background: radial-gradient(circle, var(--orb-2-color), transparent);
     bottom: -50px;
     left: -50px;
     animation: float 12s ease-in-out infinite reverse;
@@ -186,7 +244,7 @@
   .orb-3 {
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.25), transparent);
+    background: radial-gradient(circle, var(--orb-3-color), transparent);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

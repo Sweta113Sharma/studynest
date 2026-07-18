@@ -127,7 +127,7 @@ export default function QuizView({ context }) {
 
       <div className="h-1.5 rounded-full overflow-hidden glass-card">
         <motion.div
-          className="h-full bg-gradient-to-r from-primary to-purple-500 rounded-full"
+          className="h-full bg-gradient-to-r from-primary to-warning rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${((quizState.currentIndex + 1) / questions.length) * 100}%` }}
           transition={{ duration: 0.3 }}
@@ -136,7 +136,7 @@ export default function QuizView({ context }) {
 
       <div className="glass-card rounded-2xl p-6 md:p-8">
         <div className="flex items-start gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0 shadow-glow">
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
           <h2 className="text-xl font-semibold">{currentQ.question}</h2>
@@ -160,8 +160,8 @@ export default function QuizView({ context }) {
                     : showWrong
                     ? 'bg-red-500/20 border-2 border-red-500'
                     : isSelected
-                    ? 'bg-primary/20 border-2 border-primary'
-                    : 'glass-card border border-white/5 hover:border-primary/30'
+                    ? 'bg-primary/20 border-2 border-primary shadow-glow'
+                    : 'glass-card border border-white/5 hover:border-warning/30 hover:shadow-glow-accent'
                 }`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -183,8 +183,10 @@ export default function QuizView({ context }) {
         <AnimatePresence>
           {quizState.selectedOption !== null && (
             <motion.div
-              className={`mt-6 p-4 rounded-xl ${
-                feedback === 'correct' ? 'bg-emerald-500/10' : 'bg-red-500/10'
+              className={`mt-6 p-5 rounded-xl border ${
+                feedback === 'correct' 
+                  ? 'bg-emerald-500/5 border-emerald-500/20' 
+                  : 'bg-red-500/5 border-red-500/20'
               }`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -193,14 +195,17 @@ export default function QuizView({ context }) {
                 {feedback === 'correct' ? 'Correct!' : 'Incorrect!'}
               </p>
               {currentQ.explanation && (
-                <p className="text-sm text-muted-foreground">{currentQ.explanation}</p>
+                <p className="text-sm text-muted-foreground mb-3">{currentQ.explanation}</p>
               )}
+              
               <button
-                onClick={() => setShowExplanation(true)}
-                className="mt-3 text-sm text-primary hover:underline"
+                onClick={() => setShowExplanation(!showExplanation)}
+                className="mt-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-warning/10 text-warning hover:bg-warning/20 border border-warning/20 transition-all flex items-center gap-1.5"
               >
+                <Sparkles className="w-3.5 h-3.5" />
                 {showExplanation ? 'Hide AI Explanation' : 'Get AI Explanation'}
               </button>
+              
               {showExplanation && (
                 <AIGeneratedExplanation 
                   question={currentQ.question} 
