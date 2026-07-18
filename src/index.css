@@ -3,27 +3,27 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode Palette (Temporary) */
-  --bg-page: #F3F4F6;
-  --text-page: #1F2937;
-  --bg-card: #FFFFFF;
-  --text-card: #111827;
-  --border-card: #E5E7EB;
-  --bg-input: #F3F4F6;
-  --text-input: #000000;
-  --accent: #F59E0B;
-  --button-primary-bg: #111827;
+  /* Light Mode Palette - Organic Pastel Sand */
+  --bg-page: #CBBFAD;
+  --text-page: #4E4237;
+  --bg-card: #FAF8F4;
+  --text-card: #4E4237;
+  --border-card: #EBE5DC;
+  --bg-input: #F1ECE5;
+  --text-input: #4E4237;
+  --accent: #FC6370;
+  --button-primary-bg: #FC6370;
   --button-primary-text: #FFFFFF;
-  --button-primary-hover-bg: #F59E0B;
-  --button-primary-hover-text: #000000;
-  --button-secondary-bg: #FFFFFF;
-  --button-secondary-text: #1F2937;
-  --button-secondary-border: #D1D5DB;
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  --card-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --grid-line: rgba(0, 0, 0, 0.02);
-  --orb-1-color: rgba(245, 158, 11, 0.08);
-  --orb-2-color: rgba(0, 0, 0, 0.03);
+  --button-primary-hover-bg: #7A66EE;
+  --button-primary-hover-text: #FFFFFF;
+  --button-secondary-bg: #F1ECE5;
+  --button-secondary-text: #4E4237;
+  --button-secondary-border: #EBE5DC;
+  --card-shadow: 0 6px 24px rgba(78, 66, 55, 0.08);
+  --card-shadow-hover: 0 12px 36px rgba(78, 66, 55, 0.12);
+  --grid-line: rgba(78, 66, 55, 0.04);
+  --orb-1-color: rgba(252, 99, 112, 0.06);
+  --orb-2-color: rgba(130, 109, 247, 0.04);
   --orb-3-color: rgba(245, 158, 11, 0.04);
 }
 
