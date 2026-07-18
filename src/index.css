@@ -28,12 +28,12 @@
 }
 
 .dark {
-  /* Dark Mode Palette (The reference design scheme) */
-  --bg-page: #EBEBEB;
-  --text-page: #0B0B0B;
-  --bg-card: rgba(11, 11, 15, 0.96);
+  /* Dark Mode Palette (Midnight Blue & Gold Theme) */
+  --bg-page: #E2E6EC;
+  --text-page: #0D1326;
+  --bg-card: rgba(13, 20, 38, 0.97);
   --text-card: #FFFFFF;
-  --border-card: rgba(255, 255, 255, 0.06);
+  --border-card: rgba(255, 255, 255, 0.08);
   --bg-input: #FFFFFF;
   --text-input: #000000;
   --accent: #F59E0B;
@@ -44,11 +44,11 @@
   --button-secondary-bg: rgba(255, 255, 255, 0.04);
   --button-secondary-text: #FFFFFF;
   --button-secondary-border: rgba(255, 255, 255, 0.12);
-  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.16);
-  --card-shadow-hover: 0 15px 45px rgba(0, 0, 0, 0.24);
-  --grid-line: rgba(0, 0, 0, 0.03);
+  --card-shadow: 0 10px 40px rgba(13, 20, 38, 0.2);
+  --card-shadow-hover: 0 15px 45px rgba(13, 20, 38, 0.28);
+  --grid-line: rgba(13, 20, 38, 0.04);
   --orb-1-color: rgba(245, 158, 11, 0.25);
-  --orb-2-color: rgba(0, 0, 0, 0.12);
+  --orb-2-color: rgba(13, 20, 38, 0.15);
   --orb-3-color: rgba(245, 158, 11, 0.12);
 }
 
