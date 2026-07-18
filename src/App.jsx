@@ -26,6 +26,33 @@ function App() {
     if (savedDarkMode === 'true') {
       setDarkMode(true)
     }
+
+    const handlePopState = (event) => {
+      if (event.state) {
+        const { view, year, branch, sem, subject, unit } = event.state
+        setCurrentView(view || 'home')
+        setSelectedYear(year)
+        setSelectedBranch(branch)
+        setSelectedSemester(sem)
+        setSelectedSubject(subject)
+        setSelectedUnit(unit)
+      } else {
+        const hasUser = localStorage.getItem('studynest_user')
+        if (hasUser) {
+          setCurrentView('home')
+          setSelectedYear(null)
+          setSelectedBranch(null)
+          setSelectedSemester(null)
+          setSelectedSubject(null)
+          setSelectedUnit(null)
+        } else {
+          setCurrentView('login')
+        }
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   useEffect(() => {
@@ -36,6 +63,22 @@ function App() {
     }
     localStorage.setItem('studynest_darkmode', darkMode)
   }, [darkMode])
+
+  useEffect(() => {
+    if (currentView === 'login') return
+    const currentState = window.history.state
+    const newState = {
+      view: currentView,
+      year: selectedYear,
+      branch: selectedBranch,
+      sem: selectedSemester,
+      subject: selectedSubject,
+      unit: selectedUnit
+    }
+    if (JSON.stringify(currentState) !== JSON.stringify(newState)) {
+      window.history.pushState(newState, '', '')
+    }
+  }, [currentView, selectedYear, selectedBranch, selectedSemester, selectedSubject, selectedUnit])
 
   const handleLogin = (userData) => {
     setUser(userData)

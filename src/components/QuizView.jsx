@@ -104,10 +104,10 @@ export default function QuizView({ context }) {
             <RotateCcw className="w-4 h-4" /> Try Again
           </button>
           <button
-            onClick={goToSubjectDetail}
+            onClick={() => currentQuiz?.title?.includes('AI Quiz:') ? navigateTo('unit-detail') : goToSubjectDetail()}
             className="px-6 py-3 rounded-xl bg-primary text-white font-medium flex items-center gap-2 hover:brightness-110 transition-all"
           >
-            <Home className="w-4 h-4" /> Back to Subject
+            <Home className="w-4 h-4" /> {currentQuiz?.title?.includes('AI Quiz:') ? 'Back to Unit' : 'Back to Subject'}
           </button>
         </div>
       </motion.div>
@@ -118,7 +118,7 @@ export default function QuizView({ context }) {
     <motion.div className="space-y-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
         <motion.button 
-          onClick={goToSubjectDetail} 
+          onClick={() => currentQuiz?.title?.includes('AI Quiz:') ? navigateTo('unit-detail') : goToSubjectDetail()} 
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
           whileHover={{ x: -4 }}
           whileTap={{ scale: 0.92 }}
