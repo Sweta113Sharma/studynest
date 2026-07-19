@@ -123,9 +123,8 @@ export default function SubjectsView({ context }) {
                   context.setSelectedSubject(subject)
                   navigateTo('subject-detail')
                 }}
-                className="group relative p-5 rounded-2xl text-left transition-all duration-300"
+                className="group relative p-5 rounded-2xl text-left transition-all duration-300 glass-card"
                 style={{
-                  background: colors.bg,
                   borderLeft: `3px solid ${colors.border}`
                 }}
                 variants={itemVariants}
@@ -153,7 +152,7 @@ export default function SubjectsView({ context }) {
                     <span className="text-muted-foreground">Progress</span>
                     <span className="font-medium" style={{ color: colors.border }}>{progress}%</span>
                   </div>
-                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full rounded-full"
                       style={{ background: colors.border }}
