@@ -220,49 +220,246 @@ Answer: Paging divides memory into fixed-size blocks (pages/frames), while segme
       }
     }
 
+    if (userMessage.includes('differential calculus') || userMessage.includes('calculus')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Differential Calculus
+This unit focuses on advanced differentiation concepts, successive derivative extensions, limits, mean value theorems, power series representations, and multivariable functions.
+
+**Detailed Topic Breakdown:**
+
+1. **Successive Differentiation & Leibniz Theorem**:
+   - Successive Differentiation: Finding the n-th derivative of a function.
+   - Leibniz Theorem: Evaluates the n-th derivative of the product of two functions u and v: (uv)_n = Σ (n_C_r) * u_(n-r) * v_r.
+
+2. **Mean Value Theorems**:
+   - **Rolle\'s Theorem**: If f(x) is continuous in [a,b], differentiable in (a,b), and f(a) = f(b), then there exists a point c ∈ (a,b) where f\'(c) = 0.
+   - **Lagrange\'s Mean Value Theorem (LMVT)**: Relaxes f(a) = f(b). There exists a point c ∈ (a,b) where f\'(c) = [f(b) - f(a)] / (b - a).
+   - **Cauchy\'s Mean Value Theorem**: Generalizes LMVT to two functions f(x) and g(x). There exists c ∈ (a,b) where f\'(c)/g\'(c) = [f(b) - f(a)] / [g(b) - g(a)].
+
+3. **Power Series Expansions**:
+   - **Maclaurin\'s Series**: Expands f(x) around x = 0: f(x) = f(0) + x f\'(0) + (x^2/2!) f\'\'(0) + ...
+   - **Taylor\'s Series**: Expands f(x) around x = a: f(x) = f(a) + (x-a) f\'(a) + [(x-a)^2/2!] f\'\'(a) + ...
+
+4. **Multivariable Calculus (Partial Differentiation)**:
+   - Partial derivatives: Differentiation with respect to one variable keeping others constant.
+   - **Euler\'s Theorem for Homogeneous Functions**: If f(x,y) is homogeneous of degree n, then x(∂f/∂x) + y(∂f/∂y) = n f.
+
+5. **Jacobian & Change of Variables**:
+   - Jacobian determinant: Measures the local scale factor of a coordinate transformation.
+   - J = ∂(u,v)/∂(x,y) = | ∂u/∂x  ∂u/∂y | / | ∂v/∂x  ∂v/∂y |.
+
+**Important Formulas:**
+- Leibniz Theorem: (uv)_n = u_n v + n u_(n-1) v_1 + [n(n-1)/2!] u_(n-2) v_2 + ...
+- Euler\'s Theorem: x(∂f/∂x) + y(∂f/∂y) = n f.
+- Euler\'s Second-Order: x^2(∂^2f/∂x^2) + 2xy(∂^2f/∂x∂y) + y^2(∂^2f/∂y^2) = n(n-1)f.
+
+**Exam Strategy:**
+Expect Leibniz theorem proofs and multi-variable Jacobians. Maclaurin expansions for standard functions (e^x, sin x, log(1+x)) are highly common.`;
+      }
+      return `### Revision Notes: Differential Calculus
+Key theorems and n-th derivative standard forms.
+
+- **Standard n-th Derivatives**:
+  - d^n/dx^n (x^m) = m!/(m-n)! * x^(m-n)
+  - d^n/dx^n (e^(ax)) = a^n * e^(ax)
+  - d^n/dx^n [log(ax+b)] = (-1)^(n-1) * (n-1)! * a^n / (ax+b)^n
+  - d^n/dx^n [sin(ax+b)] = a^n * sin(ax + b + nπ/2)
+- **Leibniz Theorem Formula**:
+  - (u v)_n = u_n v + C(n,1) u_(n-1) v_1 + C(n,2) u_(n-2) v_2 + ... + u v_n
+- **Homogeneous Functions**:
+  - A function f(x,y) is homogeneous of degree n if f(tx, ty) = t^n * f(x,y).
+- **Euler\'s Theorem Extension**:
+  - If u = f(x,y) is homogeneous of degree n, then:
+    - x(∂u/∂x) + y(∂u/∂y) = n * u
+    - x^2(∂^2u/∂x^2) + 2xy(∂^2u/∂x∂y) + y^2(∂^2u/∂y^2) = n(n-1)u
+- **Jacobian Chain Rule**:
+  - If u, v are functions of r, s and r, s are functions of x, y:
+    - ∂(u,v)/∂(x,y) = [∂(u,v)/∂(r,s)] * [∂(r,s)/∂(x,y)]
+- **Jacobian Inverse Property**:
+  - J * J\' = 1, where J = ∂(u,v)/∂(x,y) and J\' = ∂(x,y)/∂(u,v).`;
+    }
+
     if (userMessage.includes('multiple integrals')) {
       if (systemPrompt.includes('summary')) {
         return `### Comprehensive AI Overview: Multiple Integrals
-Double and triple integrals extend the concept of single integration to multi-dimensional spaces, allowing calculations of areas, volumes, and centers of mass.
+This unit extends integration to higher dimensions. It covers double and triple integrals, switching integration limits (change of order), transformation of coordinates (Jacobian), and applications to physical geometry (area, volume, mass centers).
 
-**Key Concepts:**
-1. **Double Integrals**: Integrations over a 2D region, often used for area calculation: A = ∫∫ dx dy.
-2. **Change of Order**: Switching the integration order (dx dy to dy dx) when limits are complex.
-3. **Triple Integrals**: Integrations over a 3D volume: V = ∫∫∫ dx dy dz.
-4. **Jacobian**: Used for changing coordinates (e.g., Cartesian to Polar/Spherical).
+**Detailed Topic Breakdown:**
+
+1. **Double Integrals**:
+   - Integration over 2D planar regions. Evaluated as iterated integrals.
+   - Used to compute Area: A = ∫∫_R dx dy.
+
+2. **Change of Order of Integration**:
+   - Altering the integration sequence (e.g., from dx dy to dy dx) when limits are variable or hard to evaluate directly.
+   - Requires sketching the bounding region R and identifying new horizontal/vertical strips.
+
+3. **Triple Integrals**:
+   - Integration over 3D spatial volumes: V = ∫∫∫_V dx dy dz.
+   - Evaluated as three successive single integrals.
+
+4. **Change of Variables (Coordinate Transformations)**:
+   - Transforming variables (e.g., Cartesian to Polar/Cylindrical/Spherical) to simplify integration limits.
+   - Uses the Jacobian determinant factor: dx dy = |J| du dv.
+     - Polar: x = r cos θ, y = r sin θ => dx dy = r dr dθ.
+     - Spherical: x = r sin θ cos φ, y = r sin θ sin φ, z = r cos θ => dx dy dz = r^2 sin θ dr dθ dφ.
+
+5. **Dirichlet\'s Integrals & Liouville\'s Extension**:
+   - Dirichlet\'s formula evaluates integrals of the type ∫∫...∫ x^(l-1) y^(m-1) z^(n-1)... dx dy dz... over the domain x+y+z... <= 1.
+   - Evaluated directly using Gamma functions: Γ(l)Γ(m)Γ(n)/Γ(l+m+n+1).
+
+**Important Formulas:**
+- Double Integral Area: A = ∫∫ dx dy.
+- Triple Integral Volume: V = ∫∫∫ dx dy dz.
+- Polar Jacobian: J = r.
+- Spherical Jacobian: J = r^2 sin θ.
+- Dirichlet\'s Integral (3 variables): ∫∫∫ x^(p-1) y^(q-1) z^(r-1) dx dy dz = Γ(p)Γ(q)Γ(r) / Γ(p+q+r+1).
 
 **Exam Tips:**
-Master the steps of drawing boundaries to change the order of integration. This is a guaranteed 10-mark question.`;
+Changing the order of integration and calculating volumes using triple integrals are heavily weighted exam questions. Practice sketching circular and parabolic regions.`;
       }
       return `### Revision Notes: Multiple Integrals
-- **Area under Double Integral**: A = ∫∫ dx dy over region R.
-- **Volume under Triple Integral**: V = ∫∫∫ dx dy dz over volume V.
-- **Jacobian Transformation**: dx dy = |J| du dv where J is the Jacobian determinant.
-- **Dirichlet\'s Theorem**: Greatly simplifies triple integrals over bounded regions.`;
+Quick formulas and steps for coordinate transformations.
+
+- **Iterated Integral Evaluation**:
+  - Always integrate from the innermost limits (usually variables) to the outermost limits (always constants).
+- **Change of Order Steps**:
+  1. Sketch the boundary curves from original limits.
+  2. Identify the integration region.
+  3. Swap from vertical strip (y-limits depend on x) to horizontal strip (x-limits depend on y) or vice-versa.
+  4. Write new limits and integrate.
+- **Jacobian Transformations**:
+  - Cartesian (x,y) -> Polar (r,θ):
+    - x = r cos θ, y = r sin θ
+    - dx dy = r dr dθ
+  - Cartesian (x,y,z) -> Spherical (r,θ,φ):
+    - x = r sin θ cos φ, y = r sin θ sin φ, z = r cos θ
+    - dx dy dz = r^2 sin θ dr dθ dφ
+- **Dirichlet\'s Theorem Formula**:
+  - If x >= 0, y >= 0, z >= 0 and (x + y + z) <= 1:
+    - ∫∫∫ x^(p-1) y^(q-1) z^(r-1) dx dy dz = Γ(p) * Γ(q) * Γ(r) / Γ(p + q + r + 1)
+- **Liouville\'s Extension**:
+  - Evaluates integrals over the domain h_1 <= (x+y+z) <= h_2:
+    - Replace the Γ(p+q+r+1) division with an integral: [Γ(p)Γ(q)Γ(r)/Γ(p+q+r)] * ∫_(h_1)^(h_2) u^(p+q+r-1) f(u) du.`;
     }
 
     if (userMessage.includes('vector calculus')) {
       if (systemPrompt.includes('summary')) {
         return `### Comprehensive AI Overview: Vector Calculus
-Vector calculus is essential for electromagnetics, fluid dynamics, and mechanics, dealing with differentiation and integration of vector fields.
+Vector calculus is the study of differentiation and integration of vector fields. It is a vital tool for electromagnetic theory, fluid mechanics, and thermodynamics.
 
-**Key Concepts & Theorems:**
-1. **Gradient, Divergence, Curl**: Operations defining rate of change, expansion, and rotation of fields.
-2. **Line Integral**: Integration of a vector field along a curve.
-3. **Green\'s Theorem**: Relates a line integral around a simple closed curve to a double integral over the plane region.
-4. **Stokes\' Theorem**: Relates line integral of a vector field around a loop to flux of its curl through a surface.
-5. **Gauss Divergence Theorem**: Relates flux of a vector field through a closed surface to volume integral of its divergence.
+**Detailed Topic Breakdown:**
+
+1. **Vector Differentiation Operations**:
+   - **Gradient (∇f)**: Represents the rate and direction of maximum spatial change of a scalar field f. Normal to surface f(x,y,z) = c.
+   - **Divergence (∇ · F)**: Measures the net outward flux of a vector field F per unit volume.
+   - **Curl (∇ × F)**: Measures the rotation or angular velocity of a vector field F.
+
+2. **Physical Interpretations**:
+   - Solenoidal Field: If Divergence of F = 0 (no source or sink).
+   - Irrotational Field (Conservative): If Curl of F = 0 (field can be written as gradient of scalar potential: F = ∇φ).
+
+3. **Line, Surface, and Volume Integrals**:
+   - Line Integral (∫ F · dr): Work done by force F along curve C.
+   - Surface Integral (∫∫ F · dS): Net flux of vector field F through surface S.
+   - Volume Integral (∫∫∫ div F dV): Mass or field accumulation over a 3D region.
+
+4. **Fundamental Theorems**:
+   - **Green\'s Theorem**: Relates line integral in 2D to double integral over planar area: ∫ (P dx + Q dy) = ∫∫ (∂Q/∂x - ∂P/∂y) dx dy.
+   - **Gauss Divergence Theorem**: Relates surface flux to volume divergence: ∫∫ F · dS = ∫∫∫ (∇ · F) dV.
+   - **Stokes\' Theorem**: Relates line integral of loop to surface flux of curl: ∫ F · dr = ∫∫ (∇ × F) · dS.
 
 **Important Formulas:**
-- Div F = ∇ · F, Curl F = ∇ × F
-- Gauss: ∫∫ F · dS = ∫∫∫ (∇ · F) dV`;
+- ∇ = i(∂/∂x) + j(∂/∂y) + k(∂/∂z)
+- Green\'s: ∫ (P dx + Q dy) = ∫∫ (∂Q/∂x - ∂P/∂y) dx dy.
+- Gauss: ∫∫ F · n dS = ∫∫∫ (∇ · F) dV.
+- Stokes: ∫ F · dr = ∫∫ (∇ × F) · dS.
+
+**Exam Tips:**
+Verify Gauss or Stokes\' Theorem for a given cuboid or hemispherical surface. These theorems are always tested with 10-mark questions.`;
       }
       return `### Revision Notes: Vector Calculus
-- **Gradient (∇f)**: Vector pointing in direction of maximum rate of change.
-- **Divergence (∇·F)**: Scalar measuring source or sink strength.
-- **Curl (∇×F)**: Vector measuring rotational tendency.
-- **Conservative Field**: A field F is conservative if Curl F = 0, meaning it can be written as F = ∇f.
-- **Green\'s Theorem**: ∫ (P dx + Q dy) = ∫∫ (dQ/dx - dP/dy) dx dy.`;
+Core operations, identities, and integral vector equations.
+
+- **Vector Differential Operator**:
+  - Del (∇) = i(∂/∂x) + j(∂/∂y) + k(∂/∂z)
+- **Gradient, Divergence, Curl Definitions**:
+  - Gradient of φ: ∇φ = i(∂φ/∂x) + j(∂φ/∂y) + k(∂φ/∂z) (Result is a vector)
+  - Divergence of F: ∇·F = ∂F_x/∂x + ∂F_y/∂y + ∂F_z/∂z (Result is a scalar)
+  - Curl of F: ∇×F = Det[i, j, k; ∂/∂x, ∂/∂y, ∂/∂z; F_x, F_y, F_z] (Result is a vector)
+- **Key Vector Identities**:
+  - div(curl F) = ∇·(∇×F) = 0 (Divergence of curl is always zero)
+  - curl(grad φ) = ∇×(∇φ) = 0 (Curl of gradient is always zero)
+  - div(φ F) = φ div F + F · grad φ
+  - curl(φ F) = φ curl F + (grad φ) × F
+- **Solenoidal & Irrotational Test**:
+  - Vector F is Solenoidal <=> ∇·F = 0
+  - Vector F is Irrotational <=> ∇×F = 0
+- **Vector Theorems Cheat Sheet**:
+  - **Green\'s**: Relates a line integral to a double integral.
+  - **Gauss**: Relates a surface integral to a volume integral.
+  - **Stokes\'**: Relates a line integral to a surface integral.`;
+    }
+
+    if (userMessage.includes('beta & gamma') || userMessage.includes('gamma function') || userMessage.includes('beta function')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Beta & Gamma Functions
+This unit covers improper integrals and introduces the special Beta and Gamma transcendental functions. These functions simplify complicated calculus integrals and are widely applied in quantum mechanics, engineering statistics, and fractional derivatives.
+
+**Detailed Topic Breakdown:**
+
+1. **Improper Integrals**:
+   - Integrals where either limits are infinite or the integrand is discontinuous at some point in the interval.
+   - Evaluated using limits to test convergence or divergence.
+
+2. **Gamma Function (Eulerian Integral of the Second Kind)**:
+   - Defined as: Γ(n) = ∫_0^∞ e^-x * x^(n-1) dx (for n > 0).
+   - Acts as an extension of factorials to real and complex numbers.
+   - Key recurrence: Γ(n+1) = n Γ(n). For integers, Γ(n+1) = n!.
+   - Special value: Γ(1/2) = √π.
+
+3. **Beta Function (Eulerian Integral of the First Kind)**:
+   - Defined as: B(m,n) = ∫_0^1 x^(m-1) * (1-x)^(n-1) dx (for m > 0, n > 0).
+   - Trigonometric Form: B(m,n) = 2 ∫_0^(π/2) (sin θ)^(2m-1) * (cos θ)^(2n-1) dθ.
+
+4. **Relationship Between Beta and Gamma**:
+   - B(m,n) = Γ(m) * Γ(n) / Γ(m+n).
+   - Extremely useful for evaluating trigonometric integrals: ∫_0^(π/2) (sin θ)^p (cos θ)^q dθ = [Γ((p+1)/2) * Γ((q+1)/2)] / [2 * Γ((p+q+2)/2)].
+
+5. **Duplication Formula**:
+   - Relates Gamma functions of argument m and (m + 1/2):
+     - Γ(m) * Γ(m + 1/2) = [√π / 2^(2m-1)] * Γ(2m).
+
+**Important Formulas:**
+- Gamma definition: Γ(n) = ∫_0^∞ e^-t t^(n-1) dt.
+- Beta definition: B(m,n) = ∫_0^1 x^(m-1) (1-x)^(n-1) dx.
+- Relation: B(m,n) = Γ(m)Γ(n)/Γ(m+n).
+- Duplication: Γ(m)Γ(m+1/2) = [√π / 2^(2m-1)] * Γ(2m).
+- Special Value: Γ(1/2) = √π.
+
+**Exam Strategy:**
+Master evaluations of trigonometric definite integrals from 0 to π/2 using the Beta-Gamma relation. Proving the duplication formula is a very common theoretical question.`;
+      }
+      return `### Revision Notes: Beta & Gamma Functions
+Key identities, recurrence formulas, and integral evaluations.
+
+- **Gamma Function Properties**:
+  - Γ(1) = 1
+  - Γ(n+1) = n * Γ(n) (valid for any positive real number)
+  - Γ(n+1) = n! (if n is a positive integer)
+  - Γ(1/2) = √π
+- **Beta Function Properties**:
+  - Symmetry: B(m,n) = B(n,m)
+  - Alternate Form (Limits 0 to ∞): B(m,n) = ∫_0^∞ [x^(m-1) / (1+x)^(m+n)] dx
+- **Trigonometric Integral Reduction Formula**:
+  - ∫_0^(π/2) sin^p(θ) cos^q(θ) dθ = Γ((p+1)/2) * Γ((q+1)/2) / [2 * Γ((p+q+2)/2)]
+- **Useful Integrals**:
+  - ∫_0^∞ e^(-x^2) dx = √π / 2
+- **Gamma Recurrence for Fractions**:
+  - Γ(5/2) = (3/2) * (1/2) * Γ(1/2) = 3√π / 4
+  - Γ(7/2) = (5/2) * (3/2) * (1/2) * Γ(1/2) = 15√π / 8
+- **Duplication Formula Form**:
+  - 2^(2n-1) * Γ(n) * Γ(n + 1/2) = √π * Γ(2n)`;
     }
 
     if (userMessage.includes('electromagnetic field') || userMessage.includes('wave propagation')) {
