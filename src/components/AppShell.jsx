@@ -128,21 +128,7 @@ export default function AppShell({ context }) {
             <span>Study<span className="text-primary">Nest</span></span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-1">
-            {['home', 'subjects'].map((view) => (
-              <button
-                key={view}
-                onClick={() => view === 'home' ? goHome() : navigateTo('subjects')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  currentView === view
-                    ? 'bg-white text-black font-semibold shadow-sm'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {view.charAt(0).toUpperCase() + view.slice(1)}
-              </button>
-            ))}
-          </nav>
+
 
           <div className="flex items-center gap-2">
             <button
