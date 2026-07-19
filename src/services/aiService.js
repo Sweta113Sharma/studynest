@@ -353,28 +353,78 @@ Explores what problems can be solved by computers (decidability) and how efficie
     if (userMessage.includes('matrices') || userMessage.includes('math')) {
       if (systemPrompt.includes('summary')) {
         return `### Comprehensive AI Overview: Engineering Mathematics (Matrices)
-Matrices represent systems of linear equations and linear transformations.
+Matrices represent systems of linear equations and linear transformations. This unit covers foundational matrix operations, types, eigenvalues, eigenvectors, and complex algebraic theorems necessary for advanced engineering analysis.
 
-**Key Units & Concepts:**
-1. **Rank of a Matrix**: Maximum number of linearly independent rows or columns.
-2. **Cayley-Hamilton Theorem**: Every square matrix satisfies its own characteristic equation: |A - λI| = 0. Useful for calculating matrix inverses and higher powers of a matrix.
-3. **Eigenvalues & Eigenvectors**: Roots of the characteristic polynomial, essential for stability analysis, engineering mechanics, and structural systems.
-4. **Diagonalization**: Transforming a square matrix into a diagonal matrix using its eigenvalues, simplifying linear operations.
+**Detailed Topic Breakdown:**
+
+1. **Special Types of Matrices**:
+   - **Symmetric Matrix**: A square matrix A where A^T = A.
+   - **Skew-Symmetric Matrix**: A square matrix A where A^T = -A. The diagonal elements are always zero.
+   - **Orthogonal Matrix**: A square matrix A satisfying A * A^T = A^T * A = I. Determinant is always ±1.
+   - **Hermitian & Skew-Hermitian Matrices**: Complex matrix definitions where conjugate transpose equals A or -A.
+   - **Unitary Matrix**: Complex analogue of orthogonal matrix where A * A^H = I.
+
+2. **Rank of a Matrix**:
+   - Defined as the maximum number of linearly independent rows or columns.
+   - Calculated using Elementary Row Transformations to convert the matrix into Echelon Form (upper triangular form).
+   - Normal Form (Canonical Form) [I_r 0; 0 0] where the order of identity matrix yields the rank r.
+
+3. **Systems of Linear Equations**:
+   - Non-Homogeneous (AX = B): Consistent if Rank(A) = Rank(A|B) [Augmented Matrix]. Unique solution if Rank = n; infinite solutions if Rank < n.
+   - Homogeneous (AX = 0): Trivial solution (X = 0) if Rank = n; non-trivial solutions if Rank < n (det(A) = 0).
+
+4. **Cayley-Hamilton Theorem**:
+   - Every square matrix satisfies its own characteristic equation: P(λ) = det(A - λI) = 0.
+   - Replacing λ with matrix A yields P(A) = O (Null matrix).
+   - Crucial for finding matrix inverses A^-1 and calculating higher powers A^k without repeated multiplication.
+
+5. **Eigenvalues & Eigenvectors**:
+   - Eigenvalues (λ) are roots of the characteristic equation det(A - λI) = 0.
+   - Eigenvectors (X) satisfy AX = λX (non-zero vectors).
+   - Real Symmetric matrices always have real eigenvalues.
+
+6. **Diagonalization**:
+   - Transforming a matrix A into a diagonal matrix D via a similarity transformation D = P^-1 * A * P.
+   - P is the Modal Matrix whose columns are the linearly independent eigenvectors of A.
+   - The diagonal elements of D are the eigenvalues of A.
 
 **Important Formulas:**
 - Characteristic Equation: det(A - λI) = 0.
-- Inverse via Cayley-Hamilton: A^-1 = P(A) where P is a polynomial of degree n-1.
+- Inverse via Cayley-Hamilton: A^-1 = (1/c_n) * [A^(n-1) - c_1 A^(n-2) ... - c_(n-1) I].
+- Sum of Eigenvalues = Trace of A.
+- Product of Eigenvalues = Determinant of A.
 
 **Exam Strategy:**
 Master calculation steps for eigenvalues of 3x3 matrices. Diagonalization proofs and Cayley-Hamilton inverse verifications appear in every sessional and final paper.`;
       }
       if (systemPrompt.includes('notes')) {
         return `### Revision Notes: Matrices
-- **Symmetric Matrix**: A^T = A.
-- **Skew-Symmetric**: A^T = -A (all diagonal entries must be 0).
-- **Orthogonal**: A * A^T = I (transpose is equal to the inverse).
-- **Inverse Calculation**: A^-1 = Adj(A) / det(A).
-- **Linear Independence**: A set of vectors is linearly independent if no vector can be written as a linear combination of the others.`;
+Complete formula guide and exam checklist for Unit 1.
+
+- **Matrix Types Properties**:
+  - Symmetric: a_ij = a_ji
+  - Skew-Symmetric: a_ij = -a_ji (and a_ii = 0)
+  - Orthogonal: A^-1 = A^T
+- **Elementary Row Transformations (Rules)**:
+  - Interchanging any two rows (R_i <-> R_j)
+  - Multiplying a row by a non-zero scalar (R_i -> k * R_i)
+  - Adding a scalar multiple of a row to another row (R_i -> R_i + k * R_j)
+- **Rank Properties**:
+  - Rank(A) = Rank(A^T)
+  - Rank(AB) <= min(Rank(A), Rank(B))
+  - If det(A) != 0, Rank(A) = n (Full Rank)
+- **Cayley-Hamilton Theorem & Inverse Application**:
+  - If λ^3 - c_1 λ^2 + c_2 λ - c_3 = 0, then A^3 - c_1 A^2 + c_2 A - c_3 I = 0.
+  - Pre-multiply by A^-1 to solve: A^-1 = (1/c_3)(A^2 - c_1 A + c_2 I).
+- **Eigenvalues Properties**:
+  - Sum of Eigenvalues = Trace(A) (Sum of diagonal elements).
+  - Product of Eigenvalues = det(A).
+  - Eigenvalues of A^T are same as A.
+  - Eigenvalues of A^-1 are 1/λ_i.
+  - Eigenvalues of A^k are λ_i^k.
+- **Diagonalization Condition**:
+  - Matrix A is diagonalizable if and only if it has n linearly independent eigenvectors.
+  - If all eigenvalues are distinct, it is guaranteed to be diagonalizable.`;
       }
       if (systemPrompt.includes('qa pairs')) {
         return `Q1: State the Cayley-Hamilton Theorem.
