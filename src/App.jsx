@@ -75,8 +75,12 @@ function App() {
       subject: selectedSubject,
       unit: selectedUnit
     }
-    if (JSON.stringify(currentState) !== JSON.stringify(newState)) {
+    if (!currentState) {
       window.history.pushState(newState, '', '')
+    } else if (currentState.view !== currentView) {
+      window.history.pushState(newState, '', '')
+    } else if (JSON.stringify(currentState) !== JSON.stringify(newState)) {
+      window.history.replaceState(newState, '', '')
     }
   }, [currentView, selectedYear, selectedBranch, selectedSemester, selectedSubject, selectedUnit])
 
