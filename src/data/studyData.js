@@ -53,8 +53,10 @@ export const semesters = {
                         ppts: [{ title: 'Matrices Complete Lecture', size: '3.2 MB' }],
                         notes: [{ title: 'Quick Revision - Matrices', desc: 'All formulas & solved examples' }],
                         youtube: [
-                            { title: 'Matrices Full Course', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=bwRjC_SRQAI' },
-                            { title: 'Eigenvalues & Eigenvectors', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=PFDu9oVAE-g' }
+                            { title: 'Matrices & Determinants Complete Playlist', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=bwRjC_SRQAI' },
+                            { title: 'Eigenvalues and Eigenvectors', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=PFDu9oVAE-g' },
+                            { title: 'Cayley-Hamilton Theorem - Proof & Problems', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=84jW4cE28vY' },
+                            { title: 'Diagonalization of a Matrix', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=uFoc13aUa5w' }
                         ]
                     },
                     {
@@ -63,7 +65,10 @@ export const semesters = {
                         ppts: [{ title: 'Differential Calculus Slides', size: '2.8 MB' }],
                         notes: [{ title: 'Formulas Sheet - Calculus', desc: 'All differentiation rules + solved PYQs' }],
                         youtube: [
-                            { title: 'Calculus in One Shot', channel: 'Anurag Chauhan', url: 'https://www.youtube.com/watch?v=HfACrKJ_Y2w' }
+                            { title: 'Leibniz Theorem - Successive Differentiation', channel: 'Bhagwan Singh Vishwakarma', url: 'https://www.youtube.com/watch?v=Zc2l2U9V620' },
+                            { title: 'Taylor\'s & Maclaurin\'s Series Expansion', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=R9Ym08c8KCc' },
+                            { title: 'Rolle\'s & Mean Value Theorems', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=vV68Q7-nQ1Y' },
+                            { title: 'Jacobian & Partial Differentiation', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=N4E_R1U3jM0' }
                         ]
                     },
                     {
@@ -72,7 +77,10 @@ export const semesters = {
                         ppts: [{ title: 'Multiple Integrals Complete', size: '3.5 MB' }],
                         notes: [{ title: 'Integrals Formula Guide', desc: 'Step-by-step change of order guide' }],
                         youtube: [
-                            { title: 'Double & Triple Integrals', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=3M6Z6Qj023w' }
+                            { title: 'Double Integrals - Concepts & Evaluation', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=3M6Z6Qj023w' },
+                            { title: 'Change of Order of Integration', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=xH6S3nQvM5E' },
+                            { title: 'Triple Integrals - Volume Calculations', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=48_S69sXU_A' },
+                            { title: 'Change of Variables & Jacobians', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=q4c33f2T-8g' }
                         ]
                     },
                     {
@@ -81,7 +89,10 @@ export const semesters = {
                         ppts: [{ title: 'Vector Calculus Presentation', size: '4.2 MB' }],
                         notes: [{ title: 'Vector Theorems Solved PYQs', desc: 'Detailed proofs and exam problems' }],
                         youtube: [
-                            { title: 'Vector Calculus Playlist', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=R9Ym08c8KCc' }
+                            { title: 'Gradient, Divergence & Curl Vector Fields', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=R9Ym08c8KCc' },
+                            { title: 'Directional Derivative of a Vector', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=N4E_R1U3jM0' },
+                            { title: 'Green\'s Theorem in a Plane', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=o0vO2w4U7y8' },
+                            { title: 'Gauss Divergence & Stokes\' Theorem PYQs', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=hB9N0zO2sI0' }
                         ]
                     },
                     {
@@ -90,7 +101,10 @@ export const semesters = {
                         ppts: [{ title: 'Beta & Gamma Lecture Slides', size: '2.5 MB' }],
                         notes: [{ title: 'Beta & Gamma Formula Sheet', desc: 'Integral properties and quick tricks' }],
                         youtube: [
-                            { title: 'Beta Gamma Functions', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=u17g19d4T_o' }
+                            { title: 'Beta & Gamma Functions Definition & Properties', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=u17g19d4T_o' },
+                            { title: 'Relation Between Beta & Gamma Functions', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=q0k9F3yH2xI' },
+                            { title: 'Duplication Formula & Integral Reductions', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=tM8y-Y9Z3a8' },
+                            { title: 'Solving Definite Integrals using Beta/Gamma', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=q8c7G9d4t_A' }
                         ]
                     }
                 ]
