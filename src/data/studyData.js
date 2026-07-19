@@ -65,6 +65,33 @@ export const semesters = {
                         youtube: [
                             { title: 'Calculus in One Shot', channel: 'Anurag Chauhan', url: 'https://www.youtube.com/watch?v=HfACrKJ_Y2w' }
                         ]
+                    },
+                    {
+                        title: 'Unit 3: Multiple Integrals',
+                        aiSummary: 'Covers double and triple integrals, change of order of integration, change of variables, Jacobian, and applications to area and volume calculation. Tip: Master the Dirichlet\'s integral theorem for fast volume integrations.',
+                        ppts: [{ title: 'Multiple Integrals Complete', size: '3.5 MB' }],
+                        notes: [{ title: 'Integrals Formula Guide', desc: 'Step-by-step change of order guide' }],
+                        youtube: [
+                            { title: 'Double & Triple Integrals', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=3M6Z6Qj023w' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 4: Vector Calculus',
+                        aiSummary: 'Covers vector differentiation (gradient, divergence, curl) and vector integration (line, surface, and volume integrals). Key Theorems: Gauss Divergence Theorem, Green\'s Theorem, and Stokes\' Theorem. Focus on physical interpretations of curl and divergence.',
+                        ppts: [{ title: 'Vector Calculus Presentation', size: '4.2 MB' }],
+                        notes: [{ title: 'Vector Theorems Solved PYQs', desc: 'Detailed proofs and exam problems' }],
+                        youtube: [
+                            { title: 'Vector Calculus Playlist', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=R9Ym08c8KCc' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 5: Beta & Gamma Functions',
+                        aiSummary: 'Defines improper integrals of first and second kinds. Explains Beta and Gamma functions, their properties, relationship, and utility in solving complicated definite integrals. Essential for mechanical and physics derivations.',
+                        ppts: [{ title: 'Beta & Gamma Lecture Slides', size: '2.5 MB' }],
+                        notes: [{ title: 'Beta & Gamma Formula Sheet', desc: 'Integral properties and quick tricks' }],
+                        youtube: [
+                            { title: 'Beta Gamma Functions', channel: 'Dr. Gajendra Purohit', url: 'https://www.youtube.com/watch?v=u17g19d4T_o' }
+                        ]
                     }
                 ]
             },
@@ -78,6 +105,33 @@ export const semesters = {
                         notes: [{ title: 'Optics Quick Notes', desc: 'Derivations and numericals' }],
                         youtube: [
                             { title: 'Wave Optics Complete', channel: 'Physics Wallah', url: 'https://www.youtube.com/watch?v=6OUEfkGCJpY' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 2: Electromagnetic Field Theory',
+                        aiSummary: 'Maxwell\'s equations in differential and integral forms, displacement current, Poynting vector, Poynting theorem. Electromagnetic wave propagation in free space and dielectric media. Important: Focus on boundary conditions and wave impedance.',
+                        ppts: [{ title: 'Electromagnetic Fields PPT', size: '3.4 MB' }],
+                        notes: [{ title: 'Maxwell Equations Revision Sheet', desc: 'Equation proofs & derivations' }],
+                        youtube: [
+                            { title: 'Electromagnetic Field Theory', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=h6sXoB2eIig' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 3: Quantum Mechanics',
+                        aiSummary: 'De-Broglie hypothesis, wave-particle duality, Heisenberg uncertainty principle. Schrodinger wave equation (time-dependent and time-independent), wave function physical significance, particle in a 1D box. Practice energy level derivations.',
+                        ppts: [{ title: 'Quantum Mechanics Slides', size: '4.0 MB' }],
+                        notes: [{ title: 'Quantum Physics Formula Guide', desc: 'Solved 1D box derivations' }],
+                        youtube: [
+                            { title: 'Quantum Mechanics Playlist', channel: 'NPTEL', url: 'https://www.youtube.com/watch?v=0kFp63cK8uE' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 4: Lasers & Fiber Optics',
+                        aiSummary: 'Laser: Spontaneous and stimulated emission, Einstein\'s coefficients, population inversion, Ruby laser, He-Ne laser. Fiber Optics: Principle of propagation, acceptance angle, numerical aperture, fractional refractive index change, single/multi-mode fibers. Tip: Numerical questions are highly common from numerical aperture.',
+                        ppts: [{ title: 'Lasers & Fiber Optics PPT', size: '2.9 MB' }],
+                        notes: [{ title: 'Fiber Optics Cheat Sheet', desc: 'Formulas and step-by-step solved numerics' }],
+                        youtube: [
+                            { title: 'Lasers & Fiber Optics course', channel: 'Physics Wallah', url: 'https://www.youtube.com/watch?v=u8-FidK7zV8' }
                         ]
                     }
                 ]
@@ -180,7 +234,8 @@ export const semesters = {
                 units: [
                     { title: 'Unit 1: Finite Automata', aiSummary: 'DFA, NFA, epsilon-NFA. Equivalence of DFA and NFA, minimization of DFA. Regular languages, regular expressions, Pumping Lemma.', ppts: [{ title: 'Finite Automata PPT', size: '3.2 MB', url: '/pdfs/toc/toc_unit1.pdf' }], notes: [{ title: 'Automata Notes', desc: 'DFA/NFA constructions' }], youtube: [{ title: 'Theory of Computation', channel: 'Neso Academy', url: 'https://youtube.com' }] },
                     { title: 'Unit 2: Context-Free Languages', aiSummary: 'Context-free grammars, parse trees, ambiguity. Pushdown automata (PDA). Pumping Lemma for CFLs. Chomsky Normal Form.', ppts: [{ title: 'CFG & PDA PPT', size: '2.9 MB' }], notes: [{ title: 'CFL Notes', desc: 'Grammar simplifications' }], youtube: [{ title: 'CFG and PDA', channel: 'Neso Academy', url: 'https://youtube.com' }] },
-                    { title: 'Unit 3: Turing Machines', aiSummary: 'Turing machine model, variants. Decidable and undecidable problems, Halting Problem. Complexity classes P, NP, NP-Complete.', ppts: [{ title: 'Turing Machines', size: '3.0 MB' }], notes: [{ title: 'TM Notes', desc: 'Decidability and complexity' }], youtube: [{ title: 'Turing Machines', channel: 'Neso Academy', url: 'https://youtube.com' }] }
+                    { title: 'Unit 3: Turing Machines', aiSummary: 'Turing machine model, variants. Decidable and undecidable problems, Halting Problem. Complexity classes P, NP, NP-Complete.', ppts: [{ title: 'Turing Machines', size: '3.0 MB' }], notes: [{ title: 'TM Notes', desc: 'Decidability and complexity' }], youtube: [{ title: 'Turing Machines', channel: 'Neso Academy', url: 'https://youtube.com' }] },
+                    { title: 'Unit 4: Decidability & P/NP Complexity', aiSummary: 'Recursive and recursively enumerable languages, decidable and undecidable problems. Post Correspondence Problem (PCP), Halting Problem. Introduction to complexity theory: Time complexity, space complexity, Classes P, NP, NP-hard, NP-Complete, and Cook-Levin theorem.', ppts: [{ title: 'Decidability & Complexity Slides', size: '2.7 MB' }], notes: [{ title: 'Complexity Theory Quick Revision', desc: 'Definitions of P, NP, NP-Complete, NPC proofs' }], youtube: [{ title: 'Decidability and Complexity', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=78t6NlM27eE' }] }
                 ]
             },
             {
@@ -567,6 +622,21 @@ export const quizzes = {
     ],
     'os-1': [
         { id: 'q1', question: 'Round Robin scheduling is best for:', options: ['Batch systems', 'Time-sharing systems', 'Real-time systems', 'Embedded systems'], correctAnswer: 1, explanation: 'Round Robin is designed for time-sharing systems to provide fair CPU allocation.' }
+    ],
+    'math-1': [
+        { id: 'q1', question: 'Which theorem states that any square matrix satisfies its own characteristic equation?', options: ['Cayley-Hamilton Theorem', 'Rolle\'s Theorem', 'Mean Value Theorem', 'Dirichlet\'s Theorem'], correctAnswer: 0, explanation: 'The Cayley-Hamilton Theorem states that every square matrix satisfies its own characteristic equation, which is useful for calculating inverses and matrix powers.' },
+        { id: 'q2', question: 'What is the rank of a 3x3 Identity Matrix?', options: ['1', '2', '3', '0'], correctAnswer: 2, explanation: 'The rank of an identity matrix of size n is always n, because all of its rows are linearly independent. Thus, the rank of a 3x3 identity matrix is 3.' }
+    ],
+    'physics-1': [
+        { id: 'q1', question: 'In Newton\'s rings experiment, the central spot formed by reflected light is always:', options: ['Bright', 'Dark', 'Coloured', 'Rainbow-patterned'], correctAnswer: 1, explanation: 'In Newton\'s rings, the central spot is dark due to destructive interference. At the point of contact, the path difference is zero, but a phase change of π (destructive) occurs on reflection at the glass plate interface.' },
+        { id: 'q2', question: 'Which laser utilizes a gas mixture as its active medium?', options: ['Ruby Laser', 'Semiconductor Laser', 'He-Ne Laser', 'Nd:YAG Laser'], correctAnswer: 2, explanation: 'The Helium-Neon (He-Ne) laser uses a gas mixture of helium and neon inside a discharge tube as its active medium.' }
+    ],
+    'toc-1': [
+        { id: 'q1', question: 'Which of the following is the most powerful automata computational model?', options: ['Finite Automata', 'Pushdown Automata', 'Turing Machine', 'Linear Bounded Automata'], correctAnswer: 2, explanation: 'A Turing Machine is the most powerful model of computation, capable of simulating any algorithm (Church-Turing thesis).' },
+        { id: 'q2', question: 'The Halting Problem of a Turing Machine is:', options: ['Decidable', 'Undecidable', 'NP-Complete', 'Logarithmic'], correctAnswer: 1, explanation: 'The Halting Problem was proven to be undecidable by Alan Turing, meaning no general algorithm can decide whether any given program will finish running or run forever.' }
+    ],
+    'ai-1': [
+        { id: 'q1', question: 'Which search algorithm is guaranteed to find the shortest path if the heuristic function is admissible?', options: ['Depth-First Search', 'A* Search', 'Greedy Best-First Search', 'Breadth-First Search'], correctAnswer: 1, explanation: 'A* Search is guaranteed to be optimal (finding the shortest path) if the heuristic is admissible (never overestimates the cost to reach the goal).' }
     ]
 };
 

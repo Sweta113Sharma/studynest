@@ -220,6 +220,136 @@ Answer: Paging divides memory into fixed-size blocks (pages/frames), while segme
       }
     }
 
+    if (userMessage.includes('multiple integrals')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Multiple Integrals
+Double and triple integrals extend the concept of single integration to multi-dimensional spaces, allowing calculations of areas, volumes, and centers of mass.
+
+**Key Concepts:**
+1. **Double Integrals**: Integrations over a 2D region, often used for area calculation: A = ∫∫ dx dy.
+2. **Change of Order**: Switching the integration order (dx dy to dy dx) when limits are complex.
+3. **Triple Integrals**: Integrations over a 3D volume: V = ∫∫∫ dx dy dz.
+4. **Jacobian**: Used for changing coordinates (e.g., Cartesian to Polar/Spherical).
+
+**Exam Tips:**
+Master the steps of drawing boundaries to change the order of integration. This is a guaranteed 10-mark question.`;
+      }
+      return `### Revision Notes: Multiple Integrals
+- **Area under Double Integral**: A = ∫∫ dx dy over region R.
+- **Volume under Triple Integral**: V = ∫∫∫ dx dy dz over volume V.
+- **Jacobian Transformation**: dx dy = |J| du dv where J is the Jacobian determinant.
+- **Dirichlet\'s Theorem**: Greatly simplifies triple integrals over bounded regions.`;
+    }
+
+    if (userMessage.includes('vector calculus')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Vector Calculus
+Vector calculus is essential for electromagnetics, fluid dynamics, and mechanics, dealing with differentiation and integration of vector fields.
+
+**Key Concepts & Theorems:**
+1. **Gradient, Divergence, Curl**: Operations defining rate of change, expansion, and rotation of fields.
+2. **Line Integral**: Integration of a vector field along a curve.
+3. **Green\'s Theorem**: Relates a line integral around a simple closed curve to a double integral over the plane region.
+4. **Stokes\' Theorem**: Relates line integral of a vector field around a loop to flux of its curl through a surface.
+5. **Gauss Divergence Theorem**: Relates flux of a vector field through a closed surface to volume integral of its divergence.
+
+**Important Formulas:**
+- Div F = ∇ · F, Curl F = ∇ × F
+- Gauss: ∫∫ F · dS = ∫∫∫ (∇ · F) dV`;
+      }
+      return `### Revision Notes: Vector Calculus
+- **Gradient (∇f)**: Vector pointing in direction of maximum rate of change.
+- **Divergence (∇·F)**: Scalar measuring source or sink strength.
+- **Curl (∇×F)**: Vector measuring rotational tendency.
+- **Conservative Field**: A field F is conservative if Curl F = 0, meaning it can be written as F = ∇f.
+- **Green\'s Theorem**: ∫ (P dx + Q dy) = ∫∫ (dQ/dx - dP/dy) dx dy.`;
+    }
+
+    if (userMessage.includes('electromagnetic field') || userMessage.includes('wave propagation')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Electromagnetic Field Theory
+EMT deals with static and dynamic electric and magnetic fields, culminating in Maxwell\'s Equations and electromagnetic wave propagation.
+
+**Key Concepts:**
+1. **Maxwell\'s Equations**: Four fundamental equations unifying electricity and magnetism.
+2. **Displacement Current**: James Clerk Maxwell\'s term explaining magnetic fields produced by changing electric fields.
+3. **Poynting Vector**: Represents the directional energy flux density (power flow) of an EM wave: S = E × H.
+
+**Exam Tips:**
+Expect derivations of electromagnetic wave equations in free space and proving that EM waves are transverse.`;
+      }
+      return `### Revision Notes: Electromagnetic Field Theory
+- **Maxwell\'s 4 Equations**:
+  1. ∇·D = ρ (Gauss\'s Law for Electrostatics)
+  2. ∇·B = 0 (Gauss\'s Law for Magnetism)
+  3. ∇×E = -dB/dt (Faraday\'s Law of Induction)
+  4. ∇×H = J + dD/dt (Ampere\'s Circuital Law with displacement current)
+- **Poynting Theorem**: Statement of conservation of energy for EM fields.`;
+    }
+
+    if (userMessage.includes('quantum mechanics')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Quantum Mechanics
+Quantum mechanics describes the physical properties of nature at the scale of atoms and subatomic particles.
+
+**Key Concepts:**
+1. **Wave-Particle Duality**: Matter exhibits both particle-like and wave-like behavior (de Broglie hypothesis).
+2. **Schrodinger Equation**: Fundamental equation of quantum mechanics describing how the quantum state of a system changes with time.
+3. **Uncertainty Principle**: Position and momentum cannot be measured simultaneously with absolute precision.
+
+**Formula:**
+- Schrodinger Equation: Hψ = Eψ`;
+      }
+      return `### Revision Notes: Quantum Mechanics
+- **de Broglie Wavelength**: λ = h/p.
+- **Wave Function (ψ)**: Complex probability amplitude. |ψ|^2 represents probability density.
+- **Schrodinger Equation (Time-Independent)**: d^2ψ/dx^2 + (8π^2m/h^2)(E - V)ψ = 0.
+- **Particle in a 1D Box**: Energy is quantized: E_n = n^2 * h^2 / (8mL^2).`;
+    }
+
+    if (userMessage.includes('lasers') || userMessage.includes('fiber optics')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Lasers & Fiber Optics
+Lasers produce highly coherent, monochromatic light, while optical fibers guide this light over long distances with minimal loss.
+
+**Key Concepts:**
+1. **Population Inversion**: Condition where more atoms are in excited states than ground states (essential for laser action).
+2. **Numerical Aperture (NA)**: Light-gathering ability of an optical fiber.
+3. **Einstein Coefficients**: Describe rates of absorption, spontaneous emission, and stimulated emission.
+
+**Formulas:**
+- NA = √(μ_core^2 - μ_cladding^2)
+- Acceptance Angle: θ_a = sin^-1(NA)`;
+      }
+      return `### Revision Notes: Lasers & Fiber Optics
+- **Stimulated Emission**: Incoming photon triggers an excited atom to drop energy levels, emitting a coherent photon.
+- **Pumping**: Mechanism (optical, electrical) to achieve population inversion.
+- **Total Internal Reflection (TIR)**: Guides light in fiber core (core index > cladding index).
+- **V-Number**: Normalized frequency determining the number of modes supported by the fiber.`;
+    }
+
+    if (userMessage.includes('decidability') || userMessage.includes('complexity')) {
+      if (systemPrompt.includes('summary')) {
+        return `### Comprehensive AI Overview: Decidability & P/NP Complexity
+Explores what problems can be solved by computers (decidability) and how efficiently they can be solved (complexity classes).
+
+**Key Concepts:**
+1. **Decidable Language**: A language for which there exists a Turing Machine that halts on all inputs (accept or reject).
+2. **Halting Problem**: Proving that no program can decide if any arbitrary code halts or loops.
+3. **Classes P and NP**: P contains problems solvable in polynomial time; NP contains problems checkable in polynomial time.
+4. **NP-Complete**: The hardest problems in NP; if one is in P, then P = NP.
+
+**Famous Theorems:**
+- Cook-Levin Theorem: SAT is NP-Complete.`;
+      }
+      return `### Revision Notes: Decidability & P/NP Complexity
+- **Recursive Language**: Decidable (Turing Machine always halts).
+- **Recursively Enumerable**: Semi-decidable (TM halts on accept, may loop on reject).
+- **Undecidable Problems**: Halting Problem, Post Correspondence Problem (PCP), State Entry Problem.
+- **Reduction**: Converting problem A to B to show relative difficulty.
+- **P vs NP**: Is checking a solution fundamentally easier than finding one? (Unresolved).`;
+    }
+
     if (userMessage.includes('matrices') || userMessage.includes('math')) {
       if (systemPrompt.includes('summary')) {
         return `### Comprehensive AI Overview: Engineering Mathematics (Matrices)
