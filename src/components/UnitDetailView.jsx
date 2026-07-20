@@ -27,8 +27,6 @@ export default function UnitDetailView({ context }) {
 
   const aiFeatures = [
     { id: 'notes', label: '📝 Smart Notes', description: 'Generate detailed revision notes' },
-    { id: 'qa', label: '❓ Q&A', description: 'Practice questions & answers' },
-    { id: 'summary', label: '📋 Summary', description: 'Quick summary of the unit' },
     { id: 'quiz', label: '🎯 AI Quiz', description: 'Generate interactive MCQ quiz' }
   ]
 
