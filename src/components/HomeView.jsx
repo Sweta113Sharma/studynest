@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { BookOpen, Video, Sparkles, Award, ArrowRight } from 'lucide-react'
+import { BookOpen, Video, Sparkles, Award, ArrowRight, Bookmark, Clock, CheckCircle2, Flame, Trash2 } from 'lucide-react'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,7 +19,7 @@ const itemVariants = {
 }
 
 export default function HomeView({ context }) {
-  const { user, navigateTo, selectedYear, setSelectedYear, setSelectedBranch, branches } = context
+  const { user, navigateTo, selectedYear, setSelectedYear, setSelectedBranch, branches, getBookmarks, toggleBookmark } = context
 
   const handleYearSelect = (year) => {
     setSelectedYear(year)
@@ -30,6 +30,9 @@ export default function HomeView({ context }) {
     setSelectedBranch(branch.id)
     navigateTo('subjects')
   }
+
+  const bookmarks = getBookmarks()
+  const sessionsCount = parseInt(localStorage.getItem('studynest_timer_sessions') || '0', 10)
 
   const features = [
     { icon: Sparkles, title: 'AI Study Guide', desc: 'Subject-wide AI overviews & custom quizzes', color: 'from-amber-400 to-orange-500' },
@@ -45,9 +48,9 @@ export default function HomeView({ context }) {
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="text-center py-8" variants={itemVariants}>
+      <motion.div className="text-center py-6" variants={itemVariants}>
         <motion.h1
-          className="text-4xl md:text-5xl font-display font-bold mb-4"
+          className="text-4xl md:text-5xl font-display font-bold mb-3"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -57,14 +60,88 @@ export default function HomeView({ context }) {
           <span className="inline-block ml-2">👋</span>
         </motion.h1>
         <motion.p
-          className="text-lg text-muted-foreground"
+          className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          "Study smarter, not longer."
+          "Study smarter, not longer. Master concepts with AI notes and active recall."
         </motion.p>
       </motion.div>
+
+      {/* Stats Bar */}
+      <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4" variants={itemVariants}>
+        <div className="p-4 rounded-2xl glass-card flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <Flame className="w-6 h-6" />
+          </div>
+          <div>
+            <span className="text-2xl font-bold font-display">{sessionsCount > 0 ? `${sessionsCount}` : '1'}</span>
+            <p className="text-xs text-muted-foreground">Focus Sessions ({sessionsCount * 25} mins)</p>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl glass-card flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center">
+            <Bookmark className="w-6 h-6" />
+          </div>
+          <div>
+            <span className="text-2xl font-bold font-display">{bookmarks.length}</span>
+            <p className="text-xs text-muted-foreground">Bookmarked Units</p>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl glass-card flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <div>
+            <span className="text-2xl font-bold font-display">100%</span>
+            <p className="text-xs text-muted-foreground">Exam Coverage Ready</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Bookmarked Resources Section if any */}
+      {bookmarks.length > 0 && (
+        <motion.div variants={itemVariants}>
+          <h2 className="text-xl font-display font-semibold mb-4 flex items-center gap-2">
+            <Bookmark className="w-5 h-5 text-primary" />
+            Bookmarked Units & Resources
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {bookmarks.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => {
+                  if (item.subject) context.setSelectedSubject(item.subject)
+                  if (item.unit) context.setSelectedUnit(item.unit)
+                  navigateTo('unit-detail')
+                }}
+                className="p-4 rounded-2xl glass-card border border-white/5 hover:border-primary/30 cursor-pointer flex items-center justify-between group transition-all"
+              >
+                <div className="min-w-0 flex-1 pr-2">
+                  <h3 className="font-semibold text-sm truncate group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                    {item.subjectTitle || 'Unit'}
+                  </p>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleBookmark(item)
+                  }}
+                  className="p-1.5 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-red-400 transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       <motion.div variants={itemVariants}>
         <h2 className="text-xl font-display font-semibold mb-4 flex items-center gap-2">
@@ -166,4 +243,4 @@ export default function HomeView({ context }) {
       </motion.div>
     </motion.div>
   )
-}
+}

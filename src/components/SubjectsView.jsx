@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, BookOpen, Clock, CheckCircle, FileText, Download, ExternalLink } from 'lucide-react'
+import { ArrowLeft, BookOpen, Clock, CheckCircle, FileText, Download, ExternalLink, Search, X } from 'lucide-react'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -26,6 +26,7 @@ export default function SubjectsView({ context }) {
   } = context
 
   const [availableSemesters, setAvailableSemesters] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     const branchData = semesters[selectedBranch]
@@ -48,6 +49,14 @@ export default function SubjectsView({ context }) {
 
   const branchData = semesters[selectedBranch]
   const subjects = branchData?.[selectedSemester] || []
+
+  const filteredSubjects = subjects.filter((s) => {
+    if (!searchQuery.trim()) return true
+    const q = searchQuery.toLowerCase()
+    const matchTitle = s.title.toLowerCase().includes(q)
+    const matchUnits = s.units?.some((u) => u.title.toLowerCase().includes(q))
+    return matchTitle || matchUnits
+  })
 
   const branch = { name: 'Branch', icon: '📚' }
   if (selectedBranch === 'cse') branch.name = 'Computer Science'
@@ -74,11 +83,33 @@ export default function SubjectsView({ context }) {
         Back to Home
       </motion.button>
 
-      <motion.div variants={itemVariants}>
-        <h1 className="text-2xl md:text-3xl font-display font-bold mb-2">
-          {branch.name} Engineering
-        </h1>
-        <p className="text-muted-foreground">Year {selectedYear}</p>
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-display font-bold mb-1">
+            {branch.name} Engineering
+          </h1>
+          <p className="text-muted-foreground text-sm">Year {selectedYear}</p>
+        </div>
+
+        {/* Instant Search Bar */}
+        <div className="relative w-full sm:w-72">
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search subjects or unit topics..."
+            className="w-full pl-9 pr-8 py-2 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -103,16 +134,18 @@ export default function SubjectsView({ context }) {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         variants={containerVariants}
       >
-        {subjects.length === 0 ? (
+        {filteredSubjects.length === 0 ? (
           <motion.div
             className="col-span-full text-center py-12 glass-card rounded-2xl"
             variants={itemVariants}
           >
             <BookOpen className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <p className="text-muted-foreground">No subjects available for this semester yet.</p>
+            <p className="text-muted-foreground">
+              {searchQuery ? `No subjects match "${searchQuery}"` : 'No subjects available for this semester yet.'}
+            </p>
           </motion.div>
         ) : (
-          subjects.map((subject, i) => {
+          filteredSubjects.map((subject, i) => {
             const colors = subjectColors[subject.key] || subjectColors.default
             const progress = getSubjectProgress(subject.id)
             

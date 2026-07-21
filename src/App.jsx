@@ -154,6 +154,29 @@ function App() {
     return quizzes[subjectId] || []
   }
 
+  const getBookmarks = () => {
+    const raw = localStorage.getItem('studynest_bookmarks')
+    return raw ? JSON.parse(raw) : []
+  }
+
+  const toggleBookmark = (item) => {
+    const current = getBookmarks()
+    const exists = current.some(b => b.id === item.id)
+    let updated
+    if (exists) {
+      updated = current.filter(b => b.id !== item.id)
+    } else {
+      updated = [item, ...current]
+    }
+    localStorage.setItem('studynest_bookmarks', JSON.stringify(updated))
+    return !exists
+  }
+
+  const isBookmarked = (itemId) => {
+    const current = getBookmarks()
+    return current.some(b => b.id === itemId)
+  }
+
   const context = {
     user,
     selectedYear,
@@ -188,7 +211,10 @@ function App() {
     setUnitProgress,
     getTodos,
     saveTodos,
-    getQuizzes
+    getQuizzes,
+    getBookmarks,
+    toggleBookmark,
+    isBookmarked
   }
 
   return (

@@ -6,7 +6,10 @@ import SubjectsView from './SubjectsView'
 import SubjectDetailView from './SubjectDetailView'
 import UnitDetailView from './UnitDetailView'
 import QuizView from './QuizView'
+import FlashcardsView from './FlashcardsView'
 import SettingsModal from './SettingsModal'
+import StudyTimer from './StudyTimer'
+import AIAssistantDrawer from './AIAssistantDrawer'
 
 const viewVariants = {
   hidden: { opacity: 0, x: 20 },
@@ -100,6 +103,17 @@ export default function AppShell({ context }) {
             }}
           />
         )
+      case 'flashcards':
+        return (
+          <FlashcardsView
+            key="flashcards"
+            context={{
+              ...context,
+              navigateTo,
+              goToSubjectDetail: () => navigateTo('subject-detail')
+            }}
+          />
+        )
       default:
         return <HomeView key="home" context={{ ...context, navigateTo, goHome }} />
     }
@@ -128,9 +142,9 @@ export default function AppShell({ context }) {
             <span>Study<span className="text-primary">Nest</span></span>
           </button>
 
-
-
           <div className="flex items-center gap-2">
+            <StudyTimer />
+
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="w-10 h-10 rounded-xl glass-card hover:bg-white/10 flex items-center justify-center transition-all hover:scale-105"
@@ -182,7 +196,8 @@ export default function AppShell({ context }) {
         </AnimatePresence>
       </main>
 
+      <AIAssistantDrawer context={context} />
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} context={context} />
     </div>
   )
-}
+}

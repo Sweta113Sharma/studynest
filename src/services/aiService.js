@@ -892,6 +892,57 @@ Return the result ONLY as a valid JSON array of objects with fields: question, o
     const userMessage = `Question: ${question}\n\nCorrect Answer: ${correctAnswer}`;
     return await this.callAI([{ role: 'user', content: userMessage }], systemPrompt);
   }
+
+  async generateFlashcards(content, count = 6) {
+    const systemPrompt = `You are an expert engineering tutor. Generate ${count} high-yield revision flashcards for active recall study based on the content provided.
+Return ONLY a valid JSON array of objects. Each object must have:
+- front: A concise question, term, formula name, or concept prompt.
+- back: The clear answer, definition, equation with variables, or explanation.
+
+Example structure:
+[
+  { "front": "What is the Handshaking Lemma?", "back": "In any graph, the sum of degrees of all vertices equals twice the number of edges: Σ deg(v) = 2|E|." }
+]`;
+
+    const userMessage = `Generate ${count} flashcards for this content:\n\n${content}`;
+    try {
+      const response = await this.callAI([{ role: 'user', content: userMessage }], systemPrompt);
+      const jsonMatch = response.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+      return JSON.parse(response);
+    } catch (e) {
+      // Fallback generator for flashcards
+      return [
+        { front: "Core Definition", back: content.substring(0, 150) + "..." },
+        { front: "Key Takeaway", back: "Master fundamental definitions, formulas, and step-by-step exam derivations." },
+        { front: "Exam Application", back: "Practice numerical problems and past paper questions for maximum speed." }
+      ];
+    }
+  }
+
+  async chat(messages, contextSummary = '') {
+    const systemPrompt = `You are StudyNest AI — an encouraging, highly knowledgeable engineering study assistant.
+Help the student understand complex technical concepts, clarify doubts, explain math/code step-by-step, and share exam strategies.
+Keep responses clear, well-structured with Markdown headings and bullet points, and directly answer their question.
+Context info: ${contextSummary}`;
+
+    try {
+      return await this.callAI(messages, systemPrompt);
+    } catch (e) {
+      return `### 💡 AI Study Assistant
+      
+I'm currently operating in offline study mode! Here are some key tips for **${contextSummary || 'your active subject'}**:
+
+- **Active Recall**: Don't just re-read notes; test yourself with flashcards and quizzes.
+- **Formulas First**: Write down all key variables and unit conversions before solving numericals.
+- **Diagrams**: Draw neat labelled diagrams in exam answers for bonus structure marks.
+
+Feel free to add your OpenRouter API key in **Settings** for live AI queries!`;
+    }
+  }
 }
 
 export const aiService = new AIService();
+

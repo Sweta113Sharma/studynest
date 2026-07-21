@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, CheckCircle, Circle, Plus, Trash2, HelpCircle, Sparkles, Loader2, X } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Circle, Plus, Trash2, HelpCircle, Sparkles, Loader2, X, Bookmark, Layers } from 'lucide-react'
 import { aiService } from '../services/aiService'
 
 const containerVariants = {
@@ -24,7 +24,8 @@ export default function SubjectDetailView({ context }) {
   const {
     selectedSubject, setSelectedUnit, selectedBranch, selectedSemester,
     navigateTo, goHome, subjectColors, getSubjectProgress, setSubjectProgress,
-    getUnitProgress, setUnitProgress, getTodos, saveTodos, getQuizzes
+    getUnitProgress, setUnitProgress, getTodos, saveTodos, getQuizzes,
+    toggleBookmark, isBookmarked
   } = context
 
   const [todos, setTodos] = useState([])
@@ -79,6 +80,10 @@ export default function SubjectDetailView({ context }) {
     context.setCurrentQuiz(null)
     context.setQuizState({ currentIndex: 0, score: 0, selectedOption: null })
     navigateTo('quiz')
+  }
+
+  const startFlashcards = () => {
+    navigateTo('flashcards')
   }
 
   const handleAISubjectQuiz = async () => {
@@ -143,6 +148,13 @@ export default function SubjectDetailView({ context }) {
           
           <div className="flex flex-wrap gap-2">
             <button
+              onClick={startFlashcards}
+              className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-medium text-sm flex items-center gap-2 hover:bg-amber-500/20 transition-all"
+            >
+              <Layers className="w-4 h-4" />
+              Flashcards
+            </button>
+            <button
               onClick={handleAISubjectSummary}
               disabled={aiLoading}
               className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm flex items-center gap-2 hover:bg-white/10 transition-all disabled:opacity-50"
@@ -203,6 +215,8 @@ export default function SubjectDetailView({ context }) {
         <div className="space-y-3">
           {selectedSubject.units.map((unit, i) => {
             const done = getUnitProgress(selectedSubject.id, unit.title)
+            const bookmarkId = `unit_${selectedSubject.id}_${unit.title}`
+            const bookmarked = isBookmarked(bookmarkId)
             return (
               <motion.div
                 key={i}
@@ -235,6 +249,24 @@ export default function SubjectDetailView({ context }) {
                     {unit.youtube?.length || 0} videos • {unit.ppts?.length || 0} PPTs • AI notes
                   </p>
                 </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleBookmark({
+                      id: bookmarkId,
+                      title: unit.title,
+                      subjectTitle: selectedSubject.title,
+                      subject: selectedSubject,
+                      unit: unit
+                    })
+                  }}
+                  className={`p-1.5 rounded-lg transition-colors ${
+                    bookmarked ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-white/10'
+                  }`}
+                  title={bookmarked ? 'Remove Bookmark' : 'Bookmark Unit'}
+                >
+                  <Bookmark className="w-4 h-4" />
+                </button>
                 <span className="text-muted-foreground">→</span>
               </motion.div>
             )

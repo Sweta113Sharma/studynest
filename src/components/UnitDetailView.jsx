@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, FileText, Download, ExternalLink, Sparkles, Loader2, Copy, Check, RefreshCw } from 'lucide-react'
+import { ArrowLeft, FileText, Download, ExternalLink, Sparkles, Loader2, Copy, Check, RefreshCw, Bookmark, Layers } from 'lucide-react'
 import { aiService } from '../services/aiService'
 
 const tabVariants = {
@@ -9,7 +9,7 @@ const tabVariants = {
 }
 
 export default function UnitDetailView({ context }) {
-  const { selectedUnit, navigateTo, goToSubjectDetail, selectedSubject } = context
+  const { selectedUnit, navigateTo, goToSubjectDetail, selectedSubject, toggleBookmark, isBookmarked } = context
 
   const [activeTab, setActiveTab] = useState('ai')
   const [aiLoading, setAiLoading] = useState(false)
@@ -19,6 +19,9 @@ export default function UnitDetailView({ context }) {
 
   if (!selectedUnit) return null
 
+  const bookmarkId = `unit_${selectedSubject?.id}_${selectedUnit.title}`
+  const bookmarked = isBookmarked(bookmarkId)
+
   const tabs = [
     { id: 'ai', label: '✨ AI Notes', icon: Sparkles },
     { id: 'ppts', label: '📄 Materials', icon: FileText },
@@ -27,10 +30,16 @@ export default function UnitDetailView({ context }) {
 
   const aiFeatures = [
     { id: 'notes', label: '📝 Smart Notes', description: 'Generate detailed revision notes' },
+    { id: 'flashcards', label: '🎴 Flashcards', description: 'Practice active recall' },
     { id: 'quiz', label: '🎯 AI Quiz', description: 'Generate interactive MCQ quiz' }
   ]
 
   const handleAIFeature = async (featureId) => {
+    if (featureId === 'flashcards') {
+      navigateTo('flashcards')
+      return
+    }
+
     setActiveAIFeature(featureId)
     setAiLoading(true)
     setAiResult(null)
@@ -162,11 +171,31 @@ export default function UnitDetailView({ context }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        className="flex items-start justify-between gap-4"
       >
-        <h1 className="text-2xl md:text-3xl font-display font-bold mb-2">
-          {selectedUnit.title}
-        </h1>
-        <p className="text-muted-foreground">{selectedSubject?.title}</p>
+        <div>
+          <h1 className="text-2xl md:text-3xl font-display font-bold mb-2">
+            {selectedUnit.title}
+          </h1>
+          <p className="text-muted-foreground">{selectedSubject?.title}</p>
+        </div>
+        <button
+          onClick={() => toggleBookmark({
+            id: bookmarkId,
+            title: selectedUnit.title,
+            subjectTitle: selectedSubject?.title,
+            subject: selectedSubject,
+            unit: selectedUnit
+          })}
+          className={`p-2.5 rounded-xl border flex items-center gap-2 text-xs font-semibold transition-all ${
+            bookmarked
+              ? 'bg-primary/20 border-primary text-primary shadow-glow-sm'
+              : 'glass-card border-white/10 text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Bookmark className="w-4 h-4" />
+          <span>{bookmarked ? 'Bookmarked' : 'Bookmark Unit'}</span>
+        </button>
       </motion.div>
 
       <motion.div
