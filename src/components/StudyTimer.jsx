@@ -133,15 +133,15 @@ export default function StudyTimer() {
       {/* Header Pill Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`px-3 py-1.5 rounded-xl glass-card text-xs font-mono font-bold flex items-center gap-2 hover:bg-white/10 transition-all border border-white/10 ${
-          isRunning ? 'border-primary/50 shadow-glow-sm' : ''
+        className={`px-3.5 py-1.5 rounded-xl bg-slate-900/90 dark:bg-slate-900/90 text-amber-400 text-xs font-mono font-bold flex items-center gap-2 hover:bg-slate-800 transition-all border border-amber-500/30 shadow-md hover:scale-105 active:scale-95 ${
+          isRunning ? 'border-amber-400 shadow-glow-sm shadow-amber-500/40' : ''
         }`}
         title="Pomodoro Study Timer"
       >
-        <Clock className={`w-3.5 h-3.5 ${isRunning ? 'animate-pulse text-primary' : 'text-muted-foreground'}`} />
-        <span>{formatTime(timeLeft)}</span>
+        <Clock className={`w-3.5 h-3.5 ${isRunning ? 'animate-pulse text-amber-400' : 'text-amber-500/70'}`} />
+        <span className="text-white font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
-          <span className="px-1.5 py-0.5 rounded-full bg-primary/20 text-primary text-[10px]">
+          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
             {sessionsCompleted}⚡
           </span>
         )}
@@ -152,11 +152,11 @@ export default function StudyTimer() {
         {isOpen && (
           <>
             <div
-              className="fixed inset-0 z-40"
+              className="fixed inset-0 z-40 bg-black/20 backdrop-blur-xs"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
-              className="absolute right-0 top-12 w-84 max-w-[92vw] glass-card rounded-2xl p-5 z-50 shadow-2xl border border-white/10"
+              className="absolute right-0 top-12 w-84 max-w-[92vw] bg-slate-950/95 text-white backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl shadow-black/80 border border-amber-500/30 ring-1 ring-amber-500/20"
               initial={{ opacity: 0, scale: 0.9, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -10 }}
@@ -164,27 +164,25 @@ export default function StudyTimer() {
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" />
-                  <h3 className="font-display font-bold text-sm">Focus Timer</h3>
+                  <div className="p-1.5 rounded-xl bg-amber-500/20 border border-amber-500/30">
+                    <Clock className="w-4 h-4 text-amber-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-extrabold text-sm text-white tracking-wide">Focus Timer</h3>
+                    <p className="text-[10px] text-slate-400">Boost your study productivity</p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={() => setShowManualInput(!showManualInput)}
-                    className={`p-1.5 rounded-lg transition-colors ${showManualInput ? 'bg-primary/20 text-primary' : 'hover:bg-white/10 text-muted-foreground hover:text-foreground'}`}
-                    title="Set Custom Focus Duration"
-                  >
-                    <Settings2 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
                     onClick={() => setSoundEnabled(!soundEnabled)}
-                    className="p-1.5 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
+                    className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                     title={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
                   >
-                    {soundEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+                    {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-1.5 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
+                    className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -192,15 +190,15 @@ export default function StudyTimer() {
               </div>
 
               {/* Mode Tabs */}
-              <div className="grid grid-cols-3 gap-1 bg-white/5 p-1 rounded-xl mb-4 text-xs font-medium">
+              <div className="grid grid-cols-3 gap-1 bg-slate-900/90 p-1.5 rounded-2xl border border-white/10 mb-4 text-xs font-semibold">
                 {Object.keys(TIMER_MODES).map((key) => (
                   <button
                     key={key}
                     onClick={() => switchMode(key)}
-                    className={`py-1.5 rounded-lg transition-all ${
+                    className={`py-1.5 rounded-xl transition-all ${
                       mode === key
-                        ? 'bg-primary text-white font-bold shadow-sm'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 font-black shadow-lg shadow-amber-500/35 scale-[1.02]'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
                     }`}
                   >
                     {TIMER_MODES[key].label}
@@ -210,17 +208,19 @@ export default function StudyTimer() {
 
               {/* Manual Custom Focus Duration Bar */}
               {mode === 'focus' && (
-                <div className="mb-4 bg-white/5 p-3 rounded-xl border border-white/10">
-                  <div className="flex items-center justify-between text-xs font-medium mb-2">
-                    <span className="text-muted-foreground">Focus Duration:</span>
-                    <div className="flex items-center gap-1 font-mono font-bold text-primary">
+                <div className="mb-4 bg-slate-900/90 p-3.5 rounded-2xl border border-amber-500/25 shadow-inner">
+                  <div className="flex items-center justify-between text-xs font-medium mb-2.5">
+                    <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                      <Settings2 className="w-3.5 h-3.5 text-amber-400" /> Set Focus Minutes:
+                    </span>
+                    <div className="flex items-center gap-1 font-mono font-bold">
                       <button
                         onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
                         disabled={isRunning || customFocusMinutes <= 5}
-                        className="p-1 rounded bg-white/10 hover:bg-white/20 disabled:opacity-30 transition-all text-foreground"
+                        className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
                         title="-5 Minutes"
                       >
-                        <Minus className="w-3 h-3" />
+                        <Minus className="w-3.5 h-3.5" />
                       </button>
                       <input
                         type="number"
@@ -229,31 +229,31 @@ export default function StudyTimer() {
                         value={customFocusMinutes}
                         disabled={isRunning}
                         onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
-                        className="w-12 text-center bg-black/40 border border-primary/30 rounded py-0.5 text-xs font-mono font-bold text-primary focus:outline-none focus:border-primary"
+                        className="w-14 text-center bg-slate-950 border-2 border-amber-500/50 rounded-xl py-1 text-sm font-mono font-black text-amber-300 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-500/40 shadow-inner"
                       />
-                      <span>min</span>
+                      <span className="text-slate-400 font-sans text-xs">min</span>
                       <button
                         onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
                         disabled={isRunning || customFocusMinutes >= 300}
-                        className="p-1 rounded bg-white/10 hover:bg-white/20 disabled:opacity-30 transition-all text-foreground"
+                        className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
                         title="+5 Minutes"
                       >
-                        <Plus className="w-3 h-3" />
+                        <Plus className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
 
                   {/* Preset Minute Chips */}
-                  <div className="flex items-center gap-1.5 flex-wrap">
+                  <div className="flex items-center justify-between gap-1 flex-wrap pt-1 border-t border-white/5">
                     {PRESET_MINUTES.map((mins) => (
                       <button
                         key={mins}
                         onClick={() => updateFocusMinutes(mins)}
                         disabled={isRunning}
-                        className={`px-2 py-1 rounded-lg text-[11px] font-mono transition-all ${
+                        className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all ${
                           customFocusMinutes === mins
-                            ? 'bg-primary/20 text-primary border border-primary/40 font-bold'
-                            : 'bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground'
+                            ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black border border-amber-400 shadow-md shadow-amber-500/30 scale-105'
+                            : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/10 hover:scale-105'
                         }`}
                       >
                         {mins}m
@@ -264,13 +264,19 @@ export default function StudyTimer() {
               )}
 
               {/* Timer Display Circle */}
-              <div className="relative w-44 h-44 mx-auto mb-4 flex items-center justify-center">
+              <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <defs>
+                    <linearGradient id="timer-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#F59E0B" />
+                      <stop offset="100%" stopColor="#EA580C" />
+                    </linearGradient>
+                  </defs>
                   <circle
                     cx="50"
                     cy="50"
                     r="42"
-                    className="stroke-white/10"
+                    className="stroke-slate-800/80"
                     strokeWidth="6"
                     fill="transparent"
                   />
@@ -278,7 +284,7 @@ export default function StudyTimer() {
                     cx="50"
                     cy="50"
                     r="42"
-                    className="stroke-primary"
+                    stroke="url(#timer-amber-gradient)"
                     strokeWidth="6"
                     strokeDasharray="263.89"
                     strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
@@ -289,11 +295,11 @@ export default function StudyTimer() {
                 </svg>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-mono font-bold tracking-tight">
+                  <span className="text-4xl font-mono font-black tracking-tight text-white drop-shadow-[0_0_18px_rgba(245,158,11,0.6)]">
                     {formatTime(timeLeft)}
                   </span>
-                  <span className="text-[11px] text-muted-foreground mt-1 capitalize flex items-center gap-1">
-                    {mode === 'focus' ? <Sparkles className="w-3 h-3 text-primary" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
+                  <span className="text-xs text-amber-400 font-semibold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+                    {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-400 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
                     {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
                   </span>
                 </div>
@@ -303,31 +309,31 @@ export default function StudyTimer() {
               <div className="flex items-center justify-center gap-3">
                 <button
                   onClick={resetTimer}
-                  className="w-10 h-10 rounded-xl glass-card border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all"
+                  className="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/15 shadow-md flex items-center justify-center hover:rotate-180 transition-all cursor-pointer"
                   title="Reset Timer"
                 >
-                  <RotateCcw className="w-4 h-4 text-muted-foreground" />
+                  <RotateCcw className="w-4 h-4 text-slate-300" />
                 </button>
 
                 <button
                   onClick={toggleTimer}
-                  className="px-6 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm flex items-center gap-2 hover:brightness-110 shadow-glow transition-all"
+                  className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                 >
                   {isRunning ? (
                     <>
-                      <Pause className="w-4 h-4" /> Pause
+                      <Pause className="w-4 h-4 fill-current" /> Pause
                     </>
                   ) : (
                     <>
-                      <Play className="w-4 h-4" /> Start
+                      <Play className="w-4 h-4 fill-current" /> Start Focus
                     </>
                   )}
                 </button>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-white/5 text-center text-[11px] text-muted-foreground flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-white/10 text-center text-xs text-slate-400 flex items-center justify-between">
                 <span>Completed today:</span>
-                <span className="font-bold text-primary">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
+                <span className="font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
               </div>
             </motion.div>
           </>

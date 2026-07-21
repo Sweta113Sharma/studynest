@@ -3,52 +3,52 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode Palette - Bright Electric Blue & Sky Blue */
-  --bg-page: #2F74EB;
-  --text-page: #FFFFFF;
+  /* Light Mode Palette - Soothing Soft Slate & Ocean Indigo */
+  --bg-page: #F8FAFC;
+  --text-page: #0F172A;
   --bg-card: #FFFFFF;
   --text-card: #0F172A;
   --border-card: #E2E8F0;
   --bg-input: #F1F5F9;
   --text-input: #0F172A;
-  --accent: #3B82F6;
-  --button-primary-bg: #090D1A;
+  --accent: #F59E0B;
+  --button-primary-bg: #F59E0B;
   --button-primary-text: #FFFFFF;
-  --button-primary-hover-bg: #2F74EB;
+  --button-primary-hover-bg: #D97706;
   --button-primary-hover-text: #FFFFFF;
   --button-secondary-bg: #F1F5F9;
   --button-secondary-text: #0F172A;
-  --button-secondary-border: #E2E8F0;
-  --card-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
-  --card-shadow-hover: 0 12px 40px rgba(15, 23, 42, 0.1);
-  --grid-line: rgba(255, 255, 255, 0.06);
-  --orb-1-color: rgba(255, 255, 255, 0.15);
-  --orb-2-color: rgba(79, 160, 255, 0.12);
-  --orb-3-color: rgba(255, 255, 255, 0.08);
+  --button-secondary-border: #CBD5E1;
+  --card-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 20px 25px -5px rgba(99, 102, 241, 0.05);
+  --card-shadow-hover: 0 20px 40px -10px rgba(15, 23, 42, 0.15), 0 25px 30px -5px rgba(245, 158, 11, 0.15);
+  --grid-line: rgba(15, 23, 42, 0.04);
+  --orb-1-color: rgba(99, 102, 241, 0.15);
+  --orb-2-color: rgba(245, 158, 11, 0.15);
+  --orb-3-color: rgba(59, 130, 246, 0.10);
 }
 
 .dark {
-  /* Dark Mode Palette (Midnight Blue & Gold Theme) */
-  --bg-page: #E2E6EC;
-  --text-page: #0D1326;
-  --bg-card: rgba(13, 20, 38, 0.97);
+  /* Dark Mode Palette - Soothing Midnight Slate & Glowing Amber */
+  --bg-page: #090D16;
+  --text-page: #F8FAFC;
+  --bg-card: rgba(15, 23, 42, 0.85);
   --text-card: #FFFFFF;
-  --border-card: rgba(255, 255, 255, 0.08);
-  --bg-input: #FFFFFF;
-  --text-input: #000000;
+  --border-card: rgba(255, 255, 255, 0.12);
+  --bg-input: #0F172A;
+  --text-input: #FFFFFF;
   --accent: #F59E0B;
   --button-primary-bg: #F59E0B;
   --button-primary-text: #000000;
-  --button-primary-hover-bg: #FFFFFF;
+  --button-primary-hover-bg: #FBBF24;
   --button-primary-hover-text: #000000;
-  --button-secondary-bg: rgba(255, 255, 255, 0.04);
+  --button-secondary-bg: rgba(255, 255, 255, 0.06);
   --button-secondary-text: #FFFFFF;
-  --button-secondary-border: rgba(255, 255, 255, 0.12);
-  --card-shadow: 0 10px 40px rgba(13, 20, 38, 0.2);
-  --card-shadow-hover: 0 15px 45px rgba(13, 20, 38, 0.28);
-  --grid-line: rgba(13, 20, 38, 0.04);
-  --orb-1-color: rgba(245, 158, 11, 0.25);
-  --orb-2-color: rgba(13, 20, 38, 0.15);
+  --button-secondary-border: rgba(255, 255, 255, 0.15);
+  --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 20px 50px rgba(245, 158, 11, 0.2);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --orb-1-color: rgba(245, 158, 11, 0.20);
+  --orb-2-color: rgba(99, 102, 241, 0.20);
   --orb-3-color: rgba(245, 158, 11, 0.12);
 }
 
@@ -60,12 +60,13 @@
   body {
     background: var(--bg-page);
     color: var(--text-page);
-    font-family: Outfit, Inter, system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", Outfit, Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
-      radial-gradient(ellipse at 20% 0%, var(--orb-1-color) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, var(--orb-2-color) 0%, transparent 60%);
+      radial-gradient(at 0% 0%, var(--orb-1-color) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--orb-2-color) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, var(--orb-3-color) 0px, transparent 50%);
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
