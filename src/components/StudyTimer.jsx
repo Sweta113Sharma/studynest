@@ -71,19 +71,50 @@ export default function StudyTimer() {
     if (!soundEnabled) return
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
-      const osc = audioCtx.createOscillator()
-      const gain = audioCtx.createGain()
-      osc.type = 'sine'
-      osc.frequency.setValueAtTime(587.33, audioCtx.currentTime)
-      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3)
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5)
-      osc.connect(gain)
-      gain.connect(audioCtx.destination)
-      osc.start()
-      osc.stop(audioCtx.currentTime + 0.5)
+      const now = audioCtx.currentTime
+
+      // Alertive 4-Note Ascending Bright Bell Chime (E5 -> A5 -> C6 -> E6)
+      const notes = [
+        { freq: 659.25, time: now, duration: 0.18 },       // E5
+        { freq: 880.00, time: now + 0.12, duration: 0.18 }, // A5
+        { freq: 1046.50, time: now + 0.24, duration: 0.22 },// C6
+        { freq: 1318.51, time: now + 0.38, duration: 0.45 } // E6 (High alert finale)
+      ]
+
+      notes.forEach(({ freq, time, duration }) => {
+        // Main bright chime tone
+        const osc = audioCtx.createOscillator()
+        const gain = audioCtx.createGain()
+        osc.type = 'triangle'
+        osc.frequency.setValueAtTime(freq, time)
+
+        // Shimmer harmonic (sine 1 octave up)
+        const harmonic = audioCtx.createOscillator()
+        const harmonicGain = audioCtx.createGain()
+        harmonic.type = 'sine'
+        harmonic.frequency.setValueAtTime(freq * 2, time)
+
+        // Envelopes with crisp attack & decay
+        gain.gain.setValueAtTime(0, time)
+        gain.gain.linearRampToValueAtTime(0.35, time + 0.02)
+        gain.gain.exponentialRampToValueAtTime(0.001, time + duration)
+
+        harmonicGain.gain.setValueAtTime(0, time)
+        harmonicGain.gain.linearRampToValueAtTime(0.12, time + 0.02)
+        harmonicGain.gain.exponentialRampToValueAtTime(0.001, time + duration)
+
+        osc.connect(gain)
+        harmonic.connect(harmonicGain)
+        gain.connect(audioCtx.destination)
+        harmonicGain.connect(audioCtx.destination)
+
+        osc.start(time)
+        harmonic.start(time)
+        osc.stop(time + duration)
+        harmonic.stop(time + duration)
+      })
     } catch (e) {
-      console.log('Audio playback not supported or blocked')
+      console.log('Audio playback not supported or blocked', e)
     }
   }
 
