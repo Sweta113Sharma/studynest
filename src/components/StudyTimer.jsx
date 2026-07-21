@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Pause, RotateCcw, Clock, Coffee, Sparkles, X, Volume2, VolumeX, Plus, Minus, Settings2 } from 'lucide-react'
+import { Play, Pause, RotateCcw, Clock, Coffee, Sparkles, X, Volume2, VolumeX, Plus, Minus, Settings2, CheckCircle2 } from 'lucide-react'
 
 const TIMER_MODES = {
   focus: { label: 'Focus', defaultDuration: 25 * 60, color: 'text-primary', bg: 'bg-primary' },
@@ -18,7 +18,7 @@ export default function StudyTimer() {
   const [isRunning, setIsRunning] = useState(false)
   const [sessionsCompleted, setSessionsCompleted] = useState(0)
   const [soundEnabled, setSoundEnabled] = useState(true)
-  const [showManualInput, setShowManualInput] = useState(false)
+  const [showCompletionModal, setShowCompletionModal] = useState(false)
 
   const timerRef = useRef(null)
 
@@ -50,6 +50,10 @@ export default function StudyTimer() {
               const newCount = sessionsCompleted + 1
               setSessionsCompleted(newCount)
               localStorage.setItem('studynest_timer_sessions', newCount.toString())
+              setIsOpen(true)
+              setShowCompletionModal(true)
+            } else {
+              setIsOpen(true)
             }
             return 0
           }
@@ -95,6 +99,7 @@ export default function StudyTimer() {
   const switchMode = (newMode) => {
     setMode(newMode)
     setIsRunning(false)
+    setShowCompletionModal(false)
     if (newMode === 'focus') {
       setTimeLeft(customFocusMinutes * 60)
     } else {
@@ -103,16 +108,39 @@ export default function StudyTimer() {
   }
 
   const toggleTimer = () => {
+    setShowCompletionModal(false)
     setIsRunning(!isRunning)
   }
 
   const resetTimer = () => {
     setIsRunning(false)
+    setShowCompletionModal(false)
     if (mode === 'focus') {
       setTimeLeft(customFocusMinutes * 60)
     } else {
       setTimeLeft(TIMER_MODES[mode].duration)
     }
+  }
+
+  const handleStartBreak = () => {
+    setMode('shortBreak')
+    setTimeLeft(5 * 60)
+    setShowCompletionModal(false)
+    setIsRunning(true)
+  }
+
+  const handleKeepFocusGoing = () => {
+    setMode('focus')
+    setTimeLeft(customFocusMinutes * 60)
+    setShowCompletionModal(false)
+    setIsRunning(true)
+  }
+
+  const handleDismissCompletion = () => {
+    setMode('focus')
+    setTimeLeft(customFocusMinutes * 60)
+    setShowCompletionModal(false)
+    setIsRunning(false)
   }
 
   const formatTime = (seconds) => {
@@ -189,152 +217,196 @@ export default function StudyTimer() {
                 </div>
               </div>
 
-              {/* Mode Tabs */}
-              <div className="grid grid-cols-3 gap-1 bg-slate-900/90 p-1.5 rounded-2xl border border-white/10 mb-4 text-xs font-semibold">
-                {Object.keys(TIMER_MODES).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => switchMode(key)}
-                    className={`py-1.5 rounded-xl transition-all ${
-                      mode === key
-                        ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 font-black shadow-lg shadow-amber-500/35 scale-[1.02]'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    {TIMER_MODES[key].label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Manual Custom Focus Duration Bar */}
-              {mode === 'focus' && (
-                <div className="mb-4 bg-slate-900/90 p-3.5 rounded-2xl border border-amber-500/25 shadow-inner">
-                  <div className="flex items-center justify-between text-xs font-medium mb-2.5">
-                    <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-                      <Settings2 className="w-3.5 h-3.5 text-amber-400" /> Set Focus Minutes:
-                    </span>
-                    <div className="flex items-center gap-1 font-mono font-bold">
-                      <button
-                        onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
-                        disabled={isRunning || customFocusMinutes <= 5}
-                        className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
-                        title="-5 Minutes"
-                      >
-                        <Minus className="w-3.5 h-3.5" />
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        max="300"
-                        value={customFocusMinutes}
-                        disabled={isRunning}
-                        onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
-                        className="w-14 text-center bg-slate-950 border-2 border-amber-500/50 rounded-xl py-1 text-sm font-mono font-black text-amber-300 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-500/40 shadow-inner"
-                      />
-                      <span className="text-slate-400 font-sans text-xs">min</span>
-                      <button
-                        onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
-                        disabled={isRunning || customFocusMinutes >= 300}
-                        className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
-                        title="+5 Minutes"
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+              {showCompletionModal ? (
+                /* Timer Complete Overlay Prompt */
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="py-3 text-center space-y-4"
+                >
+                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-xl shadow-amber-500/40 text-3xl">
+                    <span>🎉</span>
                   </div>
 
-                  {/* Preset Minute Chips */}
-                  <div className="flex items-center justify-between gap-1 flex-wrap pt-1 border-t border-white/5">
-                    {PRESET_MINUTES.map((mins) => (
+                  <div>
+                    <h4 className="text-base font-extrabold text-white font-display">Focus Session Complete!</h4>
+                    <p className="text-xs text-slate-300 mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
+                  </div>
+
+                  <div className="space-y-2.5 pt-2">
+                    <button
+                      onClick={handleStartBreak}
+                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                    >
+                      <Coffee className="w-4 h-4" /> Start 5-Min Short Break
+                    </button>
+
+                    <button
+                      onClick={handleKeepFocusGoing}
+                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/35 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                    >
+                      <Sparkles className="w-4 h-4" /> Keep Focus Going (Restart Timer)
+                    </button>
+
+                    <button
+                      onClick={handleDismissCompletion}
+                      className="w-full py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-medium text-xs border border-white/10 transition-colors"
+                    >
+                      Done for Now
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                /* Standard Timer Controls & Circle */
+                <>
+                  {/* Mode Tabs */}
+                  <div className="grid grid-cols-3 gap-1 bg-slate-900/90 p-1.5 rounded-2xl border border-white/10 mb-4 text-xs font-semibold">
+                    {Object.keys(TIMER_MODES).map((key) => (
                       <button
-                        key={mins}
-                        onClick={() => updateFocusMinutes(mins)}
-                        disabled={isRunning}
-                        className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all ${
-                          customFocusMinutes === mins
-                            ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black border border-amber-400 shadow-md shadow-amber-500/30 scale-105'
-                            : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/10 hover:scale-105'
+                        key={key}
+                        onClick={() => switchMode(key)}
+                        className={`py-1.5 rounded-xl transition-all ${
+                          mode === key
+                            ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 font-black shadow-lg shadow-amber-500/35 scale-[1.02]'
+                            : 'text-slate-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
-                        {mins}m
+                        {TIMER_MODES[key].label}
                       </button>
                     ))}
                   </div>
-                </div>
-              )}
 
-              {/* Timer Display Circle */}
-              <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <defs>
-                    <linearGradient id="timer-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#F59E0B" />
-                      <stop offset="100%" stopColor="#EA580C" />
-                    </linearGradient>
-                  </defs>
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="42"
-                    className="stroke-slate-800/80"
-                    strokeWidth="6"
-                    fill="transparent"
-                  />
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r="42"
-                    stroke="url(#timer-amber-gradient)"
-                    strokeWidth="6"
-                    strokeDasharray="263.89"
-                    strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
-                    strokeLinecap="round"
-                    fill="transparent"
-                    transition={{ duration: 0.5 }}
-                  />
-                </svg>
+                  {/* Manual Custom Focus Duration Bar */}
+                  {mode === 'focus' && (
+                    <div className="mb-4 bg-slate-900/90 p-3.5 rounded-2xl border border-amber-500/25 shadow-inner">
+                      <div className="flex items-center justify-between text-xs font-medium mb-2.5">
+                        <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                          <Settings2 className="w-3.5 h-3.5 text-amber-400" /> Set Focus Minutes:
+                        </span>
+                        <div className="flex items-center gap-1 font-mono font-bold">
+                          <button
+                            onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
+                            disabled={isRunning || customFocusMinutes <= 5}
+                            className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
+                            title="-5 Minutes"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <input
+                            type="number"
+                            min="1"
+                            max="300"
+                            value={customFocusMinutes}
+                            disabled={isRunning}
+                            onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
+                            className="w-14 text-center bg-slate-950 border-2 border-amber-500/50 rounded-xl py-1 text-sm font-mono font-black text-amber-300 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-500/40 shadow-inner"
+                          />
+                          <span className="text-slate-400 font-sans text-xs">min</span>
+                          <button
+                            onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
+                            disabled={isRunning || customFocusMinutes >= 300}
+                            className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
+                            title="+5 Minutes"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-4xl font-mono font-black tracking-tight text-white drop-shadow-[0_0_18px_rgba(245,158,11,0.6)]">
-                    {formatTime(timeLeft)}
-                  </span>
-                  <span className="text-xs text-amber-400 font-semibold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
-                    {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-400 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
-                    {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
-                  </span>
-                </div>
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center justify-center gap-3">
-                <button
-                  onClick={resetTimer}
-                  className="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/15 shadow-md flex items-center justify-center hover:rotate-180 transition-all cursor-pointer"
-                  title="Reset Timer"
-                >
-                  <RotateCcw className="w-4 h-4 text-slate-300" />
-                </button>
-
-                <button
-                  onClick={toggleTimer}
-                  className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                >
-                  {isRunning ? (
-                    <>
-                      <Pause className="w-4 h-4 fill-current" /> Pause
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 fill-current" /> Start Focus
-                    </>
+                      {/* Preset Minute Chips */}
+                      <div className="flex items-center justify-between gap-1 flex-wrap pt-1 border-t border-white/5">
+                        {PRESET_MINUTES.map((mins) => (
+                          <button
+                            key={mins}
+                            onClick={() => updateFocusMinutes(mins)}
+                            disabled={isRunning}
+                            className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all ${
+                              customFocusMinutes === mins
+                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black border border-amber-400 shadow-md shadow-amber-500/30 scale-105'
+                                : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/10 hover:scale-105'
+                            }`}
+                          >
+                            {mins}m
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   )}
-                </button>
-              </div>
 
-              <div className="mt-4 pt-3 border-t border-white/10 text-center text-xs text-slate-400 flex items-center justify-between">
-                <span>Completed today:</span>
-                <span className="font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
-              </div>
+                  {/* Timer Display Circle */}
+                  <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      <defs>
+                        <linearGradient id="timer-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#F59E0B" />
+                          <stop offset="100%" stopColor="#EA580C" />
+                        </linearGradient>
+                      </defs>
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="42"
+                        className="stroke-slate-800/80"
+                        strokeWidth="6"
+                        fill="transparent"
+                      />
+                      <motion.circle
+                        cx="50"
+                        cy="50"
+                        r="42"
+                        stroke="url(#timer-amber-gradient)"
+                        strokeWidth="6"
+                        strokeDasharray="263.89"
+                        strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
+                        strokeLinecap="round"
+                        fill="transparent"
+                        transition={{ duration: 0.5 }}
+                      />
+                    </svg>
+
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-4xl font-mono font-black tracking-tight text-white drop-shadow-[0_0_18px_rgba(245,158,11,0.6)]">
+                        {formatTime(timeLeft)}
+                      </span>
+                      <span className="text-xs text-amber-400 font-semibold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+                        {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-400 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
+                        {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Controls */}
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      onClick={resetTimer}
+                      className="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/15 shadow-md flex items-center justify-center hover:rotate-180 transition-all cursor-pointer"
+                      title="Reset Timer"
+                    >
+                      <RotateCcw className="w-4 h-4 text-slate-300" />
+                    </button>
+
+                    <button
+                      onClick={toggleTimer}
+                      className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    >
+                      {isRunning ? (
+                        <>
+                          <Pause className="w-4 h-4 fill-current" /> Pause
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4 fill-current" /> Start Focus
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-white/10 text-center text-xs text-slate-400 flex items-center justify-between">
+                    <span>Completed today:</span>
+                    <span className="font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
+                  </div>
+                </>
+              )}
             </motion.div>
           </>
         )}
