@@ -117,84 +117,103 @@ class AIService {
 
   getOfflineMockResponse(userMessage, systemPrompt = '') {
     if (userMessage.includes('automata') || userMessage.includes('theory of computation') || userMessage.includes('dfa') || userMessage.includes('nfa')) {
-      if (systemPrompt.includes('summary')) {
-        return `### Comprehensive AI Overview: Theory of Computation (Finite Automata)
-Theory of Computation investigates formal models of computation and formal language theory.
+      return `### ⚡ 5-Minute Cramming Guide: Finite Automata & TOC
 
-**Key Units & Concepts:**
-1. **Deterministic Finite Automata (DFA)**: 5-tuple M = (Q, Σ, δ, q0, F) where δ: Q × Σ → Q is deterministic.
-2. **Nondeterministic Finite Automata (NFA)**: Transition function δ: Q × Σ → 2^Q allows multiple state transitions or ε-moves.
-3. **Equivalence of DFA & NFA**: Every NFA can be converted to an equivalent DFA using Subset Construction.
-4. **Regular Languages & Regular Expressions**: Languages recognized by Finite Automata.
-5. **Pumping Lemma for Regular Languages**: Tool used to prove that a language is NOT regular.
+- **Deterministic Finite Automata (DFA)**:
+  - 5-tuple: $M = (Q, \Sigma, \delta, q_0, F)$.
+  - Deterministic: Exactly ONE transition for every state and symbol.
 
-**Exam Strategy:**
-Master DFA minimization and NFA to DFA conversion problems. Pumping Lemma proofs are standard 10-mark questions.`;
-      }
-      return `### Revision Notes: Finite Automata & Formal Languages
-- **DFA (Deterministic Finite Automata)**:
-  - 5-tuple: $(Q, \Sigma, \delta, q_0, F)$.
-  - Exactly one transition for every state and input symbol combination.
-- **NFA vs DFA**:
-  - NFA allows zero, one, or multiple next states for an input, including $\epsilon$-transitions.
-  - Subset construction converts NFA ($n$ states) to equivalent DFA ($\le 2^n$ states).
-- **DFA Minimization**:
-  - Removes unreachable states and merges equivalent state pairs.
-- **Regular Expressions & Kleene's Theorem**:
-  - $R = R_1 + R_2$ (Union), $R_1 R_2$ (Concatenation), $R^*$ (Kleene Closure).
-- **Pumping Lemma**:
-  - If $L$ is regular, there exists pumping length $p$ such that any string $w \in L$ with $|w| \ge p$ can be written $w = xyz$ satisfying $|xy| \le p$, $|y| > 0$, and $xy^i z \in L$ for all $i \ge 0$.`;
+📐 **State Machine Transition Diagram**:
+\`\`\`
+[Start] ---> ( q0: Initial ) --'a'--> ( q1 ) --'b'--> (( q2: Final ))
+                |                        ^                 |
+                '----------'b'-----------'--------'a'------'
+\`\`\`
+
+> 🧠 Mnemonic: "F-I-V-E (DFA 5-Tuple)": **F**inal states ($F$), **I**nitial state ($q_0$), **V**ocabulary ($\Sigma$), **E**xact transition ($\delta$), and set of states ($Q$).
+
+- **Pumping Lemma Test for Non-Regularity**:
+  - Split any long string $w \in L$ into $w = xyz$ where $|xy| \le p$ and $|y| > 0$.
+  - Pump $y^i$ ($i \ge 0$). If $xy^i z \notin L$, then $L$ is NOT regular!
+
+> 🧠 Mnemonic: "P-U-M-P": **P**umping length ($p$), **U**npack string ($xyz$), **M**iddle non-empty ($|y|>0$), **P**ump exponent ($xy^iz \in L$).`;
     }
 
     if (userMessage.includes('graph algorithms') || userMessage.includes('dsa-ii')) {
-      if (systemPrompt.includes('summary')) {
-        return `### Comprehensive AI Overview: Data Structures & Algorithms II
-This subject focuses on advanced algorithmic techniques, particularly graph-based solutions and complex data structures.
+      return `### ⚡ 5-Minute Cramming Guide: Graph Algorithms
 
-**Key Units & Concepts:**
-1. **Graph Fundamentals**: Understanding V, E, and degree properties.
-2. **Traversals**: BFS for shortest path in unweighted graphs; DFS for connectivity and topological sorting.
-3. **Spanning Trees**: Prim's (vertex-based) and Kruskal's (edge-based) algorithms for MST.
-4. **Shortest Paths**: Dijkstra's algorithm (Greedy approach) and Bellman-Ford (Dynamic Programming).
+- **BFS vs DFS Traversal**:
+  - **BFS (Breadth-First Search)**: Level-order traversal using a **Queue** (Shortest path in unweighted graphs).
+  - **DFS (Depth-First Search)**: Deep branch exploration using a **Stack/Recursion** (Cycle detection).
 
-**Essential Formulas:**
-- Handshaking Lemma: Σ deg(v) = 2|E|.
-- Dijkstra Complexity: O(E + V log V).`;
-      }
-      return `### Revision Notes: Graph Algorithms
-- **Graph Representation**:
-  - Adjacency Matrix: Best for dense graphs, O(1) edge lookup.
-  - Adjacency List: Best for sparse graphs, O(V+E) space.
-- **BFS (Breadth-First Search)**: Uses Queue, level-order traversal.
-- **DFS (Depth-First Search)**: Uses Stack/Recursion, cycle detection.`;
+📐 **BFS Queue Flowchart**:
+\`\`\`
+[Root (1)] ---> [Queue: 2, 3] ---> Visit (2) ---> [Queue: 3, 4, 5] ---> Visit (3)...
+\`\`\`
+
+> 🧠 Mnemonic: "B-Q & D-S (BFS Queue, DFS Stack)": **B**FS uses a **Q**ueue; **D**FS uses a **S**tack!`;
     }
 
     if (userMessage.includes('er modeling') || userMessage.includes('dbms')) {
-      return `### Revision Notes: DBMS Essentials
-- **ACID Properties**: Atomicity, Consistency, Isolation, Durability.
-- **Normalization**: 1NF (Atomic), 2NF (No partial dependency), 3NF (No transitive dependency), BCNF.
-- **Joins**: Inner Join, Left Join, Right Join, Full Outer Join.`;
+      return `### ⚡ 5-Minute Cramming Guide: DBMS Essentials
+
+- **ACID Properties**:
+  - **Atomicity**: All operations execute or none do.
+  - **Consistency**: Preserves database invariant state before and after transaction.
+  - **Isolation**: Concurrent transactions execute as if serial.
+  - **Durability**: Committed data is stored permanently.
+
+📐 **ER Relationship Schema**:
+\`\`\`
+[ STUDENT ] <=====( 1 : N - Enrolls )=====> [ COURSE ]
+   ( PK: Student_ID )                          ( PK: Course_Code )
+\`\`\`
+
+> 🧠 Mnemonic: "A-C-I-D": **A**tomicity (All or None), **C**onsistency (Valid state), **I**solation (No interference), **D**urability (Permanent).`;
     }
 
     if (userMessage.includes('introduction to os') || userMessage.includes('operating systems')) {
-      return `### Revision Notes: OS Fundamentals
-- **Process States**: New, Ready, Running, Waiting, Terminated.
-- **CPU Scheduling**: FCFS, SJF, Round Robin, Multilevel Queue.
-- **Deadlock Conditions**: Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait.`;
+      return `### ⚡ 5-Minute Cramming Guide: OS Fundamentals
+
+- **4 Deadlock Necessary Conditions**:
+  - Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait.
+
+📐 **CPU Scheduling Gantt Chart (Round Robin q=2)**:
+\`\`\`
+|  P1 (0 - 2ms)  |  P2 (2 - 4ms)  |  P3 (4 - 6ms)  |  P1 (6 - 8ms)  |
+0                2                4                6                8
+\`\`\`
+
+> 🧠 Mnemonic: "M-H-N-C (Deadlock Conditions)": **M**utual Exclusion, **H**old & Wait, **N**o Preemption, **C**ircular Wait.`;
     }
 
     if (userMessage.includes('matrices') || userMessage.includes('matrix')) {
-      return `### Revision Notes: Matrices
-- **Symmetric Matrix**: $A^T = A$.
-- **Skew-Symmetric Matrix**: $A^T = -A$.
-- **Cayley-Hamilton Theorem**: Every square matrix satisfies its own characteristic equation $p(A) = 0$.
-- **Eigenvalues**: Roots of $\det(A - \lambda I) = 0$. Sum equals Trace, product equals Determinant.`;
+      return `### ⚡ 5-Minute Cramming Guide: Engineering Matrices
+
+- **Cayley-Hamilton Theorem**:
+  - Every square matrix satisfies its own characteristic equation $p(A) = 0$.
+
+📐 **Matrix Diagonalization Transform**:
+\`\`\`
+A  =  P  *  D  *  P^(-1)
+[ a11  a12 ]   [ x1  x2 ]   [ λ1   0 ]   [ x1  x2 ]^-1
+[ a21  a22 ] = [ y1  y2 ] * [  0  λ2 ] * [ y1  y2 ]
+\`\`\`
+
+> 🧠 Mnemonic: "S-S-O (Same, Sign, One)": **S**ymmetric transpose is **Same** ($A^T=A$), **S**kew transpose switches **Sign** ($A^T=-A$), **O**rthogonal product yields identity **One** ($A A^T = I$).`;
     }
 
-    return `### Revision Notes: ${userMessage.split('\n')[0].replace(/generate revision notes for:\s*/i, '').replace(/unit \d+:\s*/i, '').trim() || 'Engineering Unit'}
+    return `### ⚡ 5-Minute High-Yield Cramming Guide: ${userMessage.split('\n')[0].replace(/generate revision notes for:\s*/i, '').replace(/unit \d+:\s*/i, '').trim() || 'Engineering Unit'}
+
 - **Core Principles**: Primary definitions, physical models, and fundamental laws.
 - **Key Equations**: Review essential formulas, variable definitions, and boundary constraints.
-- **Exam Tips**: Focus on step-by-step mathematical derivations and neat block schematics.`;
+
+📐 **Visual Model Schematic**:
+\`\`\`
+[Input Variables] ---> [Physical / Mathematical System] ---> [Output Solution]
+\`\`\`
+
+> 🧠 Mnemonic: "C-F-D (Concept, Formula, Diagram)": State the **C**oncept definition, write the **F**ormula with units, and sketch a labeled **D**iagram for full exam marks!`;
   }
 
   async fetchOnlineKnowledge(topic) {
@@ -216,21 +235,32 @@ This subject focuses on advanced algorithmic techniques, particularly graph-base
 
   async generateNotes(content, unitTitle) {
     const onlineWiki = await this.fetchOnlineKnowledge(unitTitle);
-    const systemPrompt = `You are an expert engineering professor. Generate highly detailed yet precise, exam-focused revision notes optimized for last-minute cramming.
-Format: Use bullet points with clear, bold headings.
-Requirements:
-1. Include all key formulas, mathematical equations, and variable explanations clearly.
-2. Incorporate creative mnemonics, acronyms, or memory tricks to help students memorize formulas and complex sequences/concepts instantly.
-3. Keep explanations highly concise and conceptual for fast speed-reading.`;
+    const systemPrompt = `You are an expert engineering professor creating the ultimate last-minute cramming study guide for students.
+Create highly engaging, creative, and memorable revision notes.
 
-    const userMessage = `Generate revision notes for: ${unitTitle}\n\nContent:\n${content}${onlineWiki}`;
+MUST INCLUDE THE FOLLOWING SECTIONS:
+1. ⚡ **5-Minute High-Yield Cramming Summary**: Direct, punchy exam points.
+2. 📐 **Visual Model Schematic / ASCII Diagram**: MUST include at least one ASCII diagram or flowchart inside a triple-backtick (\\\`\\\`\\\`) code block (e.g. State Machine Diagram for Automata, Flowchart for Algorithms, Block Diagram for Hardware/DB, or Formula Matrix).
+3. 🧠 **Memory Mnemonics & Acronyms**: MUST include at least 2 clever memory tricks or acronyms formatted starting with '> 🧠 Mnemonic: ...' (e.g. '> 🧠 Mnemonic: "F-I-V-E" ...').
+4. ✍️ **Must-Know Exam Formulas & Step-by-Step Problem Checklist**.
+5. 🎯 **Top Exam Question & Model Solution**.
+
+Format nicely with Markdown headers (###), bold key terms, and bullet points for instant speed reading.`;
+
+    const userMessage = `Generate last-minute cramming revision notes with ASCII diagrams and mnemonics for: ${unitTitle}\n\nUnit Content:\n${content}${onlineWiki}`;
     try {
       return await this.callAI([{ role: 'user', content: userMessage }], systemPrompt);
     } catch (e) {
-      return `### Revision Notes: ${unitTitle}
-- **Core Principles**: High-yield concepts and definitions for exam preparation.
-- **Key Formulas**: Review standard equations and unit representations.
-- **Exam Tip**: Focus on step-by-step numerical problem solving and clear block diagrams.`;
+      return `### ⚡ 5-Minute High-Yield Revision: ${unitTitle}
+- **Core Principle**: Master foundational definitions, state equations, and physical models.
+- **Exam High-Yield**: Focus on step-by-step numerical problem solving and clear labeled block diagrams.
+
+📐 **Visual Model Schematic**:
+\`\`\`
+[Input Data] ---> [Processing / State Transformations] ---> [Final Output State]
+\`\`\`
+
+> 🧠 Mnemonic: "C-F-D (Concept, Formula, Diagram)": Always write the **C**oncept definition, state the **F**ormula with units, and draw a neat **D**iagram for maximum exam marks!`;
     }
   }
 

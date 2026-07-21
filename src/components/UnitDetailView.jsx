@@ -90,17 +90,21 @@ export default function UnitDetailView({ context }) {
     const lines = text.split('\n')
     const elements = []
     let currentList = []
-    let inList = false
+    let inCodeBlock = false
+    let codeBlockLines = []
+    let codeBlockKey = 0
 
     const renderInline = (str) => {
-      // Replace **bold** and *italic* with styled spans
-      const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
+      const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g)
       return parts.map((part, idx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
-          return <strong key={idx}>{part.slice(2, -2)}</strong>
+          return <strong key={idx} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>
         }
         if (part.startsWith('*') && part.endsWith('*')) {
-          return <em key={idx}>{part.slice(1, -1)}</em>
+          return <em key={idx} className="italic text-foreground/90">{part.slice(1, -1)}</em>
+        }
+        if (part.startsWith('`') && part.endsWith('`')) {
+          return <code key={idx} className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-mono text-xs">{part.slice(1, -1)}</code>
         }
         return part
       })
@@ -108,42 +112,78 @@ export default function UnitDetailView({ context }) {
 
     const flushList = (key) => {
       if (currentList.length > 0) {
-        elements.push(<ul key={`list-${key}`} className="my-3 space-y-1 ml-4 list-disc list-inside">{currentList}</ul>)
+        elements.push(<ul key={`list-${key}`} className="my-3 space-y-1.5 ml-2 list-disc list-inside">{currentList}</ul>)
         currentList = []
-        inList = false
       }
     }
 
     lines.forEach((line, i) => {
       const trimmed = line.trim()
+      
+      if (trimmed.startsWith('```')) {
+        flushList(i)
+        if (inCodeBlock) {
+          elements.push(
+            <div key={`code-${codeBlockKey}`} className="my-4 rounded-xl bg-slate-950 dark:bg-black/90 p-4 border border-amber-500/30 shadow-lg overflow-x-auto">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-amber-400 font-mono">
+                <span className="flex items-center gap-1.5">📐 Visual Diagram / Model Schematic</span>
+              </div>
+              <pre className="font-mono text-xs md:text-sm text-emerald-400 whitespace-pre leading-relaxed">
+                {codeBlockLines.join('\n')}
+              </pre>
+            </div>
+          )
+          codeBlockLines = []
+          inCodeBlock = false
+        } else {
+          inCodeBlock = true
+          codeBlockKey = i
+        }
+        return
+      }
+
+      if (inCodeBlock) {
+        codeBlockLines.push(line)
+        return
+      }
+
       if (!trimmed) {
         flushList(i)
         return
       }
 
-      if (trimmed.startsWith('### ')) {
+      if (trimmed.startsWith('>')) {
         flushList(i)
-        elements.push(<h3 key={i} className="text-lg font-bold mt-4 mb-2 text-primary">{renderInline(trimmed.slice(4))}</h3>)
+        elements.push(
+          <div key={i} className="my-3 p-3.5 rounded-xl bg-amber-500/10 border-l-4 border-amber-500 text-amber-900 dark:text-amber-200 shadow-sm">
+            <p className="font-medium text-sm flex items-start gap-2">
+              <span className="text-base">🧠</span>
+              <span>{renderInline(trimmed.replace(/^>\s*/, ''))}</span>
+            </p>
+          </div>
+        )
+      } else if (trimmed.startsWith('### ')) {
+        flushList(i)
+        elements.push(<h3 key={i} className="text-lg font-bold mt-5 mb-2 text-primary flex items-center gap-2">{renderInline(trimmed.slice(4))}</h3>)
       } else if (trimmed.startsWith('## ')) {
         flushList(i)
-        elements.push(<h2 key={i} className="text-xl font-bold mt-5 mb-2 text-primary">{renderInline(trimmed.slice(3))}</h2>)
+        elements.push(<h2 key={i} className="text-xl font-bold mt-6 mb-3 text-primary border-b border-primary/20 pb-1">{renderInline(trimmed.slice(3))}</h2>)
       } else if (trimmed.startsWith('# ')) {
         flushList(i)
-        elements.push(<h1 key={i} className="text-2xl font-bold mt-5 mb-2 text-primary">{renderInline(trimmed.slice(2))}</h1>)
+        elements.push(<h1 key={i} className="text-2xl font-bold mt-6 mb-3 text-primary">{renderInline(trimmed.slice(2))}</h1>)
       } else if (trimmed.match(/^[-*•]/) || trimmed.match(/^\d+\./)) {
-        inList = true
         const content = trimmed.replace(/^[-*•]\s*/, '').replace(/^\d+\.\s*/, '')
-        currentList.push(<li key={i} className="text-foreground/90">{renderInline(content)}</li>)
+        currentList.push(<li key={i} className="text-foreground/90 text-sm md:text-base leading-relaxed">{renderInline(content)}</li>)
       } else if (trimmed.match(/^(Q\d+:|Answer:)/i)) {
         flushList(i)
         elements.push(
-          <div key={i} className="my-3 p-3 rounded-lg bg-white/5">
-            <p className="font-medium text-primary">{renderInline(trimmed)}</p>
+          <div key={i} className="my-3 p-3.5 rounded-xl bg-primary/5 border border-primary/15">
+            <p className="font-medium text-foreground text-sm">{renderInline(trimmed)}</p>
           </div>
         )
       } else {
         flushList(i)
-        elements.push(<p key={i} className="my-2 text-foreground/90">{renderInline(trimmed)}</p>)
+        elements.push(<p key={i} className="my-2.5 text-foreground/90 text-sm md:text-base leading-relaxed">{renderInline(trimmed)}</p>)
       }
     })
 
