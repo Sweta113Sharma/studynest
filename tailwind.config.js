@@ -19,8 +19,8 @@ export default {
           foreground: '#FFFFFF',
         },
         primary: {
-          DEFAULT: '#F59E0B',
-          foreground: '#000000',
+          DEFAULT: '#78350F',
+          foreground: '#FFFFFF',
         },
         secondary: {
           DEFAULT: '#E5E7EB',
@@ -31,8 +31,8 @@ export default {
           foreground: '#4B5563',
         },
         accent: {
-          DEFAULT: '#F59E0B',
-          foreground: '#000000',
+          DEFAULT: '#92400E',
+          foreground: '#FFFFFF',
         },
         destructive: {
           DEFAULT: 'oklch(0.55 0.15 25)',
@@ -40,15 +40,15 @@ export default {
         },
         border: '#D1D5DB',
         input: '#FFFFFF',
-        ring: '#F59E0B',
+        ring: '#78350F',
         success: 'oklch(0.7 0.15 150)',
-        warning: '#F59E0B',
+        warning: '#92400E',
         // Custom gradients
         'glass-1': 'rgba(255, 255, 255, 0.05)',
         'glass-2': 'rgba(255, 255, 255, 0.08)',
         'glass-3': 'rgba(255, 255, 255, 0.12)',
-        'glow-primary': 'rgba(245, 158, 11, 0.4)',
-        'glow-accent': 'rgba(0, 0, 0, 0.12)',
+        'glow-primary': 'rgba(120, 53, 15, 0.4)',
+        'glow-accent': 'rgba(146, 64, 14, 0.3)',
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Outfit', 'Inter', 'system-ui', 'sans-serif'],
@@ -63,10 +63,10 @@ export default {
         xl: '1.25rem',
       },
       boxShadow: {
-        'glow': '0 0 40px rgba(245, 158, 11, 0.15)',
-        'glow-lg': '0 0 60px rgba(245, 158, 11, 0.22)',
-        'glow-accent': '0 0 40px rgba(245, 158, 11, 0.12)',
-        'inner-glow': 'inset 0 0 20px rgba(245, 158, 11, 0.08)',
+        'glow': '0 0 40px rgba(120, 53, 15, 0.2)',
+        'glow-lg': '0 0 60px rgba(120, 53, 15, 0.3)',
+        'glow-accent': '0 0 40px rgba(146, 64, 14, 0.2)',
+        'inner-glow': 'inset 0 0 20px rgba(120, 53, 15, 0.15)',
         'card': '0 8px 30px rgba(0, 0, 0, 0.15)',
         'card-hover': '0 12px 40px rgba(0, 0, 0, 0.22)',
       },

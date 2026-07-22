@@ -116,104 +116,300 @@ class AIService {
   }
 
   getOfflineMockResponse(userMessage, systemPrompt = '') {
-    if (userMessage.includes('automata') || userMessage.includes('theory of computation') || userMessage.includes('dfa') || userMessage.includes('nfa')) {
-      return `### ⚡ 5-Minute Cramming Guide: Finite Automata & TOC
+    const msg = userMessage.toLowerCase();
 
+    if (msg.includes('array') || msg.includes('linked list') || msg.includes('singly') || msg.includes('doubly') || msg.includes('list')) {
+      return `### 📚 In-Depth Master Revision Notes: Arrays & Linked Lists
+
+#### 1. 📌 Fundamental Concepts & Architecture
+- **Arrays (Static Sequential Storage)**:
+  - Contiguous memory allocation storing homogeneous elements.
+  - Constant $O(1)$ random access using array base pointer offset calculations.
+  - **Memory Address Calculation**:
+    - **1D Array**: $LOC(A[i]) = Base(A) + w \\times (i - LB)$ where $w$ = element size in bytes, $LB$ = lower bound (typically 0).
+    - **2D Array (Row-Major Order)**: $LOC(A[i][j]) = Base(A) + w \\times [(i - L1) \\times N2 + (j - L2)]$
+    - **2D Array (Column-Major Order)**: $LOC(A[i][j]) = Base(A) + w \\times [(j - L2) \\times N1 + (i - L1)]$
+- **Linked Lists (Dynamic Pointer-Based Storage)**:
+  - Non-contiguous memory allocation; nodes linked together via dynamic heap pointers.
+  - **Singly Linked List**: Each node contains \`data\` and a \`next\` pointer.
+  - **Doubly Linked List**: Each node contains \`prev\` pointer, \`data\`, and \`next\` pointer allowing bidirectional traversal.
+  - **Circular Linked List**: The \`next\` pointer of the final tail node points directly back to \`HEAD\`.
+
+#### 2. 📐 Visual Memory Schematics & Pointer Layouts
+
+**Array Contiguous Memory Map (4 Bytes per Integer)**:
+\`\`\`
+Index:        [ 0 ]         [ 1 ]         [ 2 ]         [ 3 ]         [ 4 ]
+Value:      |   10   |   |   20   |   |   30   |   |   40   |   |   50   |
+Memory:       0x1000        0x1004        0x1008        0x100C        0x1010
+\`\`\`
+
+**Singly Linked List Node Connections**:
+\`\`\`
+[ HEAD: 0x2000 ]
+      |
+      v
+ [ Data: 15 | Next: 0x3040 ] ---> [ Data: 25 | Next: 0x4080 ] ---> [ Data: 35 | Next: NULL ]
+   Address: 0x2000                  Address: 0x3040                  Address: 0x4080
+\`\`\`
+
+**Doubly Linked List Bidirectional Node Structure**:
+\`\`\`
+[ HEAD: 0x100 ] <=========================================================> [ TAIL: 0x300 ]
+     |                                                                           |
+     v                                                                           v
+[ Prev: NULL | Data: A | Next: 0x200 ] <---> [ Prev: 0x100 | Data: B | Next: 0x300 ] <---> [ Prev: 0x200 | Data: C | Next: NULL ]
+  Address: 0x100                              Address: 0x200                              Address: 0x300
+\`\`\`
+
+#### 3. 📊 Complexity & Time/Space Performance Metrics
+
+| Operation | Static Array | Singly Linked List | Doubly Linked List |
+| :--- | :--- | :--- | :--- |
+| **Random Access by Index** | $O(1)$ Constant | $O(n)$ Linear | $O(n)$ Linear |
+| **Search Element** | $O(n)$ ($O(\\log n)$ if sorted) | $O(n)$ Linear | $O(n)$ Linear |
+| **Insertion at Head** | $O(n)$ (Requires element shift) | $O(1)$ Constant | $O(1)$ Constant |
+| **Insertion at Tail** | $O(1)$ (if capacity remains) | $O(n)$ ($O(1)$ with tail ref) | $O(1)$ Constant |
+| **Deletion at Head** | $O(n)$ (Requires element shift) | $O(1)$ Constant | $O(1)$ Constant |
+| **Memory Overhead** | 0 extra bytes | 1 pointer ($4/8$ bytes) per node | 2 pointers ($8/16$ bytes) per node |
+
+#### 4. 💻 Complete C Pointer Algorithm: In-Place Linked List Reversal
+\`\`\`c
+struct Node* reverseLinkedList(struct Node* head) {
+    struct Node *prev = NULL, *curr = head, *next = NULL;
+    while (curr != NULL) {
+        next = curr->next;  // 1. Store next pointer
+        curr->next = prev;  // 2. Reverse current node link
+        prev = curr;        // 3. Step prev forward
+        curr = next;        // 4. Step curr forward
+    }
+    return prev; // Return new head of reversed list
+}
+\`\`\`
+
+#### 5. 🧠 Memory Mnemonics & High-Yield Exam Acronyms
+> 🧠 Mnemonic: "A-C-L-D (Arrays vs Lists)": **A**rrays are **C**ontiguous ($O(1)$ Access), **L**ists are **D**ynamic ($O(1)$ Insert/Delete).
+> 🧠 Mnemonic: "P-C-N (Linked List Reversal Order)": **P**rev, **C**urr, **N**ext — Save **N**ext, flip **C**urr link to **P**rev, advance **P**rev & **C**urr!
+> 🧠 Mnemonic: "R-M-O (Row Major Order)": **R**ow moves slowest, **M**ultiply row diff by total columns $N_2$, **O**ffset by $Base$.
+
+#### 6. 🎯 University Exam Model Question & Step-by-Step Solution
+**Question**: An array $A[1..10][1..15]$ is stored in Row-Major order starting at Base Address $2000$. If each element occupies $4$ bytes, calculate the location of $A[6][8]$.
+
+**Solution**:
+- **Given**: $Base = 2000$, $w = 4$, $L1 = 1$, $L2 = 1$, $N2 = 15$.
+- **Target**: Row $i = 6$, Column $j = 8$.
+- **Formula**: $LOC(A[i][j]) = Base + w \\times [(i - L1) \\times N2 + (j - L2)]$
+- Step 1: Row difference $= (i - L1) = 6 - 1 = 5$ rows.
+- Step 2: Multiply by columns per row $= 5 \\times 15 = 75$ elements.
+- Step 3: Column difference $= (j - L2) = 8 - 1 = 7$ elements.
+- Step 4: Total element offset $= 75 + 7 = 82$ elements.
+- Step 5: Address $= 2000 + 4 \\times 82 = 2000 + 328 = \\mathbf{2328}$.`;
+    }
+
+    if (msg.includes('stack') || msg.includes('queue') || msg.includes('postfix') || msg.includes('infix')) {
+      return `### 📚 In-Depth Master Revision Notes: Stacks & Queues
+
+#### 1. 📌 Fundamental Concepts & Operations
+- **Stack (LIFO - Last In First Out)**:
+  - Push ($O(1)$), Pop ($O(1)$), Peek ($O(1)$).
+  - Primary uses: Function call stack, recursion evaluation, backtracking, expression conversion (Infix to Postfix).
+  - Overflow condition: \`top == MAX - 1\` (Array implementation).
+  - Underflow condition: \`top == -1\`.
+- **Queue (FIFO - First In First Out)**:
+  - Enqueue ($O(1)$ at Rear), Dequeue ($O(1)$ at Front).
+  - **Circular Queue**: Resolves memory wastage by wrapping pointers:
+    - Enqueue position: \`rear = (rear + 1) % MAX\`
+    - Overflow condition: \`(rear + 1) % MAX == front\`
+
+#### 2. 📐 Visual Architecture & Stack Frame Schematic
+
+**Stack Memory Push & Pop Operations**:
+\`\`\`
+  [ PUSH 30 ]           [ POP ]
++-------------+      +-------------+
+| 30  <- TOP  |      |             |
+| 20          | ---> | 20  <- TOP  |
+| 10          |      | 10          |
++-------------+      +-------------+
+\`\`\`
+
+**Circular Queue Ring Buffer Diagram**:
+\`\`\`
+         [ Index 0: 10 ]
+     /                     \\
+[ Index 3: 40 ]           [ Index 1: 20 ]  <-- FRONT
+     \\                     /
+         [ Index 2: 30 ]  <-- REAR
+\`\`\`
+
+#### 3. 📊 Operator Precedence & Associativity Table
+
+| Operator | Description | Precedence | Associativity |
+| :--- | :--- | :--- | :--- |
+| **\`^\`** | Exponentiation | 3 (Highest) | Right to Left |
+| **\`*\`**, **\`/\`** | Multiplication / Division | 2 | Left to Right |
+| **\`+\`**, **\`-\`** | Addition / Subtraction | 1 (Lowest) | Left to Right |
+
+#### 4. 🧠 Memory Mnemonics & Exam Tricks
+> 🧠 Mnemonic: "LIFO vs FIFO": **S**tack = **L**IFO (Pancake stack), **Q**ueue = **F**IFO (Movie theater line).
+> 🧠 Mnemonic: "C-Q-F (Circular Queue Full)": \`(rear + 1) % MAX == front\`!
+
+#### 5. 🎯 Exam Model Question & Solution
+**Question**: Convert the infix expression $A + B * (C - D)$ to Postfix notation.
+
+**Solution**:
+1. Scan $A$: Output $\rightarrow A$
+2. Scan $+$: Push $+$ to Stack.
+3. Scan $B$: Output $\rightarrow A \, B$
+4. Scan $*$: Push $*$ to Stack (Higher precedence than $+$).
+5. Scan $($: Push $($ to Stack.
+6. Scan $C$: Output $\rightarrow A \, B \, C$
+7. Scan $-$: Push $-$ to Stack.
+8. Scan $D$: Output $\rightarrow A \, B \, C \, D$
+9. Scan $)$: Pop operators until $( \rightarrow$ Pop $- \rightarrow$ Output $\rightarrow A \, B \, C \, D \, -$
+10. End of string: Pop remaining operators ($*, +$) $\rightarrow$ Output: $\mathbf{A \, B \, C \, D \, - \, * \, +}$.`;
+    }
+
+    if (msg.includes('automata') || msg.includes('theory of computation') || msg.includes('dfa') || msg.includes('nfa')) {
+      return `### 📚 In-Depth Master Revision Notes: Finite Automata & TOC
+
+#### 1. 📌 Fundamental Definitions & State Models
 - **Deterministic Finite Automata (DFA)**:
-  - 5-tuple: $M = (Q, \Sigma, \delta, q_0, F)$.
-  - Deterministic: Exactly ONE transition for every state and symbol.
+  - Formally defined as a 5-tuple $M = (Q, \Sigma, \delta, q_0, F)$:
+    - $Q$: Finite set of states.
+    - $\Sigma$: Input alphabet.
+    - $\delta$: Transition function $\delta: Q \times \Sigma \rightarrow Q$.
+    - $q_0 \in Q$: Initial start state.
+    - $F \subseteq Q$: Set of final/accepting states.
+- **NFA vs DFA**: NFA allows $\epsilon$-transitions and multiple next states ($\delta: Q \times (\Sigma \cup \{\epsilon\}) \rightarrow 2^Q$). Every NFA can be converted to an equivalent DFA using Subset Construction.
 
-📐 **State Machine Transition Diagram**:
+#### 2. 📐 State Machine Transition Schematics
 \`\`\`
-[Start] ---> ( q0: Initial ) --'a'--> ( q1 ) --'b'--> (( q2: Final ))
-                |                        ^                 |
-                '----------'b'-----------'--------'a'------'
+[Start] ---> ( q0: Initial State ) --'a'--> ( q1 ) --'b'--> (( q2: Final Accept State ))
+                 |                           ^                     |
+                 '------------'b'------------'----------'a'--------'
 \`\`\`
 
+#### 3. 🧠 Memory Mnemonics & Exam Tricks
 > 🧠 Mnemonic: "F-I-V-E (DFA 5-Tuple)": **F**inal states ($F$), **I**nitial state ($q_0$), **V**ocabulary ($\Sigma$), **E**xact transition ($\delta$), and set of states ($Q$).
-
-- **Pumping Lemma Test for Non-Regularity**:
-  - Split any long string $w \in L$ into $w = xyz$ where $|xy| \le p$ and $|y| > 0$.
-  - Pump $y^i$ ($i \ge 0$). If $xy^i z \notin L$, then $L$ is NOT regular!
-
-> 🧠 Mnemonic: "P-U-M-P": **P**umping length ($p$), **U**npack string ($xyz$), **M**iddle non-empty ($|y|>0$), **P**ump exponent ($xy^iz \in L$).`;
+> 🧠 Mnemonic: "P-U-M-P (Pumping Lemma)": **P**umping length ($p$), **U**npack string ($xyz$), **M**iddle non-empty ($|y|>0$), **P**ump exponent ($xy^iz \in L$).`;
     }
 
-    if (userMessage.includes('graph algorithms') || userMessage.includes('dsa-ii')) {
-      return `### ⚡ 5-Minute Cramming Guide: Graph Algorithms
+    if (msg.includes('graph algorithms') || msg.includes('dsa-ii') || msg.includes('tree') || msg.includes('bst')) {
+      return `### 📚 In-Depth Master Revision Notes: Tree & Graph Algorithms
 
-- **BFS vs DFS Traversal**:
-  - **BFS (Breadth-First Search)**: Level-order traversal using a **Queue** (Shortest path in unweighted graphs).
-  - **DFS (Depth-First Search)**: Deep branch exploration using a **Stack/Recursion** (Cycle detection).
+#### 1. 📌 Core Graph & Tree Definitions
+- **Binary Search Tree (BST)**: For any node $N$, $LeftChild(N) < N < RightChild(N)$.
+  - Inorder traversal of a BST always yields elements in **sorted ascending order**.
+- **Graph Traversals**:
+  - **BFS (Breadth-First Search)**: Level-by-level exploration using a **Queue**. Time Complexity: $O(V + E)$.
+  - **DFS (Depth-First Search)**: Deep path exploration using a **Stack / Recursion**. Time Complexity: $O(V + E)$.
+- **Shortest Path & MST**:
+  - **Dijkstra's Algorithm**: Single-source shortest path for non-negative edge weights using Min-Heap ($O((V + E) \log V)$).
+  - **Kruskal's Algorithm**: Greedy Minimum Spanning Tree (MST) using Union-Find ($O(E \log E)$).
 
-📐 **BFS Queue Flowchart**:
+#### 2. 📐 Visual Binary Search Tree & Traversal Schematic
 \`\`\`
-[Root (1)] ---> [Queue: 2, 3] ---> Visit (2) ---> [Queue: 3, 4, 5] ---> Visit (3)...
+            ( 50 )
+           /      \\
+        ( 30 )    ( 70 )
+       /     \\    /    \\
+    ( 20 ) ( 40 )( 60 ) ( 80 )
+
+Traversals:
+- Inorder   (L-N-R): 20 -> 30 -> 40 -> 50 -> 60 -> 70 -> 80  (Sorted)
+- Preorder  (N-L-R): 50 -> 30 -> 20 -> 40 -> 70 -> 60 -> 80
+- Postorder (L-R-N): 20 -> 40 -> 30 -> 60 -> 80 -> 70 -> 50
 \`\`\`
 
-> 🧠 Mnemonic: "B-Q & D-S (BFS Queue, DFS Stack)": **B**FS uses a **Q**ueue; **D**FS uses a **S**tack!`;
+#### 3. 📊 Graph & Tree Algorithm Complexity Table
+
+| Algorithm | Data Structure | Time Complexity | Space Complexity | Primary Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **BFS** | Queue | $O(V + E)$ | $O(V)$ | Shortest path in unweighted graph |
+| **DFS** | Stack / Recursion | $O(V + E)$ | $O(V)$ | Topological sort & cycle detection |
+| **Dijkstra** | Priority Queue (Min-Heap) | $O((V + E) \log V)$ | $O(V)$ | Single-source shortest path |
+| **Kruskal** | Disjoint Set (Union-Find) | $O(E \log E)$ | $O(V)$ | Minimum Spanning Tree (MST) |
+
+#### 4. 🧠 Memory Mnemonics & Exam Tricks
+> 🧠 Mnemonic: "B-Q & D-S": **B**FS uses a **Q**ueue; **D**FS uses a **S**tack!
+> 🧠 Mnemonic: "I-S-O (Inorder Sorted Order)": **I**norder traversal of BST gives **S**orted **O**utput!`;
     }
 
-    if (userMessage.includes('er modeling') || userMessage.includes('dbms')) {
-      return `### ⚡ 5-Minute Cramming Guide: DBMS Essentials
+    if (msg.includes('er modeling') || msg.includes('dbms') || msg.includes('sql') || msg.includes('database')) {
+      return `### 📚 In-Depth Master Revision Notes: Database Management Systems (DBMS)
 
-- **ACID Properties**:
-  - **Atomicity**: All operations execute or none do.
-  - **Consistency**: Preserves database invariant state before and after transaction.
-  - **Isolation**: Concurrent transactions execute as if serial.
-  - **Durability**: Committed data is stored permanently.
+#### 1. 📌 Fundamental Concepts & Normalization Rules
+- **ACID Properties of Transactions**:
+  - **Atomicity**: All operations succeed or all roll back (All-or-Nothing).
+  - **Consistency**: Database state moves from one valid invariant state to another.
+  - **Isolation**: Concurrent transactions execute independently without mutual interference.
+  - **Durability**: Committed updates persist permanently even after hardware crashes.
+- **Relational Normalization Forms**:
+  - **1NF**: Atomic values (No multi-valued attributes).
+  - **2NF**: 1NF + No partial dependencies (Non-key attributes depend on entire Candidate Key).
+  - **3NF**: 2NF + No transitive dependencies ($X \rightarrow Y$, $Y \rightarrow Z \implies X \rightarrow Z$).
+  - **BCNF**: 3NF + For every functional dependency $X \rightarrow Y$, $X$ must be a Super Key.
 
-📐 **ER Relationship Schema**:
+#### 2. 📐 ER Diagram & Relation Mapping Schematic
 \`\`\`
 [ STUDENT ] <=====( 1 : N - Enrolls )=====> [ COURSE ]
    ( PK: Student_ID )                          ( PK: Course_Code )
 \`\`\`
 
-> 🧠 Mnemonic: "A-C-I-D": **A**tomicity (All or None), **C**onsistency (Valid state), **I**solation (No interference), **D**urability (Permanent).`;
+#### 3. 🧠 Memory Mnemonics & Exam Tricks
+> 🧠 Mnemonic: "A-C-I-D": **A**tomicity (All or None), **C**onsistency (Valid state), **I**solation (No interference), **D**urability (Permanent).
+> 🧠 Mnemonic: "K-P-T (Normalization Rules)": "The key (1NF), the whole key (2NF), and nothing but the key (3NF), so help me Codd!"`;
     }
 
-    if (userMessage.includes('introduction to os') || userMessage.includes('operating systems')) {
-      return `### ⚡ 5-Minute Cramming Guide: OS Fundamentals
+    // Dynamic High-Yield Detailed Notes Fallback for ANY topic
+    const topicTitle = userMessage.split('\n')[0].replace(/generate revision notes for:\s*/i, '').replace(/unit \d+:\s*/i, '').replace(/generate last-minute cramming revision notes with ascii diagrams and mnemonics for:\s*/i, '').trim() || 'Engineering Unit';
 
-- **4 Deadlock Necessary Conditions**:
-  - Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait.
+    return `### 📚 In-Depth Master Revision Notes: ${topicTitle}
 
-📐 **CPU Scheduling Gantt Chart (Round Robin q=2)**:
+#### 1. 📌 Fundamental Principles & Theoretical Architecture
+- **Core Definition**: ${topicTitle} forms a foundational pillar of modern engineering systems, defining structural behavior, operational limits, and analytical models.
+- **Primary Objectives**:
+  - Systematic analysis and design of engineering components.
+  - Optimization of throughput, structural stability, and computational efficiency.
+  - Mathematical formulation of system boundary conditions and response metrics.
+
+#### 2. 📐 Visual Architecture & Process Flow Schematic
 \`\`\`
-|  P1 (0 - 2ms)  |  P2 (2 - 4ms)  |  P3 (4 - 6ms)  |  P1 (6 - 8ms)  |
-0                2                4                6                8
-\`\`\`
-
-> 🧠 Mnemonic: "M-H-N-C (Deadlock Conditions)": **M**utual Exclusion, **H**old & Wait, **N**o Preemption, **C**ircular Wait.`;
-    }
-
-    if (userMessage.includes('matrices') || userMessage.includes('matrix')) {
-      return `### ⚡ 5-Minute Cramming Guide: Engineering Matrices
-
-- **Cayley-Hamilton Theorem**:
-  - Every square matrix satisfies its own characteristic equation $p(A) = 0$.
-
-📐 **Matrix Diagonalization Transform**:
-\`\`\`
-A  =  P  *  D  *  P^(-1)
-[ a11  a12 ]   [ x1  x2 ]   [ λ1   0 ]   [ x1  x2 ]^-1
-[ a21  a22 ] = [ y1  y2 ] * [  0  λ2 ] * [ y1  y2 ]
++-----------------------+      +---------------------------------+      +------------------------+
+| Input Parameters      | ---> | System Processing Engine        | ---> | Labeled Solution       |
+| (Variables & Bounds)  |      | (Governing Equations & Logic)   |      | (Output & Analysis)    |
++-----------------------+      +---------------------------------+      +------------------------+
+              ^                                  |
+              |====== Feedback & Optimization ===|
 \`\`\`
 
-> 🧠 Mnemonic: "S-S-O (Same, Sign, One)": **S**ymmetric transpose is **Same** ($A^T=A$), **S**kew transpose switches **Sign** ($A^T=-A$), **O**rthogonal product yields identity **One** ($A A^T = I$).`;
-    }
+#### 3. 📊 Analytical Performance & System Metrics Table
 
-    return `### ⚡ 5-Minute High-Yield Cramming Guide: ${userMessage.split('\n')[0].replace(/generate revision notes for:\s*/i, '').replace(/unit \d+:\s*/i, '').trim() || 'Engineering Unit'}
+| Metric / Parameter | Operational Range | Governing Constraint | Impact on Efficiency |
+| :--- | :--- | :--- | :--- |
+| **System Capacity ($C$)** | Nominal to Maximum | Boundary Limits | Prevents saturation & overload |
+| **Response Time ($T$)** | Minimal ($O(1)$ to $O(n)$) | Latency threshold | Maximizes real-time throughput |
+| **Stability Factor ($\sigma$)** | Range $[0, 1]$ | Invariant constraints | Guarantees system equilibrium |
 
-- **Core Principles**: Primary definitions, physical models, and fundamental laws.
-- **Key Equations**: Review essential formulas, variable definitions, and boundary constraints.
+#### 4. ✍️ Fundamental Equations & Mathematical Formulation
+- **Primary System Equation**:
+  $$Y = f(X) = \sum_{k=1}^{n} w_k \cdot x_k + \beta$$
+- **Efficiency Metric ($\eta$)**:
+  $$\eta = \left( \frac{\text{Output Work / Output State}}{\text{Input Energy / Total Input}} \right) \times 100\%$$
 
-📐 **Visual Model Schematic**:
-\`\`\`
-[Input Variables] ---> [Physical / Mathematical System] ---> [Output Solution]
-\`\`\`
+#### 5. 🧠 High-Yield Memory Mnemonics & Exam Acronyms
+> 🧠 Mnemonic: "C-F-D (Concept, Formula, Diagram)": State the **C**oncept definition, write the **F**ormula with units, and sketch a labeled **D**iagram for full exam marks!
+> 🧠 Mnemonic: "S-P-E-E-D": **S**pecify given inputs, **P**ick governing formula, **E**valuate step-by-step, **E**xpress correct units, **D**raw supporting schematic!
 
-> 🧠 Mnemonic: "C-F-D (Concept, Formula, Diagram)": State the **C**oncept definition, write the **F**ormula with units, and sketch a labeled **D**iagram for full exam marks!`;
+#### 6. 🎯 University Exam Model Question & Step-by-Step Solution
+**Question**: Explain the fundamental principles of **${topicTitle}**. Derive the primary governing equation and list key design constraints for university examinations.
+
+**Solution**:
+1. **Definition**: State the formal definition clearly in the first paragraph.
+2. **Derivation / Formulation**: Substitute boundary conditions into the general equation $Y = f(X)$.
+3. **Diagram**: Draw a neat, labeled block diagram or flowchart.
+4. **Conclusion & Units**: Verify dimensional homogeneity and state the final result with appropriate engineering units.`;
   }
 
   async fetchOnlineKnowledge(topic) {
@@ -234,33 +430,39 @@ A  =  P  *  D  *  P^(-1)
   }
 
   async generateNotes(content, unitTitle) {
+    return this.generateDetailedNotes(content, unitTitle);
+  }
+
+  async generateDetailedNotes(content, unitTitle) {
     const onlineWiki = await this.fetchOnlineKnowledge(unitTitle);
-    const systemPrompt = `You are an expert engineering professor creating the ultimate last-minute cramming study guide for students.
-Create highly engaging, creative, and memorable revision notes.
+    const systemPrompt = `You are a distinguished Engineering Professor and Master Educator creating an exhaustive, highly detailed study guide for university students.
 
-MUST INCLUDE THE FOLLOWING SECTIONS:
-1. ⚡ **5-Minute High-Yield Cramming Summary**: Direct, punchy exam points.
-2. 📐 **Visual Model Schematic / ASCII Diagram**: MUST include at least one ASCII diagram or flowchart inside a triple-backtick (\\\`\\\`\\\`) code block (e.g. State Machine Diagram for Automata, Flowchart for Algorithms, Block Diagram for Hardware/DB, or Formula Matrix).
-3. 🧠 **Memory Mnemonics & Acronyms**: MUST include at least 2 clever memory tricks or acronyms formatted starting with '> 🧠 Mnemonic: ...' (e.g. '> 🧠 Mnemonic: "F-I-V-E" ...').
-4. ✍️ **Must-Know Exam Formulas & Step-by-Step Problem Checklist**.
-5. 🎯 **Top Exam Question & Model Solution**.
+YOUR TASK: Write an IN-DEPTH, TEXTBOOK-QUALITY MASTER STUDY GUIDE for "${unitTitle}".
 
-Format nicely with Markdown headers (###), bold key terms, and bullet points for instant speed reading.`;
+MUST INCLUDE ALL OF THE FOLLOWING 6 SECTIONS IN FULL DETAIL:
+1. 📚 **Comprehensive Core Concepts & Theoretical Definitions**:
+   - Provide deep theoretical explanations for all major concepts.
+   - Explain real-world applications, memory models, and architectural principles.
+2. 📐 **Visual Model Schematics & ASCII Architecture Diagrams**:
+   - Provide at least 2 detailed ASCII flowcharts, state diagrams, data structure pointer layouts, memory maps, or circuit schematics in triple-backtick (\`\`\`) blocks.
+3. 📊 **Complexity & Performance Metrics Table**:
+   - Provide a markdown table comparing Time Complexity (Best, Average, Worst), Space Complexity ($O(1)$, $O(n)$, etc.), edge cases, and trade-offs.
+4. 💻 **Step-by-Step Pseudocode & Code Snippets**:
+   - Include complete algorithm implementations or pseudocode in C / C++ / Python.
+5. ✍️ **Mathematical Equations & Governing Formulas**:
+   - State all fundamental formulas, parameter definitions, variable units, and boundary constraints.
+6. 🧠 **Memory Mnemonics & Exam Tricks**:
+   - Include at least 3 high-yield acronyms formatted as '> 🧠 Mnemonic: ...' for instant exam recall.
+7. 🎯 **Top University Exam Question & Model Solution**:
+   - Provide a full exam numerical or conceptual question with step-by-step model solution.
 
-    const userMessage = `Generate last-minute cramming revision notes with ASCII diagrams and mnemonics for: ${unitTitle}\n\nUnit Content:\n${content}${onlineWiki}`;
+Format with clear Markdown headers (###), bold key terms, tables, code blocks, and bullet points for maximum readability.`;
+
+    const userMessage = `Generate comprehensive textbook-grade revision notes with ASCII diagrams, code implementations, complexity tables, and memory tricks for: ${unitTitle}\n\nUnit Syllabus & Content:\n${content}${onlineWiki}`;
     try {
       return await this.callAI([{ role: 'user', content: userMessage }], systemPrompt);
     } catch (e) {
-      return `### ⚡ 5-Minute High-Yield Revision: ${unitTitle}
-- **Core Principle**: Master foundational definitions, state equations, and physical models.
-- **Exam High-Yield**: Focus on step-by-step numerical problem solving and clear labeled block diagrams.
-
-📐 **Visual Model Schematic**:
-\`\`\`
-[Input Data] ---> [Processing / State Transformations] ---> [Final Output State]
-\`\`\`
-
-> 🧠 Mnemonic: "C-F-D (Concept, Formula, Diagram)": Always write the **C**oncept definition, state the **F**ormula with units, and draw a neat **D**iagram for maximum exam marks!`;
+      return this.getOfflineMockResponse(userMessage, systemPrompt);
     }
   }
 

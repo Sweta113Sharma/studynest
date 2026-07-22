@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode Palette - Soothing Soft Slate & Ocean Indigo */
+  /* Light Mode Palette - Soothing Soft Slate & Dark Espresso Brown */
   --bg-page: #F8FAFC;
   --text-page: #0F172A;
   --bg-card: #FFFFFF;
@@ -11,24 +11,24 @@
   --border-card: #E2E8F0;
   --bg-input: #F1F5F9;
   --text-input: #0F172A;
-  --accent: #F59E0B;
-  --button-primary-bg: #F59E0B;
+  --accent: #78350F;
+  --button-primary-bg: #78350F;
   --button-primary-text: #FFFFFF;
-  --button-primary-hover-bg: #D97706;
+  --button-primary-hover-bg: #582C12;
   --button-primary-hover-text: #FFFFFF;
   --button-secondary-bg: #F1F5F9;
   --button-secondary-text: #0F172A;
   --button-secondary-border: #CBD5E1;
-  --card-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 20px 25px -5px rgba(99, 102, 241, 0.05);
-  --card-shadow-hover: 0 20px 40px -10px rgba(15, 23, 42, 0.15), 0 25px 30px -5px rgba(245, 158, 11, 0.15);
+  --card-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 20px 25px -5px rgba(120, 53, 15, 0.05);
+  --card-shadow-hover: 0 20px 40px -10px rgba(15, 23, 42, 0.15), 0 25px 30px -5px rgba(120, 53, 15, 0.2);
   --grid-line: rgba(15, 23, 42, 0.04);
-  --orb-1-color: rgba(99, 102, 241, 0.15);
-  --orb-2-color: rgba(245, 158, 11, 0.15);
-  --orb-3-color: rgba(59, 130, 246, 0.10);
+  --orb-1-color: rgba(120, 53, 15, 0.15);
+  --orb-2-color: rgba(146, 64, 14, 0.15);
+  --orb-3-color: rgba(180, 83, 9, 0.10);
 }
 
 .dark {
-  /* Dark Mode Palette - Soothing Midnight Slate & Glowing Amber */
+  /* Dark Mode Palette - Soothing Midnight Slate & Glowing Dark Brown */
   --bg-page: #090D16;
   --text-page: #F8FAFC;
   --bg-card: rgba(15, 23, 42, 0.85);
@@ -36,20 +36,20 @@
   --border-card: rgba(255, 255, 255, 0.12);
   --bg-input: #0F172A;
   --text-input: #FFFFFF;
-  --accent: #F59E0B;
-  --button-primary-bg: #F59E0B;
-  --button-primary-text: #000000;
-  --button-primary-hover-bg: #FBBF24;
-  --button-primary-hover-text: #000000;
+  --accent: #92400E;
+  --button-primary-bg: #78350F;
+  --button-primary-text: #FFFFFF;
+  --button-primary-hover-bg: #92400E;
+  --button-primary-hover-text: #FFFFFF;
   --button-secondary-bg: rgba(255, 255, 255, 0.06);
   --button-secondary-text: #FFFFFF;
   --button-secondary-border: rgba(255, 255, 255, 0.15);
   --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  --card-shadow-hover: 0 20px 50px rgba(245, 158, 11, 0.2);
+  --card-shadow-hover: 0 20px 50px rgba(120, 53, 15, 0.25);
   --grid-line: rgba(255, 255, 255, 0.03);
-  --orb-1-color: rgba(245, 158, 11, 0.20);
-  --orb-2-color: rgba(99, 102, 241, 0.20);
-  --orb-3-color: rgba(245, 158, 11, 0.12);
+  --orb-1-color: rgba(120, 53, 15, 0.20);
+  --orb-2-color: rgba(146, 64, 14, 0.20);
+  --orb-3-color: rgba(180, 83, 9, 0.12);
 }
 
 @layer base {
@@ -94,7 +94,7 @@
   }
 
   .glass-card-hover:hover {
-    border-color: rgba(245, 158, 11, 0.25);
+    border-color: rgba(120, 53, 15, 0.3);
     box-shadow: var(--card-shadow-hover);
     transform: translateY(-3px);
   }
@@ -112,7 +112,7 @@
   .btn-primary:hover {
     background: var(--button-primary-hover-bg);
     color: var(--button-primary-hover-text);
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+    box-shadow: 0 6px 20px rgba(120, 53, 15, 0.3);
     transform: translateY(-1px);
   }
 
@@ -167,12 +167,12 @@
 
   .input-field:focus {
     outline: none;
-    border-color: #F59E0B;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
+    border-color: #78350F;
+    box-shadow: 0 0 0 3px rgba(120, 53, 15, 0.25);
   }
 
   .text-gradient {
-    background: linear-gradient(to right, #F59E0B, #FFFFFF, #F59E0B);
+    background: linear-gradient(to right, #B45309, #78350F, #D97706);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -181,7 +181,7 @@
   }
 
   .animated-gradient {
-    background: linear-gradient(-45deg, #F59E0B, #FFFFFF, #E5E7EB, #F59E0B);
+    background: linear-gradient(-45deg, #78350F, #92400E, #582C12, #78350F);
     background-size: 400% 400%;
     animation: gradient 8s ease infinite;
   }

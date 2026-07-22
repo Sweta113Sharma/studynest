@@ -99,7 +99,7 @@ export default function AIAssistantDrawer({ context }) {
         return <em key={idx}>{part.slice(1, -1)}</em>
       }
       if (part.startsWith('`') && part.endsWith('`')) {
-        return <code key={idx} className="px-1.5 py-0.5 rounded bg-white/10 font-mono text-[11px] text-amber-300">{part.slice(1, -1)}</code>
+        return <code key={idx} className="px-1.5 py-0.5 rounded bg-white/10 font-mono text-[11px] text-cyan-300">{part.slice(1, -1)}</code>
       }
       return part
     })
@@ -108,44 +108,36 @@ export default function AIAssistantDrawer({ context }) {
   return (
     <>
       {/* Floating Trigger Button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-gradient-to-r from-primary to-amber-500 text-white shadow-2xl hover:scale-105 transition-transform flex items-center gap-2 group border border-white/20"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <div className="relative">
-          <Sparkles className="w-6 h-6 animate-pulse" />
-        </div>
-        <span className="font-semibold text-sm pr-1 hidden sm:inline">AI Study Assistant</span>
-      </motion.button>
+      {!isOpen && (
+        <motion.button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-40 p-3.5 sm:p-4 rounded-full bg-gradient-to-r from-[#78350F] via-amber-900 to-[#451A03] text-white shadow-2xl hover:scale-105 transition-transform flex items-center gap-2 group border border-white/20"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <div className="relative">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
+          </div>
+          <span className="font-semibold text-sm pr-1 hidden sm:inline">AI Study Assistant</span>
+        </motion.button>
+      )}
 
-      {/* Drawer Component */}
+      {/* Floating Corner Widget Component */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            {/* Backdrop for mobile */}
-            <motion.div
-              className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            />
-
-            <motion.div
-              className="fixed bottom-0 right-0 top-0 w-full sm:w-[420px] glass-card z-50 shadow-2xl flex flex-col border-l border-white/10"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            >
+          <motion.div
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[400px] md:w-[420px] h-[520px] max-h-[75vh] glass-card z-50 shadow-2xl flex flex-col rounded-3xl border border-white/20 overflow-hidden"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+          >
               {/* Header */}
               <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-amber-500 flex items-center justify-center text-white shadow-glow">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#78350F] to-[#451A03] flex items-center justify-center text-white shadow-glow">
                     <Bot className="w-5 h-5" />
                   </div>
                   <div>
@@ -237,7 +229,6 @@ export default function AIAssistantDrawer({ context }) {
                 </form>
               </div>
             </motion.div>
-          </>
         )}
       </AnimatePresence>
     </>

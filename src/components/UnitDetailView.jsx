@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, FileText, Download, ExternalLink, Sparkles, Loader2, Copy, Check, RefreshCw, Bookmark, Layers } from 'lucide-react'
 import { aiService } from '../services/aiService'
@@ -14,8 +14,14 @@ export default function UnitDetailView({ context }) {
   const [activeTab, setActiveTab] = useState('ai')
   const [aiLoading, setAiLoading] = useState(false)
   const [aiResult, setAiResult] = useState(null)
-  const [activeAIFeature, setActiveAIFeature] = useState('notes')
+  const [activeAIFeature, setActiveAIFeature] = useState('notes-detailed')
   const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (activeTab === 'ai' && !aiResult && !aiLoading && selectedUnit) {
+      handleAIFeature('notes-detailed')
+    }
+  }, [selectedUnit, activeTab])
 
   if (!selectedUnit) return null
 
@@ -23,13 +29,13 @@ export default function UnitDetailView({ context }) {
   const bookmarked = isBookmarked(bookmarkId)
 
   const tabs = [
-    { id: 'ai', label: '✨ AI Notes', icon: Sparkles },
+    { id: 'ai', label: '✨ Detailed AI Notes', icon: Sparkles },
     { id: 'ppts', label: '📄 Materials', icon: FileText },
     { id: 'youtube', label: '▶️ Videos', icon: ExternalLink }
   ]
 
   const aiFeatures = [
-    { id: 'notes', label: '📝 Smart Notes', description: 'Generate detailed revision notes' },
+    { id: 'notes-detailed', label: '📚 Detailed Master Notes', description: 'Comprehensive textbook-grade notes' },
     { id: 'flashcards', label: '🎴 Flashcards', description: 'Practice active recall' },
     { id: 'quiz', label: '🎯 AI Quiz', description: 'Generate interactive MCQ quiz' }
   ]
@@ -48,6 +54,9 @@ export default function UnitDetailView({ context }) {
       const content = selectedUnit.aiSummary || selectedUnit.title
       let result
       switch (featureId) {
+        case 'notes-detailed':
+          result = await aiService.generateDetailedNotes(content, selectedUnit.title)
+          break
         case 'notes':
           result = await aiService.generateNotes(content, selectedUnit.title)
           break
@@ -66,7 +75,7 @@ export default function UnitDetailView({ context }) {
           })
           context.setQuizState({ currentIndex: 0, score: 0, selectedOption: null, completed: false })
           navigateTo('quiz')
-          return // Exit early as we navigated away
+          return
         default:
           result = content
       }
@@ -93,18 +102,24 @@ export default function UnitDetailView({ context }) {
     let inCodeBlock = false
     let codeBlockLines = []
     let codeBlockKey = 0
+    let inTable = false
+    let tableRows = []
+    let tableKey = 0
 
     const renderInline = (str) => {
-      const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g)
+      const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\$[^\$]+\$)/g)
       return parts.map((part, idx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
-          return <strong key={idx} className="font-semibold text-foreground">{part.slice(2, -2)}</strong>
+          return <strong key={idx} className="font-bold text-foreground">{part.slice(2, -2)}</strong>
         }
         if (part.startsWith('*') && part.endsWith('*')) {
           return <em key={idx} className="italic text-foreground/90">{part.slice(1, -1)}</em>
         }
         if (part.startsWith('`') && part.endsWith('`')) {
-          return <code key={idx} className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-mono text-xs">{part.slice(1, -1)}</code>
+          return <code key={idx} className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950/60 text-amber-950 dark:text-amber-200 border border-amber-300/60 dark:border-amber-800/40 font-mono text-xs">{part.slice(1, -1)}</code>
+        }
+        if (part.startsWith('$') && part.endsWith('$')) {
+          return <span key={idx} className="font-mono text-amber-950 dark:text-amber-200 font-bold px-1.5 py-0.5 rounded bg-amber-200/60 dark:bg-amber-950/70 border border-amber-400/50 dark:border-amber-800/50">{part.slice(1, -1)}</span>
         }
         return part
       })
@@ -112,8 +127,42 @@ export default function UnitDetailView({ context }) {
 
     const flushList = (key) => {
       if (currentList.length > 0) {
-        elements.push(<ul key={`list-${key}`} className="my-3 space-y-1.5 ml-2 list-disc list-inside">{currentList}</ul>)
+        elements.push(<ul key={`list-${key}`} className="my-3 space-y-2 ml-2 list-disc list-inside">{currentList}</ul>)
         currentList = []
+      }
+    }
+
+    const flushTable = (key) => {
+      if (tableRows.length > 0) {
+        const headerRow = tableRows[0]
+        const dataRows = tableRows.slice(1).filter(r => !r.every(cell => cell.match(/^:?-+:?$/)))
+
+        elements.push(
+          <div key={`table-${key}`} className="my-5 overflow-x-auto rounded-2xl border border-white/10 glass-card shadow-xl">
+            <table className="w-full text-left text-xs md:text-sm border-collapse">
+              {headerRow && (
+                <thead>
+                  <tr className="bg-white/10 border-b border-white/15 text-primary font-bold">
+                    {headerRow.map((cell, idx) => (
+                      <th key={idx} className="p-3 font-bold">{renderInline(cell)}</th>
+                    ))}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {dataRows.map((row, rIdx) => (
+                  <tr key={rIdx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    {row.map((cell, cIdx) => (
+                      <td key={cIdx} className="p-3 text-foreground/90">{renderInline(cell)}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+        tableRows = []
+        inTable = false
       }
     }
 
@@ -122,11 +171,12 @@ export default function UnitDetailView({ context }) {
       
       if (trimmed.startsWith('```')) {
         flushList(i)
+        flushTable(i)
         if (inCodeBlock) {
           elements.push(
-            <div key={`code-${codeBlockKey}`} className="my-4 rounded-xl bg-slate-950 dark:bg-black/90 p-4 border border-amber-500/30 shadow-lg overflow-x-auto">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-amber-400 font-mono">
-                <span className="flex items-center gap-1.5">📐 Visual Diagram / Model Schematic</span>
+            <div key={`code-${codeBlockKey}`} className="my-4 rounded-2xl bg-slate-950 dark:bg-black/95 p-4 border border-amber-900/40 shadow-2xl overflow-x-auto">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-amber-200 font-mono">
+                <span className="flex items-center gap-1.5">📐 Visual Diagram / Code Schematic</span>
               </div>
               <pre className="font-mono text-xs md:text-sm text-emerald-400 whitespace-pre leading-relaxed">
                 {codeBlockLines.join('\n')}
@@ -147,6 +197,20 @@ export default function UnitDetailView({ context }) {
         return
       }
 
+      // Check Table Row
+      if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+        flushList(i)
+        if (!inTable) {
+          inTable = true
+          tableKey = i
+        }
+        const cells = trimmed.split('|').slice(1, -1).map(c => c.trim())
+        tableRows.push(cells)
+        return
+      } else if (inTable) {
+        flushTable(i)
+      }
+
       if (!trimmed) {
         flushList(i)
         return
@@ -155,30 +219,33 @@ export default function UnitDetailView({ context }) {
       if (trimmed.startsWith('>')) {
         flushList(i)
         elements.push(
-          <div key={i} className="my-3 p-3.5 rounded-xl bg-amber-500/10 border-l-4 border-amber-500 text-amber-900 dark:text-amber-200 shadow-sm">
-            <p className="font-medium text-sm flex items-start gap-2">
+          <div key={i} className="my-3 p-4 rounded-2xl bg-amber-100/80 dark:bg-amber-950/40 border-l-4 border-amber-700 text-amber-950 dark:text-amber-100 shadow-md">
+            <p className="font-medium text-xs md:text-sm flex items-start gap-2">
               <span className="text-base">🧠</span>
               <span>{renderInline(trimmed.replace(/^>\s*/, ''))}</span>
             </p>
           </div>
         )
+      } else if (trimmed.startsWith('#### ')) {
+        flushList(i)
+        elements.push(<h4 key={i} className="text-base font-bold mt-5 mb-2 text-amber-900 dark:text-amber-300 flex items-center gap-2">{renderInline(trimmed.slice(5))}</h4>)
       } else if (trimmed.startsWith('### ')) {
         flushList(i)
-        elements.push(<h3 key={i} className="text-lg font-bold mt-5 mb-2 text-primary flex items-center gap-2">{renderInline(trimmed.slice(4))}</h3>)
+        elements.push(<h3 key={i} className="text-lg md:text-xl font-extrabold mt-6 mb-3 text-amber-900 dark:text-amber-200 flex items-center gap-2 border-b border-amber-800/20 pb-1">{renderInline(trimmed.slice(4))}</h3>)
       } else if (trimmed.startsWith('## ')) {
         flushList(i)
-        elements.push(<h2 key={i} className="text-xl font-bold mt-6 mb-3 text-primary border-b border-primary/20 pb-1">{renderInline(trimmed.slice(3))}</h2>)
+        elements.push(<h2 key={i} className="text-xl md:text-2xl font-black mt-7 mb-4 text-amber-950 dark:text-amber-100 border-b border-amber-800/30 pb-1">{renderInline(trimmed.slice(3))}</h2>)
       } else if (trimmed.startsWith('# ')) {
         flushList(i)
-        elements.push(<h1 key={i} className="text-2xl font-bold mt-6 mb-3 text-primary">{renderInline(trimmed.slice(2))}</h1>)
+        elements.push(<h1 key={i} className="text-2xl md:text-3xl font-black mt-8 mb-4 text-amber-950 dark:text-amber-100">{renderInline(trimmed.slice(2))}</h1>)
       } else if (trimmed.match(/^[-*•]/) || trimmed.match(/^\d+\./)) {
         const content = trimmed.replace(/^[-*•]\s*/, '').replace(/^\d+\.\s*/, '')
         currentList.push(<li key={i} className="text-foreground/90 text-sm md:text-base leading-relaxed">{renderInline(content)}</li>)
-      } else if (trimmed.match(/^(Q\d+:|Answer:)/i)) {
+      } else if (trimmed.match(/^(Q\d+:|Answer:|Question:|Solution:)/i)) {
         flushList(i)
         elements.push(
-          <div key={i} className="my-3 p-3.5 rounded-xl bg-primary/5 border border-primary/15">
-            <p className="font-medium text-foreground text-sm">{renderInline(trimmed)}</p>
+          <div key={i} className="my-3 p-4 rounded-2xl bg-primary/10 border border-primary/20 shadow-sm">
+            <p className="font-medium text-foreground text-sm md:text-base">{renderInline(trimmed)}</p>
           </div>
         )
       } else {
@@ -188,6 +255,7 @@ export default function UnitDetailView({ context }) {
     })
 
     flushList('end')
+    flushTable('end')
 
     return elements
   }
@@ -278,12 +346,12 @@ export default function UnitDetailView({ context }) {
                   disabled={aiLoading}
                   className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 group ${
                     activeAIFeature === feature.id
-                      ? 'bg-gradient-to-r from-primary to-purple-500 text-white shadow-glow'
+                      ? 'bg-gradient-to-r from-[#78350F] to-amber-900 text-white shadow-glow'
                       : 'glass-card border border-white/5 hover:border-primary/30'
                   }`}
                 >
                   {feature.label}
-                  <span className="absolute -top-2 -right-1 px-1.5 py-0.5 rounded-full bg-amber-500 text-[8px] font-bold text-black scale-0 group-hover:scale-100 transition-transform origin-bottom-left">
+                  <span className="absolute -top-2 -right-1 px-1.5 py-0.5 rounded-full bg-[#78350F] text-[8px] font-bold text-white scale-0 group-hover:scale-100 transition-transform origin-bottom-left border border-white/20">
                     AI POWERED
                   </span>
                 </button>

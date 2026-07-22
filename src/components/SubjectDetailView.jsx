@@ -149,7 +149,7 @@ export default function SubjectDetailView({ context }) {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={startFlashcards}
-              className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-medium text-sm flex items-center gap-2 hover:bg-amber-500/20 transition-all"
+              className="px-4 py-2 rounded-xl bg-amber-100 dark:bg-amber-950/40 border border-amber-300/60 dark:border-amber-800/40 text-amber-900 dark:text-amber-200 font-medium text-sm flex items-center gap-2 hover:bg-amber-200/60 transition-all"
             >
               <Layers className="w-4 h-4" />
               Flashcards
@@ -157,9 +157,9 @@ export default function SubjectDetailView({ context }) {
             <button
               onClick={handleAISubjectSummary}
               disabled={aiLoading}
-              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm flex items-center gap-2 hover:bg-white/10 transition-all disabled:opacity-50"
+              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-foreground font-medium text-sm flex items-center gap-2 hover:bg-white/10 transition-all disabled:opacity-50"
             >
-              {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-400" />}
+              {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-700 dark:text-amber-300" />}
               AI Overview
             </button>
           </div>
@@ -197,7 +197,7 @@ export default function SubjectDetailView({ context }) {
               <X className="w-4 h-4" />
             </button>
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-400" />
+              <Sparkles className="w-5 h-5 text-amber-300" />
               AI Subject Overview
             </h3>
             <div className="prose prose-invert max-w-none text-sm text-foreground/80 whitespace-pre-wrap">

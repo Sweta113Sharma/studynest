@@ -100,7 +100,7 @@ export default function FlashcardsView({ context }) {
         animate={{ opacity: 1, scale: 1 }}
       >
         <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-primary/20 flex items-center justify-center text-primary shadow-glow">
-          <Trophy className="w-10 h-10 text-amber-400" />
+          <Trophy className="w-10 h-10 text-amber-300" />
         </div>
 
         <h2 className="text-3xl font-display font-bold mb-2">Flashcard Deck Complete!</h2>
@@ -113,8 +113,8 @@ export default function FlashcardsView({ context }) {
             <span className="text-2xl font-bold text-emerald-400">{mastered.length}</span>
             <p className="text-xs text-muted-foreground mt-0.5">Mastered</p>
           </div>
-          <div className="p-4 rounded-2xl glass-card border border-amber-500/20 text-center">
-            <span className="text-2xl font-bold text-amber-400">{needsReview.length}</span>
+          <div className="p-4 rounded-2xl glass-card border border-amber-900/40 text-center">
+            <span className="text-2xl font-bold text-amber-300">{needsReview.length}</span>
             <p className="text-xs text-muted-foreground mt-0.5">Needs Review</p>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function FlashcardsView({ context }) {
           {needsReview.length > 0 && (
             <button
               onClick={handleReviewFlaggedOnly}
-              className="px-5 py-2.5 rounded-xl bg-amber-500 text-black font-semibold text-sm flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#78350F] to-amber-900 text-white font-semibold text-sm flex items-center justify-center gap-2 hover:brightness-110 transition-all"
             >
               <Flame className="w-4 h-4" /> Review ({needsReview.length}) Flagged
             </button>
@@ -166,7 +166,7 @@ export default function FlashcardsView({ context }) {
       {/* Progress Bar */}
       <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-primary to-amber-500 rounded-full"
+          className="h-full bg-gradient-to-r from-[#78350F] via-amber-900 to-[#451A03] rounded-full"
           animate={{ width: `${((currentIndex + 1) / cards.length) * 100}%` }}
         />
       </div>
@@ -205,7 +205,7 @@ export default function FlashcardsView({ context }) {
             /* Back Side (Un-flip horizontal mirroring from 180deg parent rotation) */
             <div className="flex flex-col justify-between h-full" style={{ transform: 'rotateY(180deg)' }}>
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400">
+                <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 border border-amber-300/50 dark:border-amber-800/40">
                   Answer & Explanation
                 </span>
                 <span className="text-xs text-muted-foreground flex items-center gap-1">
@@ -222,7 +222,7 @@ export default function FlashcardsView({ context }) {
               <div className="flex items-center justify-center gap-3 pt-4 border-t border-white/10" onClick={(e) => e.stopPropagation()}>
                 <button
                   onClick={() => handleResponse(false)}
-                  className="flex-1 py-2.5 rounded-xl glass-card border border-amber-500/30 text-amber-400 hover:bg-amber-500/20 font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2.5 rounded-xl glass-card border border-amber-800/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-950/40 font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
                 >
                   <HelpCircle className="w-4 h-4" /> Need Practice
                 </button>

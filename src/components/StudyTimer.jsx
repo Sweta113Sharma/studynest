@@ -21,6 +21,21 @@ export default function StudyTimer() {
   const [showCompletionModal, setShowCompletionModal] = useState(false)
 
   const timerRef = useRef(null)
+  const popoverRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   useEffect(() => {
     const savedSessions = localStorage.getItem('studynest_timer_sessions')
@@ -188,19 +203,19 @@ export default function StudyTimer() {
   const progressPercent = Math.min(100, Math.max(0, ((totalDuration - timeLeft) / totalDuration) * 100))
 
   return (
-    <div className="relative">
+    <div className="relative" ref={popoverRef}>
       {/* Header Pill Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`px-3.5 py-1.5 rounded-xl bg-slate-900/90 dark:bg-slate-900/90 text-amber-400 text-xs font-mono font-bold flex items-center gap-2 hover:bg-slate-800 transition-all border border-amber-500/30 shadow-md hover:scale-105 active:scale-95 ${
-          isRunning ? 'border-amber-400 shadow-glow-sm shadow-amber-500/40' : ''
+        className={`px-3.5 py-1.5 rounded-xl bg-slate-900/90 dark:bg-slate-900/90 text-amber-200 text-xs font-mono font-bold flex items-center gap-2 hover:bg-slate-800 transition-all border border-amber-900/50 shadow-md hover:scale-105 active:scale-95 ${
+          isRunning ? 'border-amber-700 shadow-glow-sm shadow-amber-900/40' : ''
         }`}
         title="Pomodoro Study Timer"
       >
-        <Clock className={`w-3.5 h-3.5 ${isRunning ? 'animate-pulse text-amber-400' : 'text-amber-500/70'}`} />
+        <Clock className={`w-3.5 h-3.5 ${isRunning ? 'animate-pulse text-amber-400' : 'text-amber-400/70'}`} />
         <span className="text-white font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
-          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
+          <span className="px-1.5 py-0.5 rounded-full bg-amber-900/40 text-amber-200 text-[10px] font-bold border border-amber-800/40">
             {sessionsCompleted}⚡
           </span>
         )}
@@ -209,22 +224,17 @@ export default function StudyTimer() {
       {/* Popover / Floating Timer Modal */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <div
-              className="fixed inset-0 z-40 bg-black/20 backdrop-blur-xs"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              className="absolute right-0 top-12 w-84 max-w-[92vw] bg-slate-950/95 text-white backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl shadow-black/80 border border-amber-500/30 ring-1 ring-amber-500/20"
-              initial={{ opacity: 0, scale: 0.9, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -10 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            >
+          <motion.div
+            className="absolute right-0 top-12 w-84 max-w-[92vw] bg-slate-950/95 text-white backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl shadow-black/80 border border-amber-900/40 ring-1 ring-amber-900/30"
+            initial={{ opacity: 0, scale: 0.9, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-xl bg-amber-500/20 border border-amber-500/30">
-                    <Clock className="w-4 h-4 text-amber-400" />
+                  <div className="p-1.5 rounded-xl bg-amber-900/30 border border-amber-800/40">
+                    <Clock className="w-4 h-4 text-amber-300" />
                   </div>
                   <div>
                     <h3 className="font-display font-extrabold text-sm text-white tracking-wide">Focus Timer</h3>
@@ -237,7 +247,7 @@ export default function StudyTimer() {
                     className="p-1.5 rounded-xl hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                     title={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
                   >
-                    {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+                    {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-300" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
@@ -255,7 +265,7 @@ export default function StudyTimer() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-3 text-center space-y-4"
                 >
-                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-xl shadow-amber-500/40 text-3xl">
+                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br from-[#78350F] to-[#451A03] shadow-xl shadow-amber-900/40 text-3xl">
                     <span>🎉</span>
                   </div>
 
@@ -267,14 +277,14 @@ export default function StudyTimer() {
                   <div className="space-y-2.5 pt-2">
                     <button
                       onClick={handleStartBreak}
-                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                       <Coffee className="w-4 h-4" /> Start 5-Min Short Break
                     </button>
 
                     <button
                       onClick={handleKeepFocusGoing}
-                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/35 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#78350F] via-amber-900 to-[#451A03] hover:brightness-110 text-white font-black text-xs shadow-lg shadow-amber-900/35 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4" /> Keep Focus Going (Restart Timer)
                     </button>
@@ -298,7 +308,7 @@ export default function StudyTimer() {
                         onClick={() => switchMode(key)}
                         className={`py-1.5 rounded-xl transition-all ${
                           mode === key
-                            ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 font-black shadow-lg shadow-amber-500/35 scale-[1.02]'
+                            ? 'bg-gradient-to-r from-[#78350F] to-amber-900 text-white font-black shadow-lg shadow-amber-900/35 scale-[1.02]'
                             : 'text-slate-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
@@ -309,16 +319,16 @@ export default function StudyTimer() {
 
                   {/* Manual Custom Focus Duration Bar */}
                   {mode === 'focus' && (
-                    <div className="mb-4 bg-slate-900/90 p-3.5 rounded-2xl border border-amber-500/25 shadow-inner">
+                    <div className="mb-4 bg-slate-900/90 p-3.5 rounded-2xl border border-amber-900/40 shadow-inner">
                       <div className="flex items-center justify-between text-xs font-medium mb-2.5">
                         <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-                          <Settings2 className="w-3.5 h-3.5 text-amber-400" /> Set Focus Minutes:
+                          <Settings2 className="w-3.5 h-3.5 text-amber-300" /> Set Focus Minutes:
                         </span>
                         <div className="flex items-center gap-1 font-mono font-bold">
                           <button
                             onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
                             disabled={isRunning || customFocusMinutes <= 5}
-                            className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
+                            className="w-7 h-7 rounded-xl bg-amber-900/30 hover:bg-amber-900/40 text-amber-300 font-bold border border-amber-800/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
                             title="-5 Minutes"
                           >
                             <Minus className="w-3.5 h-3.5" />
@@ -330,13 +340,13 @@ export default function StudyTimer() {
                             value={customFocusMinutes}
                             disabled={isRunning}
                             onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
-                            className="w-14 text-center bg-slate-950 border-2 border-amber-500/50 rounded-xl py-1 text-sm font-mono font-black text-amber-300 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-500/40 shadow-inner"
+                            className="w-14 text-center bg-slate-950 border-2 border-amber-800/50 rounded-xl py-1 text-sm font-mono font-black text-amber-200 focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-900/40 shadow-inner"
                           />
                           <span className="text-slate-400 font-sans text-xs">min</span>
                           <button
                             onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
                             disabled={isRunning || customFocusMinutes >= 300}
-                            className="w-7 h-7 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 font-bold border border-amber-500/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
+                            className="w-7 h-7 rounded-xl bg-amber-900/30 hover:bg-amber-900/40 text-amber-300 font-bold border border-amber-800/40 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
                             title="+5 Minutes"
                           >
                             <Plus className="w-3.5 h-3.5" />
@@ -353,7 +363,7 @@ export default function StudyTimer() {
                             disabled={isRunning}
                             className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all ${
                               customFocusMinutes === mins
-                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black border border-amber-400 shadow-md shadow-amber-500/30 scale-105'
+                                ? 'bg-gradient-to-r from-[#78350F] to-amber-900 text-white font-black border border-amber-700 shadow-md shadow-amber-900/30 scale-105'
                                 : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/10 hover:scale-105'
                             }`}
                           >
@@ -368,9 +378,9 @@ export default function StudyTimer() {
                   <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                       <defs>
-                        <linearGradient id="timer-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#F59E0B" />
-                          <stop offset="100%" stopColor="#EA580C" />
+                        <linearGradient id="timer-brown-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#78350F" />
+                          <stop offset="100%" stopColor="#B45309" />
                         </linearGradient>
                       </defs>
                       <circle
@@ -385,7 +395,7 @@ export default function StudyTimer() {
                         cx="50"
                         cy="50"
                         r="42"
-                        stroke="url(#timer-amber-gradient)"
+                        stroke="url(#timer-brown-gradient)"
                         strokeWidth="6"
                         strokeDasharray="263.89"
                         strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
@@ -396,11 +406,11 @@ export default function StudyTimer() {
                     </svg>
 
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-4xl font-mono font-black tracking-tight text-white drop-shadow-[0_0_18px_rgba(245,158,11,0.6)]">
+                      <span className="text-4xl font-mono font-black tracking-tight text-white drop-shadow-[0_0_18px_rgba(120,53,15,0.6)]">
                         {formatTime(timeLeft)}
                       </span>
-                      <span className="text-xs text-amber-400 font-semibold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
-                        {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-400 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
+                      <span className="text-xs text-amber-200 font-semibold mt-1 capitalize flex items-center gap-1.5 bg-amber-900/30 px-2.5 py-0.5 rounded-full border border-amber-800/30">
+                        {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-300 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-400" />}
                         {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
                       </span>
                     </div>
@@ -418,7 +428,7 @@ export default function StudyTimer() {
 
                     <button
                       onClick={toggleTimer}
-                      className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:via-orange-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                      className="px-8 py-3 rounded-2xl bg-gradient-to-r from-[#78350F] via-amber-900 to-[#582C12] hover:brightness-110 text-white font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-900/40 hover:shadow-amber-900/60 hover:scale-105 active:scale-95 transition-all cursor-pointer"
                     >
                       {isRunning ? (
                         <>
@@ -434,12 +444,11 @@ export default function StudyTimer() {
 
                   <div className="mt-4 pt-3 border-t border-white/10 text-center text-xs text-slate-400 flex items-center justify-between">
                     <span>Completed today:</span>
-                    <span className="font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
+                    <span className="font-bold text-amber-200 bg-amber-900/30 px-2 py-0.5 rounded-lg border border-amber-800/30">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
                   </div>
                 </>
               )}
             </motion.div>
-          </>
         )}
       </AnimatePresence>
     </div>

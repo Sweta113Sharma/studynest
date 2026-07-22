@@ -1,44 +1,44 @@
 // src/data/studyData.js
 
 export const branches = [
-    { id: 'cse', name: 'Computer Science & Engineering', icon: '💻', color: '#F59E0B' },
-    { id: 'ece', name: 'Electronics & Communication', icon: '📡', color: '#FB923C' },
+    { id: 'cse', name: 'Computer Science & Engineering', icon: '💻', color: '#78350F' },
+    { id: 'ece', name: 'Electronics & Communication', icon: '📡', color: '#92400E' },
     { id: 'me',  name: 'Mechanical Engineering', icon: '⚙️', color: '#9CA3AF' },
     { id: 'ce',  name: 'Civil Engineering', icon: '🏗️', color: '#D1D5DB' },
-    { id: 'ee',  name: 'Electrical Engineering', icon: '⚡', color: '#FCD34D' }
+    { id: 'ee',  name: 'Electrical Engineering', icon: '⚡', color: '#B45309' }
 ];
 
 export const subjectColors = {
-    'dsa':       { bg: 'rgba(245,158,11,0.06)',  border: '#F59E0B', text: '#FDE68A', icon: '🧮' },
-    'coa':       { bg: 'rgba(251,146,60,0.06)',  border: '#FB923C', text: '#FFEDD5', icon: '🖥️' },
-    'dbms':      { bg: 'rgba(245,158,11,0.06)',   border: '#F59E0B', text: '#FDE68A', icon: '🗄️' },
+    'dsa':       { bg: 'rgba(120,53,15,0.12)',  border: '#78350F', text: '#FDE68A', icon: '🧮' },
+    'coa':       { bg: 'rgba(146,64,14,0.12)',  border: '#92400E', text: '#FEF3C7', icon: '🖥️' },
+    'dbms':      { bg: 'rgba(120,53,15,0.12)',   border: '#78350F', text: '#FDE68A', icon: '🗄️' },
     'os':        { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '🐧' },
     'cn':        { bg: 'rgba(209,213,219,0.06)',   border: '#D1D5DB', text: '#F9FAFB', icon: '🌐' },
-    'math':      { bg: 'rgba(245,158,11,0.06)',   border: '#F59E0B', text: '#FDE68A', icon: '📐' },
-    'physics':   { bg: 'rgba(251,146,60,0.06)',  border: '#FB923C', text: '#FFEDD5', icon: '⚛️' },
+    'math':      { bg: 'rgba(180,83,9,0.12)',   border: '#B45309', text: '#FEF3C7', icon: '📐' },
+    'physics':   { bg: 'rgba(146,64,14,0.12)',  border: '#92400E', text: '#FEF3C7', icon: '⚛️' },
     'chemistry': { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '🧪' },
     'english':   { bg: 'rgba(209,213,219,0.06)',   border: '#D1D5DB', text: '#F9FAFB', icon: '📖' },
-    'bee':       { bg: 'rgba(245,158,11,0.06)',   border: '#F59E0B', text: '#FDE68A', icon: '⚡' },
-    'emft':      { bg: 'rgba(251,146,60,0.06)',  border: '#FB923C', text: '#FFEDD5', icon: '🧲' },
+    'bee':       { bg: 'rgba(180,83,9,0.12)',   border: '#B45309', text: '#FEF3C7', icon: '⚡' },
+    'emft':      { bg: 'rgba(146,64,14,0.12)',  border: '#92400E', text: '#FEF3C7', icon: '🧲' },
     'signals':   { bg: 'rgba(156,163,175,0.06)',  border: '#9CA3AF', text: '#F3F4F6', icon: '📊' },
     'micro':     { bg: 'rgba(209,213,219,0.06)',   border: '#D1D5DB', text: '#F9FAFB', icon: '🔬' },
-    'thermo':    { bg: 'rgba(245,158,11,0.06)',   border: '#F59E0B', text: '#FDE68A', icon: '🌡️' },
-    'fluid':     { bg: 'rgba(251,146,60,0.06)',   border: '#FB923C', text: '#FFEDD5', icon: '💧' },
+    'thermo':    { bg: 'rgba(120,53,15,0.12)',   border: '#78350F', text: '#FDE68A', icon: '🌡️' },
+    'fluid':     { bg: 'rgba(146,64,14,0.12)',   border: '#92400E', text: '#FEF3C7', icon: '💧' },
     'som':       { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '🏋️' },
     'survey':    { bg: 'rgba(209,213,219,0.06)',   border: '#D1D5DB', text: '#F9FAFB', icon: '📏' },
-    'concrete':  { bg: 'rgba(245,158,11,0.06)',    border: '#F59E0B', text: '#FDE68A', icon: '🧱' },
-    'machines':  { bg: 'rgba(251,146,60,0.06)',  border: '#FB923C', text: '#FFEDD5', icon: '🔌' },
+    'concrete':  { bg: 'rgba(120,53,15,0.12)',    border: '#78350F', text: '#FDE68A', icon: '🧱' },
+    'machines':  { bg: 'rgba(180,83,9,0.12)',  border: '#B45309', text: '#FEF3C7', icon: '🔌' },
     'pse':       { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '🔋' },
     'webtech':   { bg: 'rgba(209,213,219,0.06)',  border: '#D1D5DB', text: '#F9FAFB', icon: '🌐' },
-    'toc':       { bg: 'rgba(245,158,11,0.06)',  border: '#F59E0B', text: '#FDE68A', icon: '🧠' },
-    'cloud':     { bg: 'rgba(251,146,60,0.06)',   border: '#FB923C', text: '#FFEDD5', icon: '☁️' },
+    'toc':       { bg: 'rgba(180,83,9,0.12)',  border: '#B45309', text: '#FEF3C7', icon: '🧠' },
+    'cloud':     { bg: 'rgba(146,64,14,0.12)',   border: '#92400E', text: '#FEF3C7', icon: '☁️' },
     'or':        { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '📊' },
     'statsml':   { bg: 'rgba(209,213,219,0.06)',  border: '#D1D5DB', text: '#F9FAFB', icon: '📈' },
-    'psa':       { bg: 'rgba(245,158,11,0.06)',  border: '#F59E0B', text: '#FDE68A', icon: '🧩' },
-    'ai':        { bg: 'rgba(251,146,60,0.06)',   border: '#FB923C', text: '#FFEDD5', icon: '🤖' },
+    'psa':       { bg: 'rgba(120,53,15,0.12)',  border: '#78350F', text: '#FDE68A', icon: '🧩' },
+    'ai':        { bg: 'rgba(146,64,14,0.12)',   border: '#92400E', text: '#FEF3C7', icon: '🤖' },
     'java':      { bg: 'rgba(156,163,175,0.06)',   border: '#9CA3AF', text: '#F3F4F6', icon: '☕' },
     'stats':     { bg: 'rgba(209,213,219,0.06)',   border: '#D1D5DB', text: '#F9FAFB', icon: '📈' },
-    'default':   { bg: 'rgba(245,158,11,0.06)',  border: '#F59E0B', text: '#FDE68A', icon: '📘' },
+    'default':   { bg: 'rgba(120,53,15,0.12)',  border: '#78350F', text: '#FDE68A', icon: '📘' },
 };
 
 export const semesters = {

@@ -72,7 +72,7 @@ export default function HomeView({ context }) {
       {/* Stats Bar */}
       <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4" variants={itemVariants}>
         <div className="p-4 rounded-2xl glass-card flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-amber-900/30 text-amber-300 flex items-center justify-center border border-amber-800/40">
             <Flame className="w-6 h-6" />
           </div>
           <div>
