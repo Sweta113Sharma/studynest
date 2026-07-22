@@ -295,7 +295,7 @@ struct Node* reverseLinkedList(struct Node* head) {
 > 🧠 Mnemonic: "P-U-M-P (Pumping Lemma)": **P**umping length ($p$), **U**npack string ($xyz$), **M**iddle non-empty ($|y|>0$), **P**ump exponent ($xy^iz \in L$).`;
     }
 
-    if (msg.includes('graph algorithms') || msg.includes('dsa-ii') || msg.includes('tree') || msg.includes('bst')) {
+    if (msg.includes('graph') || msg.includes('tree') || msg.includes('bst') || msg.includes('dsa-ii') || msg.includes('dijkstra') || msg.includes('kruskal') || msg.includes('bfs') || msg.includes('dfs')) {
       return `### 📚 In-Depth Master Revision Notes: Tree & Graph Algorithms
 
 #### 1. 📌 Core Graph & Tree Definitions

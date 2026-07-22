@@ -174,11 +174,11 @@ export default function UnitDetailView({ context }) {
         flushTable(i)
         if (inCodeBlock) {
           elements.push(
-            <div key={`code-${codeBlockKey}`} className="my-4 rounded-2xl bg-slate-950 dark:bg-black/95 p-4 border border-amber-900/40 shadow-2xl overflow-x-auto">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-amber-200 font-mono">
+            <div key={`code-${codeBlockKey}`} className="my-4 rounded-2xl bg-amber-950/95 dark:bg-black/95 p-4 border border-amber-800/50 shadow-2xl overflow-x-auto">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-amber-800/40 text-xs text-amber-300 font-mono">
                 <span className="flex items-center gap-1.5">📐 Visual Diagram / Code Schematic</span>
               </div>
-              <pre className="font-mono text-xs md:text-sm text-emerald-400 whitespace-pre leading-relaxed">
+              <pre className="font-mono text-xs md:text-sm text-amber-200 dark:text-emerald-400 whitespace-pre leading-relaxed">
                 {codeBlockLines.join('\n')}
               </pre>
             </div>
