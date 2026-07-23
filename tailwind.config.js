@@ -8,47 +8,47 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#EBEBEB',
-        foreground: '#0B0B0B',
+        background: 'rgb(var(--bg-page-rgb) / <alpha-value>)',
+        foreground: 'rgb(var(--foreground-rgb) / <alpha-value>)',
         card: {
-          DEFAULT: '#0B0B0B',
-          foreground: '#FFFFFF',
+          DEFAULT: 'var(--bg-card)',
+          foreground: 'var(--text-card)',
         },
         popover: {
-          DEFAULT: '#0B0B0B',
-          foreground: '#FFFFFF',
+          DEFAULT: 'var(--bg-card)',
+          foreground: 'var(--text-card)',
         },
         primary: {
-          DEFAULT: '#78350F',
+          DEFAULT: 'rgb(var(--primary-rgb) / <alpha-value>)',
           foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#E5E7EB',
-          foreground: '#000000',
+          DEFAULT: 'var(--button-secondary-bg)',
+          foreground: 'var(--button-secondary-text)',
         },
         muted: {
-          DEFAULT: '#E5E7EB',
-          foreground: '#4B5563',
+          DEFAULT: 'var(--bg-input)',
+          foreground: 'rgb(var(--muted-foreground-rgb) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: '#92400E',
+          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
           foreground: '#FFFFFF',
         },
         destructive: {
           DEFAULT: 'oklch(0.55 0.15 25)',
           foreground: '#FFFFFF',
         },
-        border: '#D1D5DB',
-        input: '#FFFFFF',
-        ring: '#78350F',
+        border: 'var(--border-card)',
+        input: 'var(--bg-input)',
+        ring: 'rgb(var(--primary-rgb) / <alpha-value>)',
         success: 'oklch(0.7 0.15 150)',
-        warning: '#92400E',
+        warning: 'rgb(var(--accent-rgb) / <alpha-value>)',
         // Custom gradients
         'glass-1': 'rgba(255, 255, 255, 0.05)',
         'glass-2': 'rgba(255, 255, 255, 0.08)',
         'glass-3': 'rgba(255, 255, 255, 0.12)',
-        'glow-primary': 'rgba(120, 53, 15, 0.4)',
-        'glow-accent': 'rgba(146, 64, 14, 0.3)',
+        'glow-primary': 'rgba(245, 158, 11, 0.4)',
+        'glow-accent': 'rgba(251, 191, 36, 0.3)',
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Outfit', 'Inter', 'system-ui', 'sans-serif'],

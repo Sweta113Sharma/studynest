@@ -4,6 +4,12 @@
 
 :root {
   /* Light Mode Palette - Soothing Soft Slate & Dark Espresso Brown */
+  --bg-page-rgb: 248 250 252;
+  --foreground-rgb: 15 23 42;         /* Crisp dark slate #0F172A */
+  --muted-foreground-rgb: 71 85 105; /* Slate-600 #475569 */
+  --primary-rgb: 120 53 15;          /* Warm Espresso Brown #78350F */
+  --accent-rgb: 146 64 14;
+
   --bg-page: #F8FAFC;
   --text-page: #0F172A;
   --bg-card: #FFFFFF;
@@ -28,28 +34,34 @@
 }
 
 .dark {
-  /* Dark Mode Palette - Soothing Midnight Slate & Glowing Dark Brown */
+  /* Dark Mode Palette - Soothing Midnight Slate & Ultra-Bright High Contrast Text */
+  --bg-page-rgb: 9 13 22;
+  --foreground-rgb: 255 255 255;       /* Pure Ultra-Bright White #FFFFFF */
+  --muted-foreground-rgb: 226 232 240; /* High Contrast Slate-200 #E2E8F0 */
+  --primary-rgb: 245 158 11;          /* Vibrant Amber Gold #F59E0B */
+  --accent-rgb: 251 191 36;           /* Glowing Gold #FBBF24 */
+
   --bg-page: #090D16;
-  --text-page: #F8FAFC;
-  --bg-card: rgba(15, 23, 42, 0.85);
+  --text-page: #FFFFFF;
+  --bg-card: rgba(15, 23, 42, 0.88);
   --text-card: #FFFFFF;
-  --border-card: rgba(255, 255, 255, 0.12);
+  --border-card: rgba(255, 255, 255, 0.16);
   --bg-input: #0F172A;
   --text-input: #FFFFFF;
-  --accent: #92400E;
+  --accent: #F59E0B;
   --button-primary-bg: #78350F;
   --button-primary-text: #FFFFFF;
   --button-primary-hover-bg: #92400E;
   --button-primary-hover-text: #FFFFFF;
-  --button-secondary-bg: rgba(255, 255, 255, 0.06);
+  --button-secondary-bg: rgba(255, 255, 255, 0.08);
   --button-secondary-text: #FFFFFF;
-  --button-secondary-border: rgba(255, 255, 255, 0.15);
-  --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  --card-shadow-hover: 0 20px 50px rgba(120, 53, 15, 0.25);
-  --grid-line: rgba(255, 255, 255, 0.03);
-  --orb-1-color: rgba(120, 53, 15, 0.20);
-  --orb-2-color: rgba(146, 64, 14, 0.20);
-  --orb-3-color: rgba(180, 83, 9, 0.12);
+  --button-secondary-border: rgba(255, 255, 255, 0.2);
+  --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: 0 20px 50px rgba(245, 158, 11, 0.25);
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --orb-1-color: rgba(120, 53, 15, 0.25);
+  --orb-2-color: rgba(146, 64, 14, 0.25);
+  --orb-3-color: rgba(180, 83, 9, 0.15);
 }
 
 @layer base {
@@ -173,6 +185,15 @@
 
   .text-gradient {
     background: linear-gradient(to right, #B45309, #78350F, #D97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .dark .text-gradient {
+    background: linear-gradient(to right, #F59E0B, #FBBF24, #F59E0B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
