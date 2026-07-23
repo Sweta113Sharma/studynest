@@ -11,6 +11,8 @@ import SettingsModal from './SettingsModal'
 import StudyTimer from './StudyTimer'
 import AIAssistantDrawer from './AIAssistantDrawer'
 
+import logo from '../assets/logo.png'
+
 const viewVariants = {
   hidden: { opacity: 0, x: 20 },
   visible: { opacity: 1, x: 0 },
@@ -134,7 +136,7 @@ export default function AppShell({ context }) {
           >
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden border border-white/20 p-0.5">
               <img 
-                src="/logo.png" 
+                src={logo} 
                 alt="StudyNest Logo" 
                 className="w-full h-full object-contain"
               />

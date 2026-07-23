@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import logo from '../assets/logo.png'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -87,7 +88,7 @@ export default function LoginScreen({ onLogin }) {
               variants={itemVariants}
             >
               <img 
-                src="/logo.png" 
+                src={logo} 
                 alt="StudyNest Logo" 
                 className="w-full h-full object-contain"
               />
