@@ -64,44 +64,86 @@ export default function AIAssistantDrawer({ context }) {
 
   const formatContent = (text) => {
     const lines = text.split('\n')
-    return lines.map((line, idx) => {
+    let inCodeBlock = false
+    let codeContent = []
+    const elements = []
+
+    lines.forEach((line, idx) => {
       let trimmed = line.trim()
-      if (!trimmed) return <div key={idx} className="h-2" />
+      
+      if (trimmed.startsWith('```')) {
+        if (inCodeBlock) {
+          elements.push(
+            <pre key={`code-${idx}`} className="my-2.5 p-3 rounded-xl bg-slate-950 border border-white/20 text-amber-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
+              {codeContent.join('\n')}
+            </pre>
+          )
+          codeContent = []
+          inCodeBlock = false
+        } else {
+          inCodeBlock = true
+        }
+        return
+      }
+
+      if (inCodeBlock) {
+        codeContent.push(line)
+        return
+      }
+
+      if (!trimmed) {
+        elements.push(<div key={idx} className="h-2" />)
+        return
+      }
 
       if (trimmed.startsWith('### ')) {
-        return <h4 key={idx} className="text-sm font-bold text-amber-300 mt-3 mb-1">{trimmed.slice(4)}</h4>
-      }
-      if (trimmed.startsWith('## ')) {
-        return <h3 key={idx} className="text-base font-bold text-amber-300 mt-3 mb-1">{trimmed.slice(3)}</h3>
-      }
-      if (trimmed.startsWith('# ')) {
-        return <h2 key={idx} className="text-lg font-bold text-amber-300 mt-4 mb-2">{trimmed.slice(2)}</h2>
-      }
-      if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-        return (
-          <div key={idx} className="flex items-start gap-2 my-1 text-xs sm:text-sm text-slate-100">
-            <span className="text-amber-400 mt-1">•</span>
-            <span>{renderInline(trimmed.slice(2))}</span>
+        elements.push(<h4 key={idx} className="text-sm font-bold text-amber-300 mt-3 mb-1.5 flex items-center gap-1.5">{renderInline(trimmed.slice(4))}</h4>)
+      } else if (trimmed.startsWith('## ')) {
+        elements.push(<h3 key={idx} className="text-base font-bold text-amber-300 mt-3.5 mb-2 flex items-center gap-1.5 border-b border-white/10 pb-1">{renderInline(trimmed.slice(3))}</h3>)
+      } else if (trimmed.startsWith('# ')) {
+        elements.push(<h2 key={idx} className="text-lg font-bold text-amber-300 mt-4 mb-2 flex items-center gap-1.5">{renderInline(trimmed.slice(2))}</h2>)
+      } else if (trimmed.startsWith('> ')) {
+        elements.push(
+          <div key={idx} className="my-2 p-3 rounded-xl bg-amber-500/20 border-l-4 border-amber-400 text-amber-100 text-xs sm:text-sm font-medium shadow-sm">
+            {renderInline(trimmed.replace(/^>\s*/, ''))}
           </div>
         )
+      } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+        elements.push(
+          <div key={idx} className="flex items-start gap-2 my-1.5 text-xs sm:text-sm text-slate-100">
+            <span className="text-amber-400 font-bold mt-0.5">•</span>
+            <span className="flex-1 text-slate-100">{renderInline(trimmed.slice(2))}</span>
+          </div>
+        )
+      } else {
+        elements.push(<p key={idx} className="my-1.5 text-xs sm:text-sm leading-relaxed text-slate-100">{renderInline(trimmed)}</p>)
       }
-      return <p key={idx} className="my-1 text-xs sm:text-sm leading-relaxed text-slate-100">{renderInline(trimmed)}</p>
     })
+
+    if (inCodeBlock && codeContent.length > 0) {
+      elements.push(
+        <pre key="code-final" className="my-2.5 p-3 rounded-xl bg-slate-950 border border-white/20 text-amber-300 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
+          {codeContent.join('\n')}
+        </pre>
+      )
+    }
+
+    return elements
   }
 
   const renderInline = (str) => {
     const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g)
     return parts.map((part, idx) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={idx} className="font-bold text-white">{part.slice(2, -2)}</strong>
+        return <strong key={idx} className="font-extrabold text-amber-300">{part.slice(2, -2)}</strong>
       }
       if (part.startsWith('*') && part.endsWith('*')) {
         return <em key={idx} className="italic text-slate-200">{part.slice(1, -1)}</em>
       }
       if (part.startsWith('`') && part.endsWith('`')) {
-        return <code key={idx} className="px-1.5 py-0.5 rounded bg-white/15 font-mono text-[11px] text-amber-200 border border-white/10">{part.slice(1, -1)}</code>
+        return <code key={idx} className="px-1.5 py-0.5 rounded bg-white/15 font-mono text-[11px] text-amber-300 border border-white/20 font-bold">{part.slice(1, -1)}</code>
       }
-      return part
+      return <span key={idx} className="text-slate-100">{part}</span>
     })
   }
 
