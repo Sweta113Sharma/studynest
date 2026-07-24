@@ -43,81 +43,48 @@ export default function AppShell({ context }) {
     navigateTo('home')
   }
 
+  const goToSubjects = () => {
+    setSelectedSubject(null)
+    setSelectedUnit(null)
+    navigateTo('subjects')
+  }
+
+  const goToSubjectDetail = (subject) => {
+    if (subject) setSelectedSubject(subject)
+    setSelectedUnit(null)
+    navigateTo('subject-detail')
+  }
+
+  const goToUnitDetail = (unit) => {
+    if (unit) setSelectedUnit(unit)
+    navigateTo('unit-detail')
+  }
+
   const renderView = () => {
+    const viewContext = {
+      ...context,
+      navigateTo,
+      goHome,
+      goToSubjects,
+      goToSubjectDetail,
+      goToUnitDetail
+    }
+
     switch (currentView) {
       case 'home':
-        return (
-          <HomeView
-            key="home"
-            context={{
-              ...context,
-              navigateTo,
-              goHome,
-              selectedYear,
-              setSelectedYear,
-              setSelectedBranch,
-              yearToSemesters
-            }}
-          />
-        )
+        return <HomeView key="home" context={viewContext} />
       case 'subjects':
-        return (
-          <SubjectsView
-            key="subjects"
-            context={{
-              ...context,
-              navigateTo,
-              goHome
-            }}
-          />
-        )
+        return <SubjectsView key="subjects" context={viewContext} />
       case 'subject-detail':
-        return (
-          <SubjectDetailView
-            key="subject-detail"
-            context={{
-              ...context,
-              navigateTo,
-              goHome,
-              setSelectedUnit
-            }}
-          />
-        )
+        return <SubjectDetailView key="subject-detail" context={viewContext} />
       case 'unit-detail':
-        return (
-          <UnitDetailView
-            key="unit-detail"
-            context={{
-              ...context,
-              navigateTo,
-              goToSubjectDetail: () => navigateTo('subject-detail')
-            }}
-          />
-        )
+        return <UnitDetailView key="unit-detail" context={viewContext} />
       case 'quiz':
-        return (
-          <QuizView
-            key="quiz"
-            context={{
-              ...context,
-              navigateTo,
-              goToSubjectDetail: () => navigateTo('subject-detail')
-            }}
-          />
-        )
+        return <QuizView key="quiz" context={viewContext} />
       case 'flashcards':
-        return (
-          <FlashcardsView
-            key="flashcards"
-            context={{
-              ...context,
-              navigateTo,
-              goToSubjectDetail: () => navigateTo('subject-detail')
-            }}
-          />
-        )
+        return <FlashcardsView key="flashcards" context={viewContext} />
       default:
-        return <HomeView key="home" context={{ ...context, navigateTo, goHome }} />
+        return <HomeView key="home" context={viewContext} />
     }
   }
 

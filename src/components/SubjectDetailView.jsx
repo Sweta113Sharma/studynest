@@ -23,7 +23,7 @@ const itemVariants = {
 export default function SubjectDetailView({ context }) {
   const {
     selectedSubject, setSelectedUnit, selectedBranch, selectedSemester,
-    navigateTo, goHome, subjectColors, getSubjectProgress, setSubjectProgress,
+    navigateTo, goHome, goToSubjects, goBack, subjectColors, getSubjectProgress, setSubjectProgress,
     getUnitProgress, setUnitProgress, getTodos, saveTodos, getQuizzes,
     toggleBookmark, isBookmarked
   } = context
@@ -39,7 +39,17 @@ export default function SubjectDetailView({ context }) {
     }
   }, [selectedSubject])
 
-  if (!selectedSubject) return null
+  if (!selectedSubject) {
+    return (
+      <div className="text-center py-16 space-y-4">
+        <h2 className="text-xl font-bold">No Subject Selected</h2>
+        <p className="text-muted-foreground text-sm">Please select a subject to view syllabus and units.</p>
+        <button onClick={goToSubjects || goHome} className="btn-primary">
+          Back to Subjects
+        </button>
+      </div>
+    )
+  }
 
   const colors = subjectColors[selectedSubject.key] || subjectColors.default
   const progress = getSubjectProgress(selectedSubject.id)
@@ -125,7 +135,7 @@ export default function SubjectDetailView({ context }) {
       animate="visible"
     >
       <motion.button
-        onClick={() => navigateTo('subjects')}
+        onClick={goBack}
         className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
         variants={itemVariants}
         whileHover={{ x: -4 }}

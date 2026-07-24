@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import LoginScreen from './components/LoginScreen'
 import AppShell from './components/AppShell'
@@ -15,6 +15,7 @@ function App() {
   const [quizState, setQuizState] = useState({ currentIndex: 0, score: 0, selectedOption: null, completed: false })
   const [currentView, setCurrentView] = useState('login')
   const [darkMode, setDarkMode] = useState(false)
+  const isPoppingState = useRef(false)
 
   useEffect(() => {
     const savedUser = localStorage.getItem('studynest_user')
@@ -28,14 +29,15 @@ function App() {
     }
 
     const handlePopState = (event) => {
+      isPoppingState.current = true
       if (event.state) {
         const { view, year, branch, sem, subject, unit } = event.state
         setCurrentView(view || 'home')
-        setSelectedYear(year)
-        setSelectedBranch(branch)
-        setSelectedSemester(sem)
-        setSelectedSubject(subject)
-        setSelectedUnit(unit)
+        setSelectedYear(year ?? null)
+        setSelectedBranch(branch ?? null)
+        setSelectedSemester(sem ?? null)
+        setSelectedSubject(subject ?? null)
+        setSelectedUnit(unit ?? null)
       } else {
         const hasUser = localStorage.getItem('studynest_user')
         if (hasUser) {
@@ -66,6 +68,10 @@ function App() {
 
   useEffect(() => {
     if (currentView === 'login') return
+    if (isPoppingState.current) {
+      isPoppingState.current = false
+      return
+    }
     const currentState = window.history.state
     const newState = {
       view: currentView,
@@ -83,6 +89,34 @@ function App() {
       window.history.replaceState(newState, '', '')
     }
   }, [currentView, selectedYear, selectedBranch, selectedSemester, selectedSubject, selectedUnit])
+
+  const goBack = () => {
+    if (currentView === 'unit-detail') {
+      setSelectedUnit(null)
+      setCurrentView(selectedSubject ? 'subject-detail' : 'subjects')
+    } else if (currentView === 'subject-detail') {
+      setSelectedUnit(null)
+      setSelectedSubject(null)
+      setCurrentView(selectedBranch && selectedYear ? 'subjects' : 'home')
+    } else if (currentView === 'quiz' || currentView === 'flashcards') {
+      if (selectedUnit) {
+        setCurrentView('unit-detail')
+      } else if (selectedSubject) {
+        setCurrentView('subject-detail')
+      } else {
+        setCurrentView('subjects')
+      }
+    } else if (currentView === 'subjects') {
+      setSelectedUnit(null)
+      setSelectedSubject(null)
+      setSelectedSemester(null)
+      setSelectedBranch(null)
+      setSelectedYear(null)
+      setCurrentView('home')
+    } else {
+      setCurrentView('home')
+    }
+  }
 
   const handleLogin = (userData) => {
     setUser(userData)
@@ -203,6 +237,7 @@ function App() {
     subjectColors,
     getGreeting,
     getInitials,
+    goBack,
     handleLogin,
     handleLogout,
     getSubjectProgress,

@@ -4,7 +4,7 @@ import { ArrowLeft, RotateCw, CheckCircle2, HelpCircle, Sparkles, Trophy, Rotate
 import { aiService } from '../services/aiService'
 
 export default function FlashcardsView({ context }) {
-  const { selectedSubject, selectedUnit, navigateTo, goToSubjectDetail } = context || {}
+  const { selectedSubject, selectedUnit, navigateTo, goToSubjectDetail, goBack } = context || {}
 
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(true)
@@ -151,7 +151,7 @@ export default function FlashcardsView({ context }) {
     <motion.div className="space-y-6 max-w-xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
         <button
-          onClick={() => (selectedUnit ? navigateTo('unit-detail') : goToSubjectDetail())}
+          onClick={goBack}
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-white/5 text-sm"
         >
           <ArrowLeft className="w-4 h-4" /> Back

@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronRight, CheckCircle, XCircle, Trophy, Sparkles, Rotate
 import { aiService } from '../services/aiService'
 
 export default function QuizView({ context }) {
-  const { currentQuiz, setCurrentQuiz, setQuizState, quizState, getQuizzes, selectedSubject, navigateTo, goToSubjectDetail } = context
+  const { currentQuiz, setCurrentQuiz, setQuizState, quizState, getQuizzes, selectedSubject, navigateTo, goToSubjectDetail, goBack } = context
 
   const [feedback, setFeedback] = useState(null)
   const [showExplanation, setShowExplanation] = useState(false)
@@ -118,7 +118,7 @@ export default function QuizView({ context }) {
     <motion.div className="space-y-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
         <motion.button 
-          onClick={() => currentQuiz?.title?.includes('AI Quiz:') ? navigateTo('unit-detail') : goToSubjectDetail()} 
+          onClick={goBack} 
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
           whileHover={{ x: -4 }}
           whileTap={{ scale: 0.92 }}

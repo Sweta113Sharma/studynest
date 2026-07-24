@@ -9,7 +9,7 @@ const tabVariants = {
 }
 
 export default function UnitDetailView({ context }) {
-  const { selectedUnit, navigateTo, goToSubjectDetail, selectedSubject, toggleBookmark, isBookmarked } = context
+  const { selectedUnit, navigateTo, goToSubjectDetail, goHome, goBack, selectedSubject, toggleBookmark, isBookmarked } = context
 
   const [activeTab, setActiveTab] = useState('ai')
   const [aiLoading, setAiLoading] = useState(false)
@@ -23,7 +23,17 @@ export default function UnitDetailView({ context }) {
     }
   }, [selectedUnit, activeTab])
 
-  if (!selectedUnit) return null
+  if (!selectedUnit) {
+    return (
+      <div className="text-center py-16 space-y-4">
+        <h2 className="text-xl font-bold">No Unit Selected</h2>
+        <p className="text-muted-foreground text-sm">Please select a unit to view study materials and notes.</p>
+        <button onClick={goToSubjectDetail || goHome} className="btn-primary">
+          Back to Subject
+        </button>
+      </div>
+    )
+  }
 
   const bookmarkId = `unit_${selectedSubject?.id}_${selectedUnit.title}`
   const bookmarked = isBookmarked(bookmarkId)
@@ -267,7 +277,7 @@ export default function UnitDetailView({ context }) {
       animate={{ opacity: 1 }}
     >
       <motion.button
-        onClick={goToSubjectDetail}
+        onClick={goBack}
         className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
         whileHover={{ x: -4 }}
         whileTap={{ scale: 0.92 }}
