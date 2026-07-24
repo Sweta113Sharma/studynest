@@ -504,11 +504,84 @@ export const semesters = {
                 id: 'os-1', key: 'os', title: 'Operating Systems', code: 'BMICSE0403',
                 units: [
                     {
-                        title: 'Unit 1: Introduction to OS',
-                        aiSummary: 'Functions of OS, types of OS. Process management, CPU scheduling, memory management, file systems.',
-                        ppts: [{ title: 'OS Introduction PPT', size: '2.8 MB' }],
-                        notes: [{ title: 'OS Quick Notes', desc: 'Summary of all OS concepts' }],
-                        youtube: [{ title: 'OS Full Course', channel: 'Gate Smashers', url: 'https://youtube.com' }]
+                        title: 'Unit 1: Introduction to OS & System Structures',
+                        aiSummary: 'Operating System Overview: Functions, services, system components, and system calls. OS Architecture: Monolithic, Microkernel, Layered, and Hybrid systems. Dual-mode execution (User Mode vs Kernel Mode), interrupts, trap handlers, and booting process (BIOS/UEFI to Kernel load).',
+                        ppts: [
+                            { title: 'OS Concepts & Architecture PPT', size: '3.2 MB', url: '/pdfs/os/os_unit1.pdf' },
+                            { title: 'System Calls & Kernel Structures', size: '2.5 MB', url: '/pdfs/os/os_system_calls.pdf' }
+                        ],
+                        notes: [
+                            { title: 'OS Architecture & System Calls Guide', desc: 'Summary of dual-mode operations, traps, and system call workflow' },
+                            { title: 'Monolithic vs Microkernel Cheat Sheet', desc: 'Key differences, advantages, and real-world OS examples' }
+                        ],
+                        youtube: [
+                            { title: 'Introduction to Operating Systems', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=bkSWJJZNgf8' },
+                            { title: 'System Calls & Kernel Architecture', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=lhTobL-310U' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 2: Process Management & CPU Scheduling',
+                        aiSummary: 'Process State Model: New, Ready, Running, Waiting, Terminated. Process Control Block (PCB) and Context Switching overhead. Threads: User-level vs Kernel-level threads, Multithreading models (Many-to-One, One-to-One, Many-to-Many). CPU Scheduling: FCFS, Shortest Job First (SJF), Shortest Remaining Time First (SRTF), Round Robin (RR) with time quantum tuning, Priority Scheduling (Preemptive & Non-Preemptive), Multilevel Feedback Queue. Metrics: Throughput, Turnaround Time, Waiting Time, Response Time.',
+                        ppts: [
+                            { title: 'Process & CPU Scheduling PPT', size: '4.1 MB', url: '/pdfs/os/os_unit2_scheduling.pdf' },
+                            { title: 'Multithreading & Thread Pooling', size: '2.9 MB', url: '/pdfs/os/os_threads.pdf' }
+                        ],
+                        notes: [
+                            { title: 'CPU Scheduling Algorithms Formula Sheet', desc: 'Solved numericals for Gantt Charts, TAT, and Waiting Time' },
+                            { title: 'Process State & PCB Reference Guide', desc: 'PCB components, context switch triggers, and thread models' }
+                        ],
+                        youtube: [
+                            { title: 'Process Management & Scheduling Algorithms', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=ewabbbLRWpE' },
+                            { title: 'CPU Scheduling Numericals (SJF, RR, Priority)', channel: 'Abdul Bari', url: 'https://www.youtube.com/watch?v=zF_xI5OKnRA' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 3: Process Synchronization & Deadlocks',
+                        aiSummary: 'Concurrency & Synchronization: Race conditions, Critical Section Problem, and 3 criteria (Mutual Exclusion, Progress, Bounded Waiting). Hardware Sync (TestAndSet, Swap), Peterson\'s Solution. Semaphores: Counting & Binary Semaphores, Wait/Signal atomic ops, Mutex Locks. Classical IPC Problems: Producer-Consumer (Bounded Buffer), Readers-Writers, Dining Philosophers. Deadlocks: 4 Necessary Conditions (Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait). Resource Allocation Graph (RAG). Deadlock Handling: Prevention, Avoidance (Banker\'s Algorithm - Safety & Resource-Request), Detection & Recovery.',
+                        ppts: [
+                            { title: 'Process Synchronization & Semaphores PPT', size: '3.8 MB', url: '/pdfs/os/os_unit3_sync.pdf' },
+                            { title: 'Deadlock Avoidance & Banker Algorithm', size: '3.3 MB', url: '/pdfs/os/os_deadlocks.pdf' }
+                        ],
+                        notes: [
+                            { title: 'Semaphores & Classical IPC Solutions', desc: 'Code patterns for Producer-Consumer and Dining Philosophers' },
+                            { title: 'Banker\'s Algorithm Solved Examples', desc: 'Step-by-step matrix evaluation for Safety and Request algorithms' }
+                        ],
+                        youtube: [
+                            { title: 'Process Synchronization & Semaphores', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=ph2aI4T2vN4' },
+                            { title: 'Banker\'s Algorithm & Deadlock Solved Examples', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=7g-Cce47Qn8' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 4: Memory Management & Virtual Memory',
+                        aiSummary: 'Memory Hierarchy & Logical vs Physical Address Space. Contiguous Allocation: Fixed vs Dynamic partitioning, First-fit, Best-fit, Worst-fit. Fragmentation: Internal vs External fragmentation, Compaction. Non-contiguous Allocation: Paging, Page Table Structure, Translation Lookaside Buffer (TLB), Multi-level Paging, Segmentation. Virtual Memory: Demand Paging, Page Fault Handling workflow. Page Replacement Algorithms: FIFO, Optimal (OPT), Least Recently Used (LRU), Second Chance / Clock Algorithm. Belady\'s Anomaly, Thrashing, Working Set Model & Page Fault Frequency.',
+                        ppts: [
+                            { title: 'Memory Management & Paging PPT', size: '4.5 MB', url: '/pdfs/os/os_unit4_memory.pdf' },
+                            { title: 'Virtual Memory & Page Replacement', size: '3.7 MB', url: '/pdfs/os/os_virtual_memory.pdf' }
+                        ],
+                        notes: [
+                            { title: 'Page Replacement Algorithms Practice Sheet', desc: 'FIFO, LRU, OPT page fault calculations and Belady Anomaly' },
+                            { title: 'Paging & TLB Address Translation Guide', desc: 'Logical to physical address mapping with numerical examples' }
+                        ],
+                        youtube: [
+                            { title: 'Memory Management & Paging in OS', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=qkbBL-C26Jc' },
+                            { title: 'Page Replacement Algorithms (LRU, FIFO, OPT)', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=H74X6D3z_7E' }
+                        ]
+                    },
+                    {
+                        title: 'Unit 5: Storage Management, File Systems & Disk Scheduling',
+                        aiSummary: 'File System Architecture: File concepts, attributes, file operations, directory structures (Single-level, Two-level, Tree, Acyclic Graph). File Allocation Methods: Contiguous, Linked, Indexed Allocation (Inodes in Unix/Linux). Free Space Management: Bit vector, Linked List, Grouping, Counting. Disk Storage & Hardware Structure: Cylinders, Tracks, Sectors. Disk Scheduling Algorithms: FCFS, Shortest Seek Time First (SSTF), SCAN (Elevator), C-SCAN, LOOK, C-LOOK. Disk Formatting & Swap Space Management. RAID Technology: RAID 0, 1, 5, 6, 10 performance & redundancy trade-offs.',
+                        ppts: [
+                            { title: 'File System & Inode Allocation PPT', size: '3.9 MB', url: '/pdfs/os/os_unit5_files.pdf' },
+                            { title: 'Disk Scheduling & RAID Architectures', size: '3.1 MB', url: '/pdfs/os/os_disk_raid.pdf' }
+                        ],
+                        notes: [
+                            { title: 'Disk Scheduling Algorithms Numerical Guide', desc: 'Head movement calculations for FCFS, SSTF, SCAN, C-SCAN' },
+                            { title: 'File Allocation & Unix Inodes Summary', desc: 'Contiguous vs Indexed allocation, direct and indirect block pointers' }
+                        ],
+                        youtube: [
+                            { title: 'File System Implementation & Inodes', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=V3xU1J7sE5o' },
+                            { title: 'Disk Scheduling Algorithms (SCAN, C-SCAN, SSTF)', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=4y5J7L2Q-wM' }
+                        ]
                     }
                 ]
             }
