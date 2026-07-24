@@ -229,7 +229,7 @@ function App() {
       
       <AnimatePresence mode="wait">
         {!user ? (
-          <LoginScreen key="login" onLogin={handleLogin} />
+          <LoginScreen key="login" onLogin={handleLogin} darkMode={darkMode} setDarkMode={setDarkMode} />
         ) : (
           <AppShell key="app" context={context} />
         )}
