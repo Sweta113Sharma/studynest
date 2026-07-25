@@ -103,12 +103,9 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-full blur opacity-40 group-hover:opacity-80 transition duration-300" />
             <div className="relative w-10 h-10 rounded-full bg-white/90 dark:bg-slate-900/90 border border-white/40 dark:border-white/10 p-1 flex items-center justify-center shadow-lg">
-              <img src={logo} alt="StudyNest" className="w-full h-full object-contain" />
+              <img src={logo} alt="StudyNest Logo" className="w-full h-full object-contain" />
             </div>
           </div>
-          <span className="font-display font-bold text-xl tracking-tight text-foreground">
-            Study<span className="text-amber-600 dark:text-amber-400">Nest</span>
-          </span>
           <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full glass-pill-badge text-amber-700 dark:text-amber-300 border border-amber-500/20">
             <Sparkles className="w-3.5 h-3.5" /> B.Tech Academic Suite
           </span>
