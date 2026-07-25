@@ -170,7 +170,7 @@ export default function AIAssistantDrawer({ context }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[400px] md:w-[430px] h-[540px] max-h-[80vh] glass-panel-morphism text-foreground z-50 shadow-2xl flex flex-col rounded-3xl overflow-hidden border border-white/50 dark:border-white/15 backdrop-blur-3xl"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[400px] md:w-[430px] h-[540px] max-h-[80vh] glass-ai-body text-foreground z-50 shadow-2xl flex flex-col rounded-3xl overflow-hidden border border-white/60 dark:border-white/20 backdrop-blur-3xl"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
