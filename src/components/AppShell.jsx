@@ -99,14 +99,14 @@ export default function AppShell({ context }) {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <button
             onClick={goHome}
-            className="flex items-center hover:opacity-80 transition-opacity"
+            className="flex items-center hover:opacity-90 transition-all hover:scale-105 active:scale-95"
             title="Home"
           >
-            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden border border-white/20 p-0.5 shadow-sm">
+            <div className="w-11 h-11 rounded-2xl bg-white/90 dark:bg-slate-900/90 flex items-center justify-center overflow-hidden border border-white/40 dark:border-white/20 p-0.5 shadow-md">
               <img 
                 src={logo} 
                 alt="StudyNest Logo" 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover rounded-xl"
               />
             </div>
           </button>

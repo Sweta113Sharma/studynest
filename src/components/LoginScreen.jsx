@@ -101,9 +101,9 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
       >
         <div className="flex items-center gap-3">
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-full blur opacity-40 group-hover:opacity-80 transition duration-300" />
-            <div className="relative w-10 h-10 rounded-full bg-white/90 dark:bg-slate-900/90 border border-white/40 dark:border-white/10 p-1 flex items-center justify-center shadow-lg">
-              <img src={logo} alt="StudyNest Logo" className="w-full h-full object-contain" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-2xl blur opacity-40 group-hover:opacity-80 transition duration-300" />
+            <div className="relative w-11 h-11 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-white/40 dark:border-white/10 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
+              <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
           <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full glass-pill-badge text-amber-700 dark:text-amber-300 border border-amber-500/20">
@@ -225,11 +225,11 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
               <motion.div variants={itemVariants} className="text-center mb-6">
                 <div className="relative inline-block mb-4">
                   <motion.div 
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-white/90 to-amber-50/80 dark:from-slate-800/90 dark:to-slate-900/90 p-3 shadow-xl border border-white/60 dark:border-white/20 mx-auto flex items-center justify-center relative overflow-hidden"
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-white/90 to-amber-50/80 dark:from-slate-800/90 dark:to-slate-900/90 p-1 shadow-2xl border border-white/60 dark:border-white/20 mx-auto flex items-center justify-center relative overflow-hidden"
                     whileHover={{ scale: 1.05, rotate: 2 }}
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   >
-                    <img src={logo} alt="StudyNest Logo" className="w-full h-full object-contain drop-shadow-md" />
+                    <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-2xl drop-shadow-md" />
                   </motion.div>
                   <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md">
                     <Zap className="w-3.5 h-3.5 fill-current" />
