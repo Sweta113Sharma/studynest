@@ -63,7 +63,7 @@ export default function StudyTimer() {
             setIsRunning(false)
             setIsShaking(true)
             playAlert()
-            setTimeout(() => setIsShaking(false), 1200)
+            setTimeout(() => setIsShaking(false), 2500)
 
             if (mode === 'focus') {
               const newCount = sessionsCompleted + 1
@@ -213,7 +213,7 @@ export default function StudyTimer() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`px-3.5 py-1.5 rounded-xl glass-pill-badge bg-white/80 dark:bg-slate-900/80 text-foreground text-xs font-mono font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800 transition-all border border-amber-500/30 shadow-sm hover:scale-105 active:scale-95 ${
-          isShaking ? 'animate-bounce border-amber-500 ring-4 ring-amber-500/50 shadow-lg shadow-amber-500/40' : isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
+          isShaking ? 'animate-timer-shake border-amber-500 ring-4 ring-amber-500/50 shadow-lg shadow-amber-500/40' : isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
         }`}
         title="Pomodoro Study Timer"
       >
@@ -231,20 +231,12 @@ export default function StudyTimer() {
         {isOpen && (
           <motion.div
             className={`absolute right-0 top-12 w-84 max-w-[92vw] glass-panel-morphism bg-white/95 dark:bg-slate-900/95 text-foreground backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl transition-colors ${
-              isShaking ? 'border-2 border-amber-500 ring-4 ring-amber-500/40 shadow-amber-500/40' : 'border border-white/60 dark:border-white/15'
+              isShaking ? 'animate-timer-shake border-2 border-amber-500 ring-4 ring-amber-500/50 shadow-amber-500/50' : 'border border-white/60 dark:border-white/15'
             }`}
             initial={{ opacity: 0, scale: 0.9, y: -10 }}
-            animate={
-              isShaking
-                ? {
-                    x: [0, -14, 14, -12, 12, -8, 8, -4, 4, 0],
-                    y: [0, -5, 5, -4, 4, -2, 2, 0],
-                    scale: [1, 1.04, 0.97, 1.02, 1]
-                  }
-                : { opacity: 1, scale: 1, y: 0 }
-            }
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -10 }}
-            transition={isShaking ? { duration: 0.85, ease: "easeInOut" } : { type: 'spring', stiffness: 300, damping: 25 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
