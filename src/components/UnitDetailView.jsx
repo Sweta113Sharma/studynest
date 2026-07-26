@@ -305,14 +305,15 @@ export default function UnitDetailView({ context }) {
             subject: selectedSubject,
             unit: selectedUnit
           })}
-          className={`p-2.5 rounded-xl border flex items-center gap-2 text-xs font-semibold transition-all ${
+          className={`px-3.5 py-2.5 rounded-xl border flex items-center gap-2 text-xs font-semibold transition-all duration-200 active:scale-95 ${
             bookmarked
-              ? 'bg-primary/20 border-primary text-primary shadow-glow-sm'
-              : 'glass-card border-white/10 text-muted-foreground hover:text-foreground'
+              ? 'bg-amber-500/20 border-amber-500 text-amber-800 dark:text-amber-300 shadow-md shadow-amber-500/10'
+              : 'glass-card border-white/20 text-muted-foreground hover:text-foreground hover:bg-white/40 dark:hover:bg-white/10'
           }`}
+          title={bookmarked ? 'Remove Bookmark' : 'Bookmark Unit'}
         >
-          <Bookmark className="w-4 h-4" />
-          <span>{bookmarked ? 'Bookmarked' : 'Bookmark Unit'}</span>
+          <Bookmark className={`w-4 h-4 transition-transform duration-200 ${bookmarked ? 'fill-amber-500 text-amber-500 scale-110' : ''}`} />
+          <span>{bookmarked ? 'Bookmarked ✓' : 'Bookmark Unit'}</span>
         </button>
       </motion.div>
 

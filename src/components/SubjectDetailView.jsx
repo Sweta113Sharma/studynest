@@ -270,12 +270,14 @@ export default function SubjectDetailView({ context }) {
                       unit: unit
                     })
                   }}
-                  className={`p-1.5 rounded-lg transition-colors ${
-                    bookmarked ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-white/10'
+                  className={`p-2 rounded-xl border transition-all duration-200 ${
+                    bookmarked
+                      ? 'bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-300 shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 border-transparent'
                   }`}
                   title={bookmarked ? 'Remove Bookmark' : 'Bookmark Unit'}
                 >
-                  <Bookmark className="w-4 h-4" />
+                  <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-amber-500 text-amber-500' : ''}`} />
                 </button>
                 <span className="text-muted-foreground">→</span>
               </motion.div>
