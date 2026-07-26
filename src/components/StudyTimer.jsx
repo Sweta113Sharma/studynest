@@ -19,6 +19,7 @@ export default function StudyTimer() {
   const [sessionsCompleted, setSessionsCompleted] = useState(0)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [showCompletionModal, setShowCompletionModal] = useState(false)
+  const [isShaking, setIsShaking] = useState(false)
 
   const timerRef = useRef(null)
   const popoverRef = useRef(null)
@@ -60,7 +61,10 @@ export default function StudyTimer() {
           if (prev <= 1) {
             clearInterval(timerRef.current)
             setIsRunning(false)
+            setIsShaking(true)
             playAlert()
+            setTimeout(() => setIsShaking(false), 1200)
+
             if (mode === 'focus') {
               const newCount = sessionsCompleted + 1
               setSessionsCompleted(newCount)
@@ -88,45 +92,46 @@ export default function StudyTimer() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
       const now = audioCtx.currentTime
 
-      // Alertive 4-Note Ascending Bright Bell Chime (E5 -> A5 -> C6 -> E6)
+      // Loud, attentive, multi-pulse energetic alarm chime sequence
       const notes = [
-        { freq: 659.25, time: now, duration: 0.18 },       // E5
-        { freq: 880.00, time: now + 0.12, duration: 0.18 }, // A5
-        { freq: 1046.50, time: now + 0.24, duration: 0.22 },// C6
-        { freq: 1318.51, time: now + 0.38, duration: 0.45 } // E6 (High alert finale)
+        // Burst 1: High-energy ascending alarm chime
+        { freq: 523.25, time: now + 0.00, duration: 0.18, vol: 0.85 }, // C5
+        { freq: 659.25, time: now + 0.12, duration: 0.18, vol: 0.85 }, // E5
+        { freq: 783.99, time: now + 0.24, duration: 0.22, vol: 0.90 }, // G5
+        { freq: 1046.50, time: now + 0.38, duration: 0.35, vol: 0.95 }, // C6
+
+        // Burst 2: High-pitch attentive double-ping finale
+        { freq: 659.25, time: now + 0.70, duration: 0.18, vol: 0.85 }, // E5
+        { freq: 1046.50, time: now + 0.82, duration: 0.22, vol: 0.90 }, // C6
+        { freq: 1318.51, time: now + 0.96, duration: 0.25, vol: 0.95 }, // E6
+        { freq: 1567.98, time: now + 1.12, duration: 0.55, vol: 1.00 }  // G6 Loud Finale
       ]
 
-      notes.forEach(({ freq, time, duration }) => {
-        // Main bright chime tone
-        const osc = audioCtx.createOscillator()
+      notes.forEach(({ freq, time, duration, vol }) => {
+        // Main energetic oscillator (Square + Triangle wave for crisp acoustic punch)
+        const osc1 = audioCtx.createOscillator()
+        const osc2 = audioCtx.createOscillator()
         const gain = audioCtx.createGain()
-        osc.type = 'triangle'
-        osc.frequency.setValueAtTime(freq, time)
 
-        // Shimmer harmonic (sine 1 octave up)
-        const harmonic = audioCtx.createOscillator()
-        const harmonicGain = audioCtx.createGain()
-        harmonic.type = 'sine'
-        harmonic.frequency.setValueAtTime(freq * 2, time)
+        osc1.type = 'triangle'
+        osc1.frequency.setValueAtTime(freq, time)
 
-        // Envelopes with crisp attack & decay
+        osc2.type = 'square'
+        osc2.frequency.setValueAtTime(freq * 1.002, time) // Micro-detune for rich ringing chorus
+
+        // Master gain envelope with high output volume
         gain.gain.setValueAtTime(0, time)
-        gain.gain.linearRampToValueAtTime(0.35, time + 0.02)
+        gain.gain.linearRampToValueAtTime(vol * 0.75, time + 0.015)
         gain.gain.exponentialRampToValueAtTime(0.001, time + duration)
 
-        harmonicGain.gain.setValueAtTime(0, time)
-        harmonicGain.gain.linearRampToValueAtTime(0.12, time + 0.02)
-        harmonicGain.gain.exponentialRampToValueAtTime(0.001, time + duration)
-
-        osc.connect(gain)
-        harmonic.connect(harmonicGain)
+        osc1.connect(gain)
+        osc2.connect(gain)
         gain.connect(audioCtx.destination)
-        harmonicGain.connect(audioCtx.destination)
 
-        osc.start(time)
-        harmonic.start(time)
-        osc.stop(time + duration)
-        harmonic.stop(time + duration)
+        osc1.start(time)
+        osc2.start(time)
+        osc1.stop(time + duration)
+        osc2.stop(time + duration)
       })
     } catch (e) {
       console.log('Audio playback not supported or blocked', e)
@@ -208,11 +213,11 @@ export default function StudyTimer() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`px-3.5 py-1.5 rounded-xl glass-pill-badge bg-white/80 dark:bg-slate-900/80 text-foreground text-xs font-mono font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800 transition-all border border-amber-500/30 shadow-sm hover:scale-105 active:scale-95 ${
-          isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
+          isShaking ? 'animate-bounce border-amber-500 ring-4 ring-amber-500/50 shadow-lg shadow-amber-500/40' : isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
         }`}
         title="Pomodoro Study Timer"
       >
-        <Clock className={`w-3.5 h-3.5 ${isRunning ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600/80 dark:text-amber-400/80'}`} />
+        <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600/80 dark:text-amber-400/80'}`} />
         <span className="text-foreground font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
           <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30">
@@ -225,11 +230,21 @@ export default function StudyTimer() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute right-0 top-12 w-84 max-w-[92vw] glass-panel-morphism bg-white/95 dark:bg-slate-900/95 text-foreground backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl border border-white/60 dark:border-white/15"
+            className={`absolute right-0 top-12 w-84 max-w-[92vw] glass-panel-morphism bg-white/95 dark:bg-slate-900/95 text-foreground backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl transition-colors ${
+              isShaking ? 'border-2 border-amber-500 ring-4 ring-amber-500/40 shadow-amber-500/40' : 'border border-white/60 dark:border-white/15'
+            }`}
             initial={{ opacity: 0, scale: 0.9, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={
+              isShaking
+                ? {
+                    x: [0, -14, 14, -12, 12, -8, 8, -4, 4, 0],
+                    y: [0, -5, 5, -4, 4, -2, 2, 0],
+                    scale: [1, 1.04, 0.97, 1.02, 1]
+                  }
+                : { opacity: 1, scale: 1, y: 0 }
+            }
             exit={{ opacity: 0, scale: 0.9, y: -10 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            transition={isShaking ? { duration: 0.85, ease: "easeInOut" } : { type: 'spring', stiffness: 300, damping: 25 }}
           >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
