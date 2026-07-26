@@ -1,4 +1,4 @@
-# 🎓 StudyNest — Modern B.Tech Engineering Portal & AI Study Companion
+# StudyNest — Modern B.Tech Engineering Portal & AI Study Companion
 
 <div align="center">
 
@@ -9,41 +9,41 @@
 
 **StudyNest** is a modern, ultra-responsive academic preparation portal designed for engineering students. It streamlines B.Tech exam preparation with organized branch syllabi, textbook-grade AI notes, interactive MCQ quizzes, active recall flashcards, and a Pomodoro focus timer.
 
-[🚀 View Live Portal](https://sweta113sharma.github.io/studynest/) • [📖 Quick Start](#-quick-start) • [✨ Key Features](#-key-features) • [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
+[View Live Portal](https://sweta113sharma.github.io/studynest/) • [Quick Start](#quick-start) • [Key Features](#key-features) • [Tech Stack](#tech-stack)
 
 </div>
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 📚 1. Complete Engineering Curriculum (Sem 1 to Sem 8)
+### 1. Complete Engineering Curriculum (Sem 1 to Sem 8)
 - **Multi-Branch Support**: Dedicated subjects and unit breakdowns for **CSE, ECE, EE, ME, CE, and IT**.
 - **Year & Semester Classification**: Organizes syllabus from 1st Year (Basics) through 4th Year (Advanced Core & Electives).
 - **Curated Learning Resources**: Unit-by-unit links to lecture slides (PPTs), formula cheat sheets, and top YouTube playlists (Gate Smashers, Neso Academy, etc.).
 
-### 🤖 2. In-Depth AI Study Partner
+### 2. In-Depth AI Study Partner
 - **Textbook-Grade Master Notes**: Generates comprehensive revision notes with ASCII architecture diagrams, complexity metric tables, code implementations, and exam mnemonics.
 - **Interactive AI Quiz & Flashcards**: Instant MCQ generation with step-by-step answer explanations and active recall flashcard decks.
 - **Dual AI Engine**: Powered by **OpenRouter API** for live AI queries, with built-in Wikipedia knowledge integration and offline mock fallbacks.
 
-### ⏱️ 3. Pomodoro Focus Study Timer
+### 3. Pomodoro Focus Study Timer
 - **Customizable Intervals**: Set custom focus sessions (e.g., 25 min) and short/long break timers.
 - **Loud Attentive Alarm & Shake Effect**: Dual-pulse acoustic alarm chime accompanied by a high-energy `@keyframes timer-shake` box animation when time expires.
 - **Streak & Session Tracker**: Tracks total focus sessions completed per study day.
 
-### 🔖 4. Instant Unit Bookmarking
+### 4. Instant Unit Bookmarking
 - **Reactive State Persistence**: One-click bookmarking for quick unit access saved to local storage.
 - **Visual Feedback**: Golden filled bookmark badge and quick-filter panel on the dashboard.
 
-### 🎨 5. Glassmorphism Design & Dark/Light Themes
+### 5. Glassmorphism Design & Dark/Light Themes
 - **Modern UI Aesthetics**: Smooth glassmorphic backdrop filters, gradient borders, ambient glow effects, and physics-based Framer Motion micro-animations.
 - **Light & Dark Mode**: Seamless toggle between sleek dark mode and bright ambient light mode.
 - **Streamlined Login**: Instant name & email sign-in without password friction or clutter.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Domain | Technology |
 | :--- | :--- |
@@ -57,7 +57,7 @@
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v16.0 or higher)
@@ -93,7 +93,7 @@ npm run preview
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 studynest/
@@ -113,12 +113,12 @@ studynest/
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 
 <div align="center">
-  Crafted with ❤️ by Sweta Sharma for Engineering Students
+  Crafted by Sweta Sharma for Engineering Students
 </div>

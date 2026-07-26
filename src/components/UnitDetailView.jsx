@@ -39,15 +39,15 @@ export default function UnitDetailView({ context }) {
   const bookmarked = isBookmarked(bookmarkId)
 
   const tabs = [
-    { id: 'ai', label: '✨ Detailed AI Notes', icon: Sparkles },
-    { id: 'ppts', label: '📄 Materials', icon: FileText },
-    { id: 'youtube', label: '▶️ Videos', icon: ExternalLink }
+    { id: 'ai', label: 'Detailed AI Notes', icon: Sparkles },
+    { id: 'ppts', label: 'Materials', icon: FileText },
+    { id: 'youtube', label: 'Videos', icon: ExternalLink }
   ]
 
   const aiFeatures = [
-    { id: 'notes-detailed', label: '📚 Detailed Master Notes', description: 'Comprehensive textbook-grade notes' },
-    { id: 'flashcards', label: '🎴 Flashcards', description: 'Practice active recall' },
-    { id: 'quiz', label: '🎯 AI Quiz', description: 'Generate interactive MCQ quiz' }
+    { id: 'notes-detailed', label: 'Detailed Master Notes', description: 'Comprehensive textbook-grade notes' },
+    { id: 'flashcards', label: 'Flashcards', description: 'Practice active recall' },
+    { id: 'quiz', label: 'AI Quiz', description: 'Generate interactive MCQ quiz' }
   ]
 
   const handleAIFeature = async (featureId) => {

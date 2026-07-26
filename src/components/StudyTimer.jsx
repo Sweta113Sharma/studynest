@@ -220,8 +220,8 @@ export default function StudyTimer() {
         <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600/80 dark:text-amber-400/80'}`} />
         <span className="text-foreground font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
-          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30">
-            {sessionsCompleted}⚡
+          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30 font-mono">
+            {sessionsCompleted} completed
           </span>
         )}
       </button>
