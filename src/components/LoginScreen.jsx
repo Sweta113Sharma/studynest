@@ -240,44 +240,8 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
                   Sign In to <span className="text-gradient">StudyNest</span>
                 </h2>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 font-normal">
-                  Enter your info or select a sample student profile below
+                  Enter your student details to launch your study portal
                 </p>
-              </motion.div>
-
-              {/* Quick Demo Profiles Selection */}
-              <motion.div variants={itemVariants} className="mb-6">
-                <label className="block text-[11px] font-semibold tracking-wider uppercase text-muted-foreground mb-2">
-                  ⚡ Quick Preset Login
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {PRESET_USERS.map((preset) => {
-                    const isSelected = name === preset.name
-                    return (
-                      <motion.button
-                        key={preset.name}
-                        type="button"
-                        onClick={() => handleSelectPreset(preset)}
-                        className={`p-2.5 rounded-xl text-left transition-all duration-200 border flex flex-col justify-between ${
-                          isSelected
-                            ? 'bg-amber-500/15 border-amber-500 dark:bg-amber-400/20 text-amber-900 dark:text-amber-200 shadow-sm'
-                            : 'glass-pill-badge hover:bg-white/40 dark:hover:bg-white/10 text-foreground border-white/40 dark:border-white/10'
-                        }`}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <div className="flex items-center justify-between w-full">
-                          <span className="text-xs font-bold truncate">{preset.name.split(' ')[0]}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 font-mono font-semibold text-amber-700 dark:text-amber-300">
-                            {preset.branch}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-muted-foreground truncate mt-1">
-                          {isSelected ? '✓ Selected' : 'Tap to fill'}
-                        </span>
-                      </motion.button>
-                    )
-                  })}
-                </div>
               </motion.div>
 
               {/* Login Form */}
