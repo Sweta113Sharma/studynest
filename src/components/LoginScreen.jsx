@@ -212,28 +212,6 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
                   </div>
                 </motion.div>
 
-                {/* Branch Selection Chips */}
-                <motion.div variants={itemVariants}>
-                  <label className="block text-xs font-medium text-foreground/90 mb-1.5">
-                    Engineering Branch
-                  </label>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['CSE', 'ECE', 'EE', 'ME', 'CE', 'IT'].map((b) => (
-                      <button
-                        key={b}
-                        type="button"
-                        onClick={() => setSelectedBranch(b)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 border ${
-                          selectedBranch === b
-                            ? 'bg-amber-600 text-white border-amber-600 shadow-md scale-105'
-                            : 'glass-pill-badge text-foreground/80 hover:text-foreground border-white/40 dark:border-white/10'
-                        }`}
-                      >
-                        {b}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
 
                 {/* Submit Glass Button */}
                 <motion.div variants={itemVariants} className="pt-2">
