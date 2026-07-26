@@ -2540,31 +2540,6 @@ export const semesters = {
 ],
         5: [
             {
-                id: 'webtech-1', key: 'webtech', title: 'Web Technologies', code: 'KCS501',
-                units: [
-                    { title: 'Unit 1: HTML5 & CSS3', aiSummary: 'HTML5 semantic elements, forms, media. CSS3 selectors, box model, flexbox, grid layout, animations and transitions.', ppts: [{ title: 'HTML & CSS PPT', size: '3.0 MB' }], notes: [{ title: 'CSS Quick Reference', desc: 'Flexbox and grid cheat sheet' }], youtube: [{ title: 'HTML & CSS Full Course', channel: 'Traversy Media', url: 'https://youtube.com' }] },
-                    { title: 'Unit 2: JavaScript & DOM', aiSummary: 'JavaScript ES6+ features: arrow functions, promises, async/await, destructuring. DOM manipulation, event handling, AJAX and Fetch API.', ppts: [{ title: 'JavaScript Essentials', size: '3.5 MB' }], notes: [{ title: 'JS Cheat Sheet', desc: 'ES6 features and DOM methods' }], youtube: [{ title: 'JavaScript Crash Course', channel: 'Traversy Media', url: 'https://youtube.com' }] },
-                    { title: 'Unit 3: PHP & MySQL', aiSummary: 'PHP syntax, arrays, functions, OOP. MySQL queries, joins, stored procedures. CRUD operations and form handling.', ppts: [{ title: 'PHP & MySQL', size: '2.8 MB' }], notes: [{ title: 'PHP Quick Reference', desc: 'Common PHP functions' }], youtube: [{ title: 'PHP Full Course', channel: 'Traversy Media', url: 'https://youtube.com' }] }
-                ]
-            },
-            {
-                id: 'toc-1', key: 'toc', title: 'Theory of Computation', code: 'KCS502',
-                units: [
-                    { title: 'Unit 1: Finite Automata', aiSummary: 'DFA, NFA, epsilon-NFA. Equivalence of DFA and NFA, minimization of DFA. Regular languages, regular expressions, Pumping Lemma.', ppts: [{ title: 'Finite Automata PPT', size: '3.2 MB', url: '/pdfs/toc/toc_unit1.pdf' }], notes: [{ title: 'Automata Notes', desc: 'DFA/NFA constructions' }], youtube: [{ title: 'Theory of Computation', channel: 'Neso Academy', url: 'https://youtube.com' }] },
-                    { title: 'Unit 2: Context-Free Languages', aiSummary: 'Context-free grammars, parse trees, ambiguity. Pushdown automata (PDA). Pumping Lemma for CFLs. Chomsky Normal Form.', ppts: [{ title: 'CFG & PDA PPT', size: '2.9 MB' }], notes: [{ title: 'CFL Notes', desc: 'Grammar simplifications' }], youtube: [{ title: 'CFG and PDA', channel: 'Neso Academy', url: 'https://youtube.com' }] },
-                    { title: 'Unit 3: Turing Machines', aiSummary: 'Turing machine model, variants. Decidable and undecidable problems, Halting Problem. Complexity classes P, NP, NP-Complete.', ppts: [{ title: 'Turing Machines', size: '3.0 MB' }], notes: [{ title: 'TM Notes', desc: 'Decidability and complexity' }], youtube: [{ title: 'Turing Machines', channel: 'Neso Academy', url: 'https://youtube.com' }] },
-                    { title: 'Unit 4: Decidability & P/NP Complexity', aiSummary: 'Recursive and recursively enumerable languages, decidable and undecidable problems. Post Correspondence Problem (PCP), Halting Problem. Introduction to complexity theory: Time complexity, space complexity, Classes P, NP, NP-hard, NP-Complete, and Cook-Levin theorem.', ppts: [{ title: 'Decidability & Complexity Slides', size: '2.7 MB' }], notes: [{ title: 'Complexity Theory Quick Revision', desc: 'Definitions of P, NP, NP-Complete, NPC proofs' }], youtube: [{ title: 'Decidability and Complexity', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=78t6NlM27eE' }] }
-                ]
-            },
-            {
-                id: 'ai-1', key: 'ai', title: 'Artificial Intelligence', code: 'KCS503',
-                units: [
-                    { title: 'Unit 1: Problem Solving & Search', aiSummary: 'State space search, uninformed search (BFS, DFS, IDS), informed search (A*, heuristics). Admissibility and consistency of heuristics.', ppts: [{ title: 'AI Search Algorithms', size: '3.4 MB' }], notes: [{ title: 'Search Algorithms', desc: 'Comparison and complexity' }], youtube: [{ title: 'AI Fundamentals', channel: 'NPTEL', url: 'https://youtube.com' }] },
-                    { title: 'Unit 2: Knowledge Representation', aiSummary: 'Propositional and predicate logic, resolution, unification. Semantic networks, frames, production rules, forward and backward chaining.', ppts: [{ title: 'Knowledge Representation', size: '2.7 MB' }], notes: [{ title: 'Logic & Inference', desc: 'Resolution and unification' }], youtube: [{ title: 'Knowledge Representation', channel: 'NPTEL', url: 'https://youtube.com' }] },
-                    { title: 'Unit 3: Machine Learning Basics', aiSummary: 'Supervised, unsupervised, reinforcement learning. Linear regression, classification, decision trees, neural network fundamentals.', ppts: [{ title: 'ML Basics', size: '3.8 MB' }], notes: [{ title: 'ML Algorithms', desc: 'Overview with use cases' }], youtube: [{ title: 'Machine Learning', channel: 'Sentdex', url: 'https://youtube.com' }] }
-                ]
-            },
-            {
                 id: 'cn-1', key: 'cn', title: 'Computer Networks', code: 'KCS504',
                 units: [
                     {
