@@ -129,86 +129,10 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
         )}
       </motion.header>
 
-      {/* Main Content Split Layout */}
-      <main className="w-full max-w-7xl mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-10 my-auto py-4">
-        
-        {/* Left Side: Hero Feature Showcase (Glass Cards & Visual Highlights) */}
+      {/* Main Centered Glassmorphism Login Card Container */}
+      <main className="w-full max-w-md mx-auto flex-1 flex items-center justify-center z-10 my-auto py-8">
         <motion.div 
-          className="lg:col-span-6 space-y-6 text-left hidden lg:block"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-pill-badge border border-white/40 dark:border-white/10 shadow-sm">
-            <GraduationCap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-            <span className="text-xs font-semibold tracking-wide uppercase text-foreground/80">
-              Complete Engineering Portal
-            </span>
-          </motion.div>
-
-          <motion.h1 
-            variants={itemVariants} 
-            className="text-4xl lg:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-foreground"
-          >
-            Master your syllabus with <br />
-            <span className="text-gradient">Glass-Smooth Precision</span>
-          </motion.h1>
-
-          <motion.p 
-            variants={itemVariants} 
-            className="text-base text-muted-foreground max-w-lg leading-relaxed font-normal"
-          >
-            Instant access to syllabus units, curated lecture notes, interactive flashcards, AI doubt assistance, and semester progress tracking.
-          </motion.p>
-
-          {/* Glass Feature Cards Grid */}
-          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 pt-2">
-            <motion.div 
-              className="glass-panel-morphism p-4 rounded-2xl border border-white/40 dark:border-white/10 space-y-2 hover:border-amber-500/40 transition-all duration-300"
-              whileHover={{ y: -4 }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-amber-500/15 dark:bg-amber-400/15 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                <BookOpen className="w-5 h-5" />
-              </div>
-              <h3 className="font-semibold text-sm text-foreground">100+ Detailed Units</h3>
-              <p className="text-xs text-muted-foreground">Comprehensive notes & previous year questions</p>
-            </motion.div>
-
-            <motion.div 
-              className="glass-panel-morphism p-4 rounded-2xl border border-white/40 dark:border-white/10 space-y-2 hover:border-amber-500/40 transition-all duration-300"
-              whileHover={{ y: -4 }}
-            >
-              <div className="w-9 h-9 rounded-xl bg-amber-500/15 dark:bg-amber-400/15 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h3 className="font-semibold text-sm text-foreground">AI Study Partner</h3>
-              <p className="text-xs text-muted-foreground">Real-time smart summaries & quiz generation</p>
-            </motion.div>
-          </motion.div>
-
-          {/* Floating Stat Badge */}
-          <motion.div 
-            variants={floatingBadgeVariants} 
-            animate="animate" 
-            className="pt-2 flex items-center gap-4"
-          >
-            <div className="px-5 py-3 rounded-2xl glass-pill-badge border border-white/40 dark:border-white/10 flex items-center gap-3 shadow-lg">
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-xs border-2 border-white dark:border-slate-900">CS</div>
-                <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-bold text-xs border-2 border-white dark:border-slate-900">EC</div>
-                <div className="w-8 h-8 rounded-full bg-yellow-600 text-white flex items-center justify-center font-bold text-xs border-2 border-white dark:border-slate-900">IT</div>
-              </div>
-              <div>
-                <p className="text-xs font-bold text-foreground">Multi-Branch Support</p>
-                <p className="text-[11px] text-muted-foreground">CSE, ECE, EE, ME, CE & IT</p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Right Side: Ultra-Premium Glassmorphism Login Card */}
-        <motion.div 
-          className="lg:col-span-6 w-full max-w-md mx-auto"
+          className="w-full"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
