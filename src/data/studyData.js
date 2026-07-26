@@ -2567,9 +2567,41 @@ export const semesters = {
             {
                 id: 'cn-1', key: 'cn', title: 'Computer Networks', code: 'KCS504',
                 units: [
-                    { title: 'Unit 1: Network Models & Physical Layer', aiSummary: 'OSI and TCP/IP models, layer functions. Transmission media, multiplexing, switching (circuit, packet, message). Shannon\'s capacity theorem.', ppts: [{ title: 'Computer Networks I', size: '3.3 MB' }], notes: [{ title: 'OSI vs TCP/IP', desc: 'Layer-by-layer comparison' }], youtube: [{ title: 'Computer Networks', channel: 'Gate Smashers', url: 'https://youtube.com' }] },
-                    { title: 'Unit 2: Data Link & Network Layer', aiSummary: 'Error detection (CRC, checksum), flow control (sliding window). IP addressing, subnetting, routing algorithms (Dijkstra, Bellman-Ford in networking context).', ppts: [{ title: 'Data Link & Network', size: '3.1 MB' }], notes: [{ title: 'Subnetting Guide', desc: 'CIDR and subnet masks' }], youtube: [{ title: 'Network Layer', channel: 'Gate Smashers', url: 'https://youtube.com' }] },
-                    { title: 'Unit 3: Transport & Application Layer', aiSummary: 'TCP vs UDP, connection establishment (3-way handshake), congestion control. HTTP, HTTPS, DNS, SMTP, FTP protocols. Socket programming basics.', ppts: [{ title: 'Transport & Application', size: '2.9 MB' }], notes: [{ title: 'Protocol Notes', desc: 'TCP/UDP and application protocols' }], youtube: [{ title: 'Transport Layer', channel: 'Gate Smashers', url: 'https://youtube.com' }] }
+                    {
+                        title: 'Unit 1: Introduction & Physical Layer',
+                        aiSummary: 'Overview of Computer Networks: Topologies (Bus, Star, Ring, Mesh, Hybrid), Transmission Modes (Simplex, Half-Duplex, Full-Duplex). OSI 7-Layer and TCP/IP 4-Layer Reference Models. Physical Layer: Guided Transmission Media (Twisted Pair, Coaxial Cable, Fiber Optics) vs Unguided Media (Radio, Microwave, Infrared). Switching Techniques: Circuit Switching, Packet Switching, Message Switching. Bit rate limits: Nyquist Formula & Shannon Channel Capacity Theorem.',
+                        ppts: [{ title: 'OSI & Physical Layer PPT', size: '3.8 MB' }, { title: 'Transmission Media & Switching', size: '2.9 MB' }],
+                        notes: [{ title: 'OSI vs TCP/IP Cheat Sheet', desc: 'Layer breakdown and PDU encapsulation' }, { title: 'Physical Layer Formula Guide', desc: 'Shannon capacity & bandwidth calculations' }],
+                        youtube: [{ title: 'Computer Networks Full Course', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=IPvYjXWnt6c' }, { title: 'OSI Model 7 Layers Explained', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=vv4y_uOneC0' }]
+                    },
+                    {
+                        title: 'Unit 2: Data Link Layer & Medium Access Control',
+                        aiSummary: 'Data Link Layer Functions: Framing strategies, Flow Control Protocols (Stop-and-Wait ARQ, Sliding Window Protocols: Go-Back-N, Selective Repeat ARQ). Error Detection & Correction: Parity Check, Checksum, Cyclic Redundancy Check (CRC polynomial division), Hamming Code for single-bit error correction. MAC Protocols: Random Access (Pure ALOHA, Slotted ALOHA, CSMA, CSMA/CD for Ethernet, CSMA/CA for Wi-Fi). IEEE 802.3 Ethernet frame structure and MAC address layout.',
+                        ppts: [{ title: 'Data Link Layer & ARQ PPT', size: '4.1 MB' }, { title: 'CRC & Error Detection Numericals', size: '3.2 MB' }],
+                        notes: [{ title: 'CRC Calculation Practice Sheet', desc: 'Step-by-step polynomial division for exams' }, { title: 'Sliding Window Protocols Summary', desc: 'Go-Back-N vs Selective Repeat comparison' }],
+                        youtube: [{ title: 'Data Link Layer & Framing', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=3QhU9jd03a0' }, { title: 'CRC Error Detection Solved Examples', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=A9g6rTMblz4' }]
+                    },
+                    {
+                        title: 'Unit 3: Network Layer & IP Addressing',
+                        aiSummary: 'Network Layer Services: Packet Forwarding & Logical Addressing. IPv4 Addressing: Classful Addressing (Class A, B, C, D, E), Subnetting & Supernetting numerical calculations, CIDR notation. IPv6 Header structure, address representation, and migration from IPv4. Core Network Protocols: Address Resolution Protocol (ARP), Reverse ARP (RARP), Internet Control Message Protocol (ICMP), Network Address Translation (NAT), Dynamic Host Configuration Protocol (DHCP).',
+                        ppts: [{ title: 'IPv4 Addressing & Subnetting PPT', size: '4.5 MB' }, { title: 'Network Protocols (ARP, ICMP, DHCP)', size: '3.0 MB' }],
+                        notes: [{ title: 'IP Subnetting Cheat Sheet', desc: 'Subnet masks, block sizes, and network address shortcuts' }, { title: 'IPv4 vs IPv6 Header Comparison', desc: 'Field-by-field comparative summary' }],
+                        youtube: [{ title: 'IP Addressing & Subnetting Numericals', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=vcRr-kdsVnU' }, { title: 'ARP and RARP Protocols Explained', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=cn8ZxC6WwI4' }]
+                    },
+                    {
+                        title: 'Unit 4: Routing Algorithms & Congestion Control',
+                        aiSummary: 'Routing Concepts: Static vs Dynamic Routing, Unicast Routing Algorithms. Distance Vector Routing: RIP protocol, Count-to-Infinity problem and Split Horizon solution. Link State Routing: Dijkstra\'s Shortest Path Algorithm, OSPF protocol. Path Vector Routing: Border Gateway Protocol (BGP). Hierarchical Routing. Congestion Control: Traffic Shaping (Leaky Bucket & Token Bucket Algorithms), Open Loop vs Closed Loop Congestion Control (Choke Packets, Backpressure, Explicit Congestion Notification).',
+                        ppts: [{ title: 'Routing Algorithms (Dijkstra & DVR) PPT', size: '3.9 MB' }, { title: 'Traffic Shaping & Congestion Control', size: '2.8 MB' }],
+                        notes: [{ title: 'Routing Protocols Quick Reference', desc: 'RIP, OSPF, BGP comparison matrix' }, { title: 'Leaky Bucket vs Token Bucket', desc: 'Traffic shaping algorithm differences' }],
+                        youtube: [{ title: 'Distance Vector vs Link State Routing', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=0h50pG5Qk10' }, { title: 'Leaky Bucket & Token Bucket Algorithms', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=83x4l-b6rJg' }]
+                    },
+                    {
+                        title: 'Unit 5: Transport & Application Layer Protocols',
+                        aiSummary: 'Transport Layer: Process-to-Process Communication, Port Numbers. User Datagram Protocol (UDP) segment layout. Transmission Control Protocol (TCP): Header format, TCP 3-Way Handshake (Connection Establishment & Teardown), TCP Flow Control (Sliding Window), TCP Congestion Control (Slow Start, Congestion Avoidance, Fast Retransmit, Fast Recovery). Application Layer Protocols: Domain Name System (DNS resolution hierarchy), HTTP & HTTPS (Stateless protocol, cookies, persistent connections), FTP, SMTP, POP3, IMAP. Socket Programming basics.',
+                        ppts: [{ title: 'TCP/UDP & Transport Layer PPT', size: '4.2 MB' }, { title: 'Application Layer (DNS, HTTP, SMTP)', size: '3.5 MB' }],
+                        notes: [{ title: 'TCP 3-Way Handshake & State Diagram', desc: 'SYN, SYN-ACK, ACK sequence and teardown' }, { title: 'HTTP/1.1 vs HTTP/2 vs HTTP/3 Cheat Sheet', desc: 'Protocol evolution and security' }],
+                        youtube: [{ title: 'TCP vs UDP Header Comparison', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=uwoD5P4b_Ew' }, { title: 'TCP 3-Way Handshake Protocol', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=bW_BILl7M0E' }]
+                    }
                 ]
             }
         ],

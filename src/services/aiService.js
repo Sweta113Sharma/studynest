@@ -295,6 +295,79 @@ struct Node* reverseLinkedList(struct Node* head) {
 > 🧠 Mnemonic: "P-U-M-P (Pumping Lemma)": **P**umping length ($p$), **U**npack string ($xyz$), **M**iddle non-empty ($|y|>0$), **P**ump exponent ($xy^iz \in L$).`;
     }
 
+    if (msg.includes('computer network') || msg.includes('network model') || msg.includes('tcp/ip') || msg.includes('osi model') || (msg.includes('network') && !msg.includes('neural network') && !msg.includes('bayesian network') && !msg.includes('d.c circuit'))) {
+      return `### 📚 In-Depth Master Revision Notes: Computer Networks
+
+#### 1. 📌 Fundamental Concepts & OSI vs TCP/IP Reference Models
+- **OSI 7-Layer Reference Model (Open Systems Interconnection)**:
+  - **7. Application Layer**: User interfaces and network services (HTTP, HTTPS, FTP, DNS, SMTP, SSH).
+  - **6. Presentation Layer**: Data representation, encryption/decryption, SSL/TLS, data compression.
+  - **5. Session Layer**: Dialog control, session checkpointing, synchronization (NetBIOS, PPTP).
+  - **4. Transport Layer**: End-to-end communication, segmentation, flow control, error recovery (TCP, UDP).
+  - **3. Network Layer**: Logical addressing, packet routing, forwarding, ICMP (IPv4, IPv6, OSPF, BGP, ARP).
+  - **2. Data Link Layer**: Physical addressing (MAC), framing, error detection (CRC), MAC control (Ethernet 802.3, Wi-Fi 802.11).
+  - **1. Physical Layer**: Bit transmission over physical medium, modulation, line coding (Copper, Fiber Optics, Wireless).
+- **TCP/IP 4-Layer Architecture**:
+  - Application Layer (OSI 5-7), Transport Layer (OSI 4), Internet Layer (OSI 3), Network Access / Link Layer (OSI 1-2).
+
+#### 2. 📐 Visual Packet Header & OSI Model Schematic
+
+**OSI 7-Layer Stack & PDU Encapsulation Flow**:
+\`\`\`
+[ Layer 7: Application  ] ---> Data (HTTP / DNS)
+[ Layer 6: Presentation ] ---> Formatted / Encrypted Data
+[ Layer 5: Session      ] ---> Synchronized Session Data
+[ Layer 4: Transport    ] ---> [ TCP Header | Data ] (Segment / Datagram)
+[ Layer 3: Network      ] ---> [ IP Header | TCP Header | Data ] (Packet)
+[ Layer 2: Data Link    ] ---> [ MAC Header | IP Header | TCP Header | Data | CRC Trailer ] (Frame)
+[ Layer 1: Physical     ] ---> 101101001011010... (Bits transmitted over copper/fiber)
+\`\`\`
+
+**IPv4 Header Structure (32-Bit Word Alignment)**:
+\`\`\`
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version|  IHL  |Type of Service|          Total Length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Identification        |Flags|      Fragment Offset    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Time to Live |    Protocol   |    Header Checksum            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       Source IP Address                       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Destination IP Address                     |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+\`\`\`
+
+#### 3. 📊 Key Protocol Comparison: TCP vs UDP
+
+| Feature | TCP (Transmission Control Protocol) | UDP (User Datagram Protocol) |
+| :--- | :--- | :--- |
+| **Connection Type** | Connection-oriented (3-Way Handshake) | Connectionless (No handshake) |
+| **Reliability** | Guaranteed delivery (ACK & retransmission) | Best-effort (No ACKs, packets may drop) |
+| **Header Size** | 20-60 Bytes | 8 Bytes |
+| **Flow & Congestion Control** | Sliding Window, AIMD, Slow Start | None |
+| **Speed** | Moderate (Overhead for ACKs) | Ultra-fast (Low latency) |
+| **Use Cases** | Web (HTTP/S), Email (SMTP), File Transfer (FTP) | Video Streaming, Online Gaming, DNS, VoIP |
+
+#### 4. 🧠 Memory Mnemonics & Exam Tricks
+> 🧠 Mnemonic: "All People Seem To Need Data Processing" (OSI Top-Down): **A**pplication, **P**resentation, **S**ession, **T**ransport, **N**etwork, **D**ata Link, **P**hysical.
+> 🧠 Mnemonic: "Please Do Not Touch Steve's Pet Alligator" (OSI Bottom-Up): **P**hysical, **D**ata Link, **N**etwork, **T**ransport, **S**ession, **P**resentation, **A**pplication.
+> 🧠 Mnemonic: "S-A-K (TCP 3-Way Handshake)": **S**YN (Client $\\rightarrow$ Server), **S**YN-**A**CK (Server $\\rightarrow$ Client), **A**CK (Client $\\rightarrow$ Server).
+
+#### 5. 🎯 University Exam Numerical: Subnetting & IP Address Calculation
+**Question**: An IPv4 address is given as \`192.168.10.35/27\`. Calculate Network Mask, Network Address, Broadcast Address, and Total Usable Hosts.
+
+**Solution**:
+- **CIDR Prefix**: \`/27\` means 27 network bits and $32 - 27 = 5$ host bits.
+- **Subnet Mask**: $255.255.255.224$.
+- **Block Size**: $256 - 224 = 32$ addresses per subnet.
+- **Network Address**: $35$ lies in subnet $32..63 \\implies \\mathbf{192.168.10.32}$.
+- **Broadcast Address**: $\\mathbf{192.168.10.63}$.
+- **Usable Hosts**: $2^5 - 2 = \\mathbf{30}$ hosts (\`192.168.10.33\` to \`192.168.10.62\`).`;
+    }
+
     if (msg.includes('graph') || msg.includes('tree') || msg.includes('bst') || msg.includes('dsa-ii') || msg.includes('dijkstra') || msg.includes('kruskal') || msg.includes('bfs') || msg.includes('dfs')) {
       return `### 📚 In-Depth Master Revision Notes: Tree & Graph Algorithms
 
