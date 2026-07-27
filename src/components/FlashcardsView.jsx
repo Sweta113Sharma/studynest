@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowLeft, RotateCw, CheckCircle2, HelpCircle, Sparkles, Trophy, RotateCcw, Flame } from 'lucide-react'
 import { aiService } from '../services/aiService'
+import { useApp } from '../context/AppContext'
 
-export default function FlashcardsView({ context }) {
-  const { selectedSubject, selectedUnit, navigateTo, goToSubjectDetail, goBack } = context || {}
+export default function FlashcardsView() {
+  const { selectedSubject, selectedUnit, navigateTo, goToSubjectDetail, goBack } = useApp()
 
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(true)
@@ -84,59 +85,61 @@ export default function FlashcardsView({ context }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <Sparkles className="w-10 h-10 animate-spin text-primary mb-4" />
-        <h3 className="font-display font-bold text-lg">Generating Smart Flashcards...</h3>
-        <p className="text-sm text-muted-foreground mt-1">Creating high-yield active recall cards for exam prep</p>
+        <Sparkles className="w-10 h-10 animate-spin text-amber-600 dark:text-amber-400 mb-4" />
+        <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Generating Smart Flashcards...</h3>
+        <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mt-1">Creating active recall cards for exam prep</p>
       </div>
     )
   }
 
   if (completed) {
-    const scorePercent = Math.round((mastered.length / cards.length) * 100)
     return (
       <motion.div
         className="max-w-md mx-auto text-center py-12"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
       >
-        <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-primary/20 flex items-center justify-center text-primary shadow-glow">
-          <Trophy className="w-10 h-10 text-amber-300" />
+        <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+          <Trophy className="w-10 h-10" />
         </div>
 
-        <h2 className="text-3xl font-display font-bold mb-2">Flashcard Deck Complete!</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-3xl font-display font-black text-slate-900 dark:text-white mb-2">Flashcard Deck Complete!</h2>
+        <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-6">
           Great job practicing active recall for {selectedUnit?.title || selectedSubject?.title}
         </p>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="p-4 rounded-2xl glass-card border border-emerald-500/20 text-center">
-            <span className="text-2xl font-bold text-emerald-400">{mastered.length}</span>
-            <p className="text-xs text-muted-foreground mt-0.5">Mastered</p>
+          <div className="p-4 rounded-2xl glass-card border border-emerald-500/30 text-center">
+            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{mastered.length}</span>
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-0.5">Mastered</p>
           </div>
-          <div className="p-4 rounded-2xl glass-card border border-amber-900/40 text-center">
-            <span className="text-2xl font-bold text-amber-300">{needsReview.length}</span>
-            <p className="text-xs text-muted-foreground mt-0.5">Needs Review</p>
+          <div className="p-4 rounded-2xl glass-card border border-amber-500/30 text-center">
+            <span className="text-2xl font-bold text-amber-700 dark:text-amber-300">{needsReview.length}</span>
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-0.5">Needs Review</p>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
+            type="button"
             onClick={handleRestart}
-            className="px-5 py-2.5 rounded-xl glass-card border border-white/10 font-medium text-sm flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+            className="px-5 py-2.5 rounded-xl glass-card border border-slate-300 dark:border-white/10 font-bold text-slate-900 dark:text-white text-sm flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-white/10 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <RotateCcw className="w-4 h-4" /> Restart All
           </button>
           {needsReview.length > 0 && (
             <button
+              type="button"
               onClick={handleReviewFlaggedOnly}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#78350F] to-amber-900 text-white font-semibold text-sm flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-amber-700 text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-amber-800 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
             >
               <Flame className="w-4 h-4" /> Review ({needsReview.length}) Flagged
             </button>
           )}
           <button
+            type="button"
             onClick={() => (selectedUnit ? navigateTo('unit-detail') : goToSubjectDetail())}
-            className="px-5 py-2.5 rounded-xl bg-primary text-white font-medium text-sm flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+            className="px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-amber-700 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             Done
           </button>
@@ -151,30 +154,38 @@ export default function FlashcardsView({ context }) {
     <motion.div className="space-y-6 max-w-xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
         <button
+          type="button"
           onClick={goBack}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-white/5 text-sm"
+          className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-500"
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
-        <div className="text-xs font-semibold text-muted-foreground flex items-center gap-2">
+        <div className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
           <span>Card {currentIndex + 1} of {cards.length}</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-          <span className="text-primary">{selectedUnit?.title || selectedSubject?.title}</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+          <span className="text-amber-700 dark:text-amber-400">{selectedUnit?.title || selectedSubject?.title}</span>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#78350F] via-amber-900 to-[#451A03] rounded-full"
+          className="h-full bg-amber-600 rounded-full"
           animate={{ width: `${((currentIndex + 1) / cards.length) * 100}%` }}
         />
       </div>
 
       {/* 3D Flip Card Container */}
-      <div className="perspective-1000 min-h-[320px] cursor-pointer" onClick={handleFlip}>
+      <div 
+        className="perspective-1000 min-h-[320px] cursor-pointer" 
+        onClick={handleFlip}
+        role="button"
+        tabIndex={0}
+        aria-label="Flashcard. Click to flip"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleFlip(); } }}
+      >
         <motion.div
-          className="w-full h-full min-h-[320px] glass-card rounded-3xl p-8 flex flex-col justify-between relative shadow-2xl border border-white/10 hover:border-primary/40 transition-colors"
+          className="w-full h-full min-h-[320px] glass-card rounded-3xl p-8 flex flex-col justify-between relative shadow-2xl border border-slate-300 dark:border-white/10 hover:border-amber-500/40 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
           animate={{ rotateY: isFlipped ? 180 : 0 }}
           transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20 }}
           style={{ transformStyle: 'preserve-3d' }}
@@ -183,52 +194,54 @@ export default function FlashcardsView({ context }) {
           {!isFlipped ? (
             <div className="flex flex-col justify-between h-full">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-primary/20 text-primary">
+                <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300">
                   Question / Concept
                 </span>
-                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
                   <RotateCw className="w-3.5 h-3.5" /> Click to Flip
                 </span>
               </div>
 
               <div className="my-auto text-center py-6">
-                <h3 className="text-xl md:text-2xl font-display font-bold leading-relaxed">
+                <h3 className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white leading-relaxed">
                   {currentCard?.front}
                 </h3>
               </div>
 
-              <div className="text-center text-xs text-muted-foreground">
+              <div className="text-center text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Tap card to reveal answer
               </div>
             </div>
           ) : (
-            /* Back Side (Un-flip horizontal mirroring from 180deg parent rotation) */
+            /* Back Side */
             <div className="flex flex-col justify-between h-full" style={{ transform: 'rotateY(180deg)' }}>
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 border border-amber-300/50 dark:border-amber-800/40">
+                <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300">
                   Answer & Explanation
                 </span>
-                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
                   <RotateCw className="w-3.5 h-3.5" /> Click to Flip
                 </span>
               </div>
 
               <div className="my-auto py-6">
-                <p className="text-base md:text-lg text-foreground/90 leading-relaxed">
+                <p className="text-base md:text-lg text-slate-900 dark:text-white font-semibold leading-relaxed">
                   {currentCard?.back}
                 </p>
               </div>
 
-              <div className="flex items-center justify-center gap-3 pt-4 border-t border-white/10" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-300 dark:border-white/10" onClick={(e) => e.stopPropagation()}>
                 <button
+                  type="button"
                   onClick={() => handleResponse(false)}
-                  className="flex-1 py-2.5 rounded-xl glass-card border border-amber-800/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-950/40 font-semibold text-xs transition-all flex items-center justify-center gap-1.5"
+                  className="flex-1 py-2.5 rounded-xl glass-card border border-amber-500/40 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 font-bold text-xs transition-all flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-amber-500"
                 >
                   <HelpCircle className="w-4 h-4" /> Need Practice
                 </button>
                 <button
+                  type="button"
                   onClick={() => handleResponse(true)}
-                  className="flex-1 py-2.5 rounded-xl bg-emerald-500 text-black hover:brightness-110 font-semibold text-xs transition-all flex items-center justify-center gap-1.5 shadow-glow"
+                  className="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md focus-visible:ring-2 focus-visible:ring-amber-500"
                 >
                   <CheckCircle2 className="w-4 h-4" /> Got It!
                 </button>

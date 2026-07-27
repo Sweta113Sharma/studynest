@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Pause, RotateCcw, Clock, Coffee, Sparkles, X, Volume2, VolumeX, Plus, Minus, Settings2, CheckCircle2 } from 'lucide-react'
+import { Play, Pause, RotateCcw, Clock, Coffee, Sparkles, X, Volume2, VolumeX, Plus, Minus, Settings2 } from 'lucide-react'
 
 const TIMER_MODES = {
-  focus: { label: 'Focus', defaultDuration: 25 * 60, color: 'text-primary', bg: 'bg-primary' },
-  shortBreak: { label: 'Short Break', duration: 5 * 60, color: 'text-emerald-400', bg: 'bg-emerald-500' },
-  longBreak: { label: 'Long Break', duration: 15 * 60, color: 'text-violet-400', bg: 'bg-violet-500' }
+  focus: { label: 'Focus', defaultDuration: 25 * 60, color: 'text-amber-600', bg: 'bg-amber-600' },
+  shortBreak: { label: 'Short Break', duration: 5 * 60, color: 'text-emerald-600', bg: 'bg-emerald-600' },
+  longBreak: { label: 'Long Break', duration: 15 * 60, color: 'text-violet-600', bg: 'bg-violet-600' }
 }
 
 const PRESET_MINUTES = [15, 25, 35, 45, 60, 90]
@@ -92,23 +92,18 @@ export default function StudyTimer() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
       const now = audioCtx.currentTime
 
-      // Loud, attentive, multi-pulse energetic alarm chime sequence
       const notes = [
-        // Burst 1: High-energy ascending alarm chime
-        { freq: 523.25, time: now + 0.00, duration: 0.18, vol: 0.85 }, // C5
-        { freq: 659.25, time: now + 0.12, duration: 0.18, vol: 0.85 }, // E5
-        { freq: 783.99, time: now + 0.24, duration: 0.22, vol: 0.90 }, // G5
-        { freq: 1046.50, time: now + 0.38, duration: 0.35, vol: 0.95 }, // C6
-
-        // Burst 2: High-pitch attentive double-ping finale
-        { freq: 659.25, time: now + 0.70, duration: 0.18, vol: 0.85 }, // E5
-        { freq: 1046.50, time: now + 0.82, duration: 0.22, vol: 0.90 }, // C6
-        { freq: 1318.51, time: now + 0.96, duration: 0.25, vol: 0.95 }, // E6
-        { freq: 1567.98, time: now + 1.12, duration: 0.55, vol: 1.00 }  // G6 Loud Finale
+        { freq: 523.25, time: now + 0.00, duration: 0.18, vol: 0.85 },
+        { freq: 659.25, time: now + 0.12, duration: 0.18, vol: 0.85 },
+        { freq: 783.99, time: now + 0.24, duration: 0.22, vol: 0.90 },
+        { freq: 1046.50, time: now + 0.38, duration: 0.35, vol: 0.95 },
+        { freq: 659.25, time: now + 0.70, duration: 0.18, vol: 0.85 },
+        { freq: 1046.50, time: now + 0.82, duration: 0.22, vol: 0.90 },
+        { freq: 1318.51, time: now + 0.96, duration: 0.25, vol: 0.95 },
+        { freq: 1567.98, time: now + 1.12, duration: 0.55, vol: 1.00 }
       ]
 
       notes.forEach(({ freq, time, duration, vol }) => {
-        // Main energetic oscillator (Square + Triangle wave for crisp acoustic punch)
         const osc1 = audioCtx.createOscillator()
         const osc2 = audioCtx.createOscillator()
         const gain = audioCtx.createGain()
@@ -117,9 +112,8 @@ export default function StudyTimer() {
         osc1.frequency.setValueAtTime(freq, time)
 
         osc2.type = 'square'
-        osc2.frequency.setValueAtTime(freq * 1.002, time) // Micro-detune for rich ringing chorus
+        osc2.frequency.setValueAtTime(freq * 1.002, time)
 
-        // Master gain envelope with high output volume
         gain.gain.setValueAtTime(0, time)
         gain.gain.linearRampToValueAtTime(vol * 0.75, time + 0.015)
         gain.gain.exponentialRampToValueAtTime(0.001, time + duration)
@@ -134,7 +128,7 @@ export default function StudyTimer() {
         osc2.stop(time + duration)
       })
     } catch (e) {
-      console.log('Audio playback not supported or blocked', e)
+      console.log('Audio playback context', e)
     }
   }
 
@@ -211,251 +205,249 @@ export default function StudyTimer() {
     <div className="relative" ref={popoverRef}>
       {/* Header Pill Button */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`px-3.5 py-1.5 rounded-xl glass-pill-badge bg-white/80 dark:bg-slate-900/80 text-foreground text-xs font-mono font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800 transition-all border border-amber-500/30 shadow-sm hover:scale-105 active:scale-95 ${
+        className={`px-3.5 py-1.5 rounded-xl glass-pill-badge bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white text-xs font-mono font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800 transition-all border border-amber-500/30 shadow-sm focus-visible:ring-2 focus-visible:ring-amber-500 ${
           isShaking ? 'animate-timer-shake border-amber-500 ring-4 ring-amber-500/50 shadow-lg shadow-amber-500/40' : isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
         }`}
-        title="Pomodoro Study Timer"
+        aria-label={`Study Timer: ${formatTime(timeLeft)}`}
       >
-        <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600/80 dark:text-amber-400/80'}`} />
-        <span className="text-foreground font-mono tracking-wide">{formatTime(timeLeft)}</span>
+        <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600 dark:text-amber-400'}`} />
+        <span className="font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
-          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30">
+          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30">
             {sessionsCompleted}⚡
           </span>
         )}
       </button>
 
-      {/* Popover / Floating Light Glass Timer Modal */}
+      {/* Popover Light Glass Timer Modal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={`absolute right-0 top-12 w-84 max-w-[92vw] glass-panel-morphism bg-white/95 dark:bg-slate-900/95 text-foreground backdrop-blur-3xl rounded-3xl p-5 z-50 shadow-2xl transition-colors ${
-              isShaking ? 'animate-timer-shake border-2 border-amber-500 ring-4 ring-amber-500/50 shadow-amber-500/50' : 'border border-white/60 dark:border-white/15'
-            }`}
+            className={`absolute right-0 top-12 w-84 max-w-[92vw] glass-panel-morphism bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl p-5 z-50 shadow-2xl border border-slate-300 dark:border-white/15`}
             initial={{ opacity: 0, scale: 0.9, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -10 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30">
-                    <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-extrabold text-sm text-foreground tracking-wide">Focus Timer</h3>
-                    <p className="text-[10px] text-muted-foreground">Boost your study productivity</p>
-                  </div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30">
+                  <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 </div>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setSoundEnabled(!soundEnabled)}
-                    className="p-1.5 rounded-xl glass-pill-badge hover:bg-amber-500/10 text-muted-foreground hover:text-foreground transition-colors"
-                    title={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
-                  >
-                    {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-600 dark:text-amber-400" /> : <VolumeX className="w-4 h-4 text-muted-foreground" />}
-                  </button>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-1.5 rounded-xl glass-pill-badge hover:bg-amber-500/10 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                <div>
+                  <h3 className="font-display font-extrabold text-sm text-slate-900 dark:text-white tracking-wide">Focus Timer</h3>
+                  <p className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">Boost your study productivity</p>
                 </div>
               </div>
-
-              {showCompletionModal ? (
-                /* Timer Complete Overlay Prompt */
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="py-3 text-center space-y-4"
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setSoundEnabled(!soundEnabled)}
+                  className="p-1.5 rounded-xl glass-pill-badge hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
+                  aria-label={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
                 >
-                  <div className="relative w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 shadow-xl shadow-amber-500/30 text-3xl">
-                    <span>🎉</span>
-                  </div>
+                  {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-600 dark:text-amber-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-xl glass-pill-badge hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
+                  aria-label="Close Timer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
 
-                  <div>
-                    <h4 className="text-base font-extrabold text-foreground font-display">Focus Session Complete!</h4>
-                    <p className="text-xs text-muted-foreground mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
-                  </div>
+            {showCompletionModal ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-3 text-center space-y-4"
+              >
+                <div className="relative w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 shadow-xl text-3xl">
+                  <span>🎉</span>
+                </div>
 
-                  <div className="space-y-2.5 pt-2">
+                <div>
+                  <h4 className="text-base font-extrabold text-slate-900 dark:text-white font-display">Focus Session Complete!</h4>
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
+                </div>
+
+                <div className="space-y-2.5 pt-2">
+                  <button
+                    type="button"
+                    onClick={handleStartBreak}
+                    className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
+                  >
+                    <Coffee className="w-4 h-4" /> Start 5-Min Short Break
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleKeepFocusGoing}
+                    className="w-full py-3 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
+                  >
+                    <Sparkles className="w-4 h-4" /> Keep Focus Going (Restart Timer)
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDismissCompletion}
+                    className="w-full py-2.5 rounded-2xl glass-pill-badge text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-300 dark:border-white/10 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
+                  >
+                    Done for Now
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <>
+                <div className="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-slate-300 dark:border-white/10 mb-4 text-xs font-bold">
+                  {Object.keys(TIMER_MODES).map((key) => (
                     <button
-                      onClick={handleStartBreak}
-                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                      key={key}
+                      type="button"
+                      onClick={() => switchMode(key)}
+                      className={`py-1.5 rounded-xl transition-all focus-visible:ring-2 focus-visible:ring-amber-500 ${
+                        mode === key
+                          ? 'bg-amber-600 text-white font-bold shadow-sm'
+                          : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                      }`}
                     >
-                      <Coffee className="w-4 h-4" /> Start 5-Min Short Break
+                      {TIMER_MODES[key].label}
                     </button>
+                  ))}
+                </div>
 
-                    <button
-                      onClick={handleKeepFocusGoing}
-                      className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:brightness-110 text-white font-black text-xs shadow-lg shadow-amber-600/30 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-                    >
-                      <Sparkles className="w-4 h-4" /> Keep Focus Going (Restart Timer)
-                    </button>
-
-                    <button
-                      onClick={handleDismissCompletion}
-                      className="w-full py-2.5 rounded-2xl glass-pill-badge hover:bg-slate-200 dark:hover:bg-slate-800 text-muted-foreground hover:text-foreground font-medium text-xs border border-slate-300 dark:border-white/10 transition-colors"
-                    >
-                      Done for Now
-                    </button>
-                  </div>
-                </motion.div>
-              ) : (
-                /* Standard Timer Controls & Circle */
-                <>
-                  {/* Mode Tabs */}
-                  <div className="grid grid-cols-3 gap-1 glass-input-box bg-slate-100/90 dark:bg-slate-950/60 p-1.5 rounded-2xl border border-slate-200/80 dark:border-white/10 mb-4 text-xs font-semibold">
-                    {Object.keys(TIMER_MODES).map((key) => (
-                      <button
-                        key={key}
-                        onClick={() => switchMode(key)}
-                        className={`py-1.5 rounded-xl transition-all ${
-                          mode === key
-                            ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-md scale-[1.02]'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-white/50 dark:hover:bg-white/5'
-                        }`}
-                      >
-                        {TIMER_MODES[key].label}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Manual Custom Focus Duration Bar */}
-                  {mode === 'focus' && (
-                    <div className="mb-4 glass-card bg-amber-50/60 dark:bg-slate-900/60 p-3.5 rounded-2xl border border-amber-500/20 shadow-inner">
-                      <div className="flex items-center justify-between text-xs font-medium mb-2.5">
-                        <span className="text-foreground font-semibold flex items-center gap-1.5">
-                          <Settings2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Set Focus Minutes:
-                        </span>
-                        <div className="flex items-center gap-1 font-mono font-bold">
-                          <button
-                            onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
-                            disabled={isRunning || customFocusMinutes <= 5}
-                            className="w-7 h-7 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
-                            title="-5 Minutes"
-                          >
-                            <Minus className="w-3.5 h-3.5" />
-                          </button>
-                          <input
-                            type="number"
-                            min="1"
-                            max="300"
-                            value={customFocusMinutes}
-                            disabled={isRunning}
-                            onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
-                            className="w-14 text-center bg-white dark:bg-slate-950 border-2 border-amber-500/40 rounded-xl py-1 text-sm font-mono font-black text-foreground focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-500/30 shadow-inner"
-                          />
-                          <span className="text-muted-foreground font-sans text-xs">min</span>
-                          <button
-                            onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
-                            disabled={isRunning || customFocusMinutes >= 300}
-                            className="w-7 h-7 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all hover:scale-110 active:scale-90 disabled:opacity-30"
-                            title="+5 Minutes"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Preset Minute Chips */}
-                      <div className="flex items-center justify-between gap-1 flex-wrap pt-1 border-t border-slate-200/60 dark:border-white/10">
-                        {PRESET_MINUTES.map((mins) => (
-                          <button
-                            key={mins}
-                            onClick={() => updateFocusMinutes(mins)}
-                            disabled={isRunning}
-                            className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all ${
-                              customFocusMinutes === mins
-                                ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold border border-amber-500 shadow-sm scale-105'
-                                : 'bg-white/80 dark:bg-slate-800/80 text-foreground/80 hover:bg-amber-500/15 hover:text-amber-700 dark:hover:text-amber-300 border border-slate-200 dark:border-white/10 hover:scale-105'
-                            }`}
-                          >
-                            {mins}m
-                          </button>
-                        ))}
+                {mode === 'focus' && (
+                  <div className="mb-4 glass-card bg-slate-50 dark:bg-slate-900/60 p-3.5 rounded-2xl border border-amber-500/20">
+                    <div className="flex items-center justify-between text-xs font-semibold mb-2.5">
+                      <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
+                        <Settings2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Set Focus Minutes:
+                      </span>
+                      <div className="flex items-center gap-1 font-mono font-bold">
+                        <button
+                          type="button"
+                          onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
+                          disabled={isRunning || customFocusMinutes <= 5}
+                          className="w-7 h-7 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-amber-500"
+                          aria-label="Decrease focus time by 5 minutes"
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          max="300"
+                          value={customFocusMinutes}
+                          disabled={isRunning}
+                          onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
+                          className="w-14 text-center bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl py-1 text-sm font-mono font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                          aria-label="Custom focus minutes"
+                        />
+                        <span className="text-slate-700 dark:text-slate-300 font-sans text-xs">min</span>
+                        <button
+                          type="button"
+                          onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
+                          disabled={isRunning || customFocusMinutes >= 300}
+                          className="w-7 h-7 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-amber-500"
+                          aria-label="Increase focus time by 5 minutes"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </div>
-                  )}
 
-                  {/* Timer Display Circle */}
-                  <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                      <defs>
-                        <linearGradient id="timer-amber-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#D97706" />
-                          <stop offset="100%" stopColor="#B45309" />
-                        </linearGradient>
-                      </defs>
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="42"
-                        className="stroke-amber-100 dark:stroke-slate-800"
-                        strokeWidth="6"
-                        fill="transparent"
-                      />
-                      <motion.circle
-                        cx="50"
-                        cy="50"
-                        r="42"
-                        stroke="url(#timer-amber-gradient)"
-                        strokeWidth="6"
-                        strokeDasharray="263.89"
-                        strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
-                        strokeLinecap="round"
-                        fill="transparent"
-                        transition={{ duration: 0.5 }}
-                      />
-                    </svg>
-
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-4xl font-mono font-black tracking-tight text-foreground drop-shadow-sm">
-                        {formatTime(timeLeft)}
-                      </span>
-                      <span className="text-xs text-amber-700 dark:text-amber-300 font-bold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                        {mode === 'focus' ? <Sparkles className="w-3 h-3 text-amber-600 dark:text-amber-400 animate-spin-slow" /> : <Coffee className="w-3 h-3 text-emerald-600" />}
-                        {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
-                      </span>
+                    <div className="flex items-center justify-between gap-1 flex-wrap pt-1 border-t border-slate-200 dark:border-white/10">
+                      {PRESET_MINUTES.map((mins) => (
+                        <button
+                          key={mins}
+                          type="button"
+                          onClick={() => updateFocusMinutes(mins)}
+                          disabled={isRunning}
+                          className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-500 ${
+                            customFocusMinutes === mins
+                              ? 'bg-amber-600 text-white font-bold border border-amber-500 shadow-sm'
+                              : 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-white/10'
+                          }`}
+                        >
+                          {mins}m
+                        </button>
+                      ))}
                     </div>
                   </div>
+                )}
 
-                  {/* Controls */}
-                  <div className="flex items-center justify-center gap-3">
-                    <button
-                      onClick={resetTimer}
-                      className="w-11 h-11 rounded-2xl glass-pill-badge bg-white/80 dark:bg-slate-800 text-foreground border border-slate-200 dark:border-white/15 shadow-sm flex items-center justify-center hover:rotate-180 transition-all cursor-pointer hover:bg-amber-500/10"
-                      title="Reset Timer"
-                    >
-                      <RotateCcw className="w-4 h-4 text-foreground/80" />
-                    </button>
+                <div className="relative w-44 h-44 mx-auto mb-5 flex items-center justify-center">
+                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="42"
+                      className="stroke-slate-200 dark:stroke-slate-800"
+                      strokeWidth="6"
+                      fill="transparent"
+                    />
+                    <motion.circle
+                      cx="50"
+                      cy="50"
+                      r="42"
+                      stroke="#D97706"
+                      strokeWidth="6"
+                      strokeDasharray="263.89"
+                      strokeDashoffset={263.89 - (263.89 * progressPercent) / 100}
+                      strokeLinecap="round"
+                      fill="transparent"
+                      transition={{ duration: 0.5 }}
+                    />
+                  </svg>
 
-                    <button
-                      onClick={toggleTimer}
-                      className="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-bold text-sm flex items-center gap-2 shadow-xl shadow-amber-600/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                    >
-                      {isRunning ? (
-                        <>
-                          <Pause className="w-4 h-4 fill-current" /> Pause
-                        </>
-                      ) : (
-                        <>
-                          <Play className="w-4 h-4 fill-current" /> Start Focus
-                        </>
-                      )}
-                    </button>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-4xl font-mono font-black text-slate-900 dark:text-white">
+                      {formatTime(timeLeft)}
+                    </span>
+                    <span className="text-xs text-amber-800 dark:text-amber-300 font-bold mt-1 capitalize flex items-center gap-1.5 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                      {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
+                    </span>
                   </div>
+                </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-white/10 text-center text-xs text-muted-foreground flex items-center justify-between">
-                    <span>Completed today:</span>
-                    <span className="font-bold text-amber-700 dark:text-amber-300 bg-amber-500/15 px-2 py-0.5 rounded-lg border border-amber-500/30">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
-                  </div>
-                </>
-              )}
-            </motion.div>
+                <div className="flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={resetTimer}
+                    className="w-11 h-11 rounded-2xl glass-pill-badge bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-white/15 shadow-sm flex items-center justify-center hover:rotate-180 transition-all cursor-pointer hover:bg-amber-500/10 focus-visible:ring-2 focus-visible:ring-amber-500"
+                    aria-label="Reset Timer"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={toggleTimer}
+                    className="px-8 py-3 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-500"
+                  >
+                    {isRunning ? (
+                      <>
+                        <Pause className="w-4 h-4 fill-current" /> Pause
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 fill-current" /> Start Focus
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-200 dark:border-white/10 text-center text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                  <span>Completed today:</span>
+                  <span className="font-bold text-amber-800 dark:text-amber-300 bg-amber-500/15 px-2 py-0.5 rounded-lg border border-amber-500/30">{sessionsCompleted} sessions ({sessionsCompleted * customFocusMinutes} mins)</span>
+                </div>
+              </>
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

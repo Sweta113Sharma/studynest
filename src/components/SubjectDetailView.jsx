@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, CheckCircle, Circle, Plus, Trash2, HelpCircle, Sparkles, Loader2, X, Bookmark, Layers } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Circle, Plus, Trash2, Sparkles, Loader2, X, Bookmark, Layers } from 'lucide-react'
 import { aiService } from '../services/aiService'
+import { useApp } from '../context/AppContext'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -20,13 +21,25 @@ const itemVariants = {
   }
 }
 
-export default function SubjectDetailView({ context }) {
+export default function SubjectDetailView() {
   const {
-    selectedSubject, setSelectedUnit, selectedBranch, selectedSemester,
-    navigateTo, goHome, goToSubjects, goBack, subjectColors, getSubjectProgress, setSubjectProgress,
-    getUnitProgress, setUnitProgress, getTodos, saveTodos, getQuizzes,
-    toggleBookmark, isBookmarked
-  } = context
+    selectedSubject,
+    setSelectedUnit,
+    navigateTo,
+    goToSubjects,
+    goHome,
+    goBack,
+    subjectColors,
+    getSubjectProgress,
+    getUnitProgress,
+    setUnitProgress,
+    getTodos,
+    saveTodos,
+    setCurrentQuiz,
+    setQuizState,
+    toggleBookmark,
+    isBookmarked
+  } = useApp()
 
   const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('')
@@ -37,14 +50,18 @@ export default function SubjectDetailView({ context }) {
     if (selectedSubject) {
       setTodos(getTodos(selectedSubject.id))
     }
-  }, [selectedSubject])
+  }, [selectedSubject, getTodos])
 
   if (!selectedSubject) {
     return (
       <div className="text-center py-16 space-y-4">
-        <h2 className="text-xl font-bold">No Subject Selected</h2>
-        <p className="text-muted-foreground text-sm">Please select a subject to view syllabus and units.</p>
-        <button onClick={goToSubjects || goHome} className="btn-primary">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">No Subject Selected</h2>
+        <p className="text-slate-700 dark:text-slate-300 text-sm">Please select a subject to view syllabus and units.</p>
+        <button
+          type="button"
+          onClick={goToSubjects || goHome}
+          className="btn-primary focus-visible:ring-2 focus-visible:ring-amber-500"
+        >
           Back to Subjects
         </button>
       </div>
@@ -53,7 +70,6 @@ export default function SubjectDetailView({ context }) {
 
   const colors = subjectColors[selectedSubject.key] || subjectColors.default
   const progress = getSubjectProgress(selectedSubject.id)
-  const quizzes = getQuizzes(selectedSubject.id)
 
   const handleUnitToggle = (unitTitle) => {
     const current = getUnitProgress(selectedSubject.id, unitTitle)
@@ -86,32 +102,8 @@ export default function SubjectDetailView({ context }) {
     navigateTo('unit-detail')
   }
 
-  const startQuiz = () => {
-    context.setCurrentQuiz(null)
-    context.setQuizState({ currentIndex: 0, score: 0, selectedOption: null })
-    navigateTo('quiz')
-  }
-
   const startFlashcards = () => {
     navigateTo('flashcards')
-  }
-
-  const handleAISubjectQuiz = async () => {
-    setAiLoading(true)
-    try {
-      const mcqs = await aiService.generateSubjectQuiz(selectedSubject.title, selectedSubject.units)
-      context.setCurrentQuiz({
-        id: `ai-subject-${Date.now()}`,
-        title: `AI Comprehensive: ${selectedSubject.title}`,
-        questions: mcqs
-      })
-      context.setQuizState({ currentIndex: 0, score: 0, selectedOption: null, completed: false })
-      navigateTo('quiz')
-    } catch (e) {
-      alert('AI Quiz generation failed: ' + e.message)
-    } finally {
-      setAiLoading(false)
-    }
   }
 
   const handleAISubjectSummary = async () => {
@@ -135,52 +127,57 @@ export default function SubjectDetailView({ context }) {
       animate="visible"
     >
       <motion.button
+        type="button"
         onClick={goBack}
-        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
+        className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200/60 dark:hover:bg-white/10 w-fit focus-visible:ring-2 focus-visible:ring-amber-500"
         variants={itemVariants}
         whileHover={{ x: -4 }}
         whileTap={{ scale: 0.92 }}
+        aria-label="Back to Subjects"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Subjects
+        <span>Back to Subjects</span>
       </motion.button>
 
-      <motion.div
-        className="p-6 rounded-2xl glass-card relative overflow-hidden"
+      {/* Header Banner */}
+      <motion.header
+        className="p-6 rounded-2xl glass-card border border-slate-300 dark:border-white/10 relative overflow-hidden"
         variants={itemVariants}
       >
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-display font-bold tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-display font-black tracking-tight text-slate-900 dark:text-white">
               {selectedSubject.title}
             </h1>
           </div>
           
           <div className="flex flex-wrap gap-2">
             <button
+              type="button"
               onClick={startFlashcards}
-              className="px-4 py-2 rounded-xl bg-amber-100 dark:bg-amber-950/40 border border-amber-300/60 dark:border-amber-800/40 text-amber-900 dark:text-amber-200 font-medium text-sm flex items-center gap-2 hover:bg-amber-200/60 transition-all"
+              className="px-4 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 font-bold text-sm flex items-center gap-2 hover:bg-amber-500/20 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
             >
               <Layers className="w-4 h-4" />
-              Flashcards
+              <span>Flashcards</span>
             </button>
             <button
+              type="button"
               onClick={handleAISubjectSummary}
               disabled={aiLoading}
-              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-foreground font-medium text-sm flex items-center gap-2 hover:bg-white/10 transition-all disabled:opacity-50"
+              className="px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white font-bold text-sm flex items-center gap-2 hover:border-amber-500/40 transition-all disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-amber-500"
             >
-              {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-700 dark:text-amber-300" />}
-              AI Overview
+              {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
+              <span>AI Overview</span>
             </button>
           </div>
         </div>
 
         <div>
-          <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-muted-foreground">Overall Progress</span>
+          <div className="flex items-center justify-between text-xs font-semibold mb-2">
+            <span className="text-slate-700 dark:text-slate-300">Overall Progress</span>
             <span className="font-bold" style={{ color: colors.border }}>{progress}%</span>
           </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
               style={{ background: colors.border }}
@@ -190,36 +187,39 @@ export default function SubjectDetailView({ context }) {
             />
           </div>
         </div>
-      </motion.div>
+      </motion.header>
 
       <AnimatePresence>
         {aiSummary && (
-          <motion.div
+          <motion.article
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="glass-card rounded-2xl p-6 relative"
+            className="glass-card rounded-2xl p-6 border border-amber-500/30 relative"
           >
             <button 
+              type="button"
               onClick={() => setAiSummary(null)}
-              className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="absolute top-4 right-4 p-2 hover:bg-slate-200 dark:hover:bg-white/10 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
+              aria-label="Close AI Overview"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4 text-slate-700 dark:text-slate-300" />
             </button>
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-300" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               AI Subject Overview
             </h3>
-            <div className="prose prose-invert max-w-none text-sm text-foreground/80 whitespace-pre-wrap">
+            <div className="prose dark:prose-invert max-w-none text-sm text-slate-800 dark:text-slate-200 whitespace-pre-wrap leading-relaxed">
               {aiSummary}
             </div>
-          </motion.div>
+          </motion.article>
         )}
       </AnimatePresence>
 
-      <motion.div variants={itemVariants}>
-        <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-primary" />
+      {/* Units List */}
+      <section aria-label="Subject units">
+        <h2 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <span className="w-1.5 h-5 rounded-full bg-amber-600 dark:bg-amber-400" />
           Units
         </h2>
         <div className="space-y-3">
@@ -231,35 +231,46 @@ export default function SubjectDetailView({ context }) {
               <motion.div
                 key={i}
                 onClick={() => openUnit(unit)}
-                className={`w-full p-4 rounded-xl flex items-center gap-4 text-left transition-all cursor-pointer ${
-                  done ? 'bg-white/5 opacity-60' : 'glass-card hover:bg-white/10'
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    openUnit(unit)
+                  }
+                }}
+                className={`w-full p-4 rounded-xl flex items-center gap-4 text-left transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-500 ${
+                  done ? 'glass-card opacity-70 bg-slate-100 dark:bg-slate-900/40' : 'glass-card border border-slate-300 dark:border-white/10 hover:border-amber-500/40'
                 }`}
                 variants={itemVariants}
-                whileHover={{ scale: 1.01, x: 4 }}
+                whileHover={{ scale: 1.01, x: 3 }}
                 whileTap={{ scale: 0.99 }}
               >
-                <div
+                <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation()
                     handleUnitToggle(unit.title)
                   }}
-                  className="flex-shrink-0 cursor-pointer"
+                  className="flex-shrink-0 cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-500 rounded-full"
+                  aria-label={done ? `Mark ${unit.title} incomplete` : `Mark ${unit.title} complete`}
                 >
                   {done ? (
                     <CheckCircle className="w-6 h-6" style={{ color: colors.border }} />
                   ) : (
-                    <Circle className="w-6 h-6 text-muted-foreground" />
+                    <Circle className="w-6 h-6 text-slate-500 dark:text-slate-400" />
                   )}
-                </div>
+                </button>
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-medium ${done ? 'line-through text-muted-foreground' : ''}`}>
+                  <h3 className={`font-bold text-base text-slate-900 dark:text-white ${done ? 'line-through opacity-60' : ''}`}>
                     {unit.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                  <p className="text-xs font-medium text-slate-700 dark:text-slate-300 mt-0.5">
                     {unit.youtube?.length || 0} videos • {unit.ppts?.length || 0} PPTs • AI notes
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation()
                     toggleBookmark({
@@ -270,30 +281,31 @@ export default function SubjectDetailView({ context }) {
                       unit: unit
                     })
                   }}
-                  className={`p-2 rounded-xl border transition-all duration-200 ${
+                  className={`p-2 rounded-xl border transition-all duration-200 focus-visible:ring-2 focus-visible:ring-amber-500 ${
                     bookmarked
                       ? 'bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-300 shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-white/20 dark:hover:bg-white/10 border-transparent'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border-transparent'
                   }`}
-                  title={bookmarked ? 'Remove Bookmark' : 'Bookmark Unit'}
+                  aria-label={bookmarked ? `Remove bookmark for ${unit.title}` : `Bookmark ${unit.title}`}
                 >
                   <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-amber-500 text-amber-500' : ''}`} />
                 </button>
-                <span className="text-muted-foreground">→</span>
+                <span className="text-slate-500 dark:text-slate-400 font-bold">→</span>
               </motion.div>
             )
           })}
         </div>
-      </motion.div>
+      </section>
 
-      <motion.div variants={itemVariants}>
-        <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-emerald-500" />
-          Important Topics
+      {/* Important Topics Section */}
+      <section aria-labelledby="topics-heading">
+        <h2 id="topics-heading" className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <span className="w-1.5 h-5 rounded-full bg-emerald-600 dark:bg-emerald-400" />
+          Important Topics & To-Dos
         </h2>
-        <div className="glass-card rounded-xl p-4 space-y-3">
+        <div className="glass-card rounded-xl p-4 border border-slate-300 dark:border-white/10 space-y-3">
           {todos.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-4">
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 text-center py-4">
               No topics added yet. Add important topics to track your study goals!
             </p>
           ) : (
@@ -301,24 +313,27 @@ export default function SubjectDetailView({ context }) {
               <motion.div
                 key={i}
                 className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                  todo.done ? 'bg-white/5 opacity-60' : 'bg-white/5'
+                  todo.done ? 'bg-slate-100 dark:bg-slate-900/40 opacity-70' : 'bg-slate-50 dark:bg-slate-900/60'
                 }`}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.04 }}
               >
                 <input
                   type="checkbox"
                   checked={todo.done}
                   onChange={() => handleTodoToggle(i)}
-                  className="w-5 h-5 rounded border-border accent-emerald-500"
+                  className="w-5 h-5 rounded border-slate-400 accent-amber-600 cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-500"
+                  aria-label={`Toggle completion for ${todo.text}`}
                 />
-                <span className={`flex-1 text-sm ${todo.done ? 'line-through text-muted-foreground' : ''}`}>
+                <span className={`flex-1 text-sm font-semibold text-slate-900 dark:text-white ${todo.done ? 'line-through opacity-60' : ''}`}>
                   {todo.text}
                 </span>
                 <button
+                  type="button"
                   onClick={() => handleDeleteTodo(i)}
-                  className="p-1 hover:text-destructive transition-colors"
+                  className="p-1.5 hover:text-red-600 text-slate-500 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 rounded-lg"
+                  aria-label={`Delete topic ${todo.text}`}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -332,17 +347,20 @@ export default function SubjectDetailView({ context }) {
               onChange={(e) => setNewTodo(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAddTodo()}
               placeholder="Add an important topic..."
-              className="flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-white/15 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+              aria-label="New important topic text"
             />
             <button
+              type="button"
               onClick={handleAddTodo}
-              className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:brightness-110 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-amber-600 text-white text-sm font-bold hover:bg-amber-700 transition-all focus-visible:ring-2 focus-visible:ring-amber-500"
+              aria-label="Add topic"
             >
               <Plus className="w-4 h-4" />
             </button>
           </div>
         </div>
-      </motion.div>
+      </section>
     </motion.div>
   )
 }

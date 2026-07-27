@@ -1,253 +1,62 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { Component } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import { AppProvider, useApp } from './context/AppContext'
 import LoginScreen from './components/LoginScreen'
 import AppShell from './components/AppShell'
-import { branches, semesters, yearToSemesters, subjectColors, quizzes } from './data/studyData'
 
-function App() {
-  const [user, setUser] = useState(null)
-  const [selectedYear, setSelectedYear] = useState(null)
-  const [selectedBranch, setSelectedBranch] = useState(null)
-  const [selectedSemester, setSelectedSemester] = useState(null)
-  const [selectedSubject, setSelectedSubject] = useState(null)
-  const [selectedUnit, setSelectedUnit] = useState(null)
-  const [currentQuiz, setCurrentQuiz] = useState(null)
-  const [quizState, setQuizState] = useState({ currentIndex: 0, score: 0, selectedOption: null, completed: false })
-  const [currentView, setCurrentView] = useState('login')
-  const [darkMode, setDarkMode] = useState(false)
-  const isPoppingState = useRef(false)
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('studynest_user')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-      setCurrentView('home')
-    }
-    const savedDarkMode = localStorage.getItem('studynest_darkmode')
-    if (savedDarkMode === 'true') {
-      setDarkMode(true)
-    }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
 
-    const handlePopState = (event) => {
-      isPoppingState.current = true
-      if (event.state) {
-        const { view, year, branch, sem, subject, unit } = event.state
-        setCurrentView(view || 'home')
-        setSelectedYear(year ?? null)
-        setSelectedBranch(branch ?? null)
-        setSelectedSemester(sem ?? null)
-        setSelectedSubject(subject ?? null)
-        setSelectedUnit(unit ?? null)
-      } else {
-        const hasUser = localStorage.getItem('studynest_user')
-        if (hasUser) {
-          setCurrentView('home')
-          setSelectedYear(null)
-          setSelectedBranch(null)
-          setSelectedSemester(null)
-          setSelectedSubject(null)
-          setSelectedUnit(null)
-        } else {
-          setCurrentView('login')
-        }
-      }
+  componentDidCatch(error, errorInfo) {
+    console.error('StudyNest ErrorBoundary caught an error:', error, errorInfo)
+  }
+
+  handleReset = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-900 text-white text-center">
+          <div className="max-w-md p-8 rounded-3xl bg-slate-800 border border-slate-700 shadow-2xl space-y-4">
+            <h1 className="text-2xl font-bold text-amber-400">Something went wrong</h1>
+            <p className="text-sm text-slate-300">
+              An unexpected error occurred in StudyNest. You can refresh or reset your local session.
+            </p>
+            <div className="flex gap-3 justify-center pt-2">
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 rounded-xl bg-amber-600 font-bold text-sm text-white hover:bg-amber-700"
+              >
+                Reload Page
+              </button>
+              <button
+                onClick={this.handleReset}
+                className="px-4 py-2 rounded-xl bg-slate-700 font-bold text-sm text-slate-200 hover:bg-slate-600"
+              >
+                Reset Session
+              </button>
+            </div>
+          </div>
+        </div>
+      )
     }
 
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    localStorage.setItem('studynest_darkmode', darkMode)
-  }, [darkMode])
-
-  useEffect(() => {
-    if (currentView === 'login') return
-    if (isPoppingState.current) {
-      isPoppingState.current = false
-      return
-    }
-    const currentState = window.history.state
-    const newState = {
-      view: currentView,
-      year: selectedYear,
-      branch: selectedBranch,
-      sem: selectedSemester,
-      subject: selectedSubject,
-      unit: selectedUnit
-    }
-    if (!currentState) {
-      window.history.pushState(newState, '', '')
-    } else if (currentState.view !== currentView) {
-      window.history.pushState(newState, '', '')
-    } else if (JSON.stringify(currentState) !== JSON.stringify(newState)) {
-      window.history.replaceState(newState, '', '')
-    }
-  }, [currentView, selectedYear, selectedBranch, selectedSemester, selectedSubject, selectedUnit])
-
-  const goBack = () => {
-    if (currentView === 'unit-detail') {
-      setSelectedUnit(null)
-      setCurrentView(selectedSubject ? 'subject-detail' : 'subjects')
-    } else if (currentView === 'subject-detail') {
-      setSelectedUnit(null)
-      setSelectedSubject(null)
-      setCurrentView(selectedBranch && selectedYear ? 'subjects' : 'home')
-    } else if (currentView === 'quiz' || currentView === 'flashcards') {
-      if (selectedUnit) {
-        setCurrentView('unit-detail')
-      } else if (selectedSubject) {
-        setCurrentView('subject-detail')
-      } else {
-        setCurrentView('subjects')
-      }
-    } else if (currentView === 'subjects') {
-      setSelectedUnit(null)
-      setSelectedSubject(null)
-      setSelectedSemester(null)
-      setSelectedBranch(null)
-      setSelectedYear(null)
-      setCurrentView('home')
-    } else {
-      setCurrentView('home')
-    }
+    return this.props.children
   }
+}
 
-  const handleLogin = (userData) => {
-    setUser(userData)
-    localStorage.setItem('studynest_user', JSON.stringify(userData))
-    setCurrentView('home')
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('studynest_user')
-    setUser(null)
-    setSelectedYear(null)
-    setSelectedBranch(null)
-    setSelectedSemester(null)
-    setSelectedSubject(null)
-    setSelectedUnit(null)
-    setCurrentView('login')
-  }
-
-  const getGreeting = () => {
-    const h = new Date().getHours()
-    if (h < 12) return 'Good morning'
-    if (h < 17) return 'Good afternoon'
-    return 'Good evening'
-  }
-
-  const getInitials = (name) => {
-    return name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
-  }
-
-  const getSubjectProgress = (subjectId) => {
-    const key = `studynest_progress_${subjectId}`
-    return parseInt(localStorage.getItem(key) || '0')
-  }
-
-  const setSubjectProgress = (subjectId, progress) => {
-    const key = `studynest_progress_${subjectId}`
-    localStorage.setItem(key, progress.toString())
-  }
-
-  const getUnitProgress = (subjectId, unitTitle) => {
-    const key = `studynest_progress_${subjectId}_${unitTitle}`
-    return localStorage.getItem(key) === 'true'
-  }
-
-  const setUnitProgress = (subjectId, unitTitle, done) => {
-    const key = `studynest_progress_${subjectId}_${unitTitle}`
-    localStorage.setItem(key, done.toString())
-    if (selectedSubject && selectedSubject.id === subjectId) {
-      const completed = selectedSubject.units.filter(u => 
-        u.title === unitTitle ? done : getUnitProgress(subjectId, u.title)
-      ).length
-      const progress = Math.round((completed / selectedSubject.units.length) * 100)
-      setSubjectProgress(subjectId, progress)
-    }
-  }
-
-  const getTodos = (subjectId) => {
-    const key = `studynest_todos_${subjectId}`
-    const raw = localStorage.getItem(key)
-    return raw ? JSON.parse(raw) : []
-  }
-
-  const saveTodos = (subjectId, todos) => {
-    const key = `studynest_todos_${subjectId}`
-    localStorage.setItem(key, JSON.stringify(todos))
-  }
-
-  const getQuizzes = (subjectId) => {
-    return quizzes[subjectId] || []
-  }
-
-  const [bookmarks, setBookmarks] = useState(() => {
-    const raw = localStorage.getItem('studynest_bookmarks')
-    return raw ? JSON.parse(raw) : []
-  })
-
-  const getBookmarks = () => bookmarks
-
-  const toggleBookmark = (item) => {
-    setBookmarks((prev) => {
-      const exists = prev.some(b => b.id === item.id)
-      const updated = exists ? prev.filter(b => b.id !== item.id) : [item, ...prev]
-      localStorage.setItem('studynest_bookmarks', JSON.stringify(updated))
-      return updated
-    })
-  }
-
-  const isBookmarked = (itemId) => {
-    return bookmarks.some(b => b.id === itemId)
-  }
-
-  const context = {
-    user,
-    selectedYear,
-    setSelectedYear,
-    selectedBranch,
-    setSelectedBranch,
-    selectedSemester,
-    setSelectedSemester,
-    selectedSubject,
-    setSelectedSubject,
-    selectedUnit,
-    setSelectedUnit,
-    currentQuiz,
-    setCurrentQuiz,
-    quizState,
-    setQuizState,
-    currentView,
-    setCurrentView,
-    darkMode,
-    setDarkMode,
-    branches,
-    semesters,
-    yearToSemesters,
-    subjectColors,
-    getGreeting,
-    getInitials,
-    goBack,
-    handleLogin,
-    handleLogout,
-    getSubjectProgress,
-    setSubjectProgress,
-    getUnitProgress,
-    setUnitProgress,
-    getTodos,
-    saveTodos,
-    getQuizzes,
-    getBookmarks,
-    toggleBookmark,
-    isBookmarked
-  }
+function MainContent() {
+  const { user } = useApp()
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -261,13 +70,21 @@ function App() {
       
       <AnimatePresence mode="wait">
         {!user ? (
-          <LoginScreen key="login" onLogin={handleLogin} darkMode={darkMode} setDarkMode={setDarkMode} />
+          <LoginScreen key="login" />
         ) : (
-          <AppShell key="app" context={context} />
+          <AppShell key="app" />
         )}
       </AnimatePresence>
     </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <AppProvider>
+        <MainContent />
+      </AppProvider>
+    </ErrorBoundary>
+  )
+}

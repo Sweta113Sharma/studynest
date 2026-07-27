@@ -11,43 +11,12 @@ import {
   GraduationCap, 
   BookOpen, 
   Cpu,
-  Zap
+  Clock,
+  HelpCircle,
+  PlayCircle
 } from 'lucide-react'
 import logo from '../assets/logo.png'
-
-const containerVariants = {
-  hidden: { opacity: 0, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.08,
-      delayChildren: 0.15
-    }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 120, damping: 14 }
-  }
-}
-
-const floatingBadgeVariants = {
-  animate: {
-    y: [0, -8, 0],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      repeatType: 'reverse',
-      ease: 'easeInOut'
-    }
-  }
-}
+import { useApp } from '../context/AppContext'
 
 const PRESET_USERS = [
   { name: 'Rahul Sharma', email: 'rahul.cse@college.edu', branch: 'CSE' },
@@ -55,16 +24,24 @@ const PRESET_USERS = [
   { name: 'Ananya Gupta', email: 'ananya.it@college.edu', branch: 'IT' }
 ]
 
-export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
+export default function LoginScreen() {
+  const { handleLogin, darkMode, setDarkMode } = useApp()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [selectedBranch, setSelectedBranch] = useState('CSE')
   const [isLoading, setIsLoading] = useState(false)
+  const [showCustomForm, setShowCustomForm] = useState(false)
 
-  const handleSelectPreset = (preset) => {
-    setName(preset.name)
-    setEmail(preset.email)
-    setSelectedBranch(preset.branch)
+  const handleQuickDemo = async (preset = PRESET_USERS[0]) => {
+    setIsLoading(true)
+    await new Promise(r => setTimeout(r, 400))
+    const userData = {
+      email: preset.email,
+      name: preset.name,
+      branch: preset.branch,
+      initials: preset.name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
+    }
+    handleLogin(userData)
   }
 
   const handleSubmit = async (e) => {
@@ -72,7 +49,7 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
     if (!email || !name) return
     
     setIsLoading(true)
-    await new Promise(r => setTimeout(r, 700))
+    await new Promise(r => setTimeout(r, 500))
     
     const userData = {
       email,
@@ -80,194 +57,231 @@ export default function LoginScreen({ onLogin, darkMode, setDarkMode }) {
       branch: selectedBranch,
       initials: name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
     }
-    onLogin(userData)
+    handleLogin(userData)
   }
 
   return (
-    <div className="min-h-screen relative flex flex-col justify-between p-4 md:p-8 lg:p-12 overflow-hidden selection:bg-amber-500/20">
-      {/* Background Glass Orbs & Ambient Glow Mesh */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-tr from-amber-600/30 to-amber-400/20 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] bg-gradient-to-br from-amber-700/20 via-orange-500/15 to-yellow-400/10 rounded-full blur-[120px] animate-float" />
-        <div className="absolute -bottom-40 left-1/4 w-[28rem] h-[28rem] bg-gradient-to-t from-yellow-600/25 to-amber-500/10 rounded-full blur-[110px]" />
+    <div className="min-h-screen relative flex flex-col justify-between p-4 md:p-8 lg:p-12 selection:bg-amber-500/20">
+      {/* Background Ambient Glow */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-tr from-amber-600/25 to-amber-400/15 rounded-full blur-[100px]" />
+        <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] bg-gradient-to-br from-amber-700/15 via-orange-500/10 to-yellow-400/10 rounded-full blur-[120px]" />
       </div>
 
-      {/* Top Header Navigation Bar */}
-      <motion.header 
-        className="w-full max-w-7xl mx-auto flex items-center justify-between z-20 mb-6 lg:mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      {/* Navigation Header */}
+      <header className="w-full max-w-7xl mx-auto flex items-center justify-between z-20 mb-8">
         <div className="flex items-center gap-3">
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-2xl blur opacity-40 group-hover:opacity-80 transition duration-300" />
-            <div className="relative w-11 h-11 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-white/40 dark:border-white/10 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
+            <div className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/20 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
               <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full glass-pill-badge text-amber-700 dark:text-amber-300 border border-amber-500/20">
-            <Sparkles className="w-3.5 h-3.5" /> B.Tech Academic Suite
-          </span>
+          <div className="flex flex-col">
+            <span className="font-display font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
+              Study<span className="text-amber-600 dark:text-amber-400">Nest</span>
+            </span>
+            <span className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
+              B.Tech Engineering Hub
+            </span>
+          </div>
         </div>
 
-        {/* Theme Toggle Button */}
-        {setDarkMode && (
-          <motion.button
-            onClick={() => setDarkMode(!darkMode)}
-            className="glass-pill-badge p-2.5 rounded-full text-foreground hover:text-amber-500 transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95 shadow-md"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            title={darkMode ? "Switch to Light Glass Theme" : "Switch to Dark Glass Theme"}
-          >
-            {darkMode ? (
-              <Sun className="w-5 h-5 text-amber-400 animate-spin-slow" />
-            ) : (
-              <Moon className="w-5 h-5 text-slate-700" />
-            )}
-          </motion.button>
-        )}
-      </motion.header>
-
-      {/* Main Centered Glassmorphism Login Card Container */}
-      <main className="w-full max-w-md mx-auto flex-1 flex items-center justify-center z-10 my-auto py-8">
-        <motion.div 
-          className="w-full"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+        {/* Dark Mode Toggle */}
+        <button
+          type="button"
+          onClick={() => setDarkMode(!darkMode)}
+          className="glass-pill-badge p-2.5 rounded-full text-slate-900 dark:text-white hover:text-amber-600 transition-all duration-200 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-500 shadow-md"
+          aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
         >
-          <div className="relative group">
-            {/* Outer Specular Glow Ring */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/40 via-orange-500/30 to-amber-600/40 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-glow" />
+          {darkMode ? (
+            <Sun className="w-5 h-5 text-amber-400" />
+          ) : (
+            <Moon className="w-5 h-5 text-slate-700" />
+          )}
+        </button>
+      </header>
 
-            <div className="relative glass-panel-morphism rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl overflow-hidden backdrop-blur-3xl border border-white/50 dark:border-white/15">
-              {/* Inner Light Reflection Beam */}
-              <div className="absolute -top-24 -left-24 w-48 h-48 bg-white/20 dark:bg-white/5 rounded-full blur-2xl pointer-events-none" />
-              
-              {/* Card Header & Logo */}
-              <motion.div variants={itemVariants} className="text-center mb-6">
-                <div className="relative inline-block mb-4">
-                  <motion.div 
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-white/90 to-amber-50/80 dark:from-slate-800/90 dark:to-slate-900/90 p-1 shadow-2xl border border-white/60 dark:border-white/20 mx-auto flex items-center justify-center relative overflow-hidden"
-                    whileHover={{ scale: 1.05, rotate: 2 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                  >
-                    <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-2xl drop-shadow-md" />
-                  </motion.div>
-                  <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md">
-                    <Zap className="w-3.5 h-3.5 fill-current" />
-                  </span>
-                </div>
+      {/* Main Hero & Demo Section */}
+      <main className="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
+        {/* Value Proposition Hero Header */}
+        <section className="text-center max-w-3xl mx-auto mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 mb-4">
+              <Sparkles className="w-4 h-4 text-amber-500" /> All-in-One B.Tech Academic Suite
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-slate-900 dark:text-white leading-tight">
+              Your Complete Workspace for <span className="text-gradient">Notes, Timers & Quiz Planning</span>
+            </h1>
+            <p className="text-base sm:text-lg text-slate-700 dark:text-slate-200 mt-4 max-w-2xl mx-auto font-normal leading-relaxed">
+              StudyNest helps engineering students master syllabus topics with curated unit notes, focused Pomodoro sessions, AI assistance, and interactive quizzes.
+            </p>
+          </motion.div>
+        </section>
 
-                <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-foreground">
-                  Sign In to <span className="text-gradient">StudyNest</span>
+        {/* Hero Interactive Card Container */}
+        <motion.div 
+          className="w-full max-w-xl mx-auto"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <div className="glass-panel-morphism rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-300 dark:border-white/20">
+            {/* Primary Action Section */}
+            <div className="space-y-6 text-center">
+              <div>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                  Get Started Immediately
                 </h2>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 font-normal">
-                  Enter your student details to launch your study portal
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  Launch the live workspace with one click or sign in with your student profile.
                 </p>
-              </motion.div>
+              </div>
 
-              {/* Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name Input */}
-                <motion.div variants={itemVariants}>
-                  <label className="block text-xs font-medium text-foreground/90 mb-1.5 flex items-center justify-between">
-                    <span>Full Name</span>
-                    <span className="text-[10px] text-muted-foreground">Required</span>
-                  </label>
-                  <div className="relative glass-input-box rounded-2xl">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground">
-                      <User className="w-4 h-4" />
-                    </div>
+              {/* Primary High-Contrast Demo CTA Button */}
+              <button
+                type="button"
+                onClick={() => handleQuickDemo(PRESET_USERS[0])}
+                disabled={isLoading}
+                className="w-full group relative overflow-hidden rounded-2xl py-4 px-6 font-bold text-white bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 shadow-xl transition-all duration-300 focus-visible:ring-2 focus-visible:ring-amber-500 flex items-center justify-center gap-3 text-base"
+                aria-label="Try Demo Instant Access"
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Launching Workspace...</span>
+                  </div>
+                ) : (
+                  <>
+                    <PlayCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    <span>Try Demo Instant Access</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+
+              {/* Preset Profile Options */}
+              <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+                <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">
+                  Or select a demo student branch profile:
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {PRESET_USERS.map((preset) => (
+                    <button
+                      key={preset.branch}
+                      type="button"
+                      onClick={() => handleQuickDemo(preset)}
+                      className="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800/80 hover:bg-amber-500/10 text-slate-900 dark:text-slate-100 hover:text-amber-600 border border-slate-300 dark:border-slate-700 transition-colors flex items-center justify-center gap-1 focus-visible:ring-2 focus-visible:ring-amber-500"
+                    >
+                      <GraduationCap className="w-3.5 h-3.5" />
+                      <span>{preset.branch} Student</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Custom Sign In Toggle */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowCustomForm(!showCustomForm)}
+                  className="text-xs font-semibold text-amber-700 dark:text-amber-400 hover:underline focus-visible:outline-none"
+                >
+                  {showCustomForm ? "Hide custom login form" : "Enter custom name & email instead"}
+                </button>
+              </div>
+
+              {/* Collapsible Custom Form */}
+              {showCustomForm && (
+                <form onSubmit={handleSubmit} className="space-y-4 pt-4 text-left border-t border-slate-200 dark:border-white/10">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                      Full Name
+                    </label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Rahul Sharma"
-                      className="w-full pl-10 pr-4 py-3 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none rounded-2xl font-medium"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                       required
                     />
                   </div>
-                </motion.div>
-
-                {/* Email Input */}
-                <motion.div variants={itemVariants}>
-                  <label className="block text-xs font-medium text-foreground/90 mb-1.5 flex items-center justify-between">
-                    <span>Email Address</span>
-                    <span className="text-[10px] text-muted-foreground">College / Personal</span>
-                  </label>
-                  <div className="relative glass-input-box rounded-2xl">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground">
-                      <Mail className="w-4 h-4" />
-                    </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                      Email Address
+                    </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="rahul.cse@college.edu"
-                      className="w-full pl-10 pr-4 py-3 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none rounded-2xl font-medium"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                       required
                     />
                   </div>
-                </motion.div>
-
-
-                {/* Submit Glass Button */}
-                <motion.div variants={itemVariants} className="pt-2">
-                  <motion.button
+                  <button
                     type="submit"
-                    disabled={isLoading || !name || !email}
-                    className="w-full relative group overflow-hidden rounded-2xl p-0.5 font-semibold text-white shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileHover={{ scale: isLoading ? 1 : 1.015 }}
-                    whileTap={{ scale: isLoading ? 1 : 0.985 }}
+                    disabled={!name || !email || isLoading}
+                    className="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
-                    {/* Glowing Animated Gradient Border Background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 rounded-2xl transition-all duration-300 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    {/* Inner Glass Button Content */}
-                    <div className="relative px-6 py-3.5 rounded-[0.9rem] bg-gradient-to-r from-amber-700/90 via-amber-800/90 to-amber-900/90 dark:from-amber-600/90 dark:via-amber-700/90 dark:to-amber-800/90 backdrop-blur-md flex items-center justify-center gap-2 glass-reflection">
-                      {isLoading ? (
-                        <div className="flex items-center gap-2 text-white">
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span className="text-sm font-semibold">Setting up your nest...</span>
-                        </div>
-                      ) : (
-                        <>
-                          <span className="text-sm tracking-wide font-bold">Launch Study Dashboard</span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                        </>
-                      )}
-                    </div>
-                  </motion.button>
-                </motion.div>
-              </form>
-
-              {/* Card Footer Security Tag */}
-              <motion.div 
-                variants={itemVariants}
-                className="mt-6 pt-4 border-t border-white/30 dark:border-white/10 flex items-center justify-center gap-2 text-[11px] text-muted-foreground"
-              >
-                <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                <span>Instant local access • No password or signup required</span>
-              </motion.div>
+                    Enter Workspace
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </motion.div>
+
+        {/* Core Pillars Feature Grid */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 w-full max-w-4xl">
+          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Smart Unit Notes</h3>
+              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
+                Structured B.Tech engineering syllabus with detailed unit summaries and topics.
+              </p>
+            </div>
+          </article>
+
+          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
+              <Clock className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Focus Pomodoro</h3>
+              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
+                Built-in study timer with alarm sounds and progress tracking to keep focus.
+              </p>
+            </div>
+          </article>
+
+          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">AI & Quizzes</h3>
+              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
+                Interactive self-assessment quizzes and AI assistant support for engineering concepts.
+              </p>
+            </div>
+          </article>
+        </section>
       </main>
 
-      {/* Footer copyright / info */}
-      <motion.footer 
-        className="w-full max-w-7xl mx-auto text-center z-20 pt-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
-        <p className="text-xs text-muted-foreground/80 font-medium">
-          StudyNest B.Tech Hub &copy; {new Date().getFullYear()} • Crafted for Engineering Excellence
+      {/* Footer */}
+      <footer className="w-full max-w-7xl mx-auto text-center z-20 pt-6">
+        <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+          StudyNest B.Tech Hub &copy; {new Date().getFullYear()} • Engineered for Academic Excellence
         </p>
-      </motion.footer>
+      </footer>
     </div>
   )
 }

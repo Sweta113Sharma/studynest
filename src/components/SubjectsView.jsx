@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, BookOpen, Clock, CheckCircle, FileText, Download, ExternalLink, Search, X } from 'lucide-react'
+import { ArrowLeft, BookOpen, FileText, Download, ExternalLink, Search, X } from 'lucide-react'
+import { useApp } from '../context/AppContext'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,11 +20,19 @@ const itemVariants = {
   }
 }
 
-export default function SubjectsView({ context }) {
+export default function SubjectsView() {
   const { 
-    selectedYear, selectedBranch, setSelectedSemester, selectedSemester,
-    semesters, subjectColors, getSubjectProgress, navigateTo, goHome, goBack
-  } = context
+    selectedYear,
+    selectedBranch,
+    setSelectedSemester,
+    selectedSemester,
+    setSelectedSubject,
+    semesters,
+    subjectColors,
+    getSubjectProgress,
+    navigateTo,
+    goBack
+  } = useApp()
 
   const [availableSemesters, setAvailableSemesters] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -36,16 +45,15 @@ export default function SubjectsView({ context }) {
       const available = possible.filter(s => branchData[s])
       setAvailableSemesters(available)
       
-      // Keep the current semester if it is valid for this year
       if (selectedSemester && possible.includes(selectedSemester)) {
-        // Keep it
+        // keep current
       } else if (available.length > 0) {
         setSelectedSemester(available[0])
       } else {
         setSelectedSemester(null)
       }
     }
-  }, [selectedYear, selectedBranch])
+  }, [selectedYear, selectedBranch, semesters, selectedSemester, setSelectedSemester])
 
   const branchData = semesters[selectedBranch]
   const subjects = branchData?.[selectedSemester] || []
@@ -58,12 +66,14 @@ export default function SubjectsView({ context }) {
     return matchTitle || matchUnits
   })
 
-  const branch = { name: 'Branch', icon: '📚' }
-  if (selectedBranch === 'cse') branch.name = 'Computer Science'
-  if (selectedBranch === 'ece') branch.name = 'Electronics'
-  if (selectedBranch === 'me') branch.name = 'Mechanical'
-  if (selectedBranch === 'ce') branch.name = 'Civil'
-  if (selectedBranch === 'ee') branch.name = 'Electrical'
+  const branchNames = {
+    cse: 'Computer Science',
+    ece: 'Electronics',
+    me: 'Mechanical',
+    ce: 'Civil',
+    ee: 'Electrical'
+  }
+  const branchTitle = branchNames[selectedBranch] || 'Engineering'
 
   return (
     <motion.div
@@ -73,160 +83,166 @@ export default function SubjectsView({ context }) {
       animate="visible"
     >
       <motion.button
+        type="button"
         onClick={goBack}
-        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 w-fit"
+        className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200/60 dark:hover:bg-white/10 w-fit focus-visible:ring-2 focus-visible:ring-amber-500"
         variants={itemVariants}
         whileHover={{ x: -4 }}
         whileTap={{ scale: 0.92 }}
+        aria-label="Back to Home"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Home
+        <span>Back to Home</span>
       </motion.button>
 
-      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <motion.header variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-display font-bold mb-1">
-            {branch.name} Engineering
+          <h1 className="text-2xl md:text-3xl font-display font-black text-slate-900 dark:text-white mb-1">
+            {branchTitle} Engineering
           </h1>
-          <p className="text-muted-foreground text-sm">Year {selectedYear}</p>
+          <p className="text-slate-700 dark:text-slate-300 text-sm font-semibold">Year {selectedYear}</p>
         </div>
 
         {/* Instant Search Bar */}
         <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search subjects or unit topics..."
-            className="w-full pl-9 pr-8 py-2 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+            className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-white/15 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-medium"
+            aria-label="Search subjects or topics"
           />
           {searchQuery && (
             <button
+              type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white focus-visible:ring-2 focus-visible:ring-amber-500"
+              aria-label="Clear search"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
-      </motion.div>
+      </motion.header>
 
-      <motion.div variants={itemVariants}>
+      {/* Semester Tab Switcher */}
+      <motion.nav variants={itemVariants} aria-label="Semester selection">
         <div className="flex gap-2 flex-wrap">
           {availableSemesters.map((sem) => (
             <button
               key={sem}
+              type="button"
               onClick={() => setSelectedSemester(sem)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-500 ${
                 selectedSemester === sem
-                  ? 'bg-primary text-white shadow-glow'
-                  : 'glass-card border border-white/5 hover:border-primary/30'
+                  ? 'bg-amber-600 text-white shadow-md'
+                  : 'glass-card border border-slate-300 dark:border-white/10 text-slate-900 dark:text-slate-100 hover:border-amber-500/40'
               }`}
+              aria-current={selectedSemester === sem ? 'page' : undefined}
             >
               Semester {sem}
             </button>
           ))}
         </div>
-      </motion.div>
+      </motion.nav>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-        variants={containerVariants}
-      >
-        {filteredSubjects.length === 0 ? (
-          <motion.div
-            className="col-span-full text-center py-12 glass-card rounded-2xl"
-            variants={itemVariants}
-          >
-            <BookOpen className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <p className="text-muted-foreground">
-              {searchQuery ? `No subjects match "${searchQuery}"` : 'No subjects available for this semester yet.'}
-            </p>
-          </motion.div>
-        ) : (
-          filteredSubjects.map((subject, i) => {
-            const colors = subjectColors[subject.key] || subjectColors.default
-            const progress = getSubjectProgress(subject.id)
-            
-            return (
-              <motion.button
-                key={subject.id}
-                onClick={() => {
-                  context.setSelectedSubject(subject)
-                  navigateTo('subject-detail')
-                }}
-                className="group relative p-5 rounded-2xl text-left transition-all duration-300 glass-card"
-                style={{
-                  borderLeft: `3px solid ${colors.border}`
-                }}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -4 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-                    style={{ background: 'rgba(255,255,255,0.1)' }}
-                  >
-                    {colors.icon}
+      {/* Subjects Grid */}
+      <section aria-label="Subjects list">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={containerVariants}
+        >
+          {filteredSubjects.length === 0 ? (
+            <motion.div
+              className="col-span-full text-center py-12 glass-card rounded-2xl border border-slate-300 dark:border-white/10"
+              variants={itemVariants}
+            >
+              <BookOpen className="w-12 h-12 mx-auto mb-4 text-slate-600 dark:text-slate-400" />
+              <p className="text-slate-700 dark:text-slate-300 font-semibold text-sm">
+                {searchQuery ? `No subjects match "${searchQuery}"` : 'No subjects available for this semester yet.'}
+              </p>
+            </motion.div>
+          ) : (
+            filteredSubjects.map((subject, i) => {
+              const colors = subjectColors[subject.key] || subjectColors.default
+              const progress = getSubjectProgress(subject.id)
+              
+              return (
+                <motion.button
+                  key={subject.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedSubject(subject)
+                    navigateTo('subject-detail')
+                  }}
+                  className="group relative p-5 rounded-2xl text-left transition-all duration-200 glass-card border border-slate-300 dark:border-white/10 hover:border-amber-500/40 focus-visible:ring-2 focus-visible:ring-amber-500"
+                  style={{
+                    borderLeft: `4px solid ${colors.border}`
+                  }}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, y: -3 }}
+                  whileTap={{ scale: 0.98 }}
+                  aria-label={`Open ${subject.title}`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"
+                      aria-hidden="true"
+                    >
+                      {colors.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-base truncate">{subject.title}</h3>
+                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">
+                        {subject.units.length} units
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">{subject.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {subject.units.length} units
-                    </p>
-                  </div>
-                </div>
 
-                <div className="mt-4">
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">Progress</span>
-                    <span className="font-medium" style={{ color: colors.border }}>{progress}%</span>
+                  <div className="mt-4">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-slate-700 dark:text-slate-300 font-semibold">Progress</span>
+                      <span className="font-bold" style={{ color: colors.border }}>{progress}%</span>
+                    </div>
+                    <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{ background: colors.border }}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.5, delay: i * 0.08 }}
+                      />
+                    </div>
                   </div>
-                  <div className="h-1.5 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full"
-                      style={{ background: colors.border }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                    />
-                  </div>
-                </div>
-
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowLeft className="w-5 h-5 rotate-180" style={{ color: colors.border }} />
-                </div>
-              </motion.button>
-            )
-          })
-        )}
-      </motion.div>
+                </motion.button>
+              )
+            })
+          )}
+        </motion.div>
+      </section>
 
       {/* Official NIET Syllabus Section */}
-      <motion.div 
-        variants={itemVariants} 
-        className="mt-12 pt-8 border-t border-white/10"
-      >
+      <section aria-labelledby="syllabus-heading" className="mt-12 pt-8 border-t border-slate-300 dark:border-white/10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-xl font-display font-bold flex items-center gap-2">
-              <FileText className="w-5 h-5 text-primary" />
+            <h2 id="syllabus-heading" className="text-xl font-display font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               Official NIET Autonomous Syllabus
             </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Access the official evaluation schemes and curriculum frameworks directly from the Noida Institute of Engineering & Technology.
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mt-1">
+              Access official evaluation schemes directly from Noida Institute of Engineering & Technology.
             </p>
           </div>
           <a
             href="https://www.niet.co.in/academics/syllabus"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded-xl glass-card border border-white/5 hover:border-primary/30 flex items-center gap-1.5 transition-all text-muted-foreground hover:text-foreground w-fit"
+            className="text-xs font-bold px-3.5 py-2 rounded-xl glass-card border border-slate-300 dark:border-white/10 hover:border-amber-500/40 flex items-center gap-1.5 transition-all text-slate-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-400 w-fit focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <span>All Branches Portal</span>
-            <ExternalLink className="w-3 h-3" />
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
 
@@ -262,28 +278,29 @@ export default function SubjectsView({ context }) {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-5 rounded-2xl glass-card border border-white/5 hover:border-primary/20 transition-all flex flex-col justify-between group hover:shadow-glow-sm"
-              whileHover={{ y: -4, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 hover:border-amber-500/40 transition-all flex flex-col justify-between group focus-visible:ring-2 focus-visible:ring-amber-500"
+              whileHover={{ y: -3, scale: 1.015 }}
+              whileTap={{ scale: 0.985 }}
+              aria-label={`Download ${item.year} ${item.title}`}
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-primary px-2 py-0.5 rounded-full bg-primary/10">
+                  <span className="text-xs font-bold text-amber-700 dark:text-amber-300 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30">
                     {item.year}
                   </span>
-                  <Download className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <Download className="w-4 h-4 text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors" />
                 </div>
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm mb-1 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-xs text-muted-foreground line-clamp-2">
+                <p className="text-xs font-medium text-slate-700 dark:text-slate-300 line-clamp-2">
                   {item.desc}
                 </p>
               </div>
             </motion.a>
           ))}
         </div>
-      </motion.div>
+      </section>
     </motion.div>
   )
 }
