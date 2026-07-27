@@ -2578,6 +2578,126 @@ export const semesters = {
                         youtube: [{ title: 'TCP vs UDP Header Comparison', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=uwoD5P4b_Ew' }, { title: 'TCP 3-Way Handshake Protocol', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=bW_BILl7M0E' }]
                     }
                 ]
+            },
+            {
+                id: 'ml-1', key: 'ai', title: 'Machine Learning', code: 'KCS501',
+                units: [
+                    {
+                        title: 'Unit 1: Introduction to Machine Learning & Supervised Learning',
+                        aiSummary: 'Overview of Machine Learning: Supervised, Unsupervised, and Reinforcement Learning. Learning Theory: Bias-Variance Tradeoff, Overfitting, Underfitting, Regularization (L1 Lasso, L2 Ridge). Linear Regression: Cost Function, Gradient Descent, Normal Equation. Logistic Regression: Sigmoid Function, Decision Boundaries, Binary & Multiclass Classification.',
+                        ppts: [{ title: 'ML Intro & Linear Models PPT', size: '3.5 MB' }, { title: 'Gradient Descent & Regularization', size: '2.8 MB' }],
+                        notes: [{ title: 'Supervised Learning Cheat Sheet', desc: 'Linear vs Logistic Regression formulas' }, { title: 'Bias-Variance Tradeoff Notes', desc: 'Overfitting prevention & regularization' }],
+                        youtube: [{ title: 'Machine Learning Full Course', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=Gv9_4yMHFhI' }, { title: 'Linear & Logistic Regression', channel: 'StatQuest', url: 'https://www.youtube.com/watch?v=zM4VZR0px8E' }]
+                    },
+                    {
+                        title: 'Unit 2: Decision Trees, Naive Bayes & SVM',
+                        aiSummary: 'Decision Trees: Entropy, Information Gain, Gini Impurity, ID3, C4.5, CART algorithms, Pruning strategies. Ensemble Learning: Bagging (Random Forests), Boosting (AdaBoost, Gradient Boosting, XGBoost). Naive Bayes Classifier: Bayes Theorem, Conditional Independence, Text Classification. Support Vector Machines (SVM): Hyperplanes, Margin Maximization, Hard & Soft Margins, Kernel Trick (RBF, Polynomial, Linear).',
+                        ppts: [{ title: 'Decision Trees & Ensembles PPT', size: '4.2 MB' }, { title: 'SVM & Kernel Methods', size: '3.6 MB' }],
+                        notes: [{ title: 'Tree Splitting Criteria Formulas', desc: 'Entropy and Gini calculation examples' }, { title: 'SVM & Kernel Trick Guide', desc: 'Primal and Dual optimization summaries' }],
+                        youtube: [{ title: 'Decision Tree Algorithms Explained', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=coOTEc-0OGw' }, { title: 'Support Vector Machine (SVM)', channel: 'StatQuest', url: 'https://www.youtube.com/watch?v=efR1C6UpgzE' }]
+                    },
+                    {
+                        title: 'Unit 3: Unsupervised Learning & Dimensionality Reduction',
+                        aiSummary: 'Clustering Algorithms: K-Means Clustering, Elbow Method, Hierarchical Clustering (Dendrograms, Agglomerative & Divisive), DBSCAN (Density-Based Spatial Clustering). Dimensionality Reduction: Principal Component Analysis (PCA) - Covariance Matrix, Eigenvalues/Eigenvectors, Variance Explained. Linear Discriminant Analysis (LDA), t-SNE overview.',
+                        ppts: [{ title: 'Clustering Algorithms (K-Means & DBSCAN)', size: '3.9 MB' }, { title: 'PCA & Dimensionality Reduction', size: '3.1 MB' }],
+                        notes: [{ title: 'K-Means Step-by-Step Algorithm', desc: 'Centroid initialization & convergence rules' }, { title: 'PCA Mathematical Derivation', desc: 'Eigen-decomposition for dimensionality reduction' }],
+                        youtube: [{ title: 'K-Means Clustering Explained', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=Xvwt7y2kfno' }, { title: 'Principal Component Analysis (PCA)', channel: 'StatQuest', url: 'https://www.youtube.com/watch?v=FgakZw6K1QQ' }]
+                    },
+                    {
+                        title: 'Unit 4: Artificial Neural Networks & Deep Learning Intro',
+                        aiSummary: 'Biological vs Artificial Neurons: Perceptron Model, Perceptron Learning Rule, Activation Functions (Sigmoid, Tanh, ReLU, Leaky ReLU, Softmax). Multilayer Perceptron (MLP): Forward Propagation, Backpropagation Algorithm (Chain Rule derivation), Loss Functions (MSE, Cross-Entropy). Optimization Algorithms: SGD, Momentum, RMSprop, Adam.',
+                        ppts: [{ title: 'Neural Networks & Perceptrons PPT', size: '4.5 MB' }, { title: 'Backpropagation & Optimizers', size: '3.7 MB' }],
+                        notes: [{ title: 'Activation Functions Comparison', desc: 'Graphs, ranges, and derivative formulas' }, { title: 'Backpropagation Mathematical Proof', desc: 'Chain rule derivations for weights and biases' }],
+                        youtube: [{ title: 'Neural Networks & Backpropagation', channel: '3Blue1Brown', url: 'https://www.youtube.com/watch?v=aircAruvnKk' }, { title: 'Activation Functions in Deep Learning', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=m0pDD4KWw-M' }]
+                    },
+                    {
+                        title: 'Unit 5: Model Evaluation, Validation & AI Ethics',
+                        aiSummary: 'Model Evaluation Metrics: Confusion Matrix, Accuracy, Precision, Recall, F1-Score, ROC-AUC Curve. Cross-Validation: K-Fold, Stratified K-Fold, Leave-One-Out. Hyperparameter Tuning: Grid Search, Random Search. ML System Design & Ethics: Data Bias, Fairness, Explainable AI (XAI, SHAP, LIME), Model Deployment lifecycle.',
+                        ppts: [{ title: 'Evaluation Metrics & ROC Curves PPT', size: '3.0 MB' }, { title: 'ML System Design & AI Ethics', size: '2.6 MB' }],
+                        notes: [{ title: 'Confusion Matrix & Metrics Cheat Sheet', desc: 'Precision, Recall, Specificity formulas' }, { title: 'K-Fold Cross-Validation Guide', desc: 'Train-validation-test split strategies' }],
+                        youtube: [{ title: 'Confusion Matrix & ROC-AUC Curves', channel: 'StatQuest', url: 'https://www.youtube.com/watch?v=4jRBRDbJemM' }, { title: 'K-Fold Cross Validation Tutorial', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=fSytzGwwBVw' }]
+                    }
+                ]
+            },
+            {
+                id: 'bigdata-1', key: 'statsml', title: 'Big Data Analytics', code: 'KCS502',
+                units: [
+                    {
+                        title: 'Unit 1: Introduction to Big Data & Hadoop Ecosystem',
+                        aiSummary: 'Big Data Overview: The 5 V\'s of Big Data (Volume, Velocity, Variety, Veracity, Value), Structured vs Unstructured Data. Distributed Systems Principles. Hadoop Architecture: Hadoop Distributed File System (HDFS) - NameNode, DataNode, Secondary NameNode, Block Size, Replication Factor. YARN (Yet Another Resource Negotiator) Architecture: ResourceManager, NodeManager, ApplicationMaster.',
+                        ppts: [{ title: 'Big Data & Hadoop Architecture PPT', size: '4.0 MB' }, { title: 'HDFS & YARN Deep Dive', size: '3.3 MB' }],
+                        notes: [{ title: '5 V\'s of Big Data Summary', desc: 'Key characteristics and enterprise architecture' }, { title: 'HDFS Read & Write Process', desc: 'NameNode & DataNode interaction sequence' }],
+                        youtube: [{ title: 'Big Data & Hadoop Architecture', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=1vbXmCrkT3Y' }, { title: 'HDFS Read & Write Mechanism', channel: 'Edureka', url: 'https://www.youtube.com/watch?v=gT8vWlqD29A' }]
+                    },
+                    {
+                        title: 'Unit 2: MapReduce Programming Framework',
+                        aiSummary: 'MapReduce Model: Mapper Phase, Shuffle & Sort Phase, Reducer Phase, Combiner & Partitioner Functions. Execution Flow & Fault Tolerance. Writing MapReduce Programs in Java/Python (Word Count, Matrix Multiplication, Log Analysis). Limitations of MapReduce and transition to Dataflow architectures.',
+                        ppts: [{ title: 'MapReduce Framework & Architecture', size: '3.8 MB' }, { title: 'MapReduce Algorithms & Code Patterns', size: '3.2 MB' }],
+                        notes: [{ title: 'MapReduce Execution Pipeline Guide', desc: 'Mapper -> Shuffle -> Sort -> Reducer breakdown' }, { title: 'Word Count Algorithm Code Walkthrough', desc: 'Map and Reduce function logic' }],
+                        youtube: [{ title: 'MapReduce Architecture & Execution', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=bAyrObl7TYE' }, { title: 'MapReduce Word Count Example', channel: 'Simplilearn', url: 'https://www.youtube.com/watch?v=S2S_L7C-W_k' }]
+                    },
+                    {
+                        title: 'Unit 3: Apache Spark & In-Memory Data Processing',
+                        aiSummary: 'Apache Spark Ecosystem: Spark Core, Spark SQL, Spark Streaming, MLlib, GraphX. Resilient Distributed Datasets (RDDs): Transformations (map, filter, flatMap, reduceByKey) vs Actions (collect, count, saveAsTextFile), Lineage Graph, Lazy Evaluation. DataFrames and Datasets API: Catalyst Optimizer, Tungsten Execution Engine. Spark Architecture: Driver Program, Cluster Manager, Executors.',
+                        ppts: [{ title: 'Apache Spark Core & RDDs PPT', size: '4.4 MB' }, { title: 'Spark SQL & DataFrames Guide', size: '3.5 MB' }],
+                        notes: [{ title: 'Spark RDD Transformations vs Actions', desc: 'Complete API reference & lazy evaluation' }, { title: 'Spark Architecture & Lineage Graphs', desc: 'Fault tolerance through DAG' }],
+                        youtube: [{ title: 'Apache Spark Full Architecture', channel: 'TechWorld with Nana', url: 'https://www.youtube.com/watch?v=_C8KW-Kb0DA' }, { title: 'Spark RDDs & DataFrames Tutorial', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=Qc6y5vA5Z4A' }]
+                    },
+                    {
+                        title: 'Unit 4: NoSQL Databases & Data Ingestion',
+                        aiSummary: 'NoSQL Database Principles: CAP Theorem (Consistency, Availability, Partition Tolerance), BASE Properties vs ACID. Types of NoSQL Databases: Document Stores (MongoDB), Key-Value Stores (Redis), Column-Family Stores (Apache Cassandra, HBase), Graph Databases (Neo4j). Data Ingestion Pipelines: Apache Kafka (Topics, Partitions, Producers, Consumers, Zookeeper/KRaft), Apache Flume, Sqoop for RDBMS integration.',
+                        ppts: [{ title: 'CAP Theorem & NoSQL Databases PPT', size: '4.1 MB' }, { title: 'Apache Kafka & Ingestion Pipelines', size: '3.4 MB' }],
+                        notes: [{ title: 'NoSQL Database Classification Chart', desc: 'Document vs Column vs Key-Value vs Graph' }, { title: 'Kafka Architecture & Streaming Setup', desc: 'Producers, Consumers, and Topic partitioning' }],
+                        youtube: [{ title: 'CAP Theorem & NoSQL Databases', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=BHwGE8N7T5A' }, { title: 'Apache Kafka Architecture Explained', channel: 'TechWorld with Nana', url: 'https://www.youtube.com/watch?v=1oWlo4j_7f8' }]
+                    },
+                    {
+                        title: 'Unit 5: Big Data Analytics & Real-Time Streaming',
+                        aiSummary: 'Stream Processing: Batch vs Real-Time Stream Processing, Micro-Batching (Spark Streaming) vs Event-at-a-Time (Apache Flink). Windowing Strategies: Tumbling, Sliding, Session Windows. Big Data Mining Algorithms: Association Rule Mining (Apriori, FP-Growth), Stream Mining (Count-Min Sketch, HyperLogLog). Data Visualization and BI Dashboards for Big Data insights.',
+                        ppts: [{ title: 'Real-Time Stream Processing & Spark Streaming', size: '3.7 MB' }, { title: 'Stream Mining & BI Visualization', size: '2.9 MB' }],
+                        notes: [{ title: 'Tumbling vs Sliding Windows Reference', desc: 'Time-based vs Count-based windowing' }, { title: 'Apriori & FP-Growth Algorithm Guide', desc: 'Support, Confidence, and Lift calculations' }],
+                        youtube: [{ title: 'Real-Time Stream Processing Fundamentals', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=F3v6yR7V410' }, { title: 'Spark Streaming & Window Operations', channel: 'Edureka', url: 'https://www.youtube.com/watch?v=7gW4nS6lX0M' }]
+                    }
+                ]
+            },
+            {
+                id: 'cloudvirt-1', key: 'cloud', title: 'Cloud Computing & Virtualization', code: 'KCS503',
+                units: [
+                    {
+                        title: 'Unit 1: Cloud Computing Fundamentals & Architectures',
+                        aiSummary: 'Cloud Fundamentals: Essential Characteristics (NIST Model), On-Demand Self-Service, Broad Network Access, Resource Pooling, Rapid Elasticity, Measured Service. Service Models: Infrastructure as a Service (IaaS), Platform as a Service (PaaS), Software as a Service (SaaS), Function as a Service (FaaS/Serverless). Deployment Models: Public, Private, Hybrid, Multi-Cloud, Community Cloud. Cloud SLA (Service Level Agreement) and Billing Models.',
+                        ppts: [{ title: 'NIST Cloud Model & Architecture PPT', size: '3.6 MB' }, { title: 'Cloud Service & Deployment Models', size: '2.9 MB' }],
+                        notes: [{ title: 'IaaS vs PaaS vs SaaS Comparison Table', desc: 'Responsibility distribution matrix' }, { title: 'Cloud SLA & Availability Calculations', desc: 'Uptime percentages and SLA terms' }],
+                        youtube: [{ title: 'Cloud Computing Architecture', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=2LaAJq1lB4U' }, { title: 'IaaS, PaaS, SaaS Explained', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=36zDucUX16w' }]
+                    },
+                    {
+                        title: 'Unit 2: Virtualization Technologies & Hypervisors',
+                        aiSummary: 'Virtualization Concepts: Abstraction of Hardware, Types of Virtualization (Full Virtualization, Para-Virtualization, Hardware-Assisted Virtualization, OS-Level Virtualization). Hypervisors: Type-1 (Bare-Metal: VMware ESXi, KVM, Xen) vs Type-2 (Hosted: Oracle VirtualBox, VMware Workstation). Virtual Machine (VM) Architecture: CPU Virtualization, Memory Virtualization (Extended Page Tables), I/O & Storage Virtualization, Live VM Migration.',
+                        ppts: [{ title: 'Virtualization & Hypervisor Types PPT', size: '4.0 MB' }, { title: 'CPU, Memory & Storage Virtualization', size: '3.3 MB' }],
+                        notes: [{ title: 'Type-1 vs Type-2 Hypervisors Cheat Sheet', desc: 'Architecture differences & use cases' }, { title: 'Live VM Migration Process', desc: 'Pre-copy vs Post-copy memory transfer' }],
+                        youtube: [{ title: 'Virtualization & Hypervisors Explained', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=Gk54lWz2X4M' }, { title: 'Type 1 vs Type 2 Hypervisor', channel: 'Neso Academy', url: 'https://www.youtube.com/watch?v=J8nL7pW9m8E' }]
+                    },
+                    {
+                        title: 'Unit 3: Containerization & Cloud Orchestration',
+                        aiSummary: 'Containers vs Virtual Machines: Docker Fundamentals (Images, Containers, Dockerfile, Docker Hub, Volumes, Networks). Container Architecture: Linux Namespaces, cgroups, Layered File System (UnionFS). Container Orchestration with Kubernetes (K8s): Control Plane Components (API Server, etcd, Scheduler, Controller Manager), Worker Node Components (kubelet, kube-proxy, Container Runtime). Pods, Deployments, Services, Ingress, Helm Charts.',
+                        ppts: [{ title: 'Docker Containers & Architecture PPT', size: '4.3 MB' }, { title: 'Kubernetes Architecture & Pods', size: '3.8 MB' }],
+                        notes: [{ title: 'Docker CLI Cheat Sheet', desc: 'Commands for build, run, exec, and network' }, { title: 'Kubernetes Control Plane Reference', desc: 'API Server, etcd, and scheduler workflows' }],
+                        youtube: [{ title: 'Docker Containers Full Course', channel: 'TechWorld with Nana', url: 'https://www.youtube.com/watch?v=3c-iBn73dDE' }, { title: 'Kubernetes Architecture Explained', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=P6v-cQ5c07c' }]
+                    },
+                    {
+                        title: 'Unit 4: Cloud Storage, Networking & Public Cloud Providers',
+                        aiSummary: 'Cloud Storage Architecture: Block Storage (AWS EBS), Object Storage (AWS S3, Blob Storage), File Storage (AWS EFS), Data Redundancy & Lifecycle Policies. Cloud Networking: Virtual Private Cloud (VPC), Subnets, Route Tables, Internet Gateways, NAT Gateways, Security Groups & Network ACLs. Overview of Public Clouds: Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP).',
+                        ppts: [{ title: 'AWS Cloud Networking & VPC PPT', size: '4.1 MB' }, { title: 'Block vs Object vs File Storage', size: '3.2 MB' }],
+                        notes: [{ title: 'AWS VPC Architecture Guide', desc: 'Public vs Private subnets & NAT Gateways' }, { title: 'Cloud Storage Selection Matrix', desc: 'EBS vs S3 vs EFS trade-offs' }],
+                        youtube: [{ title: 'AWS VPC Networking Tutorial', channel: 'TechWorld with Nana', url: 'https://www.youtube.com/watch?v=g2JOHLHh4rI' }, { title: 'Cloud Storage Types (S3 vs EBS)', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=4nE6w2_8Y2k' }]
+                    },
+                    {
+                        title: 'Unit 5: Cloud Security, DevOps & Serverless Architecture',
+                        aiSummary: 'Cloud Security: Shared Responsibility Model, Identity & Access Management (IAM), Encryption at Rest & In Transit, Cloud Audit Logging. Infrastructure as Code (IaC): Terraform & AWS CloudFormation principles. DevOps & CI/CD Pipelines in Cloud. Serverless Computing: AWS Lambda, Azure Functions, Event-Driven Architecture, Cold Start Optimization, Microservices vs Monoliths.',
+                        ppts: [{ title: 'Cloud Security & IAM Best Practices PPT', size: '3.5 MB' }, { title: 'Serverless Computing & Terraform IaC', size: '3.0 MB' }],
+                        notes: [{ title: 'Shared Responsibility Model Cheat Sheet', desc: 'Customer vs Cloud Provider duties' }, { title: 'Serverless & AWS Lambda Reference', desc: 'Event sources, triggers, and execution lifecycle' }],
+                        youtube: [{ title: 'Cloud Security & IAM Tutorial', channel: 'Gate Smashers', url: 'https://www.youtube.com/watch?v=5W_E4cE28vY' }, { title: 'AWS Lambda & Serverless Architecture', channel: 'TechWorld with Nana', url: 'https://www.youtube.com/watch?v=eOBq__hV644' }]
+                    }
+                ]
             }
         ],
         6: [
