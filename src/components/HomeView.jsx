@@ -72,9 +72,6 @@ export default function HomeView() {
           <span className="text-gradient">{user?.name?.split(' ')[0] || 'Student'}</span>
           <span className="inline-block ml-2" role="img" aria-label="Waving hand">👋</span>
         </motion.h1>
-        <p className="text-base md:text-lg text-slate-700 dark:text-slate-200 max-w-xl mx-auto font-medium">
-          "Study smarter, not longer. Master concepts with structured unit notes and active recall."
-        </p>
       </section>
 
       {/* Stats Section */}
