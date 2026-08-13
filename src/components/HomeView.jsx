@@ -30,7 +30,8 @@ export default function HomeView() {
     setSelectedUnit,
     branches,
     getBookmarks,
-    toggleBookmark
+    toggleBookmark,
+    focusHistory
   } = useApp()
 
   const handleYearSelect = (year) => {
@@ -45,6 +46,49 @@ export default function HomeView() {
 
   const bookmarks = getBookmarks()
   const sessionsCount = parseInt(localStorage.getItem('studynest_timer_sessions') || '0', 10)
+
+  const getPast7Days = () => {
+    const days = []
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      const dateStr = d.toISOString().split('T')[0]
+      days.push({
+        name: dayNames[d.getDay()],
+        dateStr,
+        isToday: i === 0,
+        completed: focusHistory.includes(dateStr)
+      })
+    }
+    return days
+  }
+  const past7Days = getPast7Days()
+
+  const calculateStreak = () => {
+    let streak = 0
+    let checkDate = new Date()
+    while (true) {
+      const dateStr = checkDate.toISOString().split('T')[0]
+      if (focusHistory.includes(dateStr)) {
+        streak++
+        checkDate.setDate(checkDate.getDate() - 1)
+      } else {
+        if (streak === 0) {
+          const yesterday = new Date()
+          yesterday.setDate(yesterday.getDate() - 1)
+          const yesterdayStr = yesterday.toISOString().split('T')[0]
+          if (focusHistory.includes(yesterdayStr)) {
+            checkDate = yesterday
+            continue
+          }
+        }
+        break
+      }
+    }
+    return streak
+  }
+  const currentStreak = calculateStreak()
 
   const features = [
     { icon: Sparkles, title: 'AI Study Guide', desc: 'Subject-wide AI overviews & custom quizzes', color: 'from-amber-500 to-orange-600' },
@@ -108,6 +152,60 @@ export default function HomeView() {
             <span className="text-2xl font-bold font-display text-slate-900 dark:text-white">100%</span>
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Exam Coverage Ready</p>
           </div>
+        </div>
+      </section>
+
+      {/* 7-Day Study Streak Tracker */}
+      <section className="p-6 rounded-3xl glass-card border border-slate-300 dark:border-white/10 relative overflow-hidden" aria-label="Study Streak Tracker">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+          <div>
+            <h2 className="text-xl font-display font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <Flame className="w-5 h-5 text-amber-600 dark:text-amber-400 animate-bounce" />
+              Daily Study Streak Tracker
+            </h2>
+            <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">Complete at least one Focus Session daily to keep your flame alive!</p>
+          </div>
+          <div className="flex items-center gap-2 bg-amber-500/15 border border-amber-500/30 px-4 py-2 rounded-2xl w-fit">
+            <span className="text-2xl">🔥</span>
+            <div className="text-left">
+              <p className="text-sm font-black leading-none text-slate-900 dark:text-white">{currentStreak} Day{currentStreak !== 1 ? 's' : ''}</p>
+              <p className="text-[10px] font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider mt-0.5">Current Streak</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-7 gap-2.5 max-w-xl">
+          {past7Days.map((day, idx) => (
+            <div
+              key={idx}
+              className={`p-3 rounded-2xl text-center flex flex-col justify-between items-center border transition-all ${
+                day.completed
+                  ? 'bg-gradient-to-b from-amber-500/25 to-amber-600/10 border-amber-500/50 shadow-md shadow-amber-500/5'
+                  : day.isToday
+                  ? 'bg-slate-100 dark:bg-slate-950 border-amber-500/30 ring-1 ring-amber-500/20'
+                  : 'bg-slate-50/50 dark:bg-slate-950/30 border-slate-200 dark:border-white/5'
+              }`}
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400">{day.name}</span>
+              <div className="my-2.5 flex items-center justify-center">
+                {day.completed ? (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+                  >
+                    <Flame className="w-5 h-5 text-amber-600 dark:text-amber-400 fill-current" />
+                  </motion.div>
+                ) : (
+                  <div className={`w-5 h-5 rounded-full border-2 ${day.isToday ? 'border-dashed border-amber-500/50 animate-pulse' : 'border-slate-300 dark:border-slate-800'}`} />
+                )}
+              </div>
+              <span className="text-[9px] font-bold text-slate-600 dark:text-slate-400">
+                {day.isToday ? 'Today' : day.dateStr.split('-')[2]}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 

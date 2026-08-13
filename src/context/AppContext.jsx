@@ -40,6 +40,72 @@ export function AppProvider({ children }) {
     }
   })
 
+  const [customSubjects, setCustomSubjects] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_custom_subjects')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+
+  const [mergedSemesters, setMergedSemesters] = useState(semesters)
+
+  useEffect(() => {
+    const base = JSON.parse(JSON.stringify(semesters))
+    customSubjects.forEach(sub => {
+      const { branch, semester } = sub
+      if (!base[branch]) base[branch] = {}
+      if (!base[branch][semester]) base[branch][semester] = []
+      
+      const existingIdx = base[branch][semester].findIndex(s => s.id === sub.id)
+      if (existingIdx >= 0) {
+        base[branch][semester][existingIdx] = sub
+      } else {
+        base[branch][semester].push(sub)
+      }
+    })
+    setMergedSemesters(base)
+  }, [customSubjects])
+
+  useEffect(() => {
+    if (selectedSubject) {
+      let latest = null
+      Object.keys(mergedSemesters).forEach(branch => {
+        Object.keys(mergedSemesters[branch]).forEach(sem => {
+          const found = mergedSemesters[branch][sem].find(s => s.id === selectedSubject.id)
+          if (found) latest = found
+        })
+      })
+      if (latest && JSON.stringify(latest) !== JSON.stringify(selectedSubject)) {
+        setSelectedSubject(latest)
+      }
+    }
+  }, [mergedSemesters, selectedSubject])
+
+  const [focusHistory, setFocusHistory] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_focus_history')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+
+  const logFocusSession = () => {
+    const today = new Date().toISOString().split('T')[0]
+    setFocusHistory(prev => {
+      if (prev.includes(today)) return prev
+      const updated = [...prev, today]
+      try {
+        localStorage.setItem('studynest_focus_history', JSON.stringify(updated))
+      } catch (e) {
+        console.warn('Failed to save focus history', e)
+      }
+      return updated
+    })
+  }
+
   const isPoppingState = useRef(false)
 
   // Handle dark mode class application
@@ -290,6 +356,79 @@ export function AppProvider({ children }) {
     return bookmarks.some(b => b.id === itemId)
   }
 
+  const addCustomSubject = (subject) => {
+    const updated = [...customSubjects.filter(s => s.id !== subject.id), subject]
+    setCustomSubjects(updated)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updated))
+  }
+
+  const deleteCustomSubject = (subjectId) => {
+    const updated = customSubjects.filter(s => s.id !== subjectId)
+    setCustomSubjects(updated)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updated))
+  }
+
+  const addCustomUnit = (subjectId, unit) => {
+    const existing = customSubjects.find(s => s.id === subjectId)
+    let updatedSubjects
+    if (existing) {
+      updatedSubjects = customSubjects.map(s => {
+        if (s.id === subjectId) {
+          return { ...s, units: [...s.units, unit] }
+        }
+        return s
+      })
+    } else {
+      let staticSubject = null
+      Object.keys(semesters).forEach(branch => {
+        Object.keys(semesters[branch]).forEach(sem => {
+          const found = semesters[branch][sem].find(s => s.id === subjectId)
+          if (found) {
+            staticSubject = { ...found, branch, semester: parseInt(sem, 10) }
+          }
+        })
+      })
+      if (staticSubject) {
+        updatedSubjects = [...customSubjects, { ...staticSubject, units: [...staticSubject.units, unit] }]
+      } else {
+        console.warn("Subject not found:", subjectId)
+        return
+      }
+    }
+    setCustomSubjects(updatedSubjects)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
+  }
+
+  const deleteCustomUnit = (subjectId, unitTitle) => {
+    const existing = customSubjects.find(s => s.id === subjectId)
+    let updatedSubjects
+    if (existing) {
+      updatedSubjects = customSubjects.map(s => {
+        if (s.id === subjectId) {
+          return { ...s, units: s.units.filter(u => u.title !== unitTitle) }
+        }
+        return s
+      })
+    } else {
+      let staticSubject = null
+      Object.keys(semesters).forEach(branch => {
+        Object.keys(semesters[branch]).forEach(sem => {
+          const found = semesters[branch][sem].find(s => s.id === subjectId)
+          if (found) {
+            staticSubject = { ...found, branch, semester: parseInt(sem, 10) }
+          }
+        })
+      })
+      if (staticSubject) {
+        updatedSubjects = [...customSubjects, { ...staticSubject, units: staticSubject.units.filter(u => u.title !== unitTitle) }]
+      } else {
+        return
+      }
+    }
+    setCustomSubjects(updatedSubjects)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
+  }
+
   const value = {
     user,
     setUser,
@@ -312,7 +451,7 @@ export function AppProvider({ children }) {
     darkMode,
     setDarkMode,
     branches,
-    semesters,
+    semesters: mergedSemesters,
     yearToSemesters,
     subjectColors,
     getGreeting,
@@ -334,7 +473,14 @@ export function AppProvider({ children }) {
     goHome,
     goToSubjects,
     goToSubjectDetail,
-    goToUnitDetail
+    goToUnitDetail,
+    customSubjects,
+    addCustomSubject,
+    deleteCustomSubject,
+    addCustomUnit,
+    deleteCustomUnit,
+    focusHistory,
+    logFocusSession
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

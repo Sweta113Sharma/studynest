@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowLeft, RotateCw, CheckCircle2, HelpCircle, Sparkles, Trophy, RotateCcw, Flame } from 'lucide-react'
+import { ArrowLeft, RotateCw, CheckCircle2, HelpCircle, Sparkles, Trophy, RotateCcw, Flame, Download } from 'lucide-react'
 import { aiService } from '../services/aiService'
 import { useApp } from '../context/AppContext'
 
@@ -150,16 +150,43 @@ export default function FlashcardsView() {
 
   const currentCard = cards[currentIndex]
 
+  const exportCards = () => {
+    try {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cards, null, 2))
+      const downloadAnchor = document.createElement('a')
+      downloadAnchor.setAttribute("href", dataStr)
+      downloadAnchor.setAttribute("download", `study_flashcards_${selectedUnit?.title || 'subject'}.json`)
+      document.body.appendChild(downloadAnchor)
+      downloadAnchor.click()
+      downloadAnchor.remove()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   return (
     <motion.div className="space-y-6 max-w-xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
-        <button
-          type="button"
-          onClick={goBack}
-          className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-500"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={goBack}
+            className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-500"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back
+          </button>
+          
+          {cards.length > 0 && (
+            <button
+              type="button"
+              onClick={exportCards}
+              className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-xs transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-500"
+              title="Export Flashcards as JSON"
+            >
+              <Download className="w-3.5 h-3.5" /> Export
+            </button>
+          )}
+        </div>
         <div className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
           <span>Card {currentIndex + 1} of {cards.length}</span>
           <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />

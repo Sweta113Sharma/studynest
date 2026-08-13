@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Send, Bot, Loader2, Minimize2 } from 'lucide-react'
+import { Sparkles, Send, Bot, Loader2, Minimize2, Paperclip, File, X } from 'lucide-react'
 import { aiService } from '../services/aiService'
+import { pdfParserService } from '../services/PdfParserService'
 import { useApp } from '../context/AppContext'
 
 export default function AIAssistantDrawer() {
@@ -41,6 +42,34 @@ export default function AIAssistantDrawer() {
     'How should I prepare for exam? 📝'
   ]
 
+  const [attachment, setAttachment] = useState(null)
+  const fileInputRef = useRef(null)
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    setLoading(true)
+    try {
+      let text = ''
+      if (file.type === 'application/pdf') {
+        text = await pdfParserService.parseRawText(file)
+      } else {
+        text = await new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = (event) => resolve(event.target.result)
+          reader.onerror = (err) => reject(err)
+          reader.readAsText(file)
+        })
+      }
+      setAttachment({ name: file.name, text })
+    } catch (err) {
+      alert('Failed to parse file: ' + err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleSend = async (textToSend) => {
     const query = textToSend || input
     if (!query.trim() || loading) return
@@ -50,9 +79,15 @@ export default function AIAssistantDrawer() {
     if (!textToSend) setInput('')
     setLoading(true)
 
+    let finalContext = contextSummary
+    if (attachment) {
+      finalContext = `[Uploaded Document Context: ${attachment.name}]\n${attachment.text}\n\n${contextSummary}`
+    }
+
     try {
-      const reply = await aiService.chat(newMessages, contextSummary)
+      const reply = await aiService.chat(newMessages, finalContext)
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
+      setAttachment(null)
     } catch (error) {
       setMessages((prev) => [
         ...prev,
@@ -249,6 +284,23 @@ export default function AIAssistantDrawer() {
               ))}
             </div>
 
+            {/* Attachment Badge */}
+            {attachment && (
+              <div className="px-4 py-2 border-t border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-slate-950 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-700 dark:text-amber-400 min-w-0">
+                  <File className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate max-w-[280px]">{attachment.name}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAttachment(null)}
+                  className="p-1 rounded-md hover:bg-slate-200 dark:hover:bg-white/10 text-slate-500 hover:text-slate-950"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
             {/* Input Form */}
             <div className="p-3.5 border-t border-slate-300 dark:border-white/10 bg-white dark:bg-slate-900">
               <form
@@ -258,6 +310,21 @@ export default function AIAssistantDrawer() {
                 }}
                 className="flex items-center gap-2"
               >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept=".pdf,.txt,.md,.json"
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition-colors flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-500"
+                  title="Attach study material (PDF, TXT, MD, JSON)"
+                >
+                  <Paperclip className="w-4.5 h-4.5" />
+                </button>
                 <input
                   type="text"
                   value={input}

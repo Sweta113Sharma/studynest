@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sun, Moon, Settings, LogOut } from 'lucide-react'
+import { Sun, Moon, Settings, LogOut, Upload, BookOpen } from 'lucide-react'
 import HomeView from './HomeView'
 import SubjectsView from './SubjectsView'
 import SubjectDetailView from './SubjectDetailView'
@@ -10,6 +10,8 @@ import FlashcardsView from './FlashcardsView'
 import SettingsModal from './SettingsModal'
 import StudyTimer from './StudyTimer'
 import AIAssistantDrawer from './AIAssistantDrawer'
+import SyllabusImporterModal from './SyllabusImporterModal'
+import SyllabusManagerModal from './SyllabusManagerModal'
 import { useApp } from '../context/AppContext'
 
 import logo from '../assets/logo.png'
@@ -32,6 +34,8 @@ export default function AppShell() {
   } = useApp()
 
   const [showSettings, setShowSettings] = useState(false)
+  const [showImporter, setShowImporter] = useState(false)
+  const [showManager, setShowManager] = useState(false)
 
   const renderView = () => {
     switch (currentView) {
@@ -89,6 +93,26 @@ export default function AppShell() {
 
             <button
               type="button"
+              onClick={() => setShowImporter(true)}
+              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
+              title="Import Syllabus PDF"
+              aria-label="Import Syllabus PDF"
+            >
+              <Upload className="w-4 h-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowManager(true)}
+              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
+              title="Manage Custom Syllabus"
+              aria-label="Manage Custom Syllabus"
+            >
+              <BookOpen className="w-4 h-4" />
+            </button>
+
+            <button
+              type="button"
               onClick={() => setShowSettings(true)}
               className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
               aria-label="Open Settings"
@@ -141,6 +165,8 @@ export default function AppShell() {
 
       <AIAssistantDrawer />
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
+      <SyllabusImporterModal isOpen={showImporter} onClose={() => setShowImporter(false)} />
+      <SyllabusManagerModal isOpen={showManager} onClose={() => setShowManager(false)} />
     </div>
   )
 }

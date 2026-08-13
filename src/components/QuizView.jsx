@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ChevronRight, CheckCircle, XCircle, Trophy, Sparkles, RotateCcw, Home } from 'lucide-react'
+import { ArrowLeft, ChevronRight, CheckCircle, XCircle, Trophy, Sparkles, RotateCcw, Home, Download } from 'lucide-react'
 import { aiService } from '../services/aiService'
 import { useApp } from '../context/AppContext'
 
@@ -127,18 +127,45 @@ export default function QuizView() {
     )
   }
 
+  const exportQuiz = () => {
+    try {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(quiz, null, 2))
+      const downloadAnchor = document.createElement('a')
+      downloadAnchor.setAttribute("href", dataStr)
+      downloadAnchor.setAttribute("download", `study_quiz_${selectedSubject?.title || 'subject'}.json`)
+      document.body.appendChild(downloadAnchor)
+      downloadAnchor.click()
+      downloadAnchor.remove()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   return (
     <motion.div className="space-y-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="flex items-center justify-between">
-        <motion.button 
-          type="button"
-          onClick={goBack} 
-          className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 w-fit focus-visible:ring-2 focus-visible:ring-amber-500"
-          whileHover={{ x: -4 }}
-          whileTap={{ scale: 0.92 }}
-        >
-          <ArrowLeft className="w-4 h-4" /> Back
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button 
+            type="button"
+            onClick={goBack} 
+            className="flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-sm transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 w-fit focus-visible:ring-2 focus-visible:ring-amber-500"
+            whileHover={{ x: -4 }}
+            whileTap={{ scale: 0.92 }}
+          >
+            <ArrowLeft className="w-4 h-4" /> Back
+          </motion.button>
+          
+          {questions.length > 0 && (
+            <button
+              type="button"
+              onClick={exportQuiz}
+              className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 hover:text-amber-600 font-semibold text-xs transition-colors py-1.5 px-3 rounded-xl hover:bg-slate-200 dark:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-amber-500"
+              title="Export Quiz as JSON"
+            >
+              <Download className="w-3.5 h-3.5" /> Export
+            </button>
+          )}
+        </div>
         <div className="text-sm font-bold text-slate-700 dark:text-slate-300">
           {quizState.currentIndex + 1} / {questions.length}
         </div>

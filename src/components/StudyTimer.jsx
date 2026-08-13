@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, RotateCcw, Clock, Coffee, Sparkles, X, Volume2, VolumeX, Plus, Minus, Settings2 } from 'lucide-react'
+import { useApp } from '../context/AppContext'
 
 const TIMER_MODES = {
   focus: { label: 'Focus', defaultDuration: 25 * 60, color: 'text-amber-600', bg: 'bg-amber-600' },
@@ -11,6 +12,7 @@ const TIMER_MODES = {
 const PRESET_MINUTES = [15, 25, 35, 45, 60, 90]
 
 export default function StudyTimer() {
+  const { logFocusSession } = useApp()
   const [isOpen, setIsOpen] = useState(false)
   const [mode, setMode] = useState('focus')
   const [customFocusMinutes, setCustomFocusMinutes] = useState(25)
@@ -20,9 +22,129 @@ export default function StudyTimer() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [showCompletionModal, setShowCompletionModal] = useState(false)
   const [isShaking, setIsShaking] = useState(false)
+  const [ambientSound, setAmbientSound] = useState('none')
 
   const timerRef = useRef(null)
   const popoverRef = useRef(null)
+  const ambientAudioCtxRef = useRef(null)
+  const ambientSourceRef = useRef(null)
+
+  useEffect(() => {
+    if (isRunning && ambientSound !== 'none') {
+      startAmbientSound();
+    } else {
+      stopAmbientSound();
+    }
+    return () => stopAmbientSound();
+  }, [isRunning, ambientSound])
+
+  const requestNotificationPermission = () => {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+  }
+
+  const showNotification = (title, body) => {
+    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+      new Notification(title, { body });
+    }
+  }
+
+  const startAmbientSound = () => {
+    try {
+      stopAmbientSound();
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioCtx();
+      ambientAudioCtxRef.current = ctx;
+
+      const gainNode = ctx.createGain();
+      gainNode.gain.setValueAtTime(0.18, ctx.currentTime);
+      gainNode.connect(ctx.destination);
+
+      if (ambientSound === 'white' || ambientSound === 'brown' || ambientSound === 'rain') {
+        const bufferSize = 2 * ctx.sampleRate;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        let lastOut = 0.0;
+        
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          if (ambientSound === 'white') {
+            data[i] = white;
+          } else {
+            data[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = data[i];
+            data[i] *= 3.5;
+          }
+        }
+
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+
+        if (ambientSound === 'rain') {
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(800, ctx.currentTime);
+          source.connect(filter);
+          filter.connect(gainNode);
+        } else {
+          source.connect(gainNode);
+        }
+        
+        source.start(0);
+        ambientSourceRef.current = source;
+      } else if (ambientSound === 'binaural') {
+        const oscL = ctx.createOscillator();
+        const oscR = ctx.createOscillator();
+        oscL.type = 'sine';
+        oscL.frequency.setValueAtTime(100, ctx.currentTime);
+        oscR.type = 'sine';
+        oscR.frequency.setValueAtTime(104, ctx.currentTime);
+
+        const pannerL = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+        const pannerR = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+
+        if (pannerL && pannerR) {
+          pannerL.pan.setValueAtTime(-1, ctx.currentTime);
+          pannerR.pan.setValueAtTime(1, ctx.currentTime);
+          oscL.connect(pannerL);
+          oscR.connect(pannerR);
+          pannerL.connect(gainNode);
+          pannerR.connect(gainNode);
+        } else {
+          oscL.connect(gainNode);
+          oscR.connect(gainNode);
+        }
+
+        oscL.start(0);
+        oscR.start(0);
+
+        ambientSourceRef.current = {
+          stop: () => {
+            try { oscL.stop(); oscR.stop(); } catch(e){}
+          }
+        };
+      }
+    } catch (e) {
+      console.warn("Failed to start ambient audio synthesis:", e);
+    }
+  }
+
+  const stopAmbientSound = () => {
+    try {
+      if (ambientSourceRef.current) {
+        ambientSourceRef.current.stop();
+        ambientSourceRef.current = null;
+      }
+      if (ambientAudioCtxRef.current) {
+        ambientAudioCtxRef.current.close();
+        ambientAudioCtxRef.current = null;
+      }
+    } catch (e) {}
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,9 +191,12 @@ export default function StudyTimer() {
               const newCount = sessionsCompleted + 1
               setSessionsCompleted(newCount)
               localStorage.setItem('studynest_timer_sessions', newCount.toString())
+              logFocusSession()
+              showNotification("Focus Session Complete! ⚡", "Awesome job! Ready for a well-deserved break?")
               setIsOpen(true)
               setShowCompletionModal(true)
             } else {
+              showNotification("Break Over! 📚", "Time to get back to focus. You got this!")
               setIsOpen(true)
             }
             return 0
@@ -323,6 +448,40 @@ export default function StudyTimer() {
 
                 {mode === 'focus' && (
                   <div className="mb-4 glass-card bg-slate-50 dark:bg-slate-900/60 p-3.5 rounded-2xl border border-amber-500/20">
+                    {/* Ambient Focus Sound Selector */}
+                    <div className="mb-3.5 pb-3 border-b border-slate-200 dark:border-white/10">
+                      <div className="flex items-center justify-between mb-2 text-xs font-semibold">
+                        <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
+                          🎧 Ambient Focus Audio:
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-5 gap-1 text-[9px] font-bold">
+                        {[
+                          { id: 'none', label: 'Off' },
+                          { id: 'white', label: 'White' },
+                          { id: 'brown', label: 'Brown' },
+                          { id: 'rain', label: 'Rain' },
+                          { id: 'binaural', label: 'Binaural' }
+                        ].map(snd => (
+                          <button
+                            key={snd.id}
+                            type="button"
+                            onClick={() => {
+                              requestNotificationPermission();
+                              setAmbientSound(snd.id);
+                            }}
+                            className={`py-1 rounded-lg transition-all focus-visible:ring-1 focus-visible:ring-amber-500 ${
+                              ambientSound === snd.id
+                                ? 'bg-amber-600 text-white shadow-sm'
+                                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/5 hover:border-amber-500/20'
+                            }`}
+                          >
+                            {snd.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     <div className="flex items-center justify-between text-xs font-semibold mb-2.5">
                       <span className="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
                         <Settings2 className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> Set Focus Minutes:
