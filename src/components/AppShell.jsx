@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sun, Moon, Settings, LogOut, Upload, BookOpen } from 'lucide-react'
+import { Sun, Moon, Settings, LogOut, ShieldCheck } from 'lucide-react'
 import HomeView from './HomeView'
 import SubjectsView from './SubjectsView'
 import SubjectDetailView from './SubjectDetailView'
@@ -10,8 +10,7 @@ import FlashcardsView from './FlashcardsView'
 import SettingsModal from './SettingsModal'
 import StudyTimer from './StudyTimer'
 import AIAssistantDrawer from './AIAssistantDrawer'
-import SyllabusImporterModal from './SyllabusImporterModal'
-import SyllabusManagerModal from './SyllabusManagerModal'
+import AdminPortalView from './AdminPortalView'
 import { useApp } from '../context/AppContext'
 
 import logo from '../assets/logo.png'
@@ -34,8 +33,6 @@ export default function AppShell() {
   } = useApp()
 
   const [showSettings, setShowSettings] = useState(false)
-  const [showImporter, setShowImporter] = useState(false)
-  const [showManager, setShowManager] = useState(false)
 
   const renderView = () => {
     switch (currentView) {
@@ -51,6 +48,8 @@ export default function AppShell() {
         return <QuizView key="quiz" />
       case 'flashcards':
         return <FlashcardsView key="flashcards" />
+      case 'admin-portal':
+        return <AdminPortalView key="admin-portal" />
       default:
         return <HomeView key="home" />
     }
@@ -91,30 +90,26 @@ export default function AppShell() {
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
-            <button
-              type="button"
-              onClick={() => setShowImporter(true)}
-              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
-              title="Import Syllabus PDF"
-              aria-label="Import Syllabus PDF"
-            >
-              <Upload className="w-4 h-4" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setShowManager(true)}
-              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
-              title="Manage Custom Syllabus"
-              aria-label="Manage Custom Syllabus"
-            >
-              <BookOpen className="w-4 h-4" />
-            </button>
+            {user?.role === 'admin' && (
+              <button
+                type="button"
+                onClick={() => navigateTo(currentView === 'admin-portal' ? 'home' : 'admin-portal')}
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer ${
+                  currentView === 'admin-portal'
+                    ? 'bg-amber-600 border-amber-600 text-white shadow-sm font-sans'
+                    : 'glass-card border-slate-300 dark:border-white/10 text-slate-900 dark:text-white hover:border-amber-500/40 font-sans'
+                }`}
+                title={currentView === 'admin-portal' ? "Preview Student View Dashboard" : "Switch to Admin Dashboard"}
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span className="hidden sm:inline">{currentView === 'admin-portal' ? "Student Mode" : "Admin Panel"}</span>
+              </button>
+            )}
 
             <button
               type="button"
               onClick={() => setShowSettings(true)}
-              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200"
+              className="w-10 h-10 rounded-xl glass-card hover:bg-slate-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-all focus-visible:ring-2 focus-visible:ring-amber-500 text-slate-800 dark:text-slate-200 cursor-pointer"
               aria-label="Open Settings"
             >
               <Settings className="w-4 h-4" />
@@ -165,8 +160,6 @@ export default function AppShell() {
 
       <AIAssistantDrawer />
       <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
-      <SyllabusImporterModal isOpen={showImporter} onClose={() => setShowImporter(false)} />
-      <SyllabusManagerModal isOpen={showManager} onClose={() => setShowManager(false)} />
     </div>
   )
 }

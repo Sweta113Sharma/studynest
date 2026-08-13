@@ -106,6 +106,29 @@ export function AppProvider({ children }) {
     })
   }
 
+  const [usersDb, setUsersDb] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_users_db')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+
+  const registerUser = (newProfile) => {
+    setUsersDb(prev => {
+      const exists = prev.some(u => u.email.toLowerCase() === newProfile.email.toLowerCase())
+      if (exists) return prev
+      const updated = [...prev, newProfile]
+      try {
+        localStorage.setItem('studynest_users_db', JSON.stringify(updated))
+      } catch (e) {
+        console.warn('Failed to save user database', e)
+      }
+      return updated
+    })
+  }
+
   const isPoppingState = useRef(false)
 
   // Handle dark mode class application
@@ -136,7 +159,7 @@ export function AppProvider({ children }) {
         setSelectedUnit(unit ?? null)
       } else {
         if (user) {
-          setCurrentView('home')
+          setCurrentView(user?.role === 'admin' ? 'admin-portal' : 'home')
           setSelectedYear(null)
           setSelectedBranch(null)
           setSelectedSemester(null)
@@ -228,9 +251,9 @@ export function AppProvider({ children }) {
       setSelectedSemester(null)
       setSelectedBranch(null)
       setSelectedYear(null)
-      setCurrentView('home')
+      setCurrentView(user?.role === 'admin' ? 'admin-portal' : 'home')
     } else {
-      setCurrentView('home')
+      setCurrentView(user?.role === 'admin' ? 'admin-portal' : 'home')
     }
   }
 
@@ -241,7 +264,7 @@ export function AppProvider({ children }) {
     } catch (e) {
       console.warn('Unable to store user profile', e)
     }
-    setCurrentView('home')
+    setCurrentView(userData.role === 'admin' ? 'admin-portal' : 'home')
   }
 
   const handleLogout = () => {
@@ -480,7 +503,9 @@ export function AppProvider({ children }) {
     addCustomUnit,
     deleteCustomUnit,
     focusHistory,
-    logFocusSession
+    logFocusSession,
+    usersDb,
+    registerUser
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
