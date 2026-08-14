@@ -333,45 +333,6 @@ export default function LoginScreen() {
             )}
           </div>
         </motion.div>
-
-        {/* Core Pillars Feature Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 w-full max-w-4xl">
-          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Smart Unit Notes</h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
-                Structured B.Tech engineering syllabus with detailed unit summaries and topics.
-              </p>
-            </div>
-          </article>
-
-          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
-              <Clock className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Focus Pomodoro</h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
-                Built-in study timer with alarm sounds and progress tracking to keep focus.
-              </p>
-            </div>
-          </article>
-
-          <article className="p-5 rounded-2xl glass-card border border-slate-300 dark:border-white/10 flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">AI & Quizzes</h3>
-              <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">
-                Interactive self-assessment quizzes and AI assistant support for engineering concepts.
-              </p>
-            </div>
-          </article>
-        </section>
       </main>
 
       {/* Footer */}
