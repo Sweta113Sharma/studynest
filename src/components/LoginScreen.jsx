@@ -238,9 +238,8 @@ export default function LoginScreen() {
             ) : (
               /* SIGN UP / REGISTER VIEW (DEFAULT) */
               <form onSubmit={handleSignup} className="space-y-4 text-left">
-                <div className="text-center">
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Create a New Account</h3>
-                  <p className="text-xs text-slate-700 dark:text-slate-300 font-semibold font-sans">Get instant B.Tech notes, Pomodoro ambient timers & AI quizzes</p>
+                <div className="text-center mb-4">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">Create a New Account</h3>
                 </div>
 
                 <div>
