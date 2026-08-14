@@ -127,36 +127,28 @@ export default function LoginScreen() {
       </div>
 
       {/* Navigation Header */}
-      <header className="w-full max-w-7xl mx-auto flex items-center justify-between z-20 mb-8">
-        <div className="flex items-center gap-3">
-          <div className="relative group">
-            <div className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/20 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
-              <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-xl" />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
-              Study<span className="text-amber-600 dark:text-amber-400">Nest</span>
-            </span>
-            <span className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
-              B.Tech Engineering Hub
-            </span>
+      <header className="w-full max-w-7xl mx-auto relative flex items-center justify-center z-20 mb-8">
+        <div className="relative group">
+          <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/20 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
+            <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-xl" />
           </div>
         </div>
 
         {/* Dark Mode Toggle */}
-        <button
-          type="button"
-          onClick={() => setDarkMode(!darkMode)}
-          className="glass-pill-badge p-2.5 rounded-full text-slate-900 dark:text-white hover:text-amber-600 transition-all duration-200 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-500 shadow-md cursor-pointer"
-          aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
-        >
-          {darkMode ? (
-            <Sun className="w-5 h-5 text-amber-400" />
-          ) : (
-            <Moon className="w-5 h-5 text-slate-700" />
-          )}
-        </button>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2">
+          <button
+            type="button"
+            onClick={() => setDarkMode(!darkMode)}
+            className="glass-pill-badge p-2.5 rounded-full text-slate-900 dark:text-white hover:text-amber-600 transition-all duration-200 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-amber-500 shadow-md cursor-pointer"
+            aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
+          >
+            {darkMode ? (
+              <Sun className="w-5 h-5 text-amber-400" />
+            ) : (
+              <Moon className="w-5 h-5 text-slate-700" />
+            )}
+          </button>
+        </div>
       </header>
 
       {/* Main Hero & Demo Section */}
@@ -168,7 +160,7 @@ export default function LoginScreen() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="glass-panel-morphism rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-300 dark:border-white/20">
+          <div className="glass-panel-morphism rounded-xl p-6 sm:p-10 shadow-2xl border border-slate-300 dark:border-white/20">
             {authMode === 'login' ? (
               /* SIGN IN / LOGIN VIEW */
               <div className="space-y-6">
