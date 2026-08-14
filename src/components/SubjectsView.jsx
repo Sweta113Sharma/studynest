@@ -37,26 +37,29 @@ export default function SubjectsView() {
   const [availableSemesters, setAvailableSemesters] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
 
+  const activeBranch = selectedBranch || 'cse'
+  const activeYear = selectedYear || 2
+
   useEffect(() => {
-    const branchData = semesters[selectedBranch]
+    const branchData = semesters[activeBranch]
     if (branchData) {
       const yearToSem = { 1: [1, 2], 2: [3, 4], 3: [5, 6], 4: [7, 8] }
-      const possible = yearToSem[selectedYear] || []
-      const available = possible.filter(s => branchData[s])
-      setAvailableSemesters(available)
+      const possible = yearToSem[activeYear] || [1, 2, 3, 4]
+      const available = Object.keys(branchData).map(Number)
+      setAvailableSemesters(available.length > 0 ? available : [1, 2, 3, 4])
       
-      if (selectedSemester && possible.includes(selectedSemester)) {
+      if (selectedSemester && branchData[selectedSemester]) {
         // keep current
       } else if (available.length > 0) {
         setSelectedSemester(available[0])
       } else {
-        setSelectedSemester(null)
+        setSelectedSemester(1)
       }
     }
-  }, [selectedYear, selectedBranch, semesters, selectedSemester, setSelectedSemester])
+  }, [activeYear, activeBranch, semesters, selectedSemester, setSelectedSemester])
 
-  const branchData = semesters[selectedBranch]
-  const subjects = branchData?.[selectedSemester] || []
+  const branchData = semesters[activeBranch]
+  const subjects = branchData?.[selectedSemester] || branchData?.[1] || branchData?.[3] || []
 
   const filteredSubjects = subjects.filter((s) => {
     if (!searchQuery.trim()) return true

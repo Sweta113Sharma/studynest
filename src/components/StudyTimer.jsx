@@ -11,9 +11,9 @@ const TIMER_MODES = {
 
 const PRESET_MINUTES = [15, 25, 35, 45, 60, 90]
 
-export default function StudyTimer() {
-  const { logFocusSession } = useApp()
-  const [isOpen, setIsOpen] = useState(false)
+export default function StudyTimer({ isFullPage = false }) {
+  const { logFocusSession, addXP } = useApp()
+  const [isOpen, setIsOpen] = useState(isFullPage)
   const [mode, setMode] = useState('focus')
   const [customFocusMinutes, setCustomFocusMinutes] = useState(25)
   const [timeLeft, setTimeLeft] = useState(25 * 60)
@@ -192,6 +192,7 @@ export default function StudyTimer() {
               setSessionsCompleted(newCount)
               localStorage.setItem('studynest_timer_sessions', newCount.toString())
               logFocusSession()
+              addXP(25, 'Finished 25-min study session')
               showNotification("Focus Session Complete! ⚡", "Awesome job! Ready for a well-deserved break?")
               setIsOpen(true)
               setShowCompletionModal(true)

@@ -3,65 +3,83 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode Palette - Calm, High-Contrast Soothing Slate & Warm Espresso Accent */
-  --bg-page-rgb: 248 250 252;
-  --foreground-rgb: 15 23 42;         /* High-contrast slate-900 #0F172A */
-  --muted-foreground-rgb: 51 65 85;   /* High-contrast slate-700 #334155 for > 7:1 contrast */
-  --primary-rgb: 120 53 15;          /* Warm Espresso Brown #78350F */
-  --accent-rgb: 146 64 14;
+  /* StudyNest Warm Educational Palette (60% Cream/White, 25% Navy/Blue, 10% Green, 5% Gold) */
+  --bg-page-rgb: 255 249 238;       /* Warm Cream #FFF9EE */
+  --foreground-rgb: 23 32 51;        /* Deep Slate Dark Text #172033 */
+  --muted-foreground-rgb: 104 115 134; /* Secondary Gray Text #687386 */
+  --primary-rgb: 18 59 112;         /* Primary Deep Navy #123B70 */
+  --accent-rgb: 245 183 44;         /* Gold Accent / XP #F5B72C */
 
-  --bg-page: #F8FAFC;
-  --text-page: #0F172A;
+  --bg-page: #FFF9EE;
+  --text-page: #172033;
   --bg-card: #FFFFFF;
-  --text-card: #0F172A;
-  --border-card: #CBD5E1;            /* Enhanced 3:1 card border definition */
-  --bg-input: #F1F5F9;
-  --text-input: #0F172A;
-  --accent: #78350F;
-  --button-primary-bg: #78350F;
+  --text-card: #172033;
+  --border-card: #E5EAF0;            /* Soft Border #E5EAF0 */
+  --bg-input: #F6F9FD;
+  --text-input: #172033;
+  
+  --primary-navy: #123B70;
+  --primary-blue: #2878D4;
+  --light-blue: #EAF4FF;
+  --gold-accent: #F5B72C;
+  --growth-green: #55A85A;
+  --light-green: #EAF7E8;
+
+  --button-primary-bg: #123B70;
   --button-primary-text: #FFFFFF;
-  --button-primary-hover-bg: #582C12;
+  --button-primary-hover-bg: #2878D4;
   --button-primary-hover-text: #FFFFFF;
-  --button-secondary-bg: #F1F5F9;
-  --button-secondary-text: #0F172A;
-  --button-secondary-border: #94A3B8;
-  --card-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 20px 25px -5px rgba(120, 53, 15, 0.05);
-  --card-shadow-hover: 0 20px 40px -10px rgba(15, 23, 42, 0.15), 0 25px 30px -5px rgba(120, 53, 15, 0.2);
-  --grid-line: rgba(15, 23, 42, 0.04);
-  --orb-1-color: rgba(120, 53, 15, 0.12);
-  --orb-2-color: rgba(146, 64, 14, 0.12);
-  --orb-3-color: rgba(180, 83, 9, 0.08);
+  
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-text: #123B70;
+  --button-secondary-border: #E5EAF0;
+  
+  --card-shadow: 0 4px 20px -2px rgba(18, 59, 112, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 12px 30px -4px rgba(18, 59, 112, 0.10), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  --grid-line: rgba(18, 59, 112, 0.03);
+  --orb-1-color: rgba(40, 120, 212, 0.08);
+  --orb-2-color: rgba(245, 183, 44, 0.07);
+  --orb-3-color: rgba(85, 168, 90, 0.06);
 }
 
 .dark {
-  /* Dark Mode Palette - Calm Midnight Slate & Crisp White High Contrast Text */
-  --bg-page-rgb: 9 13 22;
-  --foreground-rgb: 255 255 255;       /* Pure White #FFFFFF (> 15:1 contrast) */
-  --muted-foreground-rgb: 203 213 225; /* High Contrast Slate-300 #CBD5E1 */
-  --primary-rgb: 245 158 11;          /* Vibrant Amber Gold #F59E0B */
-  --accent-rgb: 251 191 36;           /* Glowing Gold #FBBF24 */
+  /* Dark Mode Palette - Deep Midnight Navy & Soft Glows */
+  --bg-page-rgb: 10 18 36;          /* Midnight Navy #0A1224 */
+  --foreground-rgb: 255 255 255;      /* Pure White #FFFFFF */
+  --muted-foreground-rgb: 170 185 205; /* High Contrast Slate-300 */
+  --primary-rgb: 40 120 212;        /* Bright Primary Blue #2878D4 */
+  --accent-rgb: 245 183 44;         /* Glowing Gold #F5B72C */
 
-  --bg-page: #090D16;
+  --bg-page: #0A1224;
   --text-page: #FFFFFF;
-  --bg-card: rgba(15, 23, 42, 0.92);
+  --bg-card: rgba(17, 29, 58, 0.95);
   --text-card: #FFFFFF;
-  --border-card: rgba(255, 255, 255, 0.2);
-  --bg-input: #0F172A;
+  --border-card: rgba(255, 255, 255, 0.12);
+  --bg-input: #111D3A;
   --text-input: #FFFFFF;
-  --accent: #F59E0B;
-  --button-primary-bg: #78350F;
+  
+  --primary-navy: #2878D4;
+  --primary-blue: #4B9BFF;
+  --light-blue: rgba(40, 120, 212, 0.18);
+  --gold-accent: #F5B72C;
+  --growth-green: #55A85A;
+  --light-green: rgba(85, 168, 90, 0.2);
+
+  --button-primary-bg: #2878D4;
   --button-primary-text: #FFFFFF;
-  --button-primary-hover-bg: #92400E;
+  --button-primary-hover-bg: #123B70;
   --button-primary-hover-text: #FFFFFF;
-  --button-secondary-bg: rgba(255, 255, 255, 0.1);
+  
+  --button-secondary-bg: rgba(255, 255, 255, 0.08);
   --button-secondary-text: #FFFFFF;
-  --button-secondary-border: rgba(255, 255, 255, 0.25);
-  --card-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-  --card-shadow-hover: 0 20px 50px rgba(245, 158, 11, 0.25);
-  --grid-line: rgba(255, 255, 255, 0.04);
-  --orb-1-color: rgba(120, 53, 15, 0.20);
-  --orb-2-color: rgba(146, 64, 14, 0.20);
-  --orb-3-color: rgba(180, 83, 9, 0.12);
+  --button-secondary-border: rgba(255, 255, 255, 0.16);
+  
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 16px 40px rgba(40, 120, 212, 0.2);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --orb-1-color: rgba(40, 120, 212, 0.15);
+  --orb-2-color: rgba(245, 183, 44, 0.10);
+  --orb-3-color: rgba(85, 168, 90, 0.10);
 }
 
 @layer base {
@@ -70,14 +88,14 @@
   }
 
   *:focus-visible {
-    outline: 2px solid #F59E0B;
+    outline: 2px solid #2878D4;
     outline-offset: 2px;
   }
 
   body {
     background: var(--bg-page);
     color: var(--text-page);
-    font-family: "Plus Jakarta Sans", Outfit, Inter, system-ui, sans-serif;
+    font-family: 'Poppins', '"Plus Jakarta Sans"', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:

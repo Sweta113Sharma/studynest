@@ -129,6 +129,229 @@ export function AppProvider({ children }) {
     })
   }
 
+  // --- STUDY NOTES WORKSPACE ---
+  const [notes, setNotes] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_study_notes')
+      if (saved) return JSON.parse(saved)
+    } catch {}
+    return [
+      {
+        id: 'note-1',
+        title: 'OOP Principles & Polymorphism',
+        subject: 'Java Programming',
+        category: 'Programming',
+        content: 'Object-Oriented Programming revolves around Encapsulation, Abstraction, Inheritance, and Polymorphism.\n• Dynamic Binding: Method overriding resolved at runtime.\n• Static Binding: Method overloading resolved at compile time.',
+        tags: ['OOP', 'Core Java', 'Exam Prep'],
+        isPinned: true,
+        updatedAt: new Date(Date.now() - 3600000 * 2).toISOString()
+      },
+      {
+        id: 'note-2',
+        title: 'Binary Search Tree & Balancing',
+        subject: 'Data Structures & Algorithms',
+        category: 'Core CS',
+        content: 'BST Invariant: Left child < Node < Right child.\nAVL Trees maintain balance factor in {-1, 0, 1} via LL, RR, LR, and RL rotations. Search complexity guaranteed O(log N).',
+        tags: ['Trees', 'Algorithms', 'Complexities'],
+        isPinned: true,
+        updatedAt: new Date(Date.now() - 3600000 * 24).toISOString()
+      },
+      {
+        id: 'note-3',
+        title: 'Eigenvalues & Characteristic Equation',
+        subject: 'Engineering Mathematics',
+        category: 'Mathematics',
+        content: 'Solve |A - λI| = 0 to obtain characteristic roots (eigenvalues). Sum of eigenvalues equals trace(A), and product equals determinant |A|.',
+        tags: ['Linear Algebra', 'Formulas'],
+        isPinned: false,
+        updatedAt: new Date(Date.now() - 3600000 * 48).toISOString()
+      }
+    ]
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('studynest_study_notes', JSON.stringify(notes))
+    } catch (e) {
+      console.warn('Failed to persist notes:', e)
+    }
+  }, [notes])
+
+  const addNote = (note) => {
+    const newNote = {
+      id: `note-${Date.now()}`,
+      title: note.title || 'Untitled Note',
+      subject: note.subject || 'General Study',
+      category: note.category || 'Study',
+      content: note.content || '',
+      tags: note.tags || [],
+      isPinned: !!note.isPinned,
+      updatedAt: new Date().toISOString()
+    }
+    setNotes(prev => [newNote, ...prev])
+    addXP(15, 'Created a new study note')
+    return newNote
+  }
+
+  const updateNote = (id, updatedFields) => {
+    setNotes(prev => prev.map(n => n.id === id ? { ...n, ...updatedFields, updatedAt: new Date().toISOString() } : n))
+  }
+
+  const deleteNote = (id) => {
+    setNotes(prev => prev.filter(n => n.id !== id))
+  }
+
+  const togglePinNote = (id) => {
+    setNotes(prev => prev.map(n => n.id === id ? { ...n, isPinned: !n.isPinned } : n))
+  }
+
+  // --- STUDY PLANNER & TASKS ---
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_study_tasks')
+      if (saved) return JSON.parse(saved)
+    } catch {}
+    return [
+      { id: 'task-1', text: 'Complete Java OOP notes revision', subject: 'Java Programming', priority: 'high', completed: false, dueDate: 'Today' },
+      { id: 'task-2', text: 'Practice DSA Tree Traversal quiz', subject: 'Data Structures', priority: 'medium', completed: false, dueDate: 'Tomorrow' },
+      { id: 'task-3', text: 'Solve Math Characteristic Equations unit 2', subject: 'Mathematics', priority: 'low', completed: true, dueDate: 'Completed' },
+      { id: 'task-4', text: 'Prepare DBMS Normalization cheat-sheet', subject: 'DBMS', priority: 'medium', completed: false, dueDate: 'In 2 days' }
+    ]
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('studynest_study_tasks', JSON.stringify(tasks))
+    } catch (e) {
+      console.warn('Failed to persist tasks:', e)
+    }
+  }, [tasks])
+
+  const addTask = (task) => {
+    const newTask = {
+      id: `task-${Date.now()}`,
+      text: task.text,
+      subject: task.subject || 'General Study',
+      priority: task.priority || 'medium',
+      completed: false,
+      dueDate: task.dueDate || 'Today'
+    }
+    setTasks(prev => [newTask, ...prev])
+    addXP(10, 'Scheduled study goal')
+    return newTask
+  }
+
+  const toggleTask = (id) => {
+    setTasks(prev => prev.map(t => {
+      if (t.id === id) {
+        const nextState = !t.completed
+        if (nextState) addXP(20, 'Completed daily study task')
+        return { ...t, completed: nextState }
+      }
+      return t
+    }))
+  }
+
+  const deleteTask = (id) => {
+    setTasks(prev => prev.filter(t => t.id !== id))
+  }
+
+  // --- EXAM COUNTDOWN PLANNER ---
+  const [exams, setExams] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_study_exams')
+      if (saved) return JSON.parse(saved)
+    } catch {}
+    return [
+      { id: 'exam-1', name: 'Java OOP Midterm Exam', subject: 'Java Programming', daysLeft: 12, prepProgress: 72, date: 'Oct 28' },
+      { id: 'exam-2', name: 'Data Structures & Algorithms Final', subject: 'DSA', daysLeft: 24, prepProgress: 45, date: 'Nov 09' },
+      { id: 'exam-3', name: 'Engineering Mathematics II', subject: 'Mathematics', daysLeft: 31, prepProgress: 60, date: 'Nov 16' }
+    ]
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('studynest_study_exams', JSON.stringify(exams))
+    } catch (e) {
+      console.warn('Failed to persist exams:', e)
+    }
+  }, [exams])
+
+  const addExam = (exam) => {
+    const newExam = {
+      id: `exam-${Date.now()}`,
+      name: exam.name,
+      subject: exam.subject,
+      daysLeft: parseInt(exam.daysLeft) || 10,
+      prepProgress: parseInt(exam.prepProgress) || 0,
+      date: exam.date || 'TBD'
+    }
+    setExams(prev => [...prev, newExam])
+    return newExam
+  }
+
+  const deleteExam = (id) => {
+    setExams(prev => prev.filter(e => e.id !== id))
+  }
+
+  // --- GAMIFICATION: XP, LEVELS & BADGES ---
+  const [xp, setXp] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_user_xp')
+      return saved ? parseInt(saved) : 420
+    } catch {
+      return 420
+    }
+  })
+
+  const [lastXpGain, setLastXpGain] = useState(null)
+
+  const addXP = (amount, reason = '') => {
+    setXp(prev => {
+      const updated = prev + amount
+      try {
+        localStorage.setItem('studynest_user_xp', updated.toString())
+      } catch (e) {
+        console.warn('Failed to persist XP:', e)
+      }
+      return updated
+    })
+    setLastXpGain({ amount, reason, timestamp: Date.now() })
+    setTimeout(() => setLastXpGain(null), 3500)
+  }
+
+  const level = Math.floor(xp / 100) + 1
+  const xpInCurrentLevel = xp % 100
+  const getLevelTitle = (lvl) => {
+    if (lvl <= 3) return 'Study Explorer'
+    if (lvl <= 6) return 'Knowledge Seeker'
+    if (lvl <= 10) return 'Nest Scholar'
+    if (lvl <= 15) return 'Academic Master'
+    return 'Grand Owl Mentor'
+  }
+  const levelTitle = getLevelTitle(level)
+
+  const [unlockedBadges, setUnlockedBadges] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_user_badges')
+      return saved ? JSON.parse(saved) : ['bookworm', 'streak-7', 'speed-learner']
+    } catch {
+      return ['bookworm', 'streak-7', 'speed-learner']
+    }
+  })
+
+  const unlockBadge = (badgeId) => {
+    setUnlockedBadges(prev => {
+      if (prev.includes(badgeId)) return prev
+      const updated = [...prev, badgeId]
+      try {
+        localStorage.setItem('studynest_user_badges', JSON.stringify(updated))
+      } catch {}
+      addXP(50, `Unlocked badge: ${badgeId}`)
+      return updated
+    })
+  }
+
   const isPoppingState = useRef(false)
 
   // Handle dark mode class application
@@ -489,6 +712,7 @@ export function AppProvider({ children }) {
     getTodos,
     saveTodos,
     getQuizzes,
+    bookmarks,
     getBookmarks,
     toggleBookmark,
     isBookmarked,
@@ -505,7 +729,31 @@ export function AppProvider({ children }) {
     focusHistory,
     logFocusSession,
     usersDb,
-    registerUser
+    registerUser,
+    // Notes Workspace
+    notes,
+    addNote,
+    updateNote,
+    deleteNote,
+    togglePinNote,
+    // Planner & Tasks
+    tasks,
+    addTask,
+    toggleTask,
+    deleteTask,
+    // Exams
+    exams,
+    addExam,
+    deleteExam,
+    // Gamification & XP
+    xp,
+    addXP,
+    lastXpGain,
+    level,
+    xpInCurrentLevel,
+    levelTitle,
+    unlockedBadges,
+    unlockBadge
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
