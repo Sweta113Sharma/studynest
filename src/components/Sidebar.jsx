@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  LayoutDashboard,
+  Home,
   BookOpen,
   FileText,
   Sparkles,
@@ -35,7 +35,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
     let checkDate = new Date()
     while (true) {
       const dateStr = checkDate.toISOString().split('T')[0]
-      if (focusHistory.includes(dateStr)) {
+      if (focusHistory && focusHistory.includes(dateStr)) {
         streak++
         checkDate.setDate(checkDate.getDate() - 1)
       } else {
@@ -43,7 +43,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
           const yesterday = new Date()
           yesterday.setDate(yesterday.getDate() - 1)
           const yesterdayStr = yesterday.toISOString().split('T')[0]
-          if (focusHistory.includes(yesterdayStr)) {
+          if (focusHistory && focusHistory.includes(yesterdayStr)) {
             checkDate = yesterday
             continue
           }
@@ -56,7 +56,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
   const currentStreak = calculateStreak()
 
   const navItems = [
-    { id: 'home', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'home', label: 'Home', icon: Home },
     { id: 'subjects', label: 'Subjects', icon: BookOpen },
     { id: 'notes', label: 'Notes', icon: FileText, badge: 'New' },
     { id: 'ai-tutor', label: 'AI Tutor', icon: Sparkles, isAction: true },
@@ -95,7 +95,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         />
       )}
 
-      {/* Persistent Desktop Sidebar / Slide-out Drawer for Mobile */}
+      {/* Persistent Desktop Sidebar */}
       <aside
         className={`fixed top-0 left-0 bottom-0 w-64 bg-white dark:bg-slate-900 border-r border-[#E5EAF0] dark:border-white/10 flex flex-col justify-between z-50 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isMobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
@@ -104,7 +104,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         {/* Top Branding */}
         <div>
           <div className="p-5 flex items-center gap-3 border-b border-[#E5EAF0] dark:border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-[#EAF4FF] dark:bg-blue-950/60 border border-[#2878D4]/20 flex items-center justify-center p-1 shadow-sm">
+            <div className="w-10 h-10 rounded-full bg-[#EAF4FF] dark:bg-blue-950/60 border border-[#2878D4]/20 flex items-center justify-center p-0.5 shadow-sm overflow-hidden">
               <MascotOwl state="default" size="sm" animate={false} />
             </div>
             <div>
@@ -117,30 +117,8 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
             </div>
           </div>
 
-          {/* User Level & Streak Summary Pill */}
-          <div className="mx-4 mt-4 p-3 rounded-2xl bg-[#FFF9EE] dark:bg-slate-800/60 border border-[#F5B72C]/30 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-[#F5B72C]/20 text-[#F5B72C] flex items-center justify-center font-bold text-xs">
-                ⭐
-              </div>
-              <div>
-                <p className="text-xs font-bold text-[#172033] dark:text-white leading-none">
-                  Lvl {level} • {xp} XP
-                </p>
-                <p className="text-[10px] font-medium text-[#687386] dark:text-slate-400 mt-0.5 truncate max-w-[90px]">
-                  {levelTitle}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1 bg-amber-500/15 px-2 py-1 rounded-xl text-xs font-extrabold text-amber-700 dark:text-amber-300">
-              <Flame className="w-3.5 h-3.5 fill-current text-amber-600" />
-              <span>{currentStreak}d</span>
-            </div>
-          </div>
-
           {/* Navigation Links */}
-          <nav className="p-3 space-y-1 mt-2 overflow-y-auto max-h-[calc(100vh-280px)] custom-scrollbar">
+          <nav className="p-3 space-y-1 mt-2 overflow-y-auto max-h-[calc(100vh-290px)] custom-scrollbar">
             {navItems.map((item) => {
               const active = isItemActive(item.id)
               const Icon = item.icon
@@ -208,28 +186,40 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
           </nav>
         </div>
 
-        {/* Bottom Profile & Settings */}
-        <div className="p-3 border-t border-[#E5EAF0] dark:border-white/10 space-y-1 bg-slate-50/50 dark:bg-slate-900/50">
-          <button
-            type="button"
-            onClick={() => {
-              if (onOpenSettings) onOpenSettings()
-              if (setIsMobileOpen) setIsMobileOpen(false)
-            }}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-[#687386] dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-          >
-            <Settings className="w-4 h-4" />
-            <span>Settings & Preferences</span>
-          </button>
+        {/* Bottom Section: Streak Card + Profile + Settings */}
+        <div className="p-3 border-t border-[#E5EAF0] dark:border-white/10 space-y-2 bg-slate-50/50 dark:bg-slate-900/50">
+          {/* Streak Card */}
+          <div className="p-2.5 rounded-2xl bg-gradient-to-r from-amber-100/80 via-orange-50/60 to-amber-100/80 dark:from-amber-950/40 dark:to-orange-950/30 border border-amber-300/60 dark:border-amber-500/30 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🔥</span>
+              <div>
+                <p className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
+                  {currentStreak} Day Streak
+                </p>
+                <p className="text-[10px] text-amber-800 dark:text-amber-300 font-medium">
+                  {currentStreak > 0 ? 'Keep it going!' : 'Start your streak today!'}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCurrentView('focus')}
+              className="w-6 h-6 rounded-lg bg-white dark:bg-slate-800 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xs shadow-xs hover:scale-105 transition-transform cursor-pointer border border-amber-300/40"
+              title="Start Focus Session"
+            >
+              →
+            </button>
+          </div>
 
-          <div className="pt-2 flex items-center justify-between px-2">
-            <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-8 h-8 rounded-full bg-[#123B70] text-white flex items-center justify-center text-xs font-bold shrink-0">
-                {user?.name?.charAt(0) || 'S'}
+          {/* Profile Bar */}
+          <div className="pt-1 px-1 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="w-8 h-8 rounded-full bg-[#123B70] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-xs">
+                {user?.name?.charAt(0)?.toUpperCase() || 'S'}
               </div>
               <div className="truncate">
                 <p className="text-xs font-bold text-[#172033] dark:text-white truncate">
-                  {user?.name || 'Student'}
+                  {user?.name || 'sweta'}
                 </p>
                 <p className="text-[10px] text-[#687386] dark:text-slate-400 truncate">
                   {user?.branch || 'CSE'} • {user?.role === 'admin' ? 'Admin' : 'Student'}
@@ -241,11 +231,24 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
               type="button"
               onClick={handleLogout}
               title="Log Out"
-              className="p-1.5 rounded-lg text-slate-700 hover:text-red-700 hover:bg-red-500/15 dark:hover:bg-red-500/20 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 hover:text-red-600 hover:bg-red-500/10 transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
           </div>
+
+          {/* Settings Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (onOpenSettings) onOpenSettings()
+              if (setIsMobileOpen) setIsMobileOpen(false)
+            }}
+            className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-semibold text-[#687386] dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          >
+            <Settings className="w-4 h-4" />
+            <span>Settings & Preferences</span>
+          </button>
         </div>
       </aside>
     </>

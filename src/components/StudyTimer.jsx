@@ -333,15 +333,15 @@ export default function StudyTimer({ isFullPage = false }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`px-3.5 py-1.5 rounded-xl glass-pill-badge bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white text-xs font-mono font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800 transition-all border border-amber-500/30 shadow-sm focus-visible:ring-2 focus-visible:ring-amber-500 ${
-          isShaking ? 'animate-timer-shake border-amber-500 ring-4 ring-amber-500/50 shadow-lg shadow-amber-500/40' : isRunning ? 'border-amber-500 ring-2 ring-amber-500/30 shadow-md' : ''
+        className={`px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs font-mono font-bold flex items-center gap-1.5 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/50 transition-all border border-emerald-200 dark:border-emerald-500/30 shadow-2xs focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer ${
+          isShaking ? 'animate-timer-shake border-emerald-500 ring-4 ring-emerald-500/40' : isRunning ? 'border-emerald-500 ring-2 ring-emerald-500/30' : ''
         }`}
         aria-label={`Study Timer: ${formatTime(timeLeft)}`}
       >
-        <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-amber-600 dark:text-amber-400' : 'text-amber-600 dark:text-amber-400'}`} />
+        <Clock className={`w-3.5 h-3.5 ${isRunning || isShaking ? 'animate-pulse text-emerald-600' : 'text-emerald-600'}`} />
         <span className="font-mono tracking-wide">{formatTime(timeLeft)}</span>
         {sessionsCompleted > 0 && (
-          <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 text-[10px] font-bold border border-amber-500/30">
+          <span className="px-1.5 py-0.2 rounded-full bg-emerald-200/60 dark:bg-emerald-800/60 text-emerald-900 dark:text-emerald-100 text-[10px] font-bold">
             {sessionsCompleted}⚡
           </span>
         )}

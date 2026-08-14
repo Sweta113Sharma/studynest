@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
+  Home,
   Sun,
   Moon,
   Settings,
@@ -173,42 +174,41 @@ export default function AppShell() {
               </span>
             </div>
 
-            {/* Desktop Breadcrumb Hint */}
+            {/* Desktop Breadcrumb */}
             <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-[#687386] dark:text-slate-400">
-              <span>StudyNest</span>
-              <span>/</span>
-              <span className="text-[#172033] dark:text-white font-bold capitalize">
-                {currentView.replace('-', ' ')}
-              </span>
+              <Home className="w-4 h-4 text-[#2878D4]" />
+              <span className="font-bold text-[#172033] dark:text-white">StudyNest</span>
+              <span className="text-slate-300 dark:text-slate-600">/</span>
+              <span className="capitalize">{currentView === 'home' ? 'Home' : currentView.replace('-', ' ')}</span>
             </div>
           </div>
 
-          {/* Right: Actions & Indicators */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Quick Streak Badge */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF9EE] dark:bg-slate-800 border border-[#F5B72C]/40 text-xs font-bold text-amber-700 dark:text-amber-300">
-              <Flame className="w-4 h-4 text-amber-600 fill-current" />
+          {/* Right: Actions & Badges */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Quick Streak Badge (Orange) */}
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-500/30 text-xs font-bold text-orange-700 dark:text-orange-300">
+              <Flame className="w-3.5 h-3.5 text-orange-500 fill-current" />
               <span>{currentStreak} Days</span>
             </div>
 
-            {/* Quick XP Pill */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#EAF4FF] dark:bg-slate-800 border border-[#2878D4]/30 text-xs font-bold text-[#123B70] dark:text-blue-300">
-              <Star className="w-4 h-4 text-[#F5B72C] fill-current" />
+            {/* Quick XP Level Pill (Gold) */}
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-xs font-bold text-amber-800 dark:text-amber-300">
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-current" />
               <span>Lvl {level}</span>
             </div>
 
-            {/* Focus Study Timer (Header mini-launcher) */}
+            {/* Focus Study Timer (Green Timer Pill) */}
             <StudyTimer />
 
-            {/* AI Assistant Button */}
+            {/* AI Assistant Button (Navy Pill) */}
             <button
               type="button"
               onClick={() => setIsAiDrawerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
               title="Open AI Study Assistant"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden md:inline">AI Tutor</span>
+              <span className="hidden sm:inline">AI Tutor</span>
             </button>
 
             {/* Dark Mode Toggle */}
@@ -221,14 +221,14 @@ export default function AppShell() {
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
-            {/* User Avatar */}
+            {/* User Avatar Circle */}
             <button
               type="button"
               onClick={() => setShowSettings(true)}
-              className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#123B70] to-[#2878D4] text-white flex items-center justify-center font-bold text-xs shadow-sm hover:scale-105 transition-transform cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[#123B70] text-white flex items-center justify-center font-bold text-xs shadow-xs hover:scale-105 transition-transform cursor-pointer shrink-0"
               title="Open Settings"
             >
-              {user?.name?.charAt(0) || 'S'}
+              {user?.name?.charAt(0)?.toUpperCase() || 'S'}
             </button>
           </div>
         </header>
