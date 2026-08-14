@@ -262,38 +262,18 @@ export default function LoginScreen() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Primary Branch
-                    </label>
-                    <select
-                      value={signupBranch}
-                      onChange={(e) => setSignupBranch(e.target.value)}
-                      className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    >
-                      <option value="CSE">CSE (Computer Science)</option>
-                      <option value="ECE">ECE (Electronics)</option>
-                      <option value="IT">IT (Information Tech)</option>
-                      <option value="ME">ME (Mechanical)</option>
-                      <option value="CE">CE (Civil)</option>
-                      <option value="EE">EE (Electrical)</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Access Level / Role
-                    </label>
-                    <select
-                      value={signupRole}
-                      onChange={(e) => setSignupRole(e.target.value)}
-                      className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    >
-                      <option value="student">Student / Learner</option>
-                      <option value="admin">Syllabus Admin</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Access Level / Role
+                  </label>
+                  <select
+                    value={signupRole}
+                    onChange={(e) => setSignupRole(e.target.value)}
+                    className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    <option value="student">Student / Learner</option>
+                    <option value="admin">Syllabus Admin</option>
+                  </select>
                 </div>
 
                 <button
