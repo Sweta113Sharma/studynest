@@ -161,25 +161,6 @@ export default function LoginScreen() {
 
       {/* Main Hero & Demo Section */}
       <main className="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
-        {/* Value Proposition Hero Header */}
-        <section className="text-center max-w-3xl mx-auto mb-10">
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/30 mb-4">
-              <Sparkles className="w-4 h-4 text-amber-500" /> All-in-One B.Tech Academic Suite
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-slate-900 dark:text-white leading-tight">
-              Your Complete Workspace for <span className="text-gradient">Notes, Timers & Quiz Planning</span>
-            </h1>
-            <p className="text-base sm:text-lg text-slate-700 dark:text-slate-200 mt-4 max-w-2xl mx-auto font-normal leading-relaxed">
-              StudyNest helps engineering students master syllabus topics with curated unit notes, focused Pomodoro sessions, AI assistance, and interactive quizzes.
-            </p>
-          </motion.div>
-        </section>
-
         {/* Hero Interactive Card Container */}
         <motion.div 
           className="w-full max-w-xl mx-auto"
