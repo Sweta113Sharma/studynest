@@ -126,11 +126,11 @@ export default function LoginScreen() {
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] bg-gradient-to-br from-amber-700/15 via-orange-500/10 to-yellow-400/10 rounded-full blur-[120px]" />
       </div>
 
-      {/* Navigation Header */}
-      <header className="w-full max-w-7xl mx-auto relative flex items-center justify-center z-20 mb-8">
-        <div className="relative group">
-          <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/20 p-0.5 flex items-center justify-center shadow-lg overflow-hidden">
-            <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-xl" />
+      {/* Navigation Header with Centered Circular Logo */}
+      <header className="w-full max-w-7xl mx-auto relative flex items-center justify-center z-20 mb-6 sm:mb-8">
+        <div className="flex items-center justify-center">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-white/20 p-1 flex items-center justify-center shadow-xl overflow-hidden ring-4 ring-amber-500/10">
+            <img src={logo} alt="StudyNest Logo" className="w-full h-full object-cover rounded-full" />
           </div>
         </div>
 
