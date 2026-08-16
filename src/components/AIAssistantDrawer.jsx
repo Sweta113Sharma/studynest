@@ -192,23 +192,6 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
 
   return (
     <aside aria-label="StudyNest AI Assistant">
-      {/* Floating Trigger Button if closed */}
-      {!isDrawerOpen && (
-        <motion.button
-          type="button"
-          onClick={() => setInternalIsOpen(true)}
-          className="fixed bottom-20 lg:bottom-6 right-6 z-40 p-3.5 rounded-full bg-[#123B70] hover:bg-[#2878D4] text-white shadow-2xl transition-all flex items-center gap-2 group border border-white/20 cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          aria-label="Open AI Tutor Assistant"
-        >
-          <Sparkles className="w-5 h-5 text-amber-300" />
-          <span className="font-bold text-xs pr-1 hidden sm:inline">AI Tutor</span>
-        </motion.button>
-      )}
-
       {/* Drawer Container */}
       <AnimatePresence>
         {isDrawerOpen && (

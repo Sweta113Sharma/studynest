@@ -18,7 +18,9 @@ import {
   Star,
   Award,
   Calendar,
-  Trophy
+  Trophy,
+  Bell,
+  User
 } from 'lucide-react'
 import HomeView from './HomeView'
 import SubjectsView from './SubjectsView'
@@ -185,30 +187,15 @@ export default function AppShell() {
 
           {/* Right: Actions & Badges */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Quick Streak Badge (Orange) */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-500/30 text-xs font-bold text-orange-700 dark:text-orange-300">
-              <Flame className="w-3.5 h-3.5 text-orange-500 fill-current" />
-              <span>{currentStreak} Days</span>
-            </div>
-
-            {/* Quick XP Level Pill (Gold) */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-xs font-bold text-amber-800 dark:text-amber-300">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-current" />
-              <span>Lvl {level}</span>
-            </div>
-
-            {/* Focus Study Timer (Green Timer Pill) */}
-            <StudyTimer />
-
-            {/* AI Assistant Button (Navy Pill) */}
+            {/* Notification Bell Icon */}
             <button
               type="button"
-              onClick={() => setIsAiDrawerOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
-              title="Open AI Study Assistant"
+              onClick={() => alert("No new notifications!")}
+              className="p-2 rounded-xl text-[#687386] dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer relative"
+              aria-label="View Notifications"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden sm:inline">AI Tutor</span>
+              <Bell className="w-4 h-4" />
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[#E52A7B] rounded-full" />
             </button>
 
             {/* Dark Mode Toggle */}
@@ -256,19 +243,25 @@ export default function AppShell() {
         aria-label="Mobile Navigation"
       >
         {[
-          { id: 'home', label: 'Home', icon: LayoutDashboard },
+          { id: 'home', label: 'Home', icon: Home },
           { id: 'subjects', label: 'Subjects', icon: BookOpen },
           { id: 'focus', label: 'Focus', icon: Clock },
           { id: 'growth', label: 'Growth', icon: Sprout },
-          { id: 'notes', label: 'Notes', icon: FileText }
+          { id: 'profile', label: 'Profile', icon: User }
         ].map((tab) => {
-          const active = currentView === tab.id
+          const active = tab.id === 'profile' ? showSettings : currentView === tab.id
           const Icon = tab.icon
           return (
             <button
               key={tab.id}
               type="button"
-              onClick={() => setCurrentView(tab.id)}
+              onClick={() => {
+                if (tab.id === 'profile') {
+                  setShowSettings(true)
+                } else {
+                  setCurrentView(tab.id)
+                }
+              }}
               className={`flex flex-col items-center justify-center gap-1 w-14 py-1 rounded-xl transition-all cursor-pointer ${
                 active
                   ? 'text-[#2878D4] font-bold'

@@ -4,7 +4,6 @@ import {
   BookOpen,
   Clock,
   Sparkles,
-  Award,
   ArrowRight,
   Flame,
   CheckCircle2,
@@ -24,16 +23,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.08 }
+    transition: { staggerChildren: 0.05, delayChildren: 0.05 }
   }
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 130, damping: 15 }
+    transition: { type: 'spring', stiffness: 140, damping: 16 }
   }
 }
 
@@ -133,315 +132,284 @@ export default function HomeView() {
 
   return (
     <motion.div
-      className="space-y-6 max-w-7xl mx-auto"
+      className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 font-sans"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      {/* 1. Greeting Header */}
-      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-display font-black text-[#172033] dark:text-white tracking-tight">
-            {getGreeting()}, <span className="text-[#2878D4] dark:text-blue-400">{user?.name || 'sweta'}!</span> 👋
-          </h1>
-          <p className="text-xs sm:text-sm font-medium text-[#687386] dark:text-slate-400 mt-0.5">
-            Ready to build your knowledge nest today?
-          </p>
-        </div>
+      {/* 1. Dashboard Header (Spacious, calm, simple greeting) */}
+      <motion.div variants={itemVariants} className="space-y-1">
+        <h1 className="text-2xl sm:text-3xl font-bold font-display text-[#172033] dark:text-white tracking-tight">
+          {getGreeting()}, <span className="text-[#2878D4]">{user?.name || 'Sweta'}!</span> 👋
+        </h1>
+        <p className="text-xs sm:text-sm font-medium text-[#687386] dark:text-slate-400">
+          Ready to build your knowledge nest today?
+        </p>
       </motion.div>
 
-      {/* 2. Top Row: Hero Study Card (Left 8 cols) + Quick Overview (Right 4 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Hero Study Card (8 cols) */}
-        <motion.section
-          variants={itemVariants}
-          className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#123B70] via-[#1A4B8C] to-[#123B70] text-white shadow-lg border border-white/10 relative overflow-hidden flex flex-col justify-between"
-          aria-label="Today's Study Progress Hero"
-        >
-          <div className="relative z-10 space-y-4">
-            {/* Top Pill */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-blue-100">
-              <Clock className="w-3.5 h-3.5 text-blue-200" />
-              <span>Today's Focus Goal</span>
+      {/* 2. Today's Study Goal Hero Card (Dominant Component) */}
+      <motion.section
+        variants={itemVariants}
+        className="w-full p-6 sm:p-8 rounded-[24px] bg-[#123B70] text-white shadow-sm border border-white/5 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+        aria-label="Today's Study Goal"
+      >
+        <div className="relative z-10 space-y-4 max-w-lg">
+          <span className="text-[10px] font-bold text-blue-200 tracking-widest uppercase block">
+            Today's Study Goal
+          </span>
+
+          <div className="space-y-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-4xl sm:text-5xl font-black font-display">72%</span>
+              <span className="text-xs sm:text-sm font-medium text-blue-200">Daily syllabus revision complete</span>
             </div>
 
-            {/* Progress Header */}
-            <div className="space-y-2">
-              <div className="flex items-baseline gap-3">
-                <span className="text-4xl sm:text-5xl font-black font-display text-white">72%</span>
-                <span className="text-xs sm:text-sm font-medium text-blue-200">Daily syllabus revision complete</span>
-              </div>
-
-              {/* Gold Progress Bar */}
-              <div className="w-full max-w-md h-2.5 bg-black/30 rounded-full overflow-hidden p-0.5 border border-white/10">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '72%' }}
-                  transition={{ duration: 1.2, ease: 'easeOut' }}
-                  className="h-full bg-[#F5B72C] rounded-full"
-                />
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed max-w-md font-normal">
-              You're on track to master <span className="font-bold text-white">OOP Polymorphism</span> and finish <span className="font-bold text-white">Unit 2</span> before your study streak resets.
-            </p>
-
-            {/* Gold CTA Button */}
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => navigateTo('subjects')}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#F5B72C] hover:bg-amber-400 text-[#123B70] font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
-              >
-                Start Studying →
-              </button>
+            {/* Gold Progress Bar */}
+            <div className="w-full max-w-md h-2 bg-black/25 rounded-full overflow-hidden p-0.5 border border-white/5">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '72%' }}
+                transition={{ duration: 1, ease: 'easeOut' }}
+                className="h-full bg-[#F5B72C] rounded-full"
+              />
             </div>
           </div>
 
-          {/* Owl Mascot Illustration on Right */}
-          <div className="absolute right-4 sm:right-8 bottom-4 sm:bottom-6 pointer-events-none hidden sm:block">
-            <MascotOwl state="reading" size="xl" />
-          </div>
+          <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-normal">
+            You're on track to master <span className="font-bold text-white">OOP Polymorphism</span> and finish <span className="font-bold text-white">Unit 2</span>.
+          </p>
 
-          {/* Background Soft Glows */}
-          <div className="absolute top-0 right-1/4 w-60 h-60 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-        </motion.section>
-
-        {/* Quick Overview (4 cols) */}
-        <motion.section
-          variants={itemVariants}
-          className="lg:col-span-4 p-5 rounded-3xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-3"
-          aria-label="Quick Overview"
-        >
-          <h2 className="text-xs font-bold text-[#172033] dark:text-white uppercase tracking-wider">
-            Quick Overview
-          </h2>
-
-          <div className="space-y-3">
-            {/* 1. Topics Completed */}
-            <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[#EAF4FF] text-[#2878D4] flex items-center justify-center shrink-0 border border-[#2878D4]/20">
-                <BookOpen className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-lg font-bold font-display text-[#172033] dark:text-white leading-tight">
-                  {bookmarks?.length > 0 ? bookmarks.length : 3}
-                </p>
-                <p className="text-[11px] text-[#687386] dark:text-slate-400">Topics Completed</p>
-              </div>
-            </div>
-
-            {/* 2. Focus Time */}
-            <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-200">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-lg font-bold font-display text-[#172033] dark:text-white leading-tight">
-                  1h 45m
-                </p>
-                <p className="text-[11px] text-[#687386] dark:text-slate-400">Focus Time</p>
-              </div>
-            </div>
-
-            {/* 3. Current Streak */}
-            <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0 border border-red-200">
-                <Flame className="w-5 h-5 fill-current" />
-              </div>
-              <div>
-                <p className="text-lg font-bold font-display text-[#172033] dark:text-white leading-tight">
-                  {currentStreak} Days
-                </p>
-                <p className="text-[11px] text-[#687386] dark:text-slate-400">Current Streak</p>
-              </div>
-            </div>
-
-            {/* 4. Total Earned XP */}
-            <div className="p-3 rounded-2xl bg-slate-50/70 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200">
-                <Star className="w-5 h-5 fill-current" />
-              </div>
-              <div>
-                <p className="text-lg font-bold font-display text-[#172033] dark:text-white leading-tight">
-                  {xp} XP
-                </p>
-                <p className="text-[11px] text-[#687386] dark:text-slate-400">Total Earned</p>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-      </div>
-
-      {/* 3. Middle Row: Continue Learning (4.5 cols) + Subjects at a Glance Donut (3.5 cols) + Today's Tasks (4 cols) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-        {/* Continue Learning (5 cols) */}
-        <motion.section
-          variants={itemVariants}
-          className="lg:col-span-5 p-5 rounded-3xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-sm space-y-3.5 flex flex-col justify-between"
-        >
-          <div className="flex items-center justify-between">
-            <h2 className="font-display font-bold text-sm sm:text-base text-[#172033] dark:text-white flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-[#2878D4]" />
-              Continue Learning
-            </h2>
+          <div className="pt-1">
             <button
               type="button"
               onClick={() => navigateTo('subjects')}
-              className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-0.5"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#F5B72C] hover:bg-amber-400 text-[#123B70] font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm active:scale-95 transition-all cursor-pointer"
             >
-              All Subjects <ChevronRight className="w-3.5 h-3.5" />
+              Start Studying →
             </button>
           </div>
+        </div>
 
-          <div className="space-y-2.5">
-            {continueSubjects.map((sub) => {
-              const Icon = sub.icon
-              return (
-                <div
-                  key={sub.id}
-                  onClick={() => navigateTo('subjects')}
-                  className="p-3.5 rounded-2xl bg-white dark:bg-slate-800/80 border border-[#E5EAF0] dark:border-white/5 hover:border-[#2878D4]/40 hover:shadow-sm transition-all cursor-pointer group flex flex-col justify-between"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <div className={`w-8 h-8 rounded-xl ${sub.bgColor} text-white flex items-center justify-center shrink-0 shadow-xs`}>
-                        <Icon className="w-4 h-4" />
+        {/* Mascot Owl Illustration on Right */}
+        <div className="relative z-10 shrink-0 pointer-events-none hidden sm:block pr-4">
+          <MascotOwl state="reading" size="xl" />
+        </div>
+
+        {/* Background Ambient Glow */}
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      </motion.section>
+
+      {/* 3. Today's Focus Strip (Option B) - Compact Low Profile */}
+      <motion.div
+        variants={itemVariants}
+        className="bg-[#EAF4FF] dark:bg-blue-950/20 text-[#123B70] dark:text-blue-200 px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#E5EAF0] dark:border-white/5"
+      >
+        <div className="flex items-center gap-2">
+          <Clock className="w-4 h-4 text-[#2878D4]" />
+          <span>1h 45m focused today</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigateTo('growth')}
+          className="text-[#2878D4] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
+        >
+          View Progress →
+        </button>
+      </motion.div>
+
+      {/* 4. Two Column Layout (LEFT Continue/Growth/Countdown ~65%, RIGHT Tasks ~35%) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* Left Column (8 cols) - Stacked dashboard sub-sections */}
+        <div className="lg:col-span-8 space-y-8">
+          
+          {/* Continue Learning */}
+          <motion.section
+            variants={itemVariants}
+            className="space-y-4"
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="font-display font-semibold text-lg text-[#172033] dark:text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-[#2878D4]" />
+                Continue Learning
+              </h2>
+              <button
+                type="button"
+                onClick={() => navigateTo('subjects')}
+                className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-0.5"
+              >
+                All Subjects <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {continueSubjects.map((sub) => {
+                const Icon = sub.icon
+                return (
+                  <div
+                    key={sub.id}
+                    onClick={() => navigateTo('subjects')}
+                    className="p-4 bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-[#2878D4]/40 hover:shadow-xs transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0 flex-1">
+                      <div className={`w-9 h-9 rounded-xl ${sub.bgColor} text-white flex items-center justify-center shrink-0 shadow-xs`}>
+                        <Icon className="w-5 h-5" />
                       </div>
-                      <div className="truncate">
-                        <h3 className="font-display font-bold text-xs sm:text-sm text-[#172033] dark:text-white group-hover:text-[#2878D4] transition-colors truncate">
+                      <div className="truncate flex-1">
+                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#172033] dark:text-white group-hover:text-[#2878D4] transition-colors truncate">
                           {sub.name}
                         </h3>
-                        <p className="text-[10px] text-[#687386] dark:text-slate-400 truncate">
+                        <p className="text-xs text-[#687386] dark:text-slate-400 truncate mt-0.5">
                           Next: {sub.nextTopic}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-xs font-bold text-[#172033] dark:text-white">
-                        {sub.progress}%
-                      </span>
-                      <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 group-hover:bg-[#123B70] group-hover:text-white transition-all text-xs">
-                        →
-                      </span>
+                    <div className="flex items-center gap-4 shrink-0 min-w-[120px]">
+                      <div className="flex-1 hidden sm:block">
+                        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full"
+                            style={{ width: `${sub.progress}%`, backgroundColor: sub.color }}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-semibold text-[#172033] dark:text-white">
+                          {sub.progress}%
+                        </span>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#2878D4] transition-colors" />
+                      </div>
                     </div>
                   </div>
-
-                  {/* Progress Bar */}
-                  <div className="mt-2.5 w-full h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full"
-                      style={{ width: `${sub.progress}%`, backgroundColor: sub.color }}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </motion.section>
-
-        {/* Subjects at a Glance Donut Chart Widget (3 cols) */}
-        <motion.section
-          variants={itemVariants}
-          className="lg:col-span-3 p-5 rounded-3xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-sm flex flex-col justify-between items-center text-center space-y-3"
-        >
-          <h2 className="text-xs font-bold text-[#172033] dark:text-white uppercase tracking-wider self-start">
-            Subjects at a Glance
-          </h2>
-
-          {/* Circular Donut Ring Chart */}
-          <div className="relative w-28 h-28 my-1 flex items-center justify-center">
-            <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-              {/* Segment 1: Completed (Green 33%) */}
-              <circle
-                cx="50"
-                cy="50"
-                r="38"
-                fill="transparent"
-                stroke="#55A85A"
-                strokeWidth="12"
-                strokeDasharray="80 160"
-                strokeDashoffset="0"
-              />
-              {/* Segment 2: In Progress (Blue 33%) */}
-              <circle
-                cx="50"
-                cy="50"
-                r="38"
-                fill="transparent"
-                stroke="#2878D4"
-                strokeWidth="12"
-                strokeDasharray="80 160"
-                strokeDashoffset="-80"
-              />
-              {/* Segment 3: Not Started (Slate 33%) */}
-              <circle
-                cx="50"
-                cy="50"
-                r="38"
-                fill="transparent"
-                stroke="#CBD5E1"
-                strokeWidth="12"
-                strokeDasharray="80 160"
-                strokeDashoffset="-160"
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-black font-display text-[#172033] dark:text-white leading-none">6</span>
-              <span className="text-[10px] font-semibold text-[#687386] dark:text-slate-400 mt-0.5">Subjects</span>
+                )
+              })}
             </div>
-          </div>
+          </motion.section>
 
-          {/* Donut Legend */}
-          <div className="w-full space-y-1 text-left text-xs font-medium text-[#172033] dark:text-slate-300">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#55A85A]" />
-              <span>2 Completed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#2878D4]" />
-              <span>2 In Progress</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-              <span>2 Not Started</span>
-            </div>
-          </div>
-
-          {/* Bottom View All Link */}
-          <button
-            type="button"
-            onClick={() => navigateTo('subjects')}
-            className="text-xs font-bold text-[#2878D4] dark:text-blue-400 hover:underline flex items-center gap-1 pt-1 cursor-pointer"
+          {/* Knowledge Growth */}
+          <motion.section
+            variants={itemVariants}
+            className="p-6 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs space-y-4"
           >
-            View All Subjects →
-          </button>
-        </motion.section>
+            <div className="flex items-center justify-between border-b border-[#E5EAF0] dark:border-white/10 pb-3">
+              <h2 className="font-display font-bold text-xs uppercase tracking-wider text-[#687386] dark:text-slate-400">
+                Your Knowledge Growth
+              </h2>
+              {/* Single Display of Streak */}
+              <div className="flex items-center gap-1 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-50/70 dark:bg-orange-950/20 px-3 py-1 rounded-full border border-orange-200/50 dark:border-orange-500/20">
+                <span>🔥</span>
+                <span>{currentStreak} Day Streak</span>
+              </div>
+            </div>
 
-        {/* Today's Tasks (4 cols) */}
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              {/* Small Knowledge Tree SVG Illustration */}
+              <div className="w-20 h-20 rounded-2xl bg-[#EAF4FF] dark:bg-blue-950/30 flex items-center justify-center shrink-0 border border-[#2878D4]/10 shadow-xs">
+                <svg viewBox="0 0 100 100" className="w-16 h-16 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Trunk */}
+                  <path d="M49 85 L49 55 C49 50 51 46 51 40 M51 85 L51 60" stroke="#8B5A2B" strokeWidth="4" strokeLinecap="round" />
+                  {/* Branches */}
+                  <path d="M49 65 Q40 55 35 58" stroke="#8B5A2B" strokeWidth="3" strokeLinecap="round" />
+                  <path d="M51 60 Q62 50 67 54" stroke="#8B5A2B" strokeWidth="3" strokeLinecap="round" />
+                  {/* Leaves */}
+                  <circle cx="50" cy="32" r="15" fill="#55A85A" opacity="0.9" />
+                  <circle cx="34" cy="46" r="11" fill="#55A85A" opacity="0.8" />
+                  <circle cx="66" cy="42" r="12" fill="#55A85A" opacity="0.85" />
+                  <circle cx="52" cy="44" r="8" fill="#4CAF50" opacity="0.75" />
+                  {/* Twinkles */}
+                  <circle cx="50" cy="12" r="2.5" fill="#F5B72C" />
+                  <circle cx="28" cy="28" r="1.5" fill="#F5B72C" />
+                  <circle cx="72" cy="22" r="2" fill="#F5B72C" />
+                </svg>
+              </div>
+
+              <div className="flex-1 w-full space-y-4">
+                <p className="text-xs font-semibold text-[#687386] dark:text-slate-400">
+                  3 subjects progressing this week:
+                </p>
+                
+                <div className="space-y-2">
+                  {[
+                    { name: 'Java Programming', progress: 68, color: '#4F46E5' },
+                    { name: 'DBMS', progress: 45, color: '#F59E0B' },
+                    { name: 'Data Structures', progress: 32, color: '#059669' }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-xs font-semibold">
+                      <span className="text-[#172033] dark:text-slate-200">{item.name}</span>
+                      <span className="text-[#172033] dark:text-white">{item.progress}%</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => navigateTo('growth')}
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#123B70] dark:text-blue-300 font-bold text-xs cursor-pointer transition-colors shadow-xs"
+                  >
+                    View My Growth →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Exam Countdown (Compact Horizontal Banner) */}
+          <motion.section
+            variants={itemVariants}
+            className="p-5 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-lg shrink-0">📅</span>
+              <div>
+                <h3 className="font-display font-bold text-sm text-[#172033] dark:text-white">
+                  End Semester Exam
+                </h3>
+                <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5">
+                  15 Dec, 2024
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 justify-between sm:justify-end">
+              <div className="bg-[#EAF4FF] dark:bg-blue-950/20 px-3.5 py-1.5 rounded-xl border border-[#2878D4]/10 shadow-xs text-xs font-bold text-[#123B70] dark:text-blue-300">
+                42 days left
+              </div>
+
+              <button
+                type="button"
+                onClick={() => navigateTo('planner')}
+                className="text-xs font-bold text-[#2878D4] dark:text-blue-400 hover:underline cursor-pointer"
+              >
+                [ View Revision Plan ]
+              </button>
+            </div>
+          </motion.section>
+        </div>
+
+        {/* Right Column (4 cols) - Today's Tasks in Single Clean Container */}
         <motion.section
           variants={itemVariants}
-          className="lg:col-span-4 p-5 rounded-3xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-sm space-y-3 flex flex-col justify-between"
+          className="lg:col-span-4 p-6 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs flex flex-col justify-between space-y-4"
         >
           <div>
-            <div className="flex items-center justify-between pb-1">
-              <h2 className="font-display font-bold text-sm sm:text-base text-[#172033] dark:text-white flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#2878D4]" />
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
+              <h2 className="font-display font-bold text-base text-[#172033] dark:text-white flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-[#2878D4]" />
                 Today's Tasks
               </h2>
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-0.5"
+                className="text-xs font-bold text-[#2878D4] hover:underline"
               >
-                Open Planner <ChevronRight className="w-3.5 h-3.5" />
+                View Planner →
               </button>
             </div>
 
-            {/* Task list */}
-            <div className="space-y-2.5 mt-2">
+            {/* Task list divided by simple thin lines */}
+            <div className="divide-y divide-[#E5EAF0] dark:divide-white/5 mt-2">
               {tasks.slice(0, 4).map((task) => {
                 const isHigh = task.priority === 'high'
                 const isMed = task.priority === 'medium'
@@ -449,38 +417,34 @@ export default function HomeView() {
                   <div
                     key={task.id}
                     onClick={() => toggleTask(task.id)}
-                    className={`p-2.5 rounded-2xl border transition-all flex items-center justify-between gap-2.5 cursor-pointer ${
-                      task.completed
-                        ? 'bg-slate-50/50 dark:bg-slate-950/40 border-slate-200 dark:border-white/5 opacity-60'
-                        : 'bg-white dark:bg-slate-800/80 border-[#E5EAF0] dark:border-white/5 hover:border-[#2878D4]/40'
-                    }`}
+                    className="py-3 flex items-center justify-between gap-3 cursor-pointer group"
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <button type="button" className="text-slate-400 hover:text-emerald-600 shrink-0">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="text-slate-400 group-hover:text-emerald-600 shrink-0">
                         {task.completed ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-600 fill-emerald-100 dark:fill-emerald-950" />
                         ) : (
-                          <Circle className="w-4 h-4 text-slate-400" />
+                          <Circle className="w-4 h-4 text-slate-350 dark:text-slate-700" />
                         )}
-                      </button>
+                      </div>
                       <div className="truncate">
-                        <p className={`text-xs font-semibold truncate ${
-                          task.completed ? 'line-through text-[#687386]' : 'text-[#172033] dark:text-white'
+                        <p className={`text-sm font-semibold truncate ${
+                          task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#172033] dark:text-white'
                         }`}>
                           {task.text}
                         </p>
-                        <p className="text-[10px] text-[#687386] dark:text-slate-400 truncate">
+                        <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5 truncate">
                           {task.subject}
                         </p>
                       </div>
                     </div>
 
-                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                    <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${
                       isHigh
-                        ? 'bg-red-50 text-red-600 border border-red-200'
+                        ? 'bg-red-50 dark:bg-red-950/20 text-red-650 dark:text-red-400 border border-red-200/50 dark:border-red-500/20'
                         : isMed
-                        ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                        : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-750 dark:text-amber-400 border border-amber-200/50 dark:border-amber-500/20'
+                        : 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-500/20'
                     }`}>
                       {isHigh ? 'High' : isMed ? 'Medium' : 'Low'}
                     </span>
@@ -490,73 +454,38 @@ export default function HomeView() {
             </div>
           </div>
 
-          {/* Quick Add Task */}
-          {showTaskInput ? (
-            <form onSubmit={handleQuickAddTask} className="flex items-center gap-2 pt-2">
-              <input
-                type="text"
-                value={newTaskInput}
-                onChange={(e) => setNewTaskInput(e.target.value)}
-                placeholder="New study task..."
-                autoFocus
-                className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-1 focus:ring-[#2878D4]"
-              />
+          {/* Quick Add Task Form */}
+          <div className="pt-3 border-t border-[#E5EAF0] dark:border-white/10">
+            {showTaskInput ? (
+              <form onSubmit={handleQuickAddTask} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={newTaskInput}
+                  onChange={(e) => setNewTaskInput(e.target.value)}
+                  placeholder="New study task..."
+                  autoFocus
+                  className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-1 focus:ring-[#2878D4]"
+                />
+                <button
+                  type="submit"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#123B70] text-white text-xs font-bold shadow-xs cursor-pointer"
+                >
+                  Add
+                </button>
+              </form>
+            ) : (
               <button
-                type="submit"
-                className="px-3 py-1.5 rounded-xl bg-[#123B70] text-white text-xs font-bold shadow-xs"
+                type="button"
+                onClick={() => setShowTaskInput(true)}
+                className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                Add
+                <Plus className="w-4 h-4" /> Add New Task
               </button>
-            </form>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setShowTaskInput(true)}
-              className="text-xs font-bold text-[#2878D4] dark:text-blue-400 hover:underline flex items-center gap-1 pt-1 cursor-pointer self-start"
-            >
-              <Plus className="w-3.5 h-3.5" /> Add New Task
-            </button>
-          )}
+            )}
+          </div>
         </motion.section>
+
       </div>
-
-      {/* 4. Bottom Row: Exam Countdown Horizontal Banner (Spanning columns) */}
-      <motion.section
-        variants={itemVariants}
-        className="p-5 rounded-3xl bg-gradient-to-r from-emerald-50/80 via-teal-50/70 to-emerald-50/80 dark:from-emerald-950/30 dark:via-teal-950/20 dark:to-emerald-950/30 border border-emerald-200/80 dark:border-emerald-500/20 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-        aria-label="Exam Countdown Target"
-      >
-        <div className="flex items-center gap-4">
-          <div className="w-11 h-11 rounded-2xl bg-white dark:bg-slate-800 border border-emerald-300/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-xs shrink-0">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-display font-bold text-sm sm:text-base text-emerald-950 dark:text-emerald-200">
-              Exam Countdown
-            </h3>
-            <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80 font-medium mt-0.5">
-              End Semester Exam • 15 Dec, 2024
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="flex items-baseline gap-1 bg-white dark:bg-slate-800/90 px-4 py-2 rounded-2xl border border-emerald-300/40 shadow-xs">
-            <span className="text-2xl font-black font-display text-emerald-700 dark:text-emerald-300">
-              42
-            </span>
-            <span className="text-xs font-bold text-emerald-900 dark:text-emerald-200">Days Left</span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => navigateTo('planner')}
-            className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
-          >
-            View Revision Plan
-          </button>
-        </div>
-      </motion.section>
     </motion.div>
   )
 }
