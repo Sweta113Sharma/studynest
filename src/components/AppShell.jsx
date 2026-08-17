@@ -40,8 +40,6 @@ import Sidebar from './Sidebar'
 import MascotOwl from './MascotOwl'
 import { useApp } from '../context/AppContext'
 
-import logo from '../assets/logo.png'
-
 const viewVariants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 },
@@ -168,9 +166,6 @@ export default function AppShell() {
 
             {/* Mobile Logo Title */}
             <div className="flex items-center gap-2 lg:hidden">
-              <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#E5EAF0] dark:border-white/20">
-                <img src={logo} alt="StudyNest" className="w-full h-full object-cover" />
-              </div>
               <span className="font-display font-black text-base text-[#343b1b] dark:text-white">
                 Study<span className="text-[#3971b8]">Nest</span>
               </span>
