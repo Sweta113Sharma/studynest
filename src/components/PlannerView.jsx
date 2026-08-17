@@ -78,11 +78,11 @@ export default function PlannerView() {
       {/* Header Banner */}
       <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-[#E5EAF0] dark:border-white/10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#2878D4] dark:text-blue-400 uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#3971b8] dark:text-blue-400 uppercase tracking-wider mb-1">
             <Calendar className="w-4 h-4" />
             Study Schedule & Deadlines
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-black text-[#172033] dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-black text-[#343b1b] dark:text-white">
             Planner & Exam Countdown
           </h1>
           <p className="text-xs sm:text-sm text-[#687386] dark:text-slate-300 mt-1">
@@ -93,7 +93,7 @@ export default function PlannerView() {
         <button
           type="button"
           onClick={() => setIsExamModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-md cursor-pointer self-start md:self-auto"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#343b1b] hover:bg-[#3971b8] text-white text-xs font-bold transition-all shadow-md cursor-pointer self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           Add Exam Countdown
@@ -103,8 +103,8 @@ export default function PlannerView() {
       {/* Exam Countdown Cards Section */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-display font-bold text-[#172033] dark:text-white flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#F5B72C]" />
+          <h2 className="text-base font-display font-bold text-[#343b1b] dark:text-white flex items-center gap-2">
+            <Clock className="w-4 h-4 text-[#f6e6a5]" />
             Upcoming Exam Countdowns
           </h2>
         </div>
@@ -117,7 +117,7 @@ export default function PlannerView() {
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-[#EAF4FF] dark:bg-blue-950/60 text-[#2878D4] dark:text-blue-300 border border-[#2878D4]/20">
+                  <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-[#e8f1fc] dark:bg-blue-950/60 text-[#3971b8] dark:text-blue-300 border border-[#3971b8]/20">
                     {exam.subject}
                   </span>
 
@@ -131,14 +131,14 @@ export default function PlannerView() {
                   </button>
                 </div>
 
-                <h3 className="font-display font-bold text-sm sm:text-base text-[#172033] dark:text-white leading-snug">
+                <h3 className="font-display font-bold text-sm sm:text-base text-[#343b1b] dark:text-white leading-snug">
                   {exam.name}
                 </h3>
                 <p className="text-xs text-[#687386] dark:text-slate-400 mt-1">Exam Date: {exam.date}</p>
 
                 {/* Big Days Left Callout */}
                 <div className="my-3 flex items-baseline gap-1.5">
-                  <span className="text-3xl font-black font-display text-[#123B70] dark:text-blue-400">
+                  <span className="text-3xl font-black font-display text-[#343b1b] dark:text-blue-400">
                     {exam.daysLeft}
                   </span>
                   <span className="text-xs font-bold text-[#687386] dark:text-slate-400">Days Left</span>
@@ -148,11 +148,11 @@ export default function PlannerView() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-[11px] font-semibold text-[#687386] dark:text-slate-300">
                     <span>Preparation</span>
-                    <span className="font-bold text-[#172033] dark:text-white">{exam.prepProgress}%</span>
+                    <span className="font-bold text-[#343b1b] dark:text-white">{exam.prepProgress}%</span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-400 to-[#F5B72C] rounded-full"
+                      className="h-full bg-gradient-to-r from-amber-400 to-[#f6e6a5] rounded-full"
                       style={{ width: `${exam.prepProgress}%` }}
                     />
                   </div>
@@ -167,8 +167,8 @@ export default function PlannerView() {
       <section className="bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 p-6 shadow-sm space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-display font-bold text-lg text-[#172033] dark:text-white flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-[#55A85A]" />
+            <h2 className="font-display font-bold text-lg text-[#343b1b] dark:text-white flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-[#c8d69b]" />
               Today's Study Checklist ({pendingTasks.length} Pending)
             </h2>
             <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5">
@@ -185,13 +185,13 @@ export default function PlannerView() {
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
             placeholder="Add new study goal (e.g. Complete Unit 2 Notes)..."
-            className="flex-1 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4]"
+            className="flex-1 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8]"
           />
 
           <select
             value={taskPriority}
             onChange={(e) => setTaskPriority(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-[#172033] dark:text-white"
+            className="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-[#343b1b] dark:text-white"
           >
             <option value="high">High Priority</option>
             <option value="medium">Medium</option>
@@ -200,7 +200,7 @@ export default function PlannerView() {
 
           <button
             type="submit"
-            className="px-5 py-2 rounded-xl bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-[#343b1b] hover:bg-[#3971b8] text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" /> Add Goal
           </button>
@@ -211,7 +211,7 @@ export default function PlannerView() {
           {tasks.length === 0 ? (
             <div className="text-center py-10 flex flex-col items-center">
               <MascotOwl state="empty" size="md" />
-              <p className="text-xs font-bold text-[#172033] dark:text-white mt-3">Nothing planned yet!</p>
+              <p className="text-xs font-bold text-[#343b1b] dark:text-white mt-3">Nothing planned yet!</p>
               <p className="text-xs text-[#687386] dark:text-slate-400">Add your next study goal to keep your progress moving.</p>
             </div>
           ) : (
@@ -223,7 +223,7 @@ export default function PlannerView() {
                   className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                     task.completed
                       ? 'bg-slate-50/50 dark:bg-slate-950/40 border-slate-200 dark:border-white/5 opacity-60'
-                      : 'bg-white dark:bg-slate-900 border-[#E5EAF0] dark:border-white/10 hover:border-[#2878D4]/40 shadow-xs'
+                      : 'bg-white dark:bg-slate-900 border-[#E5EAF0] dark:border-white/10 hover:border-[#3971b8]/40 shadow-xs'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
@@ -241,7 +241,7 @@ export default function PlannerView() {
 
                     <div className="min-w-0">
                       <p className={`text-xs sm:text-sm font-semibold truncate ${
-                        task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#172033] dark:text-white'
+                        task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#343b1b] dark:text-white'
                       }`}>
                         {task.text}
                       </p>
@@ -285,7 +285,7 @@ export default function PlannerView() {
               className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 shadow-2xl p-6 relative"
             >
               <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
-                <h3 className="font-display font-bold text-base text-[#172033] dark:text-white">
+                <h3 className="font-display font-bold text-base text-[#343b1b] dark:text-white">
                   Add Exam Countdown
                 </h3>
                 <button
@@ -299,7 +299,7 @@ export default function PlannerView() {
 
               <form onSubmit={handleAddExam} className="space-y-3.5 pt-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                  <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                     Exam Title *
                   </label>
                   <input
@@ -308,13 +308,13 @@ export default function PlannerView() {
                     value={examName}
                     onChange={(e) => setExamName(e.target.value)}
                     placeholder="e.g. Operating Systems Final"
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4]"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                    <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                       Subject
                     </label>
                     <input
@@ -322,12 +322,12 @@ export default function PlannerView() {
                       value={examSubject}
                       onChange={(e) => setExamSubject(e.target.value)}
                       placeholder="e.g. OS / CSE"
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4]"
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                    <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                       Days Remaining
                     </label>
                     <input
@@ -335,7 +335,7 @@ export default function PlannerView() {
                       value={examDaysLeft}
                       onChange={(e) => setExamDaysLeft(e.target.value)}
                       min="1"
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4]"
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8]"
                     />
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export default function PlannerView() {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-[#123B70] text-white text-xs font-bold shadow-md"
+                    className="px-5 py-2 rounded-xl bg-[#343b1b] text-white text-xs font-bold shadow-md"
                   >
                     Save Exam Target
                   </button>

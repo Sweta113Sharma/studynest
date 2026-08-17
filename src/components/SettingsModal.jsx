@@ -118,9 +118,6 @@ export default function SettingsModal({ isOpen, onClose }) {
                 {activeTab === 'account' && (
                   <div className="space-y-4">
                     <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center gap-3 border border-slate-300 dark:border-slate-700">
-                      <div className="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
-                        {user?.initials || 'ST'}
-                      </div>
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white text-base">{user?.name || 'Student'}</p>
                         <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">{user?.email || '—'}</p>

@@ -46,10 +46,10 @@ export default function GrowthView() {
 
   // Subject branches data
   const subjectBranches = [
-    { name: 'Java Programming', category: 'Programming', mastery: 68, completedUnits: 3, totalUnits: 5, color: '#2878D4', icon: '💻' },
-    { name: 'Data Structures & Algorithms', category: 'Core CS', mastery: 55, completedUnits: 2, totalUnits: 5, color: '#55A85A', icon: '🌲' },
-    { name: 'Engineering Mathematics', category: 'Mathematics', mastery: 40, completedUnits: 2, totalUnits: 5, color: '#F5B72C', icon: '📐' },
-    { name: 'Database Management (DBMS)', category: 'Systems', mastery: 80, completedUnits: 4, totalUnits: 5, color: '#123B70', icon: '🗄️' },
+    { name: 'Java Programming', category: 'Programming', mastery: 68, completedUnits: 3, totalUnits: 5, color: '#3971b8', icon: '💻' },
+    { name: 'Data Structures & Algorithms', category: 'Core CS', mastery: 55, completedUnits: 2, totalUnits: 5, color: '#c8d69b', icon: '🌲' },
+    { name: 'Engineering Mathematics', category: 'Mathematics', mastery: 40, completedUnits: 2, totalUnits: 5, color: '#f6e6a5', icon: '📐' },
+    { name: 'Database Management (DBMS)', category: 'Systems', mastery: 80, completedUnits: 4, totalUnits: 5, color: '#343b1b', icon: '🗄️' },
   ]
 
   const activeBranchData = subjectBranches.find(b => b.name === selectedBranch) || subjectBranches[0]
@@ -57,7 +57,7 @@ export default function GrowthView() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#123B70] to-[#1C4B82] text-white p-6 sm:p-8 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-[#343b1b] to-[#1C4B82] text-white p-6 sm:p-8 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="relative z-10 max-w-xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-amber-300">
             <Sprout className="w-3.5 h-3.5 text-emerald-400" />
@@ -81,7 +81,7 @@ export default function GrowthView() {
                 initial={{ width: 0 }}
                 animate={{ width: `${xpInCurrentLevel}%` }}
                 transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-gradient-to-r from-amber-400 to-[#F5B72C] rounded-full"
+                className="h-full bg-gradient-to-r from-amber-400 to-[#f6e6a5] rounded-full"
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function GrowthView() {
         <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display font-bold text-lg text-[#172033] dark:text-white flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg text-[#343b1b] dark:text-white flex items-center gap-2">
                 <Sprout className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 Growth Canopy & Subject Branches
               </h2>
@@ -117,7 +117,7 @@ export default function GrowthView() {
             </div>
 
             {/* Tree Branch Diagram Card */}
-            <div className="relative p-6 rounded-2xl bg-[#FFF9EE] dark:bg-slate-800/50 border border-[#E5EAF0] dark:border-slate-700/60 overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+            <div className="relative p-6 rounded-2xl bg-[#f0fcee] dark:bg-slate-800/50 border border-[#E5EAF0] dark:border-slate-700/60 overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
               {/* Branch Node Buttons */}
               <div className="grid grid-cols-2 gap-4 w-full max-w-md z-10">
                 {subjectBranches.map((branch) => {
@@ -131,15 +131,15 @@ export default function GrowthView() {
                       onClick={() => setSelectedBranch(branch.name)}
                       className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#123B70] text-white border-[#123B70] shadow-md'
-                          : 'bg-white dark:bg-slate-900 border-[#E5EAF0] dark:border-white/10 text-[#172033] dark:text-white hover:border-[#2878D4]/50'
+                          ? 'bg-[#343b1b] text-white border-[#343b1b] shadow-md'
+                          : 'bg-white dark:bg-slate-900 border-[#E5EAF0] dark:border-white/10 text-[#343b1b] dark:text-white hover:border-[#3971b8]/50'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-lg">{branch.icon}</span>
                         <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
                           isSelected
-                            ? 'bg-amber-400 text-[#123B70]'
+                            ? 'bg-amber-400 text-[#343b1b]'
                             : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                         }`}>
                           {branch.mastery}%
@@ -157,7 +157,7 @@ export default function GrowthView() {
               {/* Tree Trunk Base */}
               <div className="mt-6 flex flex-col items-center text-center z-10">
                 <div className="w-12 h-14 bg-gradient-to-b from-[#8B5A2B] to-[#5C381E] rounded-t-lg border-2 border-[#4A2A14]" />
-                <div className="px-5 py-2 rounded-2xl bg-[#EAF7E8] dark:bg-emerald-950/60 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold shadow-sm -mt-2">
+                <div className="px-5 py-2 rounded-2xl bg-[#f2f9f0] dark:bg-emerald-950/60 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold shadow-sm -mt-2">
                   🌱 Root: StudyNest Academic Foundation
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function GrowthView() {
                 key={idx}
                 className={`p-2.5 rounded-xl border text-xs font-semibold ${
                   step.active
-                    ? 'bg-[#EAF4FF] dark:bg-blue-950/40 border-[#2878D4]/30 text-[#123B70] dark:text-blue-300'
+                    ? 'bg-[#e8f1fc] dark:bg-blue-950/40 border-[#3971b8]/30 text-[#343b1b] dark:text-blue-300'
                     : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-white/5 text-[#687386] opacity-60'
                 }`}
               >
@@ -193,11 +193,11 @@ export default function GrowthView() {
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 p-6 shadow-sm space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#EAF4FF] dark:bg-blue-900/30 text-2xl flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-[#e8f1fc] dark:bg-blue-900/30 text-2xl flex items-center justify-center">
                   {activeBranchData.icon}
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-base text-[#172033] dark:text-white">
+                  <h3 className="font-display font-bold text-base text-[#343b1b] dark:text-white">
                     {activeBranchData.name}
                   </h3>
                   <p className="text-xs text-[#687386] dark:text-slate-400">
@@ -206,7 +206,7 @@ export default function GrowthView() {
                 </div>
               </div>
 
-              <span className="text-sm font-extrabold text-[#2878D4] dark:text-blue-400">
+              <span className="text-sm font-extrabold text-[#3971b8] dark:text-blue-400">
                 {activeBranchData.mastery}%
               </span>
             </div>
@@ -215,11 +215,11 @@ export default function GrowthView() {
             <div>
               <div className="flex justify-between text-xs font-semibold text-[#687386] dark:text-slate-300 mb-1.5">
                 <span>Subject Mastery Progress</span>
-                <span className="text-[#172033] dark:text-white font-bold">{activeBranchData.completedUnits} of {activeBranchData.totalUnits} Units</span>
+                <span className="text-[#343b1b] dark:text-white font-bold">{activeBranchData.completedUnits} of {activeBranchData.totalUnits} Units</span>
               </div>
               <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#55A85A] rounded-full transition-all duration-500"
+                  className="h-full bg-[#c8d69b] rounded-full transition-all duration-500"
                   style={{ width: `${activeBranchData.mastery}%` }}
                 />
               </div>
@@ -227,23 +227,23 @@ export default function GrowthView() {
 
             {/* Quick Metrics */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-2xl bg-[#FFF9EE] dark:bg-slate-800/60 border border-[#F5B72C]/20">
+              <div className="p-3 rounded-2xl bg-[#f0fcee] dark:bg-slate-800/60 border border-[#f6e6a5]/20">
                 <span className="text-[10px] font-bold text-[#687386] dark:text-slate-400 uppercase">Focus Time</span>
-                <p className="text-lg font-bold text-[#172033] dark:text-white mt-0.5">
+                <p className="text-lg font-bold text-[#343b1b] dark:text-white mt-0.5">
                   {safeFocusHistory.length * 25} mins
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#EAF4FF] dark:bg-slate-800/60 border border-[#2878D4]/20">
+              <div className="p-3 rounded-2xl bg-[#e8f1fc] dark:bg-slate-800/60 border border-[#3971b8]/20">
                 <span className="text-[10px] font-bold text-[#687386] dark:text-slate-400 uppercase">Saved Notes</span>
-                <p className="text-lg font-bold text-[#172033] dark:text-white mt-0.5">
+                <p className="text-lg font-bold text-[#343b1b] dark:text-white mt-0.5">
                   {safeBookmarks.length + 3} Topics
                 </p>
               </div>
             </div>
 
             {/* Growth Tips from Owl */}
-            <div className="p-4 rounded-2xl bg-[#EAF7E8] dark:bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-3">
+            <div className="p-4 rounded-2xl bg-[#f2f9f0] dark:bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-3">
               <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
                 <Sparkles className="w-4 h-4" />
               </div>

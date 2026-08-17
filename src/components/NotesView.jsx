@@ -70,11 +70,11 @@ export default function NotesView({ onOpenAI }) {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-[#E5EAF0] dark:border-white/10 shadow-sm relative overflow-hidden">
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#2878D4] dark:text-blue-400 uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#3971b8] dark:text-blue-400 uppercase tracking-wider mb-1">
             <FileText className="w-4 h-4" />
             Study Workspace
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-black text-[#172033] dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-black text-[#343b1b] dark:text-white">
             Smart Study Notes
           </h1>
           <p className="text-xs sm:text-sm text-[#687386] dark:text-slate-300 mt-1 max-w-xl">
@@ -86,7 +86,7 @@ export default function NotesView({ onOpenAI }) {
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#123B70] hover:bg-[#2878D4] text-white text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#343b1b] hover:bg-[#3971b8] text-white text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Create Note
@@ -108,7 +108,7 @@ export default function NotesView({ onOpenAI }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search notes by keyword, topic, or tag..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 text-xs sm:text-sm text-[#172033] dark:text-white placeholder-[#687386] focus:outline-none focus:ring-2 focus:ring-[#2878D4] shadow-sm font-medium"
+            className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 text-xs sm:text-sm text-[#343b1b] dark:text-white placeholder-[#687386] focus:outline-none focus:ring-2 focus:ring-[#3971b8] shadow-sm font-medium"
           />
         </div>
 
@@ -121,8 +121,8 @@ export default function NotesView({ onOpenAI }) {
               onClick={() => setSelectedSubject(subj)}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 selectedSubject === subj
-                  ? 'bg-[#123B70] text-white shadow-sm'
-                  : 'bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 text-[#687386] dark:text-slate-300 hover:border-[#2878D4]/40'
+                  ? 'bg-[#343b1b] text-white shadow-sm'
+                  : 'bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 text-[#687386] dark:text-slate-300 hover:border-[#3971b8]/40'
               }`}
             >
               {subj}
@@ -134,7 +134,7 @@ export default function NotesView({ onOpenAI }) {
       {/* Pinned Notes Section */}
       {pinnedNotes.length > 0 && (
         <section className="space-y-3">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#123B70] dark:text-blue-300 uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#343b1b] dark:text-blue-300 uppercase tracking-wider">
             <Pin className="w-3.5 h-3.5 fill-current" />
             Pinned Notes ({pinnedNotes.length})
           </div>
@@ -158,7 +158,7 @@ export default function NotesView({ onOpenAI }) {
         {filteredNotes.length === 0 ? (
           <div className="text-center py-16 px-4 bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 flex flex-col items-center justify-center">
             <MascotOwl state="empty" size="lg" />
-            <h3 className="text-lg font-bold font-display text-[#172033] dark:text-white mt-4">
+            <h3 className="text-lg font-bold font-display text-[#343b1b] dark:text-white mt-4">
               Your nest is empty!
             </h3>
             <p className="text-xs sm:text-sm text-[#687386] dark:text-slate-400 max-w-sm mt-1">
@@ -167,7 +167,7 @@ export default function NotesView({ onOpenAI }) {
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="mt-5 flex items-center gap-2 px-5 py-2 rounded-xl bg-[#F5B72C] text-[#123B70] font-bold text-xs sm:text-sm shadow-md hover:bg-amber-400 transition-all cursor-pointer"
+              className="mt-5 flex items-center gap-2 px-5 py-2 rounded-xl bg-[#f6e6a5] text-[#343b1b] font-bold text-xs sm:text-sm shadow-md hover:bg-amber-400 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Create Note
@@ -194,11 +194,11 @@ export default function NotesView({ onOpenAI }) {
             >
               <div className="flex items-center justify-between pb-4 border-b border-[#E5EAF0] dark:border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#EAF4FF] dark:bg-blue-950/60 border border-[#2878D4]/20 flex items-center justify-center text-[#2878D4]">
+                  <div className="w-9 h-9 rounded-xl bg-[#e8f1fc] dark:bg-blue-950/60 border border-[#3971b8]/20 flex items-center justify-center text-[#3971b8]">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-base sm:text-lg font-display font-bold text-[#172033] dark:text-white">
+                    <h2 className="text-base sm:text-lg font-display font-bold text-[#343b1b] dark:text-white">
                       Create Study Note
                     </h2>
                     <p className="text-[11px] text-[#687386] dark:text-slate-400">Add key concepts, formula cheat-sheets & summaries</p>
@@ -216,7 +216,7 @@ export default function NotesView({ onOpenAI }) {
 
               <form onSubmit={handleCreateNote} className="space-y-4 pt-4 overflow-y-auto custom-scrollbar flex-1 pr-1">
                 <div>
-                  <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                  <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                     Note Title *
                   </label>
                   <input
@@ -225,13 +225,13 @@ export default function NotesView({ onOpenAI }) {
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder="e.g. Graph Traversal: BFS vs DFS"
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4] font-medium"
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8] font-medium"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                    <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                       Subject
                     </label>
                     <input
@@ -239,12 +239,12 @@ export default function NotesView({ onOpenAI }) {
                       value={newSubject}
                       onChange={(e) => setNewSubject(e.target.value)}
                       placeholder="e.g. Java Programming"
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4] font-medium"
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8] font-medium"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                    <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                       Tags (Comma-separated)
                     </label>
                     <input
@@ -252,13 +252,13 @@ export default function NotesView({ onOpenAI }) {
                       value={newTags}
                       onChange={(e) => setNewTags(e.target.value)}
                       placeholder="e.g. OOP, Formulas, Unit 2"
-                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4] font-medium"
+                      className="w-full px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8] font-medium"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#172033] dark:text-slate-200 mb-1">
+                  <label className="block text-xs font-bold text-[#343b1b] dark:text-slate-200 mb-1">
                     Note Content *
                   </label>
                   <textarea
@@ -267,7 +267,7 @@ export default function NotesView({ onOpenAI }) {
                     value={newContent}
                     onChange={(e) => setNewContent(e.target.value)}
                     placeholder="Write detailed notes, definitions, formulas, or bullet points here..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#172033] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2878D4] font-normal leading-relaxed custom-scrollbar"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs sm:text-sm text-[#343b1b] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3971b8] font-normal leading-relaxed custom-scrollbar"
                   />
                 </div>
 
@@ -277,9 +277,9 @@ export default function NotesView({ onOpenAI }) {
                     id="pin-note-chk"
                     checked={isPinned}
                     onChange={(e) => setIsPinned(e.target.checked)}
-                    className="w-4 h-4 rounded text-[#2878D4] focus:ring-[#2878D4] cursor-pointer"
+                    className="w-4 h-4 rounded text-[#3971b8] focus:ring-[#3971b8] cursor-pointer"
                   />
-                  <label htmlFor="pin-note-chk" className="text-xs font-semibold text-[#172033] dark:text-slate-300 cursor-pointer">
+                  <label htmlFor="pin-note-chk" className="text-xs font-semibold text-[#343b1b] dark:text-slate-300 cursor-pointer">
                     Pin this note to the top of the workspace
                   </label>
                 </div>
@@ -294,7 +294,7 @@ export default function NotesView({ onOpenAI }) {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-[#123B70] hover:bg-[#2878D4] text-white text-xs font-bold transition-all shadow-md"
+                    className="px-5 py-2 rounded-xl bg-[#343b1b] hover:bg-[#3971b8] text-white text-xs font-bold transition-all shadow-md"
                   >
                     Save Note (+15 XP)
                   </button>
@@ -318,7 +318,7 @@ function NoteCard({ note, onPin, onDelete, onOpenAI }) {
     <article className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
       <div>
         <div className="flex items-start justify-between gap-2 mb-2">
-          <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-[#EAF4FF] dark:bg-blue-900/40 text-[#2878D4] dark:text-blue-300 border border-[#2878D4]/20 truncate max-w-[150px]">
+          <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-[#e8f1fc] dark:bg-blue-900/40 text-[#3971b8] dark:text-blue-300 border border-[#3971b8]/20 truncate max-w-[150px]">
             {note.subject}
           </span>
 
@@ -347,7 +347,7 @@ function NoteCard({ note, onPin, onDelete, onOpenAI }) {
           </div>
         </div>
 
-        <h3 className="font-display font-bold text-sm sm:text-base text-[#172033] dark:text-white leading-snug">
+        <h3 className="font-display font-bold text-sm sm:text-base text-[#343b1b] dark:text-white leading-snug">
           {note.title}
         </h3>
 
@@ -371,7 +371,7 @@ function NoteCard({ note, onPin, onDelete, onOpenAI }) {
               type="button"
               onClick={onOpenAI}
               title="Ask AI about this note"
-              className="text-[10px] font-bold text-[#2878D4] dark:text-blue-400 hover:underline flex items-center gap-0.5"
+              className="text-[10px] font-bold text-[#3971b8] dark:text-blue-400 hover:underline flex items-center gap-0.5"
             >
               <Sparkles className="w-3 h-3" /> AI
             </button>

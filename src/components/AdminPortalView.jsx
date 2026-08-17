@@ -290,13 +290,9 @@ export default function AdminPortalView() {
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-white/5 text-slate-950 dark:text-white">
                 {allUsers.map((usr, uIdx) => {
-                  const initials = usr.name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
                   return (
                     <tr key={uIdx} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                       <td className="p-3 flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-600 to-amber-500 text-white font-bold flex items-center justify-center text-[10px]">
-                          {initials}
-                        </div>
                         <span className="font-bold text-slate-900 dark:text-white">{usr.name}</span>
                       </td>
                       <td className="p-3 text-slate-700 dark:text-slate-300 font-mono">{usr.email}</td>

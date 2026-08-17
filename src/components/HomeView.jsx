@@ -139,8 +139,8 @@ export default function HomeView() {
     >
       {/* 1. Dashboard Header (Spacious, calm, simple greeting) */}
       <motion.div variants={itemVariants} className="space-y-1">
-        <h1 className="text-2xl sm:text-3xl font-bold font-display text-[#172033] dark:text-white tracking-tight">
-          {getGreeting()}, <span className="text-[#2878D4]">{user?.name || 'Sweta'}!</span> 👋
+        <h1 className="text-2xl sm:text-3xl font-bold font-display text-[#343b1b] dark:text-white tracking-tight">
+          {getGreeting()}, <span className="text-[#3971b8]">{user?.name || 'Sweta'}!</span> 👋
         </h1>
         <p className="text-xs sm:text-sm font-medium text-[#687386] dark:text-slate-400">
           Ready to build your knowledge nest today?
@@ -150,7 +150,7 @@ export default function HomeView() {
       {/* 2. Today's Study Goal Hero Card (Dominant Component) */}
       <motion.section
         variants={itemVariants}
-        className="w-full p-6 sm:p-8 rounded-[24px] bg-[#123B70] text-white shadow-sm border border-white/5 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+        className="w-full p-6 sm:p-8 rounded-[24px] bg-[#343b1b] text-white shadow-sm border border-white/5 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
         aria-label="Today's Study Goal"
       >
         <div className="relative z-10 space-y-4 max-w-lg">
@@ -170,7 +170,7 @@ export default function HomeView() {
                 initial={{ width: 0 }}
                 animate={{ width: '72%' }}
                 transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-[#F5B72C] rounded-full"
+                className="h-full bg-[#f6e6a5] rounded-full"
               />
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function HomeView() {
             <button
               type="button"
               onClick={() => navigateTo('subjects')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#F5B72C] hover:bg-amber-400 text-[#123B70] font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#f6e6a5] hover:bg-amber-400 text-[#343b1b] font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm active:scale-95 transition-all cursor-pointer"
             >
               Start Studying →
             </button>
@@ -202,16 +202,16 @@ export default function HomeView() {
       {/* 3. Today's Focus Strip (Option B) - Compact Low Profile */}
       <motion.div
         variants={itemVariants}
-        className="bg-[#EAF4FF] dark:bg-blue-950/20 text-[#123B70] dark:text-blue-200 px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#E5EAF0] dark:border-white/5"
+        className="bg-[#e8f1fc] dark:bg-blue-950/20 text-[#343b1b] dark:text-blue-200 px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#E5EAF0] dark:border-white/5"
       >
         <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-[#2878D4]" />
+          <Clock className="w-4 h-4 text-[#3971b8]" />
           <span>1h 45m focused today</span>
         </div>
         <button
           type="button"
           onClick={() => navigateTo('growth')}
-          className="text-[#2878D4] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
+          className="text-[#3971b8] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
         >
           View Progress →
         </button>
@@ -229,14 +229,14 @@ export default function HomeView() {
             className="space-y-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="font-display font-semibold text-lg text-[#172033] dark:text-white flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#2878D4]" />
+              <h2 className="font-display font-semibold text-lg text-[#343b1b] dark:text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-[#3971b8]" />
                 Continue Learning
               </h2>
               <button
                 type="button"
                 onClick={() => navigateTo('subjects')}
-                className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-0.5"
+                className="text-xs font-bold text-[#3971b8] hover:underline flex items-center gap-0.5"
               >
                 All Subjects <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -249,14 +249,14 @@ export default function HomeView() {
                   <div
                     key={sub.id}
                     onClick={() => navigateTo('subjects')}
-                    className="p-4 bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-[#2878D4]/40 hover:shadow-xs transition-all duration-200 group"
+                    className="p-4 bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-[#3971b8]/40 hover:shadow-xs transition-all duration-200 group"
                   >
                     <div className="flex items-center gap-3.5 min-w-0 flex-1">
                       <div className={`w-9 h-9 rounded-xl ${sub.bgColor} text-white flex items-center justify-center shrink-0 shadow-xs`}>
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="truncate flex-1">
-                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#172033] dark:text-white group-hover:text-[#2878D4] transition-colors truncate">
+                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#343b1b] dark:text-white group-hover:text-[#3971b8] transition-colors truncate">
                           {sub.name}
                         </h3>
                         <p className="text-xs text-[#687386] dark:text-slate-400 truncate mt-0.5">
@@ -275,10 +275,10 @@ export default function HomeView() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-[#172033] dark:text-white">
+                        <span className="text-sm font-semibold text-[#343b1b] dark:text-white">
                           {sub.progress}%
                         </span>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#2878D4] transition-colors" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#3971b8] transition-colors" />
                       </div>
                     </div>
                   </div>
@@ -305,7 +305,7 @@ export default function HomeView() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Small Knowledge Tree SVG Illustration */}
-              <div className="w-20 h-20 rounded-2xl bg-[#EAF4FF] dark:bg-blue-950/30 flex items-center justify-center shrink-0 border border-[#2878D4]/10 shadow-xs">
+              <div className="w-20 h-20 rounded-2xl bg-[#e8f1fc] dark:bg-blue-950/30 flex items-center justify-center shrink-0 border border-[#3971b8]/10 shadow-xs">
                 <svg viewBox="0 0 100 100" className="w-16 h-16 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   {/* Trunk */}
                   <path d="M49 85 L49 55 C49 50 51 46 51 40 M51 85 L51 60" stroke="#8B5A2B" strokeWidth="4" strokeLinecap="round" />
@@ -313,14 +313,14 @@ export default function HomeView() {
                   <path d="M49 65 Q40 55 35 58" stroke="#8B5A2B" strokeWidth="3" strokeLinecap="round" />
                   <path d="M51 60 Q62 50 67 54" stroke="#8B5A2B" strokeWidth="3" strokeLinecap="round" />
                   {/* Leaves */}
-                  <circle cx="50" cy="32" r="15" fill="#55A85A" opacity="0.9" />
-                  <circle cx="34" cy="46" r="11" fill="#55A85A" opacity="0.8" />
-                  <circle cx="66" cy="42" r="12" fill="#55A85A" opacity="0.85" />
+                  <circle cx="50" cy="32" r="15" fill="#c8d69b" opacity="0.9" />
+                  <circle cx="34" cy="46" r="11" fill="#c8d69b" opacity="0.8" />
+                  <circle cx="66" cy="42" r="12" fill="#c8d69b" opacity="0.85" />
                   <circle cx="52" cy="44" r="8" fill="#4CAF50" opacity="0.75" />
                   {/* Twinkles */}
-                  <circle cx="50" cy="12" r="2.5" fill="#F5B72C" />
-                  <circle cx="28" cy="28" r="1.5" fill="#F5B72C" />
-                  <circle cx="72" cy="22" r="2" fill="#F5B72C" />
+                  <circle cx="50" cy="12" r="2.5" fill="#f6e6a5" />
+                  <circle cx="28" cy="28" r="1.5" fill="#f6e6a5" />
+                  <circle cx="72" cy="22" r="2" fill="#f6e6a5" />
                 </svg>
               </div>
 
@@ -336,8 +336,8 @@ export default function HomeView() {
                     { name: 'Data Structures', progress: 32, color: '#059669' }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center justify-between text-xs font-semibold">
-                      <span className="text-[#172033] dark:text-slate-200">{item.name}</span>
-                      <span className="text-[#172033] dark:text-white">{item.progress}%</span>
+                      <span className="text-[#343b1b] dark:text-slate-200">{item.name}</span>
+                      <span className="text-[#343b1b] dark:text-white">{item.progress}%</span>
                     </div>
                   ))}
                 </div>
@@ -346,7 +346,7 @@ export default function HomeView() {
                   <button
                     type="button"
                     onClick={() => navigateTo('growth')}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#123B70] dark:text-blue-300 font-bold text-xs cursor-pointer transition-colors shadow-xs"
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#343b1b] dark:text-blue-300 font-bold text-xs cursor-pointer transition-colors shadow-xs"
                   >
                     View My Growth →
                   </button>
@@ -363,7 +363,7 @@ export default function HomeView() {
             <div className="flex items-center gap-3">
               <span className="text-lg shrink-0">📅</span>
               <div>
-                <h3 className="font-display font-bold text-sm text-[#172033] dark:text-white">
+                <h3 className="font-display font-bold text-sm text-[#343b1b] dark:text-white">
                   End Semester Exam
                 </h3>
                 <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5">
@@ -373,14 +373,14 @@ export default function HomeView() {
             </div>
 
             <div className="flex items-center gap-4 justify-between sm:justify-end">
-              <div className="bg-[#EAF4FF] dark:bg-blue-950/20 px-3.5 py-1.5 rounded-xl border border-[#2878D4]/10 shadow-xs text-xs font-bold text-[#123B70] dark:text-blue-300">
+              <div className="bg-[#e8f1fc] dark:bg-blue-950/20 px-3.5 py-1.5 rounded-xl border border-[#3971b8]/10 shadow-xs text-xs font-bold text-[#343b1b] dark:text-blue-300">
                 42 days left
               </div>
 
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-bold text-[#2878D4] dark:text-blue-400 hover:underline cursor-pointer"
+                className="text-xs font-bold text-[#3971b8] dark:text-blue-400 hover:underline cursor-pointer"
               >
                 [ View Revision Plan ]
               </button>
@@ -395,14 +395,14 @@ export default function HomeView() {
         >
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
-              <h2 className="font-display font-bold text-base text-[#172033] dark:text-white flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#2878D4]" />
+              <h2 className="font-display font-bold text-base text-[#343b1b] dark:text-white flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-[#3971b8]" />
                 Today's Tasks
               </h2>
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-bold text-[#2878D4] hover:underline"
+                className="text-xs font-bold text-[#3971b8] hover:underline"
               >
                 View Planner →
               </button>
@@ -429,7 +429,7 @@ export default function HomeView() {
                       </div>
                       <div className="truncate">
                         <p className={`text-sm font-semibold truncate ${
-                          task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#172033] dark:text-white'
+                          task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#343b1b] dark:text-white'
                         }`}>
                           {task.text}
                         </p>
@@ -464,11 +464,11 @@ export default function HomeView() {
                   onChange={(e) => setNewTaskInput(e.target.value)}
                   placeholder="New study task..."
                   autoFocus
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-[#172033] dark:text-white focus:outline-none focus:ring-1 focus:ring-[#2878D4]"
+                  className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-[#343b1b] dark:text-white focus:outline-none focus:ring-1 focus:ring-[#3971b8]"
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-1.5 rounded-xl bg-[#123B70] text-white text-xs font-bold shadow-xs cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#343b1b] text-white text-xs font-bold shadow-xs cursor-pointer"
                 >
                   Add
                 </button>
@@ -477,7 +477,7 @@ export default function HomeView() {
               <button
                 type="button"
                 onClick={() => setShowTaskInput(true)}
-                className="text-xs font-bold text-[#2878D4] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-bold text-[#3971b8] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Add New Task
               </button>

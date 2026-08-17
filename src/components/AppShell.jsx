@@ -121,10 +121,10 @@ export default function AppShell() {
         return (
           <div key="focus" className="max-w-3xl mx-auto py-4">
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center p-3 rounded-3xl bg-[#FFF9EE] dark:bg-slate-800 border border-[#F5B72C]/40 mb-3">
+              <div className="inline-flex items-center justify-center p-3 rounded-3xl bg-[#f0fcee] dark:bg-slate-800 border border-[#f6e6a5]/40 mb-3">
                 <MascotOwl state="focus" size="lg" />
               </div>
-              <h1 className="text-2xl font-display font-black text-[#172033] dark:text-white">
+              <h1 className="text-2xl font-display font-black text-[#343b1b] dark:text-white">
                 Quiet Study Nest
               </h1>
               <p className="text-xs sm:text-sm text-[#687386] dark:text-slate-400 mt-1">
@@ -142,7 +142,7 @@ export default function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF9EE] dark:bg-[#0A1224] text-[#172033] dark:text-white transition-colors">
+    <div className="min-h-screen bg-[#f0fcee] dark:bg-[#0A1224] text-[#343b1b] dark:text-white transition-colors">
       {/* 1. Persistent Sidebar (Desktop) + Slide Drawer (Mobile) */}
       <Sidebar
         onOpenSettings={() => setShowSettings(true)}
@@ -171,15 +171,15 @@ export default function AppShell() {
               <div className="w-8 h-8 rounded-lg overflow-hidden border border-[#E5EAF0] dark:border-white/20">
                 <img src={logo} alt="StudyNest" className="w-full h-full object-cover" />
               </div>
-              <span className="font-display font-black text-base text-[#123B70] dark:text-white">
-                Study<span className="text-[#2878D4]">Nest</span>
+              <span className="font-display font-black text-base text-[#343b1b] dark:text-white">
+                Study<span className="text-[#3971b8]">Nest</span>
               </span>
             </div>
 
             {/* Desktop Breadcrumb */}
             <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-[#687386] dark:text-slate-400">
-              <Home className="w-4 h-4 text-[#2878D4]" />
-              <span className="font-bold text-[#172033] dark:text-white">StudyNest</span>
+              <Home className="w-4 h-4 text-[#3971b8]" />
+              <span className="font-bold text-[#343b1b] dark:text-white">StudyNest</span>
               <span className="text-slate-300 dark:text-slate-600">/</span>
               <span className="capitalize">{currentView === 'home' ? 'Home' : currentView.replace('-', ' ')}</span>
             </div>
@@ -208,14 +208,14 @@ export default function AppShell() {
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
-            {/* User Avatar Circle */}
+            {/* Settings Button */}
             <button
               type="button"
               onClick={() => setShowSettings(true)}
-              className="w-8 h-8 rounded-full bg-[#123B70] text-white flex items-center justify-center font-bold text-xs shadow-xs hover:scale-105 transition-transform cursor-pointer shrink-0"
+              className="p-2 rounded-xl text-[#687386] dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
               title="Open Settings"
             >
-              {user?.name?.charAt(0)?.toUpperCase() || 'S'}
+              <Settings className="w-4 h-4" />
             </button>
           </div>
         </header>
@@ -264,7 +264,7 @@ export default function AppShell() {
               }}
               className={`flex flex-col items-center justify-center gap-1 w-14 py-1 rounded-xl transition-all cursor-pointer ${
                 active
-                  ? 'text-[#2878D4] font-bold'
+                  ? 'text-[#3971b8] font-bold'
                   : 'text-[#687386] dark:text-slate-400 font-medium'
               }`}
             >

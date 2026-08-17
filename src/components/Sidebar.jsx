@@ -104,12 +104,12 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         {/* Top Branding */}
         <div>
           <div className="p-5 flex items-center gap-3 border-b border-[#E5EAF0] dark:border-white/10">
-            <div className="w-10 h-10 rounded-full bg-[#EAF4FF] dark:bg-blue-950/60 border border-[#2878D4]/20 flex items-center justify-center p-0.5 shadow-sm overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-[#e8f1fc] dark:bg-blue-950/60 border border-[#3971b8]/20 flex items-center justify-center p-0.5 shadow-sm overflow-hidden">
               <MascotOwl state="default" size="sm" animate={false} />
             </div>
             <div>
-              <h1 className="font-display font-black text-lg text-[#123B70] dark:text-white leading-tight tracking-tight flex items-center gap-1">
-                Study<span className="text-[#2878D4]">Nest</span>
+              <h1 className="font-display font-black text-lg text-[#343b1b] dark:text-white leading-tight tracking-tight flex items-center gap-1">
+                Study<span className="text-[#3971b8]">Nest</span>
               </h1>
               <p className="text-[10px] font-semibold text-[#687386] dark:text-slate-400">
                 Academic Study Workspace
@@ -129,14 +129,14 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
                   onClick={() => handleNavClick(item)}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-sm font-semibold transition-all duration-150 cursor-pointer ${
                     active
-                      ? 'bg-[#EAF4FF] dark:bg-blue-950/40 text-[#123B70] dark:text-slate-200 shadow-xs'
-                      : 'text-[#687386] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-[#172033] dark:hover:text-white'
+                      ? 'bg-[#e8f1fc] dark:bg-blue-950/40 text-[#343b1b] dark:text-slate-200 shadow-xs'
+                      : 'text-[#687386] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-[#343b1b] dark:hover:text-white'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <Icon
                       className={`w-4 h-4 transition-colors ${
-                        active ? 'text-[#2878D4] dark:text-blue-400' : 'text-[#687386] dark:text-slate-400'
+                        active ? 'text-[#3971b8] dark:text-blue-400' : 'text-[#687386] dark:text-slate-400'
                       }`}
                     />
                     <span>{item.label}</span>
@@ -145,7 +145,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
                   {item.badge && (
                     <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
                       active
-                        ? 'bg-[#2878D4] text-white'
+                        ? 'bg-[#3971b8] text-white'
                         : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
                     }`}>
                       {item.badge}
@@ -190,12 +190,9 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         <div className="p-3 border-t border-[#E5EAF0] dark:border-white/10 space-y-2 bg-slate-50/50 dark:bg-slate-900/50">
           {/* Profile Bar */}
           <div className="pt-1 px-1 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-full bg-[#123B70] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-xs">
-                {user?.name?.charAt(0)?.toUpperCase() || 'S'}
-              </div>
+            <div className="flex items-center gap-2 overflow-hidden">
               <div className="truncate">
-                <p className="text-xs font-bold text-[#172033] dark:text-white truncate">
+                <p className="text-xs font-bold text-[#343b1b] dark:text-white truncate">
                   {user?.name || 'sweta'}
                 </p>
                 <p className="text-[10px] text-[#687386] dark:text-slate-400 truncate">

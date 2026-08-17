@@ -53,7 +53,7 @@ export default function MascotOwl({
           </linearGradient>
           <linearGradient id="capBlue" x1="100" y1="20" x2="100" y2="70" gradientUnits="userSpaceOnUse">
             <stop stopColor="#1C4B82" />
-            <stop offset="1" stopColor="#123B70" />
+            <stop offset="1" stopColor="#343b1b" />
           </linearGradient>
           <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
             <stop stopColor="#FCD34D" />
@@ -64,8 +64,8 @@ export default function MascotOwl({
             <stop offset="1" stopColor="#5C381E" />
           </linearGradient>
           <linearGradient id="bookBlue" x1="0" y1="0" x2="1" y2="1">
-            <stop stopColor="#2878D4" />
-            <stop offset="1" stopColor="#123B70" />
+            <stop stopColor="#3971b8" />
+            <stop offset="1" stopColor="#343b1b" />
           </linearGradient>
         </defs>
 
@@ -78,8 +78,8 @@ export default function MascotOwl({
             <path d="M42 162 C75 178, 125 178, 158 162" stroke="#6B3F1D" strokeWidth="3.5" strokeLinecap="round" />
             <path d="M30 174 C70 190, 130 190, 170 174" stroke="#87532B" strokeWidth="3" strokeLinecap="round" />
             {/* Green Nest Leaves */}
-            <path d="M28 165 C20 155, 30 148, 38 156 C34 165, 28 165, 28 165 Z" fill="#55A85A" />
-            <path d="M172 165 C180 155, 170 148, 162 156 C166 165, 172 165, 172 165 Z" fill="#55A85A" />
+            <path d="M28 165 C20 155, 30 148, 38 156 C34 165, 28 165, 28 165 Z" fill="#c8d69b" />
+            <path d="M172 165 C180 155, 170 148, 162 156 C166 165, 172 165, 172 165 Z" fill="#c8d69b" />
           </g>
         )}
 
@@ -87,10 +87,10 @@ export default function MascotOwl({
         {state === 'tree' && (
           <g id="tree-branch">
             <path d="M10 178 C60 172, 140 172, 190 178" stroke="#654321" strokeWidth="12" strokeLinecap="round" />
-            <circle cx="170" cy="155" r="14" fill="#55A85A" />
+            <circle cx="170" cy="155" r="14" fill="#c8d69b" />
             <circle cx="185" cy="162" r="10" fill="#78C67D" />
-            <circle cx="25" cy="162" r="12" fill="#55A85A" />
-            <polygon points="100,18 104,28 114,29 106,36 109,46 100,40 91,46 94,36 86,29 96,28" fill="#F5B72C" />
+            <circle cx="25" cy="162" r="12" fill="#c8d69b" />
+            <polygon points="100,18 104,28 114,29 106,36 109,46 100,40 91,46 94,36 86,29 96,28" fill="#f6e6a5" />
           </g>
         )}
 
@@ -123,32 +123,32 @@ export default function MascotOwl({
         {state === 'break' ? (
           /* Sleeping Eyes (Happy curves) */
           <g id="sleeping-eyes">
-            <path d="M68 95 Q80 108 92 95" stroke="#172033" strokeWidth="4.5" strokeLinecap="round" fill="none" />
-            <path d="M108 95 Q120 108 132 95" stroke="#172033" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+            <path d="M68 95 Q80 108 92 95" stroke="#343b1b" strokeWidth="4.5" strokeLinecap="round" fill="none" />
+            <path d="M108 95 Q120 108 132 95" stroke="#343b1b" strokeWidth="4.5" strokeLinecap="round" fill="none" />
             {/* ZZZ Floating */}
-            <text x="145" y="70" fill="#2878D4" fontSize="18" fontWeight="800" fontFamily="Poppins">Z</text>
-            <text x="160" y="55" fill="#55A85A" fontSize="14" fontWeight="800" fontFamily="Poppins">z</text>
-            <text x="172" y="42" fill="#F5B72C" fontSize="11" fontWeight="800" fontFamily="Poppins">z</text>
+            <text x="145" y="70" fill="#3971b8" fontSize="18" fontWeight="800" fontFamily="Poppins">Z</text>
+            <text x="160" y="55" fill="#c8d69b" fontSize="14" fontWeight="800" fontFamily="Poppins">z</text>
+            <text x="172" y="42" fill="#f6e6a5" fontSize="11" fontWeight="800" fontFamily="Poppins">z</text>
           </g>
         ) : (
           /* Awake Big Scholarly Eyes with Eye Rings */
           <g id="awake-eyes">
             {/* Left Eye White & Ring */}
             <circle cx="78" cy="94" r="22" fill="#FFFFFF" stroke="#D9C3A5" strokeWidth="3" />
-            <circle cx="78" cy="94" r="14" fill="#172033" />
+            <circle cx="78" cy="94" r="14" fill="#343b1b" />
             <circle cx="73" cy="89" r="5" fill="#FFFFFF" />
             <circle cx="83" cy="98" r="2.5" fill="#FFFFFF" />
 
             {/* Right Eye White & Ring */}
             <circle cx="122" cy="94" r="22" fill="#FFFFFF" stroke="#D9C3A5" strokeWidth="3" />
-            <circle cx="122" cy="94" r="14" fill="#172033" />
+            <circle cx="122" cy="94" r="14" fill="#343b1b" />
             <circle cx="117" cy="89" r="5" fill="#FFFFFF" />
             <circle cx="127" cy="98" r="2.5" fill="#FFFFFF" />
 
             {/* Scholarly Spectacles Frame */}
-            <circle cx="78" cy="94" r="23" stroke="#123B70" strokeWidth="3.5" fill="none" />
-            <circle cx="122" cy="94" r="23" stroke="#123B70" strokeWidth="3.5" fill="none" />
-            <path d="M101 94 Q100 88 99 94" stroke="#123B70" strokeWidth="3.5" fill="none" />
+            <circle cx="78" cy="94" r="23" stroke="#343b1b" strokeWidth="3.5" fill="none" />
+            <circle cx="122" cy="94" r="23" stroke="#343b1b" strokeWidth="3.5" fill="none" />
+            <path d="M101 94 Q100 88 99 94" stroke="#343b1b" strokeWidth="3.5" fill="none" />
           </g>
         )}
 
@@ -166,11 +166,11 @@ export default function MascotOwl({
         {/* GRADUATION CAP (mortarboard) */}
         <g id="grad-cap">
           <polygon points="100,32 158,50 100,66 42,50" fill="url(#capBlue)" stroke="#0E2C54" strokeWidth="1.5" />
-          <ellipse cx="100" cy="66" rx="28" ry="9" fill="#123B70" />
-          <circle cx="100" cy="49" r="4" fill="#F5B72C" />
+          <ellipse cx="100" cy="66" rx="28" ry="9" fill="#343b1b" />
+          <circle cx="100" cy="49" r="4" fill="#f6e6a5" />
           {/* Gold Tassel */}
-          <path d="M100 49 Q132 54 138 72" stroke="#F5B72C" strokeWidth="3" fill="none" />
-          <polygon points="138,72 134,84 142,84" fill="#F5B72C" />
+          <path d="M100 49 Q132 54 138 72" stroke="#f6e6a5" strokeWidth="3" fill="none" />
+          <polygon points="138,72 134,84 142,84" fill="#f6e6a5" />
         </g>
 
         {/* CONTEXT ACCESSORIES */}
@@ -182,9 +182,9 @@ export default function MascotOwl({
             {/* Book Pages */}
             <path d="M63 140 Q100 145 100 159 Q100 145 137 140 L134 168 Q100 173 100 184 Q100 173 66 168 Z" fill="#FFFFFF" />
             {/* Text lines */}
-            <line x1="72" y1="148" x2="94" y2="151" stroke="#2878D4" strokeWidth="2" strokeLinecap="round" />
+            <line x1="72" y1="148" x2="94" y2="151" stroke="#3971b8" strokeWidth="2" strokeLinecap="round" />
             <line x1="72" y1="156" x2="92" y2="159" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
-            <line x1="106" y1="151" x2="128" y2="148" stroke="#2878D4" strokeWidth="2" strokeLinecap="round" />
+            <line x1="106" y1="151" x2="128" y2="148" stroke="#3971b8" strokeWidth="2" strokeLinecap="round" />
             <line x1="108" y1="159" x2="128" y2="156" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" />
           </g>
         )}
@@ -200,8 +200,8 @@ export default function MascotOwl({
         {/* State: 'tutor' / 'ai' -> Sparkles & Speech Bubble */}
         {(state === 'tutor' || state === 'ai') && (
           <g id="tutor-sparkles">
-            <polygon points="160,35 163,43 171,46 163,49 160,57 157,49 149,46 157,43" fill="#F5B72C" />
-            <polygon points="35,45 37,51 43,53 37,55 35,61 33,55 27,53 33,51" fill="#2878D4" />
+            <polygon points="160,35 163,43 171,46 163,49 160,57 157,49 149,46 157,43" fill="#f6e6a5" />
+            <polygon points="35,45 37,51 43,53 37,55 35,61 33,55 27,53 33,51" fill="#3971b8" />
           </g>
         )}
 
@@ -216,12 +216,12 @@ export default function MascotOwl({
         {/* State: 'celebrate' -> Stars around */}
         {state === 'celebrate' && (
           <g id="celebrate-confetti">
-            <circle cx="35" cy="65" r="4" fill="#55A85A" />
-            <circle cx="165" cy="65" r="4" fill="#F5B72C" />
-            <circle cx="175" cy="110" r="3" fill="#2878D4" />
+            <circle cx="35" cy="65" r="4" fill="#c8d69b" />
+            <circle cx="165" cy="65" r="4" fill="#f6e6a5" />
+            <circle cx="175" cy="110" r="3" fill="#3971b8" />
             <circle cx="25" cy="110" r="3" fill="#EF4444" />
-            <polygon points="160,25 163,33 171,36 163,39 160,47 157,39 149,36 157,33" fill="#F5B72C" />
-            <polygon points="40,25 43,33 51,36 43,39 40,47 37,39 29,36 37,33" fill="#2878D4" />
+            <polygon points="160,25 163,33 171,36 163,39 160,47 157,39 149,36 157,33" fill="#f6e6a5" />
+            <polygon points="40,25 43,33 51,36 43,39 40,47 37,39 29,36 37,33" fill="#3971b8" />
           </g>
         )}
       </motion.svg>

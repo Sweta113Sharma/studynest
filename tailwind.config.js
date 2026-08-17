@@ -32,38 +32,38 @@ export default {
         },
         accent: {
           DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
-          foreground: '#172033',
+          foreground: '#343b1b',
         },
         // Official StudyNest Design Tokens
         nest: {
-          navy: '#123B70',
-          blue: '#2878D4',
-          'light-blue': '#EAF4FF',
-          gold: '#F5B72C',
-          cream: '#FFF9EE',
+          navy: '#343b1b', // Drab Dark Brown
+          blue: '#3971b8', // Celtic Blue
+          'light-blue': '#e8f1fc',
+          gold: '#f6e6a5', // Vanilla
+          cream: '#f0fcee', // Ivory
           white: '#FFFFFF',
-          green: '#55A85A',
-          'light-green': '#EAF7E8',
-          dark: '#172033',
-          gray: '#687386',
-          border: '#E5EAF0',
+          green: '#c8d69b', // Tea Green
+          'light-green': '#f2f9f0',
+          dark: '#14170b', // Deep dark matcha
+          gray: '#646e46', // Matcha-themed gray
+          border: '#e2ecd9',
           error: '#D9534F',
         },
         border: 'var(--border-card)',
         input: 'var(--bg-input)',
         ring: 'rgb(var(--primary-rgb) / <alpha-value>)',
-        success: '#55A85A',
-        warning: '#F5B72C',
+        success: '#c8d69b', // Tea Green
+        warning: '#f6e6a5', // Vanilla
         // Custom subtle overlays
         'glass-1': 'rgba(255, 255, 255, 0.05)',
         'glass-2': 'rgba(255, 255, 255, 0.08)',
         'glass-3': 'rgba(255, 255, 255, 0.12)',
-        'glow-primary': 'rgba(40, 120, 212, 0.3)',
-        'glow-accent': 'rgba(245, 183, 44, 0.3)',
+        'glow-primary': 'rgba(57, 113, 184, 0.3)', // Celtic Blue
+        'glow-accent': 'rgba(246, 230, 165, 0.3)', // Vanilla
       },
       fontFamily: {
         sans: ['Poppins', '"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['Poppins', '"Plus Jakarta Sans"', 'sans-serif'],
+        display: ['Comfortaa', 'Poppins', '"Plus Jakarta Sans"', 'sans-serif'],
         body: ['Poppins', 'Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
@@ -76,10 +76,10 @@ export default {
         '3xl': '1.5rem',
       },
       boxShadow: {
-        'glow': '0 0 40px rgba(120, 53, 15, 0.2)',
-        'glow-lg': '0 0 60px rgba(120, 53, 15, 0.3)',
-        'glow-accent': '0 0 40px rgba(146, 64, 14, 0.2)',
-        'inner-glow': 'inset 0 0 20px rgba(120, 53, 15, 0.15)',
+        'glow': '0 0 40px rgba(52, 59, 27, 0.15)',
+        'glow-lg': '0 0 60px rgba(52, 59, 27, 0.25)',
+        'glow-accent': '0 0 40px rgba(246, 230, 165, 0.2)',
+        'inner-glow': 'inset 0 0 20px rgba(52, 59, 27, 0.1)',
         'card': '0 8px 30px rgba(0, 0, 0, 0.15)',
         'card-hover': '0 12px 40px rgba(0, 0, 0, 0.22)',
       },
