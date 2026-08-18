@@ -94,8 +94,8 @@ export default function HomeView() {
       nextTopic: 'OOP Concepts & Polymorphism',
       progress: 68,
       icon: Code2,
-      bgColor: 'bg-indigo-600',
-      color: '#4F46E5'
+      bgColor: 'bg-[#3971b8]/10 text-[#3971b8] border border-[#3971b8]/20',
+      color: '#3971b8'
     },
     {
       id: 'sub-dbms',
@@ -103,8 +103,8 @@ export default function HomeView() {
       nextTopic: 'Normalization',
       progress: 45,
       icon: Database,
-      bgColor: 'bg-amber-500',
-      color: '#F59E0B'
+      bgColor: 'bg-[#f6e6a5]/25 text-[#735e07] dark:text-[#f6e6a5] border border-[#f6e6a5]/30',
+      color: '#c8a415'
     },
     {
       id: 'sub-dsa',
@@ -112,8 +112,8 @@ export default function HomeView() {
       nextTopic: 'Arrays & Linked Lists',
       progress: 32,
       icon: Network,
-      bgColor: 'bg-emerald-600',
-      color: '#059669'
+      bgColor: 'bg-[#c8d69b]/25 text-[#4c5628] dark:text-[#c8d69b] border border-[#c8d69b]/35',
+      color: '#5b6b2f'
     }
   ]
 
@@ -138,52 +138,64 @@ export default function HomeView() {
       animate="visible"
     >
       {/* 1. Dashboard Header (Spacious, calm, simple greeting) */}
-      <motion.div variants={itemVariants} className="space-y-1">
-        <h1 className="text-2xl sm:text-3xl font-bold font-display text-[#343b1b] dark:text-white tracking-tight">
-          {getGreeting()}, <span className="text-[#3971b8]">{user?.name || 'Sweta'}!</span> 👋
-        </h1>
-        <p className="text-xs sm:text-sm font-medium text-[#687386] dark:text-slate-400">
-          Ready to build your knowledge nest today?
-        </p>
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#e2ecd9] dark:border-[#343b1b]/40 pb-5">
+        <div className="space-y-1">
+          <h1 className="text-2xl sm:text-3xl font-black font-display text-[#343b1b] dark:text-[#f0fcee] tracking-tight">
+            {getGreeting()}, <span className="text-[#3971b8]">{user?.name || 'Sweta'}!</span> 👋
+          </h1>
+          <p className="text-xs sm:text-sm font-medium text-[#646e46] dark:text-[#a0af8c]">
+            Ready to build your knowledge nest today?
+          </p>
+        </div>
+        {/* Date Capsule Badge */}
+        <div className="flex items-center gap-2 self-start sm:self-center px-4 py-2 rounded-full bg-[#f2f9f0] dark:bg-[#1b1e0f]/80 border border-[#c8d69b]/40 dark:border-[#c8d69b]/25 shadow-xs">
+          <Calendar className="w-4 h-4 text-[#3971b8]" />
+          <span className="text-xs font-bold text-[#343b1b] dark:text-[#f0fcee]">
+            {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+          </span>
+        </div>
       </motion.div>
 
       {/* 2. Today's Study Goal Hero Card (Dominant Component) */}
       <motion.section
         variants={itemVariants}
-        className="w-full p-6 sm:p-8 rounded-[24px] bg-[#343b1b] text-white shadow-sm border border-white/5 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+        className="w-full p-6 sm:p-8 rounded-[28px] bg-[#343b1b] text-white shadow-xl border border-[#c8d69b]/25 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 group hover:border-[#c8d69b]/40 transition-all duration-300"
         aria-label="Today's Study Goal"
       >
+        {/* Abstract gradient overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#3971b8]/15 via-[#c8d69b]/5 to-transparent pointer-events-none" />
+
         <div className="relative z-10 space-y-4 max-w-lg">
-          <span className="text-[10px] font-bold text-blue-200 tracking-widest uppercase block">
+          <span className="text-[10px] font-bold text-[#f6e6a5] tracking-widest uppercase block">
             Today's Study Goal
           </span>
 
           <div className="space-y-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl sm:text-5xl font-black font-display">72%</span>
-              <span className="text-xs sm:text-sm font-medium text-blue-200">Daily syllabus revision complete</span>
+              <span className="text-4xl sm:text-5xl font-black font-display text-[#f0fcee]">72%</span>
+              <span className="text-xs sm:text-sm font-medium text-[#c8d69b]">Daily syllabus revision complete</span>
             </div>
 
-            {/* Gold Progress Bar */}
-            <div className="w-full max-w-md h-2 bg-black/25 rounded-full overflow-hidden p-0.5 border border-white/5">
+            {/* Gold/Vanilla Progress Bar */}
+            <div className="w-full max-w-md h-2.5 bg-black/40 rounded-full overflow-hidden p-0.5 border border-white/10 shadow-[inset_0_1px_3px_rgba(0,0,0,0.5)]">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '72%' }}
                 transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-[#f6e6a5] rounded-full"
+                className="h-full bg-gradient-to-r from-[#f6e6a5] to-[#c8d69b] rounded-full shadow-[0_0_8px_rgba(246,230,165,0.4)]"
               />
             </div>
           </div>
 
-          <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-normal">
-            You're on track to master <span className="font-bold text-white">OOP Polymorphism</span> and finish <span className="font-bold text-white">Unit 2</span>.
+          <p className="text-xs sm:text-sm text-[#f0fcee]/90 leading-relaxed font-normal">
+            You're on track to master <span className="font-bold text-[#f6e6a5]">OOP Polymorphism</span> and finish <span className="font-bold text-[#f6e6a5]">Unit 2</span>.
           </p>
 
           <div className="pt-1">
             <button
               type="button"
               onClick={() => navigateTo('subjects')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#f6e6a5] hover:bg-amber-400 text-[#343b1b] font-bold text-xs sm:text-sm shadow-xs hover:shadow-sm active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#f6e6a5] hover:bg-[#f6e6a5]/90 text-[#343b1b] font-black text-xs sm:text-sm shadow-md hover:scale-102 active:scale-95 transition-all cursor-pointer"
             >
               Start Studying →
             </button>
@@ -191,27 +203,29 @@ export default function HomeView() {
         </div>
 
         {/* Mascot Owl Illustration on Right */}
-        <div className="relative z-10 shrink-0 pointer-events-none hidden sm:block pr-4">
+        <div className="relative z-10 shrink-0 pointer-events-none hidden sm:block pr-4 transform group-hover:scale-105 transition-transform duration-300">
           <MascotOwl state="reading" size="xl" />
         </div>
 
         {/* Background Ambient Glow */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#c8d69b]/15 rounded-full blur-3xl pointer-events-none" />
       </motion.section>
 
       {/* 3. Today's Focus Strip (Option B) - Compact Low Profile */}
       <motion.div
         variants={itemVariants}
-        className="bg-[#e8f1fc] dark:bg-blue-950/20 text-[#343b1b] dark:text-blue-200 px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#E5EAF0] dark:border-white/5"
+        className="bg-[#f2f9f0] dark:bg-[#1b1e0f]/60 text-[#343b1b] dark:text-[#f0fcee] px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#c8d69b]/35 dark:border-white/5"
       >
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-[#3971b8]" />
-          <span>1h 45m focused today</span>
+          <span className="font-semibold text-[#646e46] dark:text-[#a0af8c]">
+            Daily Focus Session: <span className="font-bold text-[#343b1b] dark:text-[#f0fcee]">1h 45m focused today</span>
+          </span>
         </div>
         <button
           type="button"
           onClick={() => navigateTo('growth')}
-          className="text-[#3971b8] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
+          className="text-[#3971b8] dark:text-[#c8d69b] hover:underline font-black flex items-center gap-0.5 cursor-pointer"
         >
           View Progress →
         </button>
@@ -249,14 +263,14 @@ export default function HomeView() {
                   <div
                     key={sub.id}
                     onClick={() => navigateTo('subjects')}
-                    className="p-4 bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:border-[#3971b8]/40 hover:shadow-xs transition-all duration-200 group"
+                    className="p-4 bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 rounded-[20px] flex items-center justify-between gap-4 cursor-pointer hover:border-[#3971b8]/40 hover:shadow-md hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-250 group shadow-xs"
                   >
                     <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                      <div className={`w-9 h-9 rounded-xl ${sub.bgColor} text-white flex items-center justify-center shrink-0 shadow-xs`}>
+                      <div className={`w-9 h-9 rounded-xl ${sub.bgColor} flex items-center justify-center shrink-0 shadow-xs`}>
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="truncate flex-1">
-                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#343b1b] dark:text-white group-hover:text-[#3971b8] transition-colors truncate">
+                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#343b1b] dark:text-[#f0fcee] group-hover:text-[#3971b8] transition-colors truncate">
                           {sub.name}
                         </h3>
                         <p className="text-xs text-[#687386] dark:text-slate-400 truncate mt-0.5">
@@ -265,9 +279,9 @@ export default function HomeView() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 shrink-0 min-w-[120px]">
+                     <div className="flex items-center gap-4 shrink-0 min-w-[120px]">
                       <div className="flex-1 hidden sm:block">
-                        <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-[#f2f9f0] dark:bg-slate-800/60 border border-[#e2ecd9]/50 dark:border-white/5 rounded-full overflow-hidden">
                           <div
                             className="h-full rounded-full"
                             style={{ width: `${sub.progress}%`, backgroundColor: sub.color }}
@@ -275,7 +289,7 @@ export default function HomeView() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-[#343b1b] dark:text-white">
+                        <span className="text-sm font-semibold text-[#343b1b] dark:text-[#f0fcee]">
                           {sub.progress}%
                         </span>
                         <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#3971b8] transition-colors" />
@@ -290,14 +304,14 @@ export default function HomeView() {
           {/* Knowledge Growth */}
           <motion.section
             variants={itemVariants}
-            className="p-6 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs space-y-4"
+            className="p-6 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs space-y-4 hover:shadow-md transition-all duration-300"
           >
-            <div className="flex items-center justify-between border-b border-[#E5EAF0] dark:border-white/10 pb-3">
-              <h2 className="font-display font-bold text-xs uppercase tracking-wider text-[#687386] dark:text-slate-400">
+            <div className="flex items-center justify-between border-b border-[#e2ecd9] dark:border-[#343b1b]/50 pb-3">
+              <h2 className="font-display font-black text-xs uppercase tracking-wider text-[#646e46] dark:text-[#a0af8c]">
                 Your Knowledge Growth
               </h2>
               {/* Single Display of Streak */}
-              <div className="flex items-center gap-1 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-50/70 dark:bg-orange-950/20 px-3 py-1 rounded-full border border-orange-200/50 dark:border-orange-500/20">
+              <div className="flex items-center gap-1 text-xs font-bold text-orange-650 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 px-3 py-1 rounded-full border border-orange-200/50 dark:border-orange-500/25">
                 <span>🔥</span>
                 <span>{currentStreak} Day Streak</span>
               </div>
@@ -305,7 +319,7 @@ export default function HomeView() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Small Knowledge Tree SVG Illustration */}
-              <div className="w-20 h-20 rounded-2xl bg-[#e8f1fc] dark:bg-blue-950/30 flex items-center justify-center shrink-0 border border-[#3971b8]/10 shadow-xs">
+              <div className="w-20 h-20 rounded-2xl bg-[#f2f9f0] dark:bg-[#1b1e0f] flex items-center justify-center shrink-0 border border-[#c8d69b]/40 dark:border-[#c8d69b]/15 shadow-xs">
                 <svg viewBox="0 0 100 100" className="w-16 h-16 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   {/* Trunk */}
                   <path d="M49 85 L49 55 C49 50 51 46 51 40 M51 85 L51 60" stroke="#8B5A2B" strokeWidth="4" strokeLinecap="round" />
@@ -325,28 +339,33 @@ export default function HomeView() {
               </div>
 
               <div className="flex-1 w-full space-y-4">
-                <p className="text-xs font-semibold text-[#687386] dark:text-slate-400">
+                <p className="text-xs font-semibold text-[#646e46] dark:text-[#a0af8c]">
                   3 subjects progressing this week:
                 </p>
                 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {[
-                    { name: 'Java Programming', progress: 68, color: '#4F46E5' },
-                    { name: 'DBMS', progress: 45, color: '#F59E0B' },
-                    { name: 'Data Structures', progress: 32, color: '#059669' }
+                    { name: 'Java Programming', progress: 68, color: '#3971b8' },
+                    { name: 'DBMS', progress: 45, color: '#c8a415' },
+                    { name: 'Data Structures', progress: 32, color: '#5b6b2f' }
                   ].map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-xs font-semibold">
-                      <span className="text-[#343b1b] dark:text-slate-200">{item.name}</span>
-                      <span className="text-[#343b1b] dark:text-white">{item.progress}%</span>
+                    <div key={idx} className="space-y-1">
+                      <div className="flex items-center justify-between text-xs font-semibold">
+                        <span className="text-[#343b1b] dark:text-[#f0fcee]">{item.name}</span>
+                        <span className="text-[#343b1b] dark:text-[#f0fcee]">{item.progress}%</span>
+                      </div>
+                      <div className="w-full h-1 bg-[#f2f9f0] dark:bg-slate-800/40 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${item.progress}%`, backgroundColor: item.color }} />
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-1">
                   <button
                     type="button"
                     onClick={() => navigateTo('growth')}
-                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#343b1b] dark:text-blue-300 font-bold text-xs cursor-pointer transition-colors shadow-xs"
+                    className="px-4 py-2 rounded-xl bg-[#f2f9f0] hover:bg-[#c8d69b]/20 dark:bg-[#1b1e0f] dark:hover:bg-[#c8d69b]/10 text-[#343b1b] dark:text-[#c8d69b] font-black text-xs cursor-pointer transition-all shadow-xs border border-[#c8d69b]/35 dark:border-white/5"
                   >
                     View My Growth →
                   </button>
@@ -358,29 +377,29 @@ export default function HomeView() {
           {/* Exam Countdown (Compact Horizontal Banner) */}
           <motion.section
             variants={itemVariants}
-            className="p-5 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+            className="p-5 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:shadow-md transition-all duration-300"
           >
             <div className="flex items-center gap-3">
               <span className="text-lg shrink-0">📅</span>
               <div>
-                <h3 className="font-display font-bold text-sm text-[#343b1b] dark:text-white">
+                <h3 className="font-display font-bold text-sm text-[#343b1b] dark:text-[#f0fcee]">
                   End Semester Exam
                 </h3>
-                <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-[#646e46] dark:text-[#a0af8c] mt-0.5">
                   15 Dec, 2024
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-4 justify-between sm:justify-end">
-              <div className="bg-[#e8f1fc] dark:bg-blue-950/20 px-3.5 py-1.5 rounded-xl border border-[#3971b8]/10 shadow-xs text-xs font-bold text-[#343b1b] dark:text-blue-300">
+              <div className="bg-[#f2f9f0] dark:bg-[#1b1e0f] px-3.5 py-1.5 rounded-xl border border-[#c8d69b]/40 dark:border-[#c8d69b]/15 shadow-xs text-xs font-bold text-[#343b1b] dark:text-[#c8d69b]">
                 42 days left
               </div>
 
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-bold text-[#3971b8] dark:text-blue-400 hover:underline cursor-pointer"
+                className="text-xs font-black text-[#3971b8] dark:text-[#c8d69b] hover:underline cursor-pointer"
               >
                 [ View Revision Plan ]
               </button>
@@ -391,11 +410,11 @@ export default function HomeView() {
         {/* Right Column (4 cols) - Today's Tasks in Single Clean Container */}
         <motion.section
           variants={itemVariants}
-          className="lg:col-span-4 p-6 rounded-[20px] bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 shadow-xs flex flex-col justify-between space-y-4"
+          className="lg:col-span-4 p-6 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs flex flex-col justify-between space-y-4 hover:shadow-md transition-all duration-300"
         >
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
-              <h2 className="font-display font-bold text-base text-[#343b1b] dark:text-white flex items-center gap-2">
+            <div className="flex items-center justify-between pb-3 border-b border-[#e2ecd9] dark:border-[#343b1b]/50">
+              <h2 className="font-display font-black text-base text-[#343b1b] dark:text-[#f0fcee] flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#3971b8]" />
                 Today's Tasks
               </h2>
@@ -409,7 +428,7 @@ export default function HomeView() {
             </div>
 
             {/* Task list divided by simple thin lines */}
-            <div className="divide-y divide-[#E5EAF0] dark:divide-white/5 mt-2">
+            <div className="divide-y divide-[#e2ecd9] dark:divide-white/5 mt-2">
               {tasks.slice(0, 4).map((task) => {
                 const isHigh = task.priority === 'high'
                 const isMed = task.priority === 'medium'
@@ -420,7 +439,7 @@ export default function HomeView() {
                     className="py-3 flex items-center justify-between gap-3 cursor-pointer group"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="text-slate-400 group-hover:text-emerald-600 shrink-0">
+                      <div className="text-slate-400 group-hover:text-emerald-650 shrink-0">
                         {task.completed ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-600 fill-emerald-100 dark:fill-emerald-950" />
                         ) : (
@@ -429,11 +448,11 @@ export default function HomeView() {
                       </div>
                       <div className="truncate">
                         <p className={`text-sm font-semibold truncate ${
-                          task.completed ? 'line-through text-[#687386] dark:text-slate-500' : 'text-[#343b1b] dark:text-white'
+                          task.completed ? 'line-through text-[#808d5b] dark:text-slate-500' : 'text-[#343b1b] dark:text-[#f0fcee]'
                         }`}>
                           {task.text}
                         </p>
-                        <p className="text-xs text-[#687386] dark:text-slate-400 mt-0.5 truncate">
+                        <p className="text-xs text-[#646e46] dark:text-[#a0af8c] mt-0.5 truncate">
                           {task.subject}
                         </p>
                       </div>
@@ -455,7 +474,7 @@ export default function HomeView() {
           </div>
 
           {/* Quick Add Task Form */}
-          <div className="pt-3 border-t border-[#E5EAF0] dark:border-white/10">
+          <div className="pt-3 border-t border-[#e2ecd9] dark:border-[#343b1b]/50">
             {showTaskInput ? (
               <form onSubmit={handleQuickAddTask} className="flex items-center gap-2">
                 <input
@@ -464,11 +483,11 @@ export default function HomeView() {
                   onChange={(e) => setNewTaskInput(e.target.value)}
                   placeholder="New study task..."
                   autoFocus
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-[#343b1b] dark:text-white focus:outline-none focus:ring-1 focus:ring-[#3971b8]"
+                  className="flex-1 px-3 py-1.5 rounded-xl bg-[#f8fdf6] dark:bg-[#1b1e0f] border border-[#e2ecd9] dark:border-slate-800 text-xs text-[#343b1b] dark:text-[#f0fcee] focus:outline-none focus:ring-1 focus:ring-[#3971b8]"
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-1.5 rounded-xl bg-[#343b1b] text-white text-xs font-bold shadow-xs cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#343b1b] dark:bg-[#c8d69b] text-white dark:text-[#14170b] text-xs font-black shadow-xs cursor-pointer hover:opacity-90 active:scale-95 transition-all"
                 >
                   Add
                 </button>
@@ -477,7 +496,7 @@ export default function HomeView() {
               <button
                 type="button"
                 onClick={() => setShowTaskInput(true)}
-                className="text-xs font-bold text-[#3971b8] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-black text-[#3971b8] dark:text-[#c8d69b] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Add New Task
               </button>
