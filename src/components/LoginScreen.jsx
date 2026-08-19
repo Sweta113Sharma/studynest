@@ -119,11 +119,7 @@ export default function LoginScreen() {
 
   return (
     <div className="min-h-screen relative flex flex-col justify-between p-4 md:p-8 lg:p-12 selection:bg-nest-green/20">
-      {/* Background Ambient Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-40 -left-40 w-[32rem] h-[32rem] bg-gradient-to-tr from-nest-blue/20 to-nest-green/15 rounded-full blur-[110px]" />
-        <div className="absolute top-1/3 -right-40 w-[36rem] h-[36rem] bg-gradient-to-br from-nest-green/15 via-nest-gold/10 to-nest-blue/10 rounded-full blur-[130px]" />
-      </div>
+
 
       {/* Navigation Header with Dark Mode Toggle */}
       <header className="w-full max-w-7xl mx-auto flex items-center justify-end z-20 mb-6 sm:mb-8">
