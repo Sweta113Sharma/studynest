@@ -173,7 +173,7 @@ export default function LoginScreen() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. rahul.cse@college.edu"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-nest-light-input dark:bg-nest-dark-input border border-nest-border dark:border-slate-800 text-sm text-nest-navy focus:outline-none focus:ring-2 focus:ring-nest-blue focus:border-nest-blue font-semibold transition-all duration-200"
+                      className="input-field text-sm font-semibold"
                       required
                     />
                   </div>
@@ -186,7 +186,7 @@ export default function LoginScreen() {
                   <button
                     type="submit"
                     disabled={!email || isLoading}
-                    className="w-full py-2.5 rounded-xl bg-nest-navy dark:bg-nest-green text-white dark:text-nest-dark font-bold text-sm hover:opacity-95 hover:scale-[1.01] active:scale-95 transition-all disabled:opacity-50 cursor-pointer shadow-md"
+                    className="w-full btn-primary py-2.5 flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
                   >
                     {isLoading ? "Signing In..." : "Sign In"}
                   </button>
@@ -203,7 +203,7 @@ export default function LoginScreen() {
                         key={preset.email}
                         type="button"
                         onClick={() => handleQuickDemo(preset)}
-                        className="px-3 py-2 rounded-xl text-xs font-semibold bg-nest-light-input dark:bg-nest-dark-input hover:bg-nest-green/15 text-nest-navy hover:text-nest-blue border border-nest-border dark:border-slate-800 transition-colors flex items-center justify-center gap-1 focus-visible:ring-2 focus-visible:ring-nest-blue cursor-pointer"
+                        className="px-3 py-2 rounded-xl text-xs font-semibold bg-nest-light-input hover:bg-nest-green/15 text-nest-navy hover:text-nest-blue border border-nest-border transition-colors flex items-center justify-center gap-1 focus-visible:ring-2 focus-visible:ring-nest-blue cursor-pointer"
                       >
                         <GraduationCap className="w-3.5 h-3.5 font-bold" />
                         <span className="truncate">{preset.name.split(' ')[0]} ({preset.role === 'admin' ? 'Admin' : preset.branch})</span>
@@ -239,7 +239,7 @@ export default function LoginScreen() {
                     value={signupName}
                     onChange={(e) => setSignupName(e.target.value)}
                     placeholder="e.g. Sweta Sharma"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-nest-light-input dark:bg-nest-dark-input border border-nest-border dark:border-slate-800 text-xs sm:text-sm text-nest-navy focus:outline-none focus:ring-2 focus:ring-nest-blue focus:border-nest-blue font-semibold transition-all duration-200"
+                    className="input-field text-sm font-semibold"
                   />
                 </div>
 
@@ -253,7 +253,7 @@ export default function LoginScreen() {
                     value={signupEmail}
                     onChange={(e) => setSignupEmail(e.target.value)}
                     placeholder="e.g. sweta@college.edu"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-nest-light-input dark:bg-nest-dark-input border border-nest-border dark:border-slate-800 text-xs sm:text-sm text-nest-navy focus:outline-none focus:ring-2 focus:ring-nest-blue focus:border-nest-blue font-semibold transition-all duration-200"
+                    className="input-field text-sm font-semibold"
                   />
                 </div>
 
@@ -264,7 +264,7 @@ export default function LoginScreen() {
                   <select
                     value={signupRole}
                     onChange={(e) => setSignupRole(e.target.value)}
-                    className="w-full bg-nest-light-input dark:bg-nest-dark-input border border-nest-border dark:border-slate-800 rounded-xl p-2.5 text-xs text-nest-navy font-semibold focus:outline-none focus:ring-2 focus:ring-nest-blue"
+                    className="input-field text-sm font-semibold"
                   >
                     <option value="student">Student / Learner</option>
                     <option value="admin">Syllabus Admin</option>
@@ -274,7 +274,7 @@ export default function LoginScreen() {
                 <button
                   type="submit"
                   disabled={!signupName || !signupEmail || isLoading}
-                  className="w-full mt-4 py-3 rounded-xl bg-nest-navy dark:bg-nest-green text-white dark:text-nest-dark font-bold text-sm shadow-md hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-nest-blue cursor-pointer"
+                  className="w-full mt-4 btn-primary py-3 flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
                 >
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
