@@ -142,19 +142,19 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
       }
 
       if (trimmed.startsWith('### ')) {
-        elements.push(<h4 key={idx} className="text-xs font-bold text-[#343b1b] dark:text-blue-300 mt-2.5 mb-1">{renderInline(trimmed.slice(4))}</h4>)
+        elements.push(<h4 key={idx} className="text-xs font-bold text-nest-navy dark:text-blue-300 mt-2.5 mb-1">{renderInline(trimmed.slice(4))}</h4>)
       } else if (trimmed.startsWith('## ')) {
-        elements.push(<h3 key={idx} className="text-sm font-bold text-[#343b1b] dark:text-blue-300 mt-3 mb-1.5 border-b border-[#E5EAF0] dark:border-white/10 pb-0.5">{renderInline(trimmed.slice(3))}</h3>)
+        elements.push(<h3 key={idx} className="text-sm font-bold text-nest-navy dark:text-blue-300 mt-3 mb-1.5 border-b border-nest-border dark:border-white/10 pb-0.5">{renderInline(trimmed.slice(3))}</h3>)
       } else if (trimmed.startsWith('> ')) {
         elements.push(
-          <div key={idx} className="my-2 p-2.5 rounded-xl bg-[#e8f1fc] dark:bg-blue-950/40 border-l-3 border-[#3971b8] text-xs font-medium">
+          <div key={idx} className="my-2 p-2.5 rounded-xl bg-nest-light-blue dark:bg-blue-950/40 border-l-3 border-nest-blue text-xs font-medium">
             {renderInline(trimmed.replace(/^>\s*/, ''))}
           </div>
         )
       } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
         elements.push(
           <div key={idx} className="flex items-start gap-2 my-1 text-xs leading-relaxed">
-            <span className="text-[#3971b8] font-bold mt-0.5">•</span>
+            <span className="text-nest-blue font-bold mt-0.5">•</span>
             <span className="flex-1 font-medium">{renderInline(trimmed.slice(2))}</span>
           </div>
         )
@@ -178,7 +178,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
     const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g)
     return parts.map((part, idx) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={idx} className="font-bold text-[#343b1b] dark:text-blue-300">{part.slice(2, -2)}</strong>
+        return <strong key={idx} className="font-bold text-nest-navy dark:text-blue-300">{part.slice(2, -2)}</strong>
       }
       if (part.startsWith('*') && part.endsWith('*')) {
         return <em key={idx} className="italic">{part.slice(1, -1)}</em>
@@ -196,23 +196,23 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
       <AnimatePresence>
         {isDrawerOpen && (
           <motion.div
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[410px] h-[550px] max-h-[85vh] bg-white dark:bg-slate-900 text-[#343b1b] dark:text-white z-50 shadow-2xl flex flex-col rounded-3xl overflow-hidden border border-[#E5EAF0] dark:border-white/15"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[410px] h-[550px] max-h-[85vh] bg-white dark:bg-slate-900 text-nest-navy dark:text-white z-50 shadow-2xl flex flex-col rounded-3xl overflow-hidden border border-nest-border dark:border-white/15"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', stiffness: 350, damping: 25 }}
           >
             {/* Header */}
-            <div className="p-4 border-b border-[#E5EAF0] dark:border-white/10 flex items-center justify-between bg-[#f0fcee] dark:bg-slate-800/80">
+            <div className="p-4 border-b border-nest-border dark:border-white/10 flex items-center justify-between bg-nest-cream dark:bg-slate-800/80">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#e8f1fc] dark:bg-blue-950/60 border border-[#3971b8]/20 flex items-center justify-center p-1 shadow-sm">
+                <div className="w-10 h-10 rounded-2xl bg-nest-light-blue dark:bg-blue-950/60 border border-nest-blue/20 flex items-center justify-center p-1 shadow-sm">
                   <MascotOwl state="tutor" size="sm" animate={false} />
                 </div>
                 <div>
-                  <h3 className="font-display font-black text-sm text-[#343b1b] dark:text-white">
+                  <h3 className="font-display font-black text-sm text-nest-navy dark:text-white">
                     StudyNest AI Tutor
                   </h3>
-                  <p className="text-[10px] font-semibold text-[#687386] dark:text-slate-400 truncate max-w-[210px]">
+                  <p className="text-[10px] font-semibold text-nest-gray dark:text-slate-400 truncate max-w-[210px]">
                     {contextSummary}
                   </p>
                 </div>
@@ -221,7 +221,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
               <button
                 type="button"
                 onClick={handleClose}
-                className="p-1.5 rounded-xl text-[#687386] hover:text-[#343b1b] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-xl text-nest-gray hover:text-nest-navy dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 aria-label="Minimize AI Chat"
               >
                 <Minimize2 className="w-4 h-4" />
@@ -238,15 +238,15 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
                   animate={{ opacity: 1, y: 0 }}
                 >
                   {msg.role === 'assistant' && (
-                    <div className="w-7 h-7 rounded-xl bg-[#e8f1fc] dark:bg-blue-950/60 flex items-center justify-center shrink-0 border border-[#3971b8]/20 mt-1">
+                    <div className="w-7 h-7 rounded-xl bg-nest-light-blue dark:bg-blue-950/60 flex items-center justify-center shrink-0 border border-nest-blue/20 mt-1">
                       <MascotOwl state="default" size="xs" animate={false} />
                     </div>
                   )}
                   <div
                     className={`max-w-[85%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-[#3971b8] text-white rounded-tr-xs shadow-sm font-semibold'
-                        : 'bg-[#F6F9FD] dark:bg-slate-800/80 border border-[#E5EAF0] dark:border-white/10 rounded-tl-xs text-[#343b1b] dark:text-white shadow-xs'
+                        ? 'bg-nest-blue text-white rounded-tr-xs shadow-sm font-semibold'
+                        : 'bg-nest-light-input dark:bg-slate-800/80 border border-nest-border dark:border-white/10 rounded-tl-xs text-nest-navy dark:text-white shadow-xs'
                     }`}
                   >
                     {msg.role === 'assistant' ? formatContent(msg.content) : msg.content}
@@ -255,8 +255,8 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
               ))}
 
               {loading && (
-                <div className="flex gap-2 items-center text-[#687386] dark:text-slate-400 text-xs font-semibold p-2">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#3971b8]" />
+                <div className="flex gap-2 items-center text-nest-gray dark:text-slate-400 text-xs font-semibold p-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-nest-blue" />
                   <span>The owl is thinking...</span>
                 </div>
               )}
@@ -264,13 +264,13 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
             </div>
 
             {/* Quick Prompts */}
-            <div className="px-3.5 py-2 flex gap-1.5 overflow-x-auto no-scrollbar border-t border-[#E5EAF0] dark:border-white/10 bg-[#F6F9FD] dark:bg-slate-800/40">
+            <div className="px-3.5 py-2 flex gap-1.5 overflow-x-auto no-scrollbar border-t border-nest-border dark:border-white/10 bg-nest-light-input dark:bg-slate-800/40">
               {quickPrompts.map((prompt, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => handleSend(prompt)}
-                  className="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-900 border border-[#E5EAF0] dark:border-white/10 text-[10px] font-bold text-[#343b1b] dark:text-blue-300 whitespace-nowrap hover:border-[#3971b8] transition-all shadow-2xs"
+                  className="px-2.5 py-1 rounded-xl bg-white dark:bg-slate-900 border border-nest-border dark:border-white/10 text-[10px] font-bold text-nest-navy dark:text-blue-300 whitespace-nowrap hover:border-nest-blue transition-all shadow-2xs"
                 >
                   {prompt}
                 </button>
@@ -279,7 +279,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
 
             {/* Attachment Badge */}
             {attachment && (
-              <div className="px-3.5 py-1.5 border-t border-[#E5EAF0] dark:border-white/10 bg-amber-50 dark:bg-amber-950/30 flex items-center justify-between gap-2">
+              <div className="px-3.5 py-1.5 border-t border-nest-border dark:border-white/10 bg-amber-50 dark:bg-amber-950/30 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-amber-800 dark:text-amber-300 min-w-0">
                   <File className="w-3.5 h-3.5 shrink-0" />
                   <span className="truncate max-w-[260px]">{attachment.name}</span>
@@ -295,7 +295,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
             )}
 
             {/* Input Form */}
-            <div className="p-3 border-t border-[#E5EAF0] dark:border-white/10 bg-white dark:bg-slate-900">
+            <div className="p-3 border-t border-nest-border dark:border-white/10 bg-white dark:bg-slate-900">
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
@@ -313,7 +313,7 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="p-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[#687386] border border-[#E5EAF0] dark:border-slate-700 transition-colors"
+                  className="p-2 rounded-xl bg-nest-light-input dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-nest-gray border border-nest-border dark:border-slate-700 transition-colors"
                   title="Attach study notes (PDF, TXT, MD, JSON)"
                 >
                   <Paperclip className="w-4 h-4" />
@@ -323,12 +323,12 @@ export default function AIAssistantDrawer({ isOpen: controlledIsOpen, onClose })
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask a question or request a summary..."
-                  className="flex-1 px-3.5 py-2 rounded-xl bg-[#F6F9FD] dark:bg-slate-800 border border-[#E5EAF0] dark:border-slate-700 text-xs text-[#343b1b] dark:text-white placeholder-[#687386] focus:outline-none focus:ring-2 focus:ring-[#3971b8] font-medium"
+                  className="flex-1 px-3.5 py-2 rounded-xl bg-nest-light-input dark:bg-slate-800 border border-nest-border dark:border-slate-700 text-xs text-nest-navy dark:text-white placeholder-nest-gray focus:outline-none focus:ring-2 focus:ring-nest-blue font-medium"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || loading}
-                  className="p-2 rounded-xl bg-[#343b1b] hover:bg-[#3971b8] text-white disabled:opacity-50 transition-all shadow-sm"
+                  className="p-2 rounded-xl bg-nest-navy hover:bg-nest-blue text-white disabled:opacity-50 transition-all shadow-sm"
                 >
                   <Send className="w-4 h-4" />
                 </button>

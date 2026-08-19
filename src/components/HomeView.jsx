@@ -94,7 +94,7 @@ export default function HomeView() {
       nextTopic: 'OOP Concepts & Polymorphism',
       progress: 68,
       icon: Code2,
-      bgColor: 'bg-[#3971b8]/10 text-[#3971b8] border border-[#3971b8]/20',
+      bgColor: 'bg-nest-blue/10 text-nest-blue border border-nest-blue/20',
       color: '#3971b8'
     },
     {
@@ -103,7 +103,7 @@ export default function HomeView() {
       nextTopic: 'Normalization',
       progress: 45,
       icon: Database,
-      bgColor: 'bg-[#f6e6a5]/25 text-[#735e07] dark:text-[#f6e6a5] border border-[#f6e6a5]/30',
+      bgColor: 'bg-nest-gold/25 text-[#735e07] dark:text-nest-gold border border-nest-gold/30',
       color: '#c8a415'
     },
     {
@@ -112,7 +112,7 @@ export default function HomeView() {
       nextTopic: 'Arrays & Linked Lists',
       progress: 32,
       icon: Network,
-      bgColor: 'bg-[#c8d69b]/25 text-[#4c5628] dark:text-[#c8d69b] border border-[#c8d69b]/35',
+      bgColor: 'bg-nest-green/25 text-[#4c5628] dark:text-nest-green border border-nest-green/35',
       color: '#5b6b2f'
     }
   ]
@@ -138,19 +138,19 @@ export default function HomeView() {
       animate="visible"
     >
       {/* 1. Dashboard Header (Spacious, calm, simple greeting) */}
-      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#e2ecd9] dark:border-[#343b1b]/40 pb-5">
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-nest-border dark:border-nest-navy/40 pb-5">
         <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-black font-display text-[#343b1b] dark:text-[#f0fcee] tracking-tight">
-            {getGreeting()}, <span className="text-[#3971b8]">{user?.name || 'Sweta'}!</span> 👋
+          <h1 className="text-2xl sm:text-3xl font-black font-display text-nest-navy tracking-tight">
+            {getGreeting()}, <span className="text-nest-blue">{user?.name || 'Sweta'}!</span> 👋
           </h1>
-          <p className="text-xs sm:text-sm font-medium text-[#646e46] dark:text-[#a0af8c]">
+          <p className="text-xs sm:text-sm font-medium text-nest-gray dark:text-[#a0af8c]">
             Ready to build your knowledge nest today?
           </p>
         </div>
         {/* Date Capsule Badge */}
-        <div className="flex items-center gap-2 self-start sm:self-center px-4 py-2 rounded-full bg-[#f2f9f0] dark:bg-[#1b1e0f]/80 border border-[#c8d69b]/40 dark:border-[#c8d69b]/25 shadow-xs">
-          <Calendar className="w-4 h-4 text-[#3971b8]" />
-          <span className="text-xs font-bold text-[#343b1b] dark:text-[#f0fcee]">
+        <div className="flex items-center gap-2 self-start sm:self-center px-4 py-2 rounded-full bg-nest-light-green dark:bg-nest-dark-input/80 border border-nest-green/40 dark:border-nest-green/25 shadow-xs">
+          <Calendar className="w-4 h-4 text-nest-blue" />
+          <span className="text-xs font-bold text-nest-navy">
             {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
           </span>
         </div>
@@ -159,21 +159,21 @@ export default function HomeView() {
       {/* 2. Today's Study Goal Hero Card (Dominant Component) */}
       <motion.section
         variants={itemVariants}
-        className="w-full p-6 sm:p-8 rounded-[28px] bg-[#343b1b] text-white shadow-xl border border-[#c8d69b]/25 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 group hover:border-[#c8d69b]/40 transition-all duration-300"
+        className="w-full p-6 sm:p-8 rounded-[28px] bg-nest-navy text-white shadow-xl border border-nest-green/25 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 group hover:border-nest-green/40 transition-all duration-300"
         aria-label="Today's Study Goal"
       >
         {/* Abstract gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#3971b8]/15 via-[#c8d69b]/5 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-nest-blue/15 via-nest-green/5 to-transparent pointer-events-none" />
 
         <div className="relative z-10 space-y-4 max-w-lg">
-          <span className="text-[10px] font-bold text-[#f6e6a5] tracking-widest uppercase block">
+          <span className="text-[10px] font-bold text-nest-gold tracking-widest uppercase block">
             Today's Study Goal
           </span>
 
           <div className="space-y-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl sm:text-5xl font-black font-display text-[#f0fcee]">72%</span>
-              <span className="text-xs sm:text-sm font-medium text-[#c8d69b]">Daily syllabus revision complete</span>
+              <span className="text-4xl sm:text-5xl font-black font-display text-nest-cream">72%</span>
+              <span className="text-xs sm:text-sm font-medium text-nest-green">Daily syllabus revision complete</span>
             </div>
 
             {/* Gold/Vanilla Progress Bar */}
@@ -182,20 +182,20 @@ export default function HomeView() {
                 initial={{ width: 0 }}
                 animate={{ width: '72%' }}
                 transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-gradient-to-r from-[#f6e6a5] to-[#c8d69b] rounded-full shadow-[0_0_8px_rgba(246,230,165,0.4)]"
+                className="h-full bg-gradient-to-r from-nest-gold to-nest-green rounded-full shadow-[0_0_8px_rgba(246,230,165,0.4)]"
               />
             </div>
           </div>
 
-          <p className="text-xs sm:text-sm text-[#f0fcee]/90 leading-relaxed font-normal">
-            You're on track to master <span className="font-bold text-[#f6e6a5]">OOP Polymorphism</span> and finish <span className="font-bold text-[#f6e6a5]">Unit 2</span>.
+          <p className="text-xs sm:text-sm text-nest-cream/90 leading-relaxed font-normal">
+            You're on track to master <span className="font-bold text-nest-gold">OOP Polymorphism</span> and finish <span className="font-bold text-nest-gold">Unit 2</span>.
           </p>
 
           <div className="pt-1">
             <button
               type="button"
               onClick={() => navigateTo('subjects')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#f6e6a5] hover:bg-[#f6e6a5]/90 text-[#343b1b] font-black text-xs sm:text-sm shadow-md hover:scale-102 active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-nest-gold hover:bg-nest-gold/90 text-nest-navy font-black text-xs sm:text-sm shadow-md hover:scale-102 active:scale-95 transition-all cursor-pointer"
             >
               Start Studying →
             </button>
@@ -208,24 +208,24 @@ export default function HomeView() {
         </div>
 
         {/* Background Ambient Glow */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#c8d69b]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-nest-green/15 rounded-full blur-3xl pointer-events-none" />
       </motion.section>
 
       {/* 3. Today's Focus Strip (Option B) - Compact Low Profile */}
       <motion.div
         variants={itemVariants}
-        className="bg-[#f2f9f0] dark:bg-[#1b1e0f]/60 text-[#343b1b] dark:text-[#f0fcee] px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-[#c8d69b]/35 dark:border-white/5"
+        className="bg-nest-light-green dark:bg-nest-dark-input/60 text-nest-navy px-5 py-3 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-semibold border border-nest-green/35 dark:border-white/5"
       >
         <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-[#3971b8]" />
-          <span className="font-semibold text-[#646e46] dark:text-[#a0af8c]">
-            Daily Focus Session: <span className="font-bold text-[#343b1b] dark:text-[#f0fcee]">1h 45m focused today</span>
+          <Clock className="w-4 h-4 text-nest-blue" />
+          <span className="font-semibold text-nest-gray dark:text-[#a0af8c]">
+            Daily Focus Session: <span className="font-bold text-nest-navy">1h 45m focused today</span>
           </span>
         </div>
         <button
           type="button"
           onClick={() => navigateTo('growth')}
-          className="text-[#3971b8] dark:text-[#c8d69b] hover:underline font-black flex items-center gap-0.5 cursor-pointer"
+          className="text-nest-blue dark:text-nest-green hover:underline font-black flex items-center gap-0.5 cursor-pointer"
         >
           View Progress →
         </button>
@@ -243,14 +243,14 @@ export default function HomeView() {
             className="space-y-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="font-display font-semibold text-lg text-[#343b1b] dark:text-white flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#3971b8]" />
+              <h2 className="font-display font-semibold text-lg text-nest-navy dark:text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-nest-blue" />
                 Continue Learning
               </h2>
               <button
                 type="button"
                 onClick={() => navigateTo('subjects')}
-                className="text-xs font-bold text-[#3971b8] hover:underline flex items-center gap-0.5"
+                className="text-xs font-bold text-nest-blue hover:underline flex items-center gap-0.5"
               >
                 All Subjects <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -263,17 +263,17 @@ export default function HomeView() {
                   <div
                     key={sub.id}
                     onClick={() => navigateTo('subjects')}
-                    className="p-4 bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 rounded-[20px] flex items-center justify-between gap-4 cursor-pointer hover:border-[#3971b8]/40 hover:shadow-md hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-250 group shadow-xs"
+                    className="p-4 bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 rounded-[20px] flex items-center justify-between gap-4 cursor-pointer hover:border-nest-blue/40 hover:shadow-md hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-250 group shadow-xs"
                   >
                     <div className="flex items-center gap-3.5 min-w-0 flex-1">
                       <div className={`w-9 h-9 rounded-xl ${sub.bgColor} flex items-center justify-center shrink-0 shadow-xs`}>
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="truncate flex-1">
-                        <h3 className="font-display font-semibold text-sm sm:text-base text-[#343b1b] dark:text-[#f0fcee] group-hover:text-[#3971b8] transition-colors truncate">
+                        <h3 className="font-display font-semibold text-sm sm:text-base text-nest-navy group-hover:text-nest-blue transition-colors truncate">
                           {sub.name}
                         </h3>
-                        <p className="text-xs text-[#687386] dark:text-slate-400 truncate mt-0.5">
+                        <p className="text-xs text-nest-gray dark:text-slate-400 truncate mt-0.5">
                           Next: {sub.nextTopic}
                         </p>
                       </div>
@@ -281,7 +281,7 @@ export default function HomeView() {
 
                      <div className="flex items-center gap-4 shrink-0 min-w-[120px]">
                       <div className="flex-1 hidden sm:block">
-                        <div className="w-full h-1.5 bg-[#f2f9f0] dark:bg-slate-800/60 border border-[#e2ecd9]/50 dark:border-white/5 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-nest-light-green dark:bg-slate-800/60 border border-nest-border/50 dark:border-white/5 rounded-full overflow-hidden">
                           <div
                             className="h-full rounded-full"
                             style={{ width: `${sub.progress}%`, backgroundColor: sub.color }}
@@ -289,10 +289,10 @@ export default function HomeView() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-[#343b1b] dark:text-[#f0fcee]">
+                        <span className="text-sm font-semibold text-nest-navy">
                           {sub.progress}%
                         </span>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#3971b8] transition-colors" />
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-nest-blue transition-colors" />
                       </div>
                     </div>
                   </div>
@@ -304,10 +304,10 @@ export default function HomeView() {
           {/* Knowledge Growth */}
           <motion.section
             variants={itemVariants}
-            className="p-6 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs space-y-4 hover:shadow-md transition-all duration-300"
+            className="p-6 rounded-[24px] bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 shadow-xs space-y-4 hover:shadow-md transition-all duration-300"
           >
-            <div className="flex items-center justify-between border-b border-[#e2ecd9] dark:border-[#343b1b]/50 pb-3">
-              <h2 className="font-display font-black text-xs uppercase tracking-wider text-[#646e46] dark:text-[#a0af8c]">
+            <div className="flex items-center justify-between border-b border-nest-border dark:border-nest-navy/50 pb-3">
+              <h2 className="font-display font-black text-xs uppercase tracking-wider text-nest-gray dark:text-[#a0af8c]">
                 Your Knowledge Growth
               </h2>
               {/* Single Display of Streak */}
@@ -319,7 +319,7 @@ export default function HomeView() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Small Knowledge Tree SVG Illustration */}
-              <div className="w-20 h-20 rounded-2xl bg-[#f2f9f0] dark:bg-[#1b1e0f] flex items-center justify-center shrink-0 border border-[#c8d69b]/40 dark:border-[#c8d69b]/15 shadow-xs">
+              <div className="w-20 h-20 rounded-2xl bg-nest-light-green dark:bg-nest-dark-input flex items-center justify-center shrink-0 border border-nest-green/40 dark:border-nest-green/15 shadow-xs">
                 <svg viewBox="0 0 100 100" className="w-16 h-16 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   {/* Trunk */}
                   <path d="M49 85 L49 55 C49 50 51 46 51 40 M51 85 L51 60" stroke="#8B5A2B" strokeWidth="4" strokeLinecap="round" />
@@ -339,7 +339,7 @@ export default function HomeView() {
               </div>
 
               <div className="flex-1 w-full space-y-4">
-                <p className="text-xs font-semibold text-[#646e46] dark:text-[#a0af8c]">
+                <p className="text-xs font-semibold text-nest-gray dark:text-[#a0af8c]">
                   3 subjects progressing this week:
                 </p>
                 
@@ -351,10 +351,10 @@ export default function HomeView() {
                   ].map((item, idx) => (
                     <div key={idx} className="space-y-1">
                       <div className="flex items-center justify-between text-xs font-semibold">
-                        <span className="text-[#343b1b] dark:text-[#f0fcee]">{item.name}</span>
-                        <span className="text-[#343b1b] dark:text-[#f0fcee]">{item.progress}%</span>
+                        <span className="text-nest-navy">{item.name}</span>
+                        <span className="text-nest-navy">{item.progress}%</span>
                       </div>
-                      <div className="w-full h-1 bg-[#f2f9f0] dark:bg-slate-800/40 rounded-full overflow-hidden">
+                      <div className="w-full h-1 bg-nest-light-green dark:bg-slate-800/40 rounded-full overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${item.progress}%`, backgroundColor: item.color }} />
                       </div>
                     </div>
@@ -365,7 +365,7 @@ export default function HomeView() {
                   <button
                     type="button"
                     onClick={() => navigateTo('growth')}
-                    className="px-4 py-2 rounded-xl bg-[#f2f9f0] hover:bg-[#c8d69b]/20 dark:bg-[#1b1e0f] dark:hover:bg-[#c8d69b]/10 text-[#343b1b] dark:text-[#c8d69b] font-black text-xs cursor-pointer transition-all shadow-xs border border-[#c8d69b]/35 dark:border-white/5"
+                    className="px-4 py-2 rounded-xl bg-nest-light-green hover:bg-nest-green/20 dark:bg-nest-dark-input dark:hover:bg-nest-green/10 text-nest-navy dark:text-nest-green font-black text-xs cursor-pointer transition-all shadow-xs border border-nest-green/35 dark:border-white/5"
                   >
                     View My Growth →
                   </button>
@@ -377,29 +377,29 @@ export default function HomeView() {
           {/* Exam Countdown (Compact Horizontal Banner) */}
           <motion.section
             variants={itemVariants}
-            className="p-5 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:shadow-md transition-all duration-300"
+            className="p-5 rounded-[24px] bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:shadow-md transition-all duration-300"
           >
             <div className="flex items-center gap-3">
               <span className="text-lg shrink-0">📅</span>
               <div>
-                <h3 className="font-display font-bold text-sm text-[#343b1b] dark:text-[#f0fcee]">
+                <h3 className="font-display font-bold text-sm text-nest-navy">
                   End Semester Exam
                 </h3>
-                <p className="text-xs text-[#646e46] dark:text-[#a0af8c] mt-0.5">
+                <p className="text-xs text-nest-gray dark:text-[#a0af8c] mt-0.5">
                   15 Dec, 2024
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-4 justify-between sm:justify-end">
-              <div className="bg-[#f2f9f0] dark:bg-[#1b1e0f] px-3.5 py-1.5 rounded-xl border border-[#c8d69b]/40 dark:border-[#c8d69b]/15 shadow-xs text-xs font-bold text-[#343b1b] dark:text-[#c8d69b]">
+              <div className="bg-nest-light-green dark:bg-nest-dark-input px-3.5 py-1.5 rounded-xl border border-nest-green/40 dark:border-nest-green/15 shadow-xs text-xs font-bold text-nest-navy dark:text-nest-green">
                 42 days left
               </div>
 
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-black text-[#3971b8] dark:text-[#c8d69b] hover:underline cursor-pointer"
+                className="text-xs font-black text-nest-blue dark:text-nest-green hover:underline cursor-pointer"
               >
                 [ View Revision Plan ]
               </button>
@@ -410,25 +410,25 @@ export default function HomeView() {
         {/* Right Column (4 cols) - Today's Tasks in Single Clean Container */}
         <motion.section
           variants={itemVariants}
-          className="lg:col-span-4 p-6 rounded-[24px] bg-white/90 dark:bg-[#1b1e0f]/90 border border-[#e2ecd9] dark:border-[#343b1b]/60 shadow-xs flex flex-col justify-between space-y-4 hover:shadow-md transition-all duration-300"
+          className="lg:col-span-4 p-6 rounded-[24px] bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 shadow-xs flex flex-col justify-between space-y-4 hover:shadow-md transition-all duration-300"
         >
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-[#e2ecd9] dark:border-[#343b1b]/50">
-              <h2 className="font-display font-black text-base text-[#343b1b] dark:text-[#f0fcee] flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#3971b8]" />
+            <div className="flex items-center justify-between pb-3 border-b border-nest-border dark:border-nest-navy/50">
+              <h2 className="font-display font-black text-base text-nest-navy flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-nest-blue" />
                 Today's Tasks
               </h2>
               <button
                 type="button"
                 onClick={() => navigateTo('planner')}
-                className="text-xs font-bold text-[#3971b8] hover:underline"
+                className="text-xs font-bold text-nest-blue hover:underline"
               >
                 View Planner →
               </button>
             </div>
 
             {/* Task list divided by simple thin lines */}
-            <div className="divide-y divide-[#e2ecd9] dark:divide-white/5 mt-2">
+            <div className="divide-y divide-nest-border dark:divide-white/5 mt-2">
               {tasks.slice(0, 4).map((task) => {
                 const isHigh = task.priority === 'high'
                 const isMed = task.priority === 'medium'
@@ -448,11 +448,11 @@ export default function HomeView() {
                       </div>
                       <div className="truncate">
                         <p className={`text-sm font-semibold truncate ${
-                          task.completed ? 'line-through text-[#808d5b] dark:text-slate-500' : 'text-[#343b1b] dark:text-[#f0fcee]'
+                          task.completed ? 'line-through text-[#808d5b] dark:text-slate-500' : 'text-nest-navy'
                         }`}>
                           {task.text}
                         </p>
-                        <p className="text-xs text-[#646e46] dark:text-[#a0af8c] mt-0.5 truncate">
+                        <p className="text-xs text-nest-gray dark:text-[#a0af8c] mt-0.5 truncate">
                           {task.subject}
                         </p>
                       </div>
@@ -474,7 +474,7 @@ export default function HomeView() {
           </div>
 
           {/* Quick Add Task Form */}
-          <div className="pt-3 border-t border-[#e2ecd9] dark:border-[#343b1b]/50">
+          <div className="pt-3 border-t border-nest-border dark:border-nest-navy/50">
             {showTaskInput ? (
               <form onSubmit={handleQuickAddTask} className="flex items-center gap-2">
                 <input
@@ -483,11 +483,11 @@ export default function HomeView() {
                   onChange={(e) => setNewTaskInput(e.target.value)}
                   placeholder="New study task..."
                   autoFocus
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-[#f8fdf6] dark:bg-[#1b1e0f] border border-[#e2ecd9] dark:border-slate-800 text-xs text-[#343b1b] dark:text-[#f0fcee] focus:outline-none focus:ring-1 focus:ring-[#3971b8]"
+                  className="flex-1 px-3 py-1.5 rounded-xl bg-nest-light-input dark:bg-nest-dark-input border border-nest-border dark:border-slate-800 text-xs text-nest-navy focus:outline-none focus:ring-1 focus:ring-nest-blue"
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-1.5 rounded-xl bg-[#343b1b] dark:bg-[#c8d69b] text-white dark:text-[#14170b] text-xs font-black shadow-xs cursor-pointer hover:opacity-90 active:scale-95 transition-all"
+                  className="px-3.5 py-1.5 rounded-xl bg-nest-navy dark:bg-nest-green text-white dark:text-nest-dark text-xs font-black shadow-xs cursor-pointer hover:opacity-90 active:scale-95 transition-all"
                 >
                   Add
                 </button>
@@ -496,7 +496,7 @@ export default function HomeView() {
               <button
                 type="button"
                 onClick={() => setShowTaskInput(true)}
-                className="text-xs font-black text-[#3971b8] dark:text-[#c8d69b] hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs font-black text-nest-blue dark:text-nest-green hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Add New Task
               </button>

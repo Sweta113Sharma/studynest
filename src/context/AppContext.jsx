@@ -31,6 +31,8 @@ export function AppProvider({ children }) {
     }
   })
 
+
+
   const [bookmarks, setBookmarks] = useState(() => {
     try {
       const raw = localStorage.getItem('studynest_bookmarks')
@@ -368,6 +370,8 @@ export function AppProvider({ children }) {
     }
   }, [darkMode])
 
+
+
   // History / PopState router handling
   useEffect(() => {
     const handlePopState = (event) => {
@@ -696,6 +700,7 @@ export function AppProvider({ children }) {
     setCurrentView,
     darkMode,
     setDarkMode,
+
     branches,
     semesters: mergedSemesters,
     yearToSemesters,

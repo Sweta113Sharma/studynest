@@ -57,7 +57,7 @@ export default function GrowthView() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#343b1b] to-[#1C4B82] text-white p-6 sm:p-8 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-nest-navy to-[#1C4B82] text-white p-6 sm:p-8 rounded-3xl border border-white/10 shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="relative z-10 max-w-xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-amber-300">
             <Sprout className="w-3.5 h-3.5 text-emerald-400" />
@@ -81,7 +81,7 @@ export default function GrowthView() {
                 initial={{ width: 0 }}
                 animate={{ width: `${xpInCurrentLevel}%` }}
                 transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-gradient-to-r from-amber-400 to-[#f6e6a5] rounded-full"
+                className="h-full bg-gradient-to-r from-amber-400 to-nest-gold rounded-full"
               />
             </div>
           </div>
@@ -104,20 +104,20 @@ export default function GrowthView() {
       {/* Main Growth Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Interactive Tree Visualizer (7 Columns) */}
-        <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 p-6 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl border border-nest-border dark:border-white/10 p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display font-bold text-lg text-[#343b1b] dark:text-white flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg text-nest-navy dark:text-white flex items-center gap-2">
                 <Sprout className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 Growth Canopy & Subject Branches
               </h2>
-              <span className="text-xs font-semibold text-[#687386] dark:text-slate-400">
+              <span className="text-xs font-semibold text-nest-gray dark:text-slate-400">
                 Click a branch to view
               </span>
             </div>
 
             {/* Tree Branch Diagram Card */}
-            <div className="relative p-6 rounded-2xl bg-[#f0fcee] dark:bg-slate-800/50 border border-[#E5EAF0] dark:border-slate-700/60 overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+            <div className="relative p-6 rounded-2xl bg-nest-cream dark:bg-slate-800/50 border border-nest-border dark:border-slate-700/60 overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
               {/* Branch Node Buttons */}
               <div className="grid grid-cols-2 gap-4 w-full max-w-md z-10">
                 {subjectBranches.map((branch) => {
@@ -131,22 +131,22 @@ export default function GrowthView() {
                       onClick={() => setSelectedBranch(branch.name)}
                       className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#343b1b] text-white border-[#343b1b] shadow-md'
-                          : 'bg-white dark:bg-slate-900 border-[#E5EAF0] dark:border-white/10 text-[#343b1b] dark:text-white hover:border-[#3971b8]/50'
+                          ? 'bg-nest-navy text-white border-nest-navy shadow-md'
+                          : 'bg-white dark:bg-slate-900 border-nest-border dark:border-white/10 text-nest-navy dark:text-white hover:border-nest-blue/50'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-lg">{branch.icon}</span>
                         <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${
                           isSelected
-                            ? 'bg-amber-400 text-[#343b1b]'
+                            ? 'bg-amber-400 text-nest-navy'
                             : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                         }`}>
                           {branch.mastery}%
                         </span>
                       </div>
                       <p className="text-xs font-bold truncate">{branch.name}</p>
-                      <p className={`text-[10px] mt-0.5 ${isSelected ? 'text-blue-200' : 'text-[#687386] dark:text-slate-400'}`}>
+                      <p className={`text-[10px] mt-0.5 ${isSelected ? 'text-blue-200' : 'text-nest-gray dark:text-slate-400'}`}>
                         {branch.completedUnits}/{branch.totalUnits} Units Mastered
                       </p>
                     </motion.button>
@@ -157,7 +157,7 @@ export default function GrowthView() {
               {/* Tree Trunk Base */}
               <div className="mt-6 flex flex-col items-center text-center z-10">
                 <div className="w-12 h-14 bg-gradient-to-b from-[#8B5A2B] to-[#5C381E] rounded-t-lg border-2 border-[#4A2A14]" />
-                <div className="px-5 py-2 rounded-2xl bg-[#f2f9f0] dark:bg-emerald-950/60 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold shadow-sm -mt-2">
+                <div className="px-5 py-2 rounded-2xl bg-nest-light-green dark:bg-emerald-950/60 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold shadow-sm -mt-2">
                   🌱 Root: StudyNest Academic Foundation
                 </div>
               </div>
@@ -165,7 +165,7 @@ export default function GrowthView() {
           </div>
 
           {/* Growth Milestone Steps */}
-          <div className="grid grid-cols-4 gap-2 pt-6 mt-4 border-t border-[#E5EAF0] dark:border-white/10 text-center">
+          <div className="grid grid-cols-4 gap-2 pt-6 mt-4 border-t border-nest-border dark:border-white/10 text-center">
             {[
               { stage: 'Beginner', lvl: 'Lvl 1-3', emoji: '🌱', active: level >= 1 },
               { stage: 'Learning', lvl: 'Lvl 4-6', emoji: '🌿', active: level >= 4 },
@@ -176,13 +176,13 @@ export default function GrowthView() {
                 key={idx}
                 className={`p-2.5 rounded-xl border text-xs font-semibold ${
                   step.active
-                    ? 'bg-[#e8f1fc] dark:bg-blue-950/40 border-[#3971b8]/30 text-[#343b1b] dark:text-blue-300'
-                    : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-white/5 text-[#687386] opacity-60'
+                    ? 'bg-nest-light-blue dark:bg-blue-950/40 border-nest-blue/30 text-nest-navy dark:text-blue-300'
+                    : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-white/5 text-nest-gray opacity-60'
                 }`}
               >
                 <div className="text-base">{step.emoji}</div>
                 <div className="font-bold text-[11px] mt-0.5">{step.stage}</div>
-                <div className="text-[9px] text-[#687386] dark:text-slate-400">{step.lvl}</div>
+                <div className="text-[9px] text-nest-gray dark:text-slate-400">{step.lvl}</div>
               </div>
             ))}
           </div>
@@ -190,36 +190,36 @@ export default function GrowthView() {
 
         {/* Right: Selected Branch Detail & Mastery Card (5 Columns) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-[#E5EAF0] dark:border-white/10 p-6 shadow-sm space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF0] dark:border-white/10">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-nest-border dark:border-white/10 p-6 shadow-sm space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-nest-border dark:border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#e8f1fc] dark:bg-blue-900/30 text-2xl flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-nest-light-blue dark:bg-blue-900/30 text-2xl flex items-center justify-center">
                   {activeBranchData.icon}
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-base text-[#343b1b] dark:text-white">
+                  <h3 className="font-display font-bold text-base text-nest-navy dark:text-white">
                     {activeBranchData.name}
                   </h3>
-                  <p className="text-xs text-[#687386] dark:text-slate-400">
+                  <p className="text-xs text-nest-gray dark:text-slate-400">
                     Category: {activeBranchData.category}
                   </p>
                 </div>
               </div>
 
-              <span className="text-sm font-extrabold text-[#3971b8] dark:text-blue-400">
+              <span className="text-sm font-extrabold text-nest-blue dark:text-blue-400">
                 {activeBranchData.mastery}%
               </span>
             </div>
 
             {/* Progress Bar */}
             <div>
-              <div className="flex justify-between text-xs font-semibold text-[#687386] dark:text-slate-300 mb-1.5">
+              <div className="flex justify-between text-xs font-semibold text-nest-gray dark:text-slate-300 mb-1.5">
                 <span>Subject Mastery Progress</span>
-                <span className="text-[#343b1b] dark:text-white font-bold">{activeBranchData.completedUnits} of {activeBranchData.totalUnits} Units</span>
+                <span className="text-nest-navy dark:text-white font-bold">{activeBranchData.completedUnits} of {activeBranchData.totalUnits} Units</span>
               </div>
               <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#c8d69b] rounded-full transition-all duration-500"
+                  className="h-full bg-nest-green rounded-full transition-all duration-500"
                   style={{ width: `${activeBranchData.mastery}%` }}
                 />
               </div>
@@ -227,23 +227,23 @@ export default function GrowthView() {
 
             {/* Quick Metrics */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-2xl bg-[#f0fcee] dark:bg-slate-800/60 border border-[#f6e6a5]/20">
-                <span className="text-[10px] font-bold text-[#687386] dark:text-slate-400 uppercase">Focus Time</span>
-                <p className="text-lg font-bold text-[#343b1b] dark:text-white mt-0.5">
+              <div className="p-3 rounded-2xl bg-nest-cream dark:bg-slate-800/60 border border-nest-gold/20">
+                <span className="text-[10px] font-bold text-nest-gray dark:text-slate-400 uppercase">Focus Time</span>
+                <p className="text-lg font-bold text-nest-navy dark:text-white mt-0.5">
                   {safeFocusHistory.length * 25} mins
                 </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#e8f1fc] dark:bg-slate-800/60 border border-[#3971b8]/20">
-                <span className="text-[10px] font-bold text-[#687386] dark:text-slate-400 uppercase">Saved Notes</span>
-                <p className="text-lg font-bold text-[#343b1b] dark:text-white mt-0.5">
+              <div className="p-3 rounded-2xl bg-nest-light-blue dark:bg-slate-800/60 border border-nest-blue/20">
+                <span className="text-[10px] font-bold text-nest-gray dark:text-slate-400 uppercase">Saved Notes</span>
+                <p className="text-lg font-bold text-nest-navy dark:text-white mt-0.5">
                   {safeBookmarks.length + 3} Topics
                 </p>
               </div>
             </div>
 
             {/* Growth Tips from Owl */}
-            <div className="p-4 rounded-2xl bg-[#f2f9f0] dark:bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-3">
+            <div className="p-4 rounded-2xl bg-nest-light-green dark:bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-3">
               <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
                 <Sparkles className="w-4 h-4" />
               </div>

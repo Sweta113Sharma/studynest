@@ -34,19 +34,20 @@ export default {
           DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
           foreground: '#343b1b',
         },
-        // Official StudyNest Design Tokens
         nest: {
-          navy: '#343b1b', // Drab Dark Brown
-          blue: '#3971b8', // Celtic Blue
-          'light-blue': '#e8f1fc',
-          gold: '#f6e6a5', // Vanilla
-          cream: '#f0fcee', // Ivory
+          navy: 'var(--nest-navy)',
+          blue: 'var(--nest-blue)',
+          'light-blue': 'var(--nest-light-blue)',
+          gold: 'var(--nest-gold)',
+          cream: 'var(--nest-cream)',
           white: '#FFFFFF',
-          green: '#c8d69b', // Tea Green
-          'light-green': '#f2f9f0',
-          dark: '#14170b', // Deep dark matcha
-          gray: '#646e46', // Matcha-themed gray
-          border: '#e2ecd9',
+          green: 'var(--nest-green)',
+          'light-green': 'var(--nest-light-green)',
+          dark: 'var(--nest-dark)',
+          gray: 'var(--nest-gray)',
+          border: 'var(--nest-border)',
+          'light-input': 'var(--nest-light-input)',
+          'dark-input': 'var(--nest-dark-input)',
           error: '#D9534F',
         },
         border: 'var(--border-card)',

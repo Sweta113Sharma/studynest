@@ -119,13 +119,13 @@ export default function AppShell() {
         return (
           <div key="focus" className="max-w-3xl mx-auto py-4">
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center p-3 rounded-3xl bg-[#f0fcee] dark:bg-slate-800 border border-[#f6e6a5]/40 mb-3">
+              <div className="inline-flex items-center justify-center p-3 rounded-3xl bg-nest-cream dark:bg-slate-800 border border-nest-gold/40 mb-3">
                 <MascotOwl state="focus" size="lg" />
               </div>
-              <h1 className="text-2xl font-display font-black text-[#343b1b] dark:text-white">
+              <h1 className="text-2xl font-display font-black text-nest-navy dark:text-white">
                 Quiet Study Nest
               </h1>
-              <p className="text-xs sm:text-sm text-[#687386] dark:text-slate-400 mt-1">
+              <p className="text-xs sm:text-sm text-nest-gray dark:text-slate-400 mt-1">
                 Distraction-free focus timer with ambient soundscapes. Complete sessions to nourish your streak!
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f0fcee] dark:bg-[#0A1224] text-[#343b1b] dark:text-white transition-colors">
+    <div className="min-h-screen bg-nest-cream text-nest-navy transition-colors">
       {/* 1. Persistent Sidebar (Desktop) + Slide Drawer (Mobile) */}
       <Sidebar
         onOpenSettings={() => setShowSettings(true)}
@@ -152,13 +152,13 @@ export default function AppShell() {
       {/* 2. Main Content Wrapper (Shifted right for 256px sidebar on lg screens) */}
       <div className="lg:pl-64 flex flex-col min-h-screen">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-[#E5EAF0] dark:border-white/10 px-4 sm:px-6 flex items-center justify-between">
+        <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-nest-light-input/80 backdrop-blur-md border-b border-nest-border px-4 sm:px-6 flex items-center justify-between">
           {/* Left: Mobile Menu Trigger + Brand on Mobile */}
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden cursor-pointer"
+              className="p-2 rounded-xl text-nest-gray hover:bg-nest-light-blue/20 dark:hover:bg-nest-light-input lg:hidden cursor-pointer"
               aria-label="Open Navigation Sidebar"
             >
               <Menu className="w-5 h-5" />
@@ -166,16 +166,16 @@ export default function AppShell() {
 
             {/* Mobile Logo Title */}
             <div className="flex items-center gap-2 lg:hidden">
-              <span className="font-display font-black text-base text-[#343b1b] dark:text-white">
-                Study<span className="text-[#3971b8]">Nest</span>
+              <span className="font-display font-black text-base text-nest-navy dark:text-white">
+                Study<span className="text-nest-blue">Nest</span>
               </span>
             </div>
 
             {/* Desktop Breadcrumb */}
-            <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-[#687386] dark:text-slate-400">
-              <Home className="w-4 h-4 text-[#3971b8]" />
-              <span className="font-bold text-[#343b1b] dark:text-white">StudyNest</span>
-              <span className="text-slate-300 dark:text-slate-600">/</span>
+            <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-nest-gray dark:text-slate-400">
+              <Home className="w-4 h-4 text-nest-blue" />
+              <span className="font-bold text-nest-navy dark:text-white">StudyNest</span>
+              <span className="text-slate-300 dark:text-slate-650">/</span>
               <span className="capitalize">{currentView === 'home' ? 'Home' : currentView.replace('-', ' ')}</span>
             </div>
           </div>
@@ -186,7 +186,7 @@ export default function AppShell() {
             <button
               type="button"
               onClick={() => alert("No new notifications!")}
-              className="p-2 rounded-xl text-[#687386] dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer relative"
+              className="p-2 rounded-xl text-nest-gray hover:bg-nest-light-blue/20 dark:hover:bg-nest-light-input transition-colors cursor-pointer relative"
               aria-label="View Notifications"
             >
               <Bell className="w-4 h-4" />
@@ -197,7 +197,7 @@ export default function AppShell() {
             <button
               type="button"
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-xl text-[#687386] dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-nest-gray hover:bg-nest-light-blue/20 dark:hover:bg-nest-light-input transition-colors cursor-pointer"
               aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
             >
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
@@ -207,7 +207,7 @@ export default function AppShell() {
             <button
               type="button"
               onClick={() => setShowSettings(true)}
-              className="p-2 rounded-xl text-[#687386] dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
+              className="p-2 rounded-xl text-nest-gray hover:bg-nest-light-blue/20 dark:hover:bg-nest-light-input transition-colors cursor-pointer shrink-0"
               title="Open Settings"
             >
               <Settings className="w-4 h-4" />
@@ -234,7 +234,7 @@ export default function AppShell() {
 
       {/* 4. Mobile Bottom Navigation Bar (Visible only on mobile/small screens) */}
       <nav
-        className="fixed bottom-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-[#E5EAF0] dark:border-white/10 flex items-center justify-around z-40 lg:hidden px-2"
+        className="fixed bottom-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-nest-border dark:border-white/10 flex items-center justify-around z-40 lg:hidden px-2"
         aria-label="Mobile Navigation"
       >
         {[
@@ -259,8 +259,8 @@ export default function AppShell() {
               }}
               className={`flex flex-col items-center justify-center gap-1 w-14 py-1 rounded-xl transition-all cursor-pointer ${
                 active
-                  ? 'text-[#3971b8] font-bold'
-                  : 'text-[#687386] dark:text-slate-400 font-medium'
+                  ? 'text-nest-blue font-bold'
+                  : 'text-nest-gray dark:text-slate-400 font-medium'
               }`}
             >
               <Icon className={`w-5 h-5 ${active ? 'stroke-[2.5]' : 'stroke-2'}`} />
