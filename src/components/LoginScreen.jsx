@@ -154,8 +154,7 @@ export default function LoginScreen() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <div className="glass-panel-morphism rounded-[28px] p-8 sm:p-10 shadow-2xl border-2 border-nest-border dark:border-white/10 relative overflow-hidden">
-            {/* Top decorative branding stripe */}
-            <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-nest-green via-nest-gold to-nest-blue" />
+
             {authMode === 'login' ? (
               /* SIGN IN / LOGIN VIEW */
               <div className="space-y-6">
