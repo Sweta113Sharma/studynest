@@ -101,7 +101,7 @@ export default function SubjectsView() {
       <motion.header variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-display font-black text-slate-900 dark:text-white mb-1">
-            {branchTitle} Engineering
+            {branchTitle === 'Engineering' ? 'Engineering' : `${branchTitle} Engineering`}
           </h1>
           <p className="text-slate-700 dark:text-slate-300 text-sm font-semibold">Year {selectedYear}</p>
         </div>
