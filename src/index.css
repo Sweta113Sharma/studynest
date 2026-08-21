@@ -5,41 +5,41 @@
 @layer base {
   :root {
     /* --- THEME REDESIGN PALETTE --- */
-    --bg-page-rgb: 234 249 231;        /* #EAF9E7 */
-    --foreground-rgb: 1 50 55;         /* #013237 */
-    --muted-foreground-rgb: 102 129 125; /* #66817D */
-    --primary-rgb: 76 167 113;         /* #4CA771 */
-    --accent-rgb: 192 230 186;         /* #C0E6BA */
+    --bg-page-rgb: 242 251 243;        /* #F2FBF3 */
+    --foreground-rgb: 7 59 58;         /* #073B3A */
+    --muted-foreground-rgb: 96 125 120; /* #607D78 */
+    --primary-rgb: 79 175 120;         /* #4FAF78 */
+    --accent-rgb: 168 217 188;         /* #A8D9BC */
 
-    --bg-page: #EAF9E7;
-    --text-page: #013237;
+    --bg-page: #F2FBF3;
+    --text-page: #073B3A;
     --bg-card: #FFFFFF;
-    --text-card: #013237;
-    --border-card: #D7EBD4;
+    --text-card: #073B3A;
+    --border-card: #CDE8D5;
     --bg-input: #FFFFFF;
-    --text-input: #013237;
+    --text-input: #073B3A;
     
-    --nest-navy: #013237;
-    --nest-blue: #4CA771;
-    --nest-light-blue: #C0E6BA;
+    --nest-navy: #073B3A;
+    --nest-blue: #4FAF78;
+    --nest-light-blue: #EAF8EE;
     --nest-gold: #D9A441;
-    --nest-cream: #EAF9E7;
-    --nest-green: #4CA771;
-    --nest-light-green: #C0E6BA;
-    --nest-dark: #013237;
-    --nest-gray: #66817D;
-    --nest-border: #D7EBD4;
+    --nest-cream: #F2FBF3;
+    --nest-green: #4FAF78;
+    --nest-light-green: #A8D9BC;
+    --nest-dark: #073B3A;
+    --nest-gray: #607D78;
+    --nest-border: #CDE8D5;
     --nest-light-input: #FFFFFF;
     --nest-dark-input: #0e292c;
 
-    --button-primary-bg: #4CA771;
+    --button-primary-bg: #4FAF78;
     --button-primary-text: #FFFFFF;
-    --button-primary-hover-bg: #013237;
+    --button-primary-hover-bg: #073B3A;
     --button-primary-hover-text: #FFFFFF;
     
-    --button-secondary-bg: #C0E6BA;
-    --button-secondary-text: #013237;
-    --button-secondary-border: #D7EBD4;
+    --button-secondary-bg: #A8D9BC;
+    --button-secondary-text: #073B3A;
+    --button-secondary-border: #CDE8D5;
     
     --card-shadow: 0 6px 24px rgba(1, 50, 55, 0.06);
     --card-shadow-hover: 0 12px 32px rgba(1, 50, 55, 0.12);
@@ -276,30 +276,38 @@
   }
 
   .btn-primary {
-    padding: 0.625rem 1.5rem;
-    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    padding: 0 1.5rem;
+    border-radius: 16px;
     background: var(--button-primary-bg);
     color: var(--button-primary-text);
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
     border: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .btn-primary:hover {
     background: var(--button-primary-hover-bg);
     color: var(--button-primary-hover-text);
-    box-shadow: 0 6px 20px rgba(1, 50, 55, 0.15);
-    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(7, 59, 58, 0.12);
+    transform: translateY(-2px);
   }
 
   .btn-primary:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(0);
   }
 
   .btn-secondary {
-    padding: 0.625rem 1.5rem;
-    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    padding: 0 1.5rem;
+    border-radius: 16px;
     border: 1px solid var(--button-secondary-border);
     color: var(--button-secondary-text);
     font-weight: 600;
@@ -309,19 +317,21 @@
   }
 
   .btn-secondary:hover {
-    background: #4CA771;
+    background: #4FAF78;
     color: #FFFFFF;
-    border-color: #4CA771;
+    border-color: #4FAF78;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 175, 120, 0.12);
   }
 
   .btn-secondary:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(0);
   }
 
   .btn-ghost {
     padding: 0.5rem 1rem;
     border-radius: 12px;
-    color: rgba(1, 50, 55, 0.6);
+    color: rgba(7, 59, 58, 0.6);
     transition: all 0.2s;
   }
 
@@ -330,8 +340,8 @@
   }
 
   .btn-ghost:hover {
-    background: rgba(76, 167, 113, 0.08);
-    color: #013237;
+    background: rgba(79, 175, 120, 0.08);
+    color: #073B3A;
   }
 
   .dark .btn-ghost:hover {
@@ -341,8 +351,9 @@
 
   .input-field {
     width: 100%;
-    padding: 0.75rem 1.25rem;
-    border-radius: 12px;
+    height: 56px;
+    padding: 0 1.5rem;
+    border-radius: 16px;
     border: 1px solid var(--border-card);
     color: var(--text-input);
     background: var(--bg-input);
@@ -350,13 +361,13 @@
   }
 
   .input-field::placeholder {
-    color: rgba(102, 129, 125, 0.5);
+    color: rgba(96, 125, 120, 0.5);
   }
 
   .input-field:focus {
     outline: none;
-    border-color: #4CA771;
-    box-shadow: 0 0 0 3px rgba(76, 167, 113, 0.25);
+    border-color: #4FAF78;
+    box-shadow: 0 0 0 3px rgba(79, 175, 120, 0.15);
   }
 
   .text-gradient {
@@ -408,7 +419,7 @@
 
   .grid-bg {
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg stroke='rgba(52,59,27,0.14)' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(35, 45)'%3E%3Cpath d='M5,12 h18 v12 c0,5 -4,9 -9,9 h0 c-5,0 -9,-4 -9,-9 z' /%3E%3Cpath d='M23,15 c3,0 5,2 5,4.5 s-2,4.5 -5,4.5' /%3E%3Cpath d='M9,6 c0,-3 2,-3 2,-6 M14,7 c0,-3 2,-3 2,-6 M19,6 c0,-3 2,-3 2,-6' /%3E%3C/g%3E%3Cg transform='translate(190, 45)'%3E%3Cpath d='M5,15 c5,0 12,-3 18,-6 v18 c-6,3 -13,6 -18,6 z' /%3E%3Cpath d='M41,15 c-5,0 -12,-3 -18,-6 v18 c6,3 13,6 18,6 z' /%3E%3Cpath d='M23,9 v18' /%3E%3Cpath d='M9,15 h8 M9,18 h8 M9,21 h6 M29,15 h8 M29,18 h8 M29,21 h6' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(40, 180)'%3E%3Cpath d='M5,35 h22' /%3E%3Cpath d='M16,35 v-18 c0,-4 -3,-7 -7,-7' /%3E%3Cpath d='M5,10 l8,-6 h8 l8,6 z' /%3E%3Cpath d='M8,15 l-4,4 M16,15 v5 M24,15 l4,4' opacity='0.6' /%3E%3C/g%3E%3Cg transform='translate(220, 160)'%3E%3Cpath d='M10,25 h16 l-2.5,12 h-11 z' /%3E%3Cpath d='M18,10 c-2,3 -4,6 -4,11 M18,10 c2,3 4,6 4,11' /%3E%3Cpath d='M18,6 c-1,4 -2,7 -2,15 M18,6 c1,4 2,7 2,15' /%3E%3Cpath d='M14,14 c-3,-2 -5,0 -4,4 c1,1.5 4,1 4,-4' /%3E%3Cpath d='M22,14 c3,-2 5,0 4,4 c-1,1.5 -4,1 -4,-4' /%3E%3C/g%3E%3Cg transform='translate(130, 220)'%3E%3Crect x='8' y='5' width='28' height='18' rx='2' /%3E%3Cpath d='M8,20 h28' /%3E%3Cpath d='M4,23 h36 l2,4 h-40 z' /%3E%3Cline x1='16' y1='25' x2='28' y2='25' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(125, 45) scale(0.9)'%3E%3Ccircle cx='20' cy='20' r='11' /%3E%3Cpath d='M13,29 l-3,3 M27,29 l3,3' /%3E%3Cpath d='M11,11 a3,3 0 1,1 4,-4 M25,7 a3,3 0 1,1 4,4' /%3E%3Cpath d='M20,13 v7 h5' /%3E%3C/g%3E%3Cg transform='translate(110, 130) scale(0.9)'%3E%3Cpath d='M20,6 l16,6 l-16,6 l-16,-6 z' /%3E%3Cpath d='M10,15 v4 c0,3.5 4.5,5 10,5 s10,-1.5 10,-5 v-4' /%3E%3Cpath d='M28,12 l6,4 v7' /%3E%3C/g%3E%3Cg transform='translate(240, 95) scale(0.85)'%3E%3Cpath d='M10,24 c0,-6 4,-11 10,-11 s10,5 10,11 c0,5 -4,7 -10,7 s-10,-2 -10,-7 z' /%3E%3Cpath d='M10,15 l-3,-4 l5,2 M30,15 l3,-4 l-5,2' /%3E%3Ccircle cx='16' cy='20' r='2.5' /%3E%3Ccircle cx='24' cy='20' r='2.5' /%3E%3Cpath d='M20,21 l-1.5,-2 h3 z' /%3E%3C/g%3E%3Cpath d='M85,35 l2,2 l2,-2 l-2,-2 z' /%3E%3Cpath d='M170,95 l1.5,1.5 l1.5,-1.5 l-1.5,-1.5 z' /%3E%3Cpath d='M230,230 l2.5,2.5 l2.5,-2.5 l-2.5,-2.5 z' /%3E%3Cpath d='M30,110 l1.5,1.5 l1.5,-1.5 l-1.5,-1.5 z' /%3E%3Cg transform='translate(70, 75) scale(0.7)'%3E%3Cpath d='M10,15 a4,4 0 0,1 4,-4 a5,5 0 0,1 8,-2 a5,5 0 0,1 6,4 a4,4 0 0,1 3,4 a4,4 0 0,1 -4,4 h-13 a4,4 0 0,1 -4,-6 z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg stroke='rgba(52,59,27,0.14)' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(35, 45)'%3E%3Cpath d='M5,12 c0,-1.5 18,-1.5 18,0 c0,1.5 -18,1.5 -18,0' /%3E%3Cpath d='M5,12 v9 c0,4.5 4,8 9,8 s9,-3.5 9,-8 v-9' /%3E%3Cpath d='M23,15 c3.5,0 5.5,1.5 5.5,3.5 s-2,3.5 -5.5,3.5' /%3E%3Cpath d='M9,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3Cpath d='M14,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3Cpath d='M19,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3C/g%3E%3Cg transform='translate(190, 45)'%3E%3Cpath d='M5,16 c6,-1 12,-3 18,-6 v18 c-6,3 -12,5 -18,6 z' /%3E%3Cpath d='M41,16 c-6,-1 -12,-3 -18,-6 v18 c6,3 12,5 18,6 z' /%3E%3Cpath d='M5,15 c6,-1 12,-3 18,-6 v17 c-6,3 -12,5 -18,6 z' /%3E%3Cpath d='M41,15 c-6,-1 -12,-3 -18,-6 v17 c6,3 12,5 18,6 z' /%3E%3Cpath d='M23,9 v18' /%3E%3Cpath d='M23,27 v7 l2.5,-1.5 l2.5,1.5 v-7' /%3E%3Cpath d='M9,14 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M9,17 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M9,20 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,11.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,14.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,17.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(40, 180)'%3E%3Cpath d='M8,33 h16' /%3E%3Cpath d='M16,33 C16,23 23,20 23,13' /%3E%3Cpath d='M18,13 l2.5,-6 h5 l2.5,6 z' /%3E%3Cpath d='M21,13 a1.5,1.5 0 0,0 3,0' /%3E%3Cpath d='M16,17 l-3,3' opacity='0.6' /%3E%3Cpath d='M23,18 v4.5' opacity='0.6' /%3E%3Cpath d='M30,17 l3,3' opacity='0.6' /%3E%3C/g%3E%3Cg transform='translate(220, 160)'%3E%3Cpath d='M9,23 h18 v3 h-18 z' /%3E%3Cpath d='M11,26 L13,35 h10 L25,26' /%3E%3Cpath d='M18,23 C18,15 20,8 18,4 C16,8 18,15 18,23' /%3E%3Cpath d='M16,23 C13,17 10,13 8,11 C11,13 15,18 17,23' /%3E%3Cpath d='M20,23 C23,17 26,13 28,11 C25,13 21,18 19,23' /%3E%3Cpath d='M18,18 V10' stroke-width='1' opacity='0.7' /%3E%3Cpath d='M15,20 L11,15' stroke-width='1' opacity='0.7' /%3E%3Cpath d='M21,20 L25,15' stroke-width='1' opacity='0.7' /%3E%3C/g%3E%3Cg transform='translate(130, 220)'%3E%3Crect x='6' y='6' width='28' height='17' rx='2' /%3E%3Crect x='8' y='8' width='24' height='13' rx='0.5' /%3E%3Cpath d='M4,23.5 h32 l1,2 c0,0.5 -0.5,1 -1,1 h-32 c-0.5,0 -1,-0.5 -1,-1 z' /%3E%3Cpath d='M17,25 h6' stroke-width='1' /%3E%3Cpath d='M17,13.5 l-2,2 l2,2' stroke-width='1' /%3E%3Cpath d='M23,13.5 l2,2 l-2,2' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(125, 45) scale(0.9)'%3E%3Ccircle cx='20' cy='20' r='12' /%3E%3Cpath d='M10,12 C9.5,8.5 13.5,5.5 16,8' /%3E%3Cpath d='M24,8 C26.5,5.5 30.5,8.5 30,12' /%3E%3Cpath d='M17,8 A3,3 0 0,1 23,8' /%3E%3Cpath d='M13,31 L10,34' /%3E%3Cpath d='M27,31 L30,34' /%3E%3Cpath d='M20,20 L20,15' /%3E%3Cpath d='M20,20 L24,20' /%3E%3Ccircle cx='20' cy='20' r='1' fill='currentColor' /%3E%3C/g%3E%3Cg transform='translate(110, 130) scale(0.9)'%3E%3Cpath d='M20,5 L37,11 L20,17 L3,11 Z' /%3E%3Cpath d='M11,14 v3 c0,3 4,4.5 9,4.5 s9,-1.5 9,-4.5 v-3' /%3E%3Ccircle cx='20' cy='11' r='1' fill='currentColor' /%3E%3Cpath d='M20,11 L31,14 v6' /%3E%3Cpath d='M29.5,20 h3 v4 l-1.5,2 l-1.5,-2 z' /%3E%3C/g%3E%3Cg transform='translate(240, 95) scale(0.85)'%3E%3Cpath d='M10,25 C10,15 13,10 20,10 S30,15 30,25 C30,29 27,32 20,32 S10,29 10,25 Z' /%3E%3Cpath d='M12,11 L8,7 L15,10' /%3E%3Cpath d='M28,11 L32,7 L25,10' /%3E%3Ccircle cx='15.5' cy='18' r='3.5' /%3E%3Ccircle cx='24.5' cy='18' r='3.5' /%3E%3Ccircle cx='15.5' cy='18' r='1' fill='currentColor' /%3E%3Ccircle cx='24.5' cy='18' r='1' fill='currentColor' /%3E%3Cpath d='M20,19.5 L18.5,21.5 H21.5 Z' /%3E%3Cpath d='M10,22 C9,25 11,28 13,27' /%3E%3Cpath d='M30,22 C31,25 29,28 27,27' /%3E%3Cpath d='M17,25 a3,3 0 0,0 6,0' stroke-width='1' /%3E%3Cpath d='M18.5,28 a1.5,1.5 0 0,0 3,0' stroke-width='1' /%3E%3C/g%3E%3Cpath d='M 85,31 Q 85,35 81,35 Q 85,35 85,39 Q 85,35 89,35 Q 85,35 85,31 Z' /%3E%3Cpath d='M 170,91 Q 170,95 166,95 Q 170,95 170,99 Q 170,95 174,95 Q 170,95 170,91 Z' /%3E%3Cpath d='M 230,226 Q 230,230 226,230 Q 230,230 230,234 Q 230,230 234,230 Q 230,230 230,226 Z' /%3E%3Cpath d='M 30,106 Q 30,110 26,110 Q 30,110 30,114 Q 30,110 34,110 Q 30,110 30,106 Z' /%3E%3Cg transform='translate(70, 75) scale(0.7)'%3E%3Cpath d='M10,18 a5,5 0 0,1 5,-5 a6,6 0 0,1 10,-2 a6,6 0 0,1 8,4 a4,4 0 0,1 2,7 a4,4 0 0,1 -4,4 h-17 a5,5 0 0,1 -4,-8 z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 300px 300px, 40px 40px, 40px 40px;
@@ -417,7 +428,7 @@
 
   .dark .grid-bg {
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg stroke='rgba(200,214,155,0.14)' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(35, 45)'%3E%3Cpath d='M5,12 h18 v12 c0,5 -4,9 -9,9 h0 c-5,0 -9,-4 -9,-9 z' /%3E%3Cpath d='M23,15 c3,0 5,2 5,4.5 s-2,4.5 -5,4.5' /%3E%3Cpath d='M9,6 c0,-3 2,-3 2,-6 M14,7 c0,-3 2,-3 2,-6 M19,6 c0,-3 2,-3 2,-6' /%3E%3C/g%3E%3Cg transform='translate(190, 45)'%3E%3Cpath d='M5,15 c5,0 12,-3 18,-6 v18 c-6,3 -13,6 -18,6 z' /%3E%3Cpath d='M41,15 c-5,0 -12,-3 -18,-6 v18 c6,3 13,6 18,6 z' /%3E%3Cpath d='M23,9 v18' /%3E%3Cpath d='M9,15 h8 M9,18 h8 M9,21 h6 M29,15 h8 M29,18 h8 M29,21 h6' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(40, 180)'%3E%3Cpath d='M5,35 h22' /%3E%3Cpath d='M16,35 v-18 c0,-4 -3,-7 -7,-7' /%3E%3Cpath d='M5,10 l8,-6 h8 l8,6 z' /%3E%3Cpath d='M8,15 l-4,4 M16,15 v5 M24,15 l4,4' opacity='0.6' /%3E%3C/g%3E%3Cg transform='translate(220, 160)'%3E%3Cpath d='M10,25 h16 l-2.5,12 h-11 z' /%3E%3Cpath d='M18,10 c-2,3 -4,6 -4,11 M18,10 c2,3 4,6 4,11' /%3E%3Cpath d='M18,6 c-1,4 -2,7 -2,15 M18,6 c1,4 2,7 2,15' /%3E%3Cpath d='M14,14 c-3,-2 -5,0 -4,4 c1,1.5 4,1 4,-4' /%3E%3Cpath d='M22,14 c3,-2 5,0 4,4 c-1,1.5 -4,1 -4,-4' /%3E%3C/g%3E%3Cg transform='translate(130, 220)'%3E%3Crect x='8' y='5' width='28' height='18' rx='2' /%3E%3Cpath d='M8,20 h28' /%3E%3Cpath d='M4,23 h36 l2,4 h-40 z' /%3E%3Cline x1='16' y1='25' x2='28' y2='25' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(125, 45) scale(0.9)'%3E%3Ccircle cx='20' cy='20' r='11' /%3E%3Cpath d='M13,29 l-3,3 M27,29 l3,3' /%3E%3Cpath d='M11,11 a3,3 0 1,1 4,-4 M25,7 a3,3 0 1,1 4,4' /%3E%3Cpath d='M20,13 v7 h5' /%3E%3C/g%3E%3Cg transform='translate(110, 130) scale(0.9)'%3E%3Cpath d='M20,6 l16,6 l-16,6 l-16,-6 z' /%3E%3Cpath d='M10,15 v4 c0,3.5 4.5,5 10,5 s10,-1.5 10,-5 v-4' /%3E%3Cpath d='M28,12 l6,4 v7' /%3E%3C/g%3E%3Cg transform='translate(240, 95) scale(0.85)'%3E%3Cpath d='M10,24 c0,-6 4,-11 10,-11 s10,5 10,11 c0,5 -4,7 -10,7 s-10,-2 -10,-7 z' /%3E%3Cpath d='M10,15 l-3,-4 l5,2 M30,15 l3,-4 l-5,2' /%3E%3Ccircle cx='16' cy='20' r='2.5' /%3E%3Ccircle cx='24' cy='20' r='2.5' /%3E%3Cpath d='M20,21 l-1.5,-2 h3 z' /%3E%3C/g%3E%3Cpath d='M85,35 l2,2 l2,-2 l-2,-2 z' /%3E%3Cpath d='M170,95 l1.5,1.5 l1.5,-1.5 l-1.5,-1.5 z' /%3E%3Cpath d='M230,230 l2.5,2.5 l2.5,-2.5 l-2.5,-2.5 z' /%3E%3Cpath d='M30,110 l1.5,1.5 l1.5,-1.5 l-1.5,-1.5 z' /%3E%3Cg transform='translate(70, 75) scale(0.7)'%3E%3Cpath d='M10,15 a4,4 0 0,1 4,-4 a5,5 0 0,1 8,-2 a5,5 0 0,1 6,4 a4,4 0 0,1 3,4 a4,4 0 0,1 -4,4 h-13 a4,4 0 0,1 -4,-6 z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg stroke='rgba(200,214,155,0.14)' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(35, 45)'%3E%3Cpath d='M5,12 c0,-1.5 18,-1.5 18,0 c0,1.5 -18,1.5 -18,0' /%3E%3Cpath d='M5,12 v9 c0,4.5 4,8 9,8 s9,-3.5 9,-8 v-9' /%3E%3Cpath d='M23,15 c3.5,0 5.5,1.5 5.5,3.5 s-2,3.5 -5.5,3.5' /%3E%3Cpath d='M9,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3Cpath d='M14,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3Cpath d='M19,7 c0.5,-2.5 -0.5,-4.5 1,-6.5' /%3E%3C/g%3E%3Cg transform='translate(190, 45)'%3E%3Cpath d='M5,16 c6,-1 12,-3 18,-6 v18 c-6,3 -12,5 -18,6 z' /%3E%3Cpath d='M41,16 c-6,-1 -12,-3 -18,-6 v18 c6,3 12,5 18,6 z' /%3E%3Cpath d='M5,15 c6,-1 12,-3 18,-6 v17 c-6,3 -12,5 -18,6 z' /%3E%3Cpath d='M41,15 c-6,-1 -12,-3 -18,-6 v17 c6,3 12,5 18,6 z' /%3E%3Cpath d='M23,9 v18' /%3E%3Cpath d='M23,27 v7 l2.5,-1.5 l2.5,1.5 v-7' /%3E%3Cpath d='M9,14 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M9,17 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M9,20 c3.5,-0.5 7,-1.5 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,11.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,14.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3Cpath d='M27,17.5 c3,-1 6.5,-2 10,-2.5' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(40, 180)'%3E%3Cpath d='M8,33 h16' /%3E%3Cpath d='M16,33 C16,23 23,20 23,13' /%3E%3Cpath d='M18,13 l2.5,-6 h5 l2.5,6 z' /%3E%3Cpath d='M21,13 a1.5,1.5 0 0,0 3,0' /%3E%3Cpath d='M16,17 l-3,3' opacity='0.6' /%3E%3Cpath d='M23,18 v4.5' opacity='0.6' /%3E%3Cpath d='M30,17 l3,3' opacity='0.6' /%3E%3C/g%3E%3Cg transform='translate(220, 160)'%3E%3Cpath d='M9,23 h18 v3 h-18 z' /%3E%3Cpath d='M11,26 L13,35 h10 L25,26' /%3E%3Cpath d='M18,23 C18,15 20,8 18,4 C16,8 18,15 18,23' /%3E%3Cpath d='M16,23 C13,17 10,13 8,11 C11,13 15,18 17,23' /%3E%3Cpath d='M20,23 C23,17 26,13 28,11 C25,13 21,18 19,23' /%3E%3Cpath d='M18,18 V10' stroke-width='1' opacity='0.7' /%3E%3Cpath d='M15,20 L11,15' stroke-width='1' opacity='0.7' /%3E%3Cpath d='M21,20 L25,15' stroke-width='1' opacity='0.7' /%3E%3C/g%3E%3Cg transform='translate(130, 220)'%3E%3Crect x='6' y='6' width='28' height='17' rx='2' /%3E%3Crect x='8' y='8' width='24' height='13' rx='0.5' /%3E%3Cpath d='M4,23.5 h32 l1,2 c0,0.5 -0.5,1 -1,1 h-32 c-0.5,0 -1,-0.5 -1,-1 z' /%3E%3Cpath d='M17,25 h6' stroke-width='1' /%3E%3Cpath d='M17,13.5 l-2,2 l2,2' stroke-width='1' /%3E%3Cpath d='M23,13.5 l2,2 l-2,2' stroke-width='1' /%3E%3C/g%3E%3Cg transform='translate(125, 45) scale(0.9)'%3E%3Ccircle cx='20' cy='20' r='12' /%3E%3Cpath d='M10,12 C9.5,8.5 13.5,5.5 16,8' /%3E%3Cpath d='M24,8 C26.5,5.5 30.5,8.5 30,12' /%3E%3Cpath d='M17,8 A3,3 0 0,1 23,8' /%3E%3Cpath d='M13,31 L10,34' /%3E%3Cpath d='M27,31 L30,34' /%3E%3Cpath d='M20,20 L20,15' /%3E%3Cpath d='M20,20 L24,20' /%3E%3Ccircle cx='20' cy='20' r='1' fill='currentColor' /%3E%3C/g%3E%3Cg transform='translate(110, 130) scale(0.9)'%3E%3Cpath d='M20,5 L37,11 L20,17 L3,11 Z' /%3E%3Cpath d='M11,14 v3 c0,3 4,4.5 9,4.5 s9,-1.5 9,-4.5 v-3' /%3E%3Ccircle cx='20' cy='11' r='1' fill='currentColor' /%3E%3Cpath d='M20,11 L31,14 v6' /%3E%3Cpath d='M29.5,20 h3 v4 l-1.5,2 l-1.5,-2 z' /%3E%3C/g%3E%3Cg transform='translate(240, 95) scale(0.85)'%3E%3Cpath d='M10,25 C10,15 13,10 20,10 S30,15 30,25 C30,29 27,32 20,32 S10,29 10,25 Z' /%3E%3Cpath d='M12,11 L8,7 L15,10' /%3E%3Cpath d='M28,11 L32,7 L25,10' /%3E%3Ccircle cx='15.5' cy='18' r='3.5' /%3E%3Ccircle cx='24.5' cy='18' r='3.5' /%3E%3Ccircle cx='15.5' cy='18' r='1' fill='currentColor' /%3E%3Ccircle cx='24.5' cy='18' r='1' fill='currentColor' /%3E%3Cpath d='M20,19.5 L18.5,21.5 H21.5 Z' /%3E%3Cpath d='M10,22 C9,25 11,28 13,27' /%3E%3Cpath d='M30,22 C31,25 29,28 27,27' /%3E%3Cpath d='M17,25 a3,3 0 0,0 6,0' stroke-width='1' /%3E%3Cpath d='M18.5,28 a1.5,1.5 0 0,0 3,0' stroke-width='1' /%3E%3C/g%3E%3Cpath d='M 85,31 Q 85,35 81,35 Q 85,35 85,39 Q 85,35 89,35 Q 85,35 85,31 Z' /%3E%3Cpath d='M 170,91 Q 170,95 166,95 Q 170,95 170,99 Q 170,95 174,95 Q 170,95 170,91 Z' /%3E%3Cpath d='M 230,226 Q 230,230 226,230 Q 230,230 230,234 Q 230,230 234,230 Q 230,230 230,226 Z' /%3E%3Cpath d='M 30,106 Q 30,110 26,110 Q 30,110 30,114 Q 30,110 34,110 Q 30,110 30,106 Z' /%3E%3Cg transform='translate(70, 75) scale(0.7)'%3E%3Cpath d='M10,18 a5,5 0 0,1 5,-5 a6,6 0 0,1 10,-2 a6,6 0 0,1 8,4 a4,4 0 0,1 2,7 a4,4 0 0,1 -4,4 h-17 a5,5 0 0,1 -4,-8 z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 300px 300px, 40px 40px, 40px 40px;
