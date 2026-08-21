@@ -14,7 +14,9 @@ import {
   Clock,
   HelpCircle,
   PlayCircle,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 
@@ -30,11 +32,17 @@ export default function LoginScreen() {
   
   // Custom Login States
   const [email, setEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const [showLoginPassword, setShowLoginPassword] = useState(false)
   const [loginError, setLoginError] = useState('')
 
   // Sign Up / Create Account States
   const [signupName, setSignupName] = useState('')
   const [signupEmail, setSignupEmail] = useState('')
+  const [signupPassword, setSignupPassword] = useState('')
+  const [signupConfirmPassword, setSignupConfirmPassword] = useState('')
+  const [showSignupPassword, setShowSignupPassword] = useState(false)
+  const [showSignupConfirmPassword, setShowSignupConfirmPassword] = useState(false)
   const [signupBranch, setSignupBranch] = useState('CSE')
   const [signupRole, setSignupRole] = useState('student')
 
@@ -55,7 +63,7 @@ export default function LoginScreen() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!email) return
+    if (!email || !loginPassword) return
     setLoginError('')
 
     const presetUser = PRESET_USERS.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
@@ -74,6 +82,10 @@ export default function LoginScreen() {
 
     const customUser = usersDb.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
     if (customUser) {
+      if (customUser.password && customUser.password !== loginPassword) {
+        setLoginError("Incorrect password. Please try again!")
+        return
+      }
       setIsLoading(true)
       await new Promise(r => setTimeout(r, 500))
       handleLogin({
@@ -91,12 +103,18 @@ export default function LoginScreen() {
 
   const handleSignup = async (e) => {
     e.preventDefault()
-    if (!signupName || !signupEmail) return
+    if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword) return
+    setLoginError('')
+
+    if (signupPassword !== signupConfirmPassword) {
+      setLoginError("Passwords do not match!")
+      return
+    }
 
     const emailExists = PRESET_USERS.some(u => u.email.toLowerCase() === signupEmail.trim().toLowerCase()) ||
                         usersDb.some(u => u.email.toLowerCase() === signupEmail.trim().toLowerCase())
     if (emailExists) {
-      alert("This email is already registered. Please sign in instead!")
+      setLoginError("This email is already registered. Please sign in instead!")
       setAuthMode('login')
       setEmail(signupEmail)
       return
@@ -110,6 +128,7 @@ export default function LoginScreen() {
       email: signupEmail.trim().toLowerCase(),
       branch: signupBranch,
       role: signupRole,
+      password: signupPassword,
       initials: signupName.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
     }
 
@@ -119,7 +138,6 @@ export default function LoginScreen() {
 
   return (
     <div className="min-h-screen relative flex flex-col justify-between p-4 md:p-8 lg:p-12 selection:bg-nest-green/20">
-
 
       {/* Navigation Header with Dark Mode Toggle */}
       <header className="w-full max-w-7xl mx-auto flex items-center justify-end z-20 mb-6 sm:mb-8">
@@ -144,46 +162,88 @@ export default function LoginScreen() {
       <main className="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
         {/* Hero Interactive Card Container */}
         <motion.div 
-          className="w-full max-w-xl mx-auto"
+          className="w-full max-w-[620px] mx-auto px-4 sm:px-0"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="glass-panel-morphism rounded-[28px] p-8 sm:p-10 shadow-2xl border-2 border-nest-border dark:border-white/10 relative overflow-hidden">
+          <div className="glass-panel-morphism rounded-[24px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(7,59,58,0.04)] border border-nest-border/60 dark:border-white/10 relative overflow-hidden">
+            
+            {/* StudyNest Branding */}
+            <div className="flex flex-col items-center gap-1.5 mb-6 select-none">
+              <div className="w-10 h-10 rounded-full bg-nest-light-blue dark:bg-nest-light-blue/20 border border-nest-border flex items-center justify-center p-0.5 shadow-sm">
+                <GraduationCap className="w-5 h-5 text-nest-green" />
+              </div>
+              <span className="font-display font-semibold text-sm text-nest-navy dark:text-white tracking-tight">
+                Study<span className="text-nest-green font-bold">Nest</span>
+              </span>
+            </div>
 
             {authMode === 'login' ? (
               /* SIGN IN / LOGIN VIEW */
               <div className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                  <div className="text-center">
-                    <h3 className="text-base font-display font-black text-nest-navy mb-1">Sign In to Your Workspace</h3>
-                    <p className="text-xs text-nest-gray dark:text-[#a0af8c] font-semibold">Enter your registered email address to access your portal</p>
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
+                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                   </div>
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="e.g. rahul.cse@college.edu"
-                      className="input-field text-sm font-semibold"
-                      required
-                    />
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="e.g. rahul.cse@college.edu"
+                        className="input-field text-sm font-semibold"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Password
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showLoginPassword ? 'text' : 'password'}
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}
+                          placeholder="Enter your password"
+                          className="input-field text-sm font-semibold pr-12"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowLoginPassword(!showLoginPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                        >
+                          {showLoginPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
                   </div>
+
                   {loginError && (
-                    <p className="text-xs font-bold text-red-650 dark:text-red-400 flex items-center gap-1">
+                    <p className="text-xs font-bold text-red-650 dark:text-red-400 flex items-center gap-1 mt-3">
                       <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
                       <span>{loginError}</span>
                     </p>
                   )}
+                  
                   <button
                     type="submit"
-                    disabled={!email || isLoading}
-                    className="w-full btn-primary py-2.5 flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
+                    disabled={!email || !loginPassword || isLoading}
+                    className="w-full btn-primary flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50 mt-2"
                   >
-                    {isLoading ? "Signing In..." : "Sign In"}
+                    {isLoading ? "Signing In..." : "Sign In →"}
                   </button>
                 </form>
 
@@ -207,88 +267,152 @@ export default function LoginScreen() {
                   </div>
                 </div>
 
-                <div className="pt-2 text-center border-t border-nest-border dark:border-white/10">
-                  <button
-                    type="button"
-                    onClick={() => { setAuthMode('signup'); setLoginError(''); }}
-                    className="text-xs font-bold text-nest-blue dark:text-nest-green hover:underline focus-visible:outline-none cursor-pointer"
-                  >
-                    New to StudyNest? Create a new account
-                  </button>
+                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
+                  <p className="text-xs text-nest-gray font-medium">
+                    New to StudyNest?{' '}
+                    <button
+                      type="button"
+                      onClick={() => { setAuthMode('signup'); setLoginError(''); }}
+                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
+                    >
+                      Create account
+                    </button>
+                  </p>
                 </div>
               </div>
             ) : (
               /* SIGN UP / REGISTER VIEW (DEFAULT) */
               <form onSubmit={handleSignup} className="space-y-4 text-left">
-                <div className="text-center mb-4">
-                  <h3 className="text-base font-display font-black text-nest-navy">Create a New Account</h3>
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
+                  <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-nest-navy mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={signupName}
-                    onChange={(e) => setSignupName(e.target.value)}
-                    placeholder="e.g. Sweta Sharma"
-                    className="input-field text-sm font-semibold"
-                  />
+                <div className="space-y-4 text-left">
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={signupName}
+                      onChange={(e) => setSignupName(e.target.value)}
+                      placeholder="e.g. Sweta Sharma"
+                      className="input-field text-sm font-semibold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={signupEmail}
+                      onChange={(e) => setSignupEmail(e.target.value)}
+                      placeholder="e.g. sweta@college.edu"
+                      className="input-field text-sm font-semibold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                      Access Level / Role
+                    </label>
+                    <select
+                      value={signupRole}
+                      onChange={(e) => setSignupRole(e.target.value)}
+                      className="input-field text-sm font-semibold cursor-pointer"
+                    >
+                      <option value="student">Student / Learner</option>
+                      <option value="faculty">Faculty / Mentor</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showSignupPassword ? 'text' : 'password'}
+                        required
+                        value={signupPassword}
+                        onChange={(e) => setSignupPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        className="input-field text-sm font-semibold pr-12"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowSignupPassword(!showSignupPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                      >
+                        {showSignupPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showSignupConfirmPassword ? 'text' : 'password'}
+                        required
+                        value={signupConfirmPassword}
+                        onChange={(e) => setSignupConfirmPassword(e.target.value)}
+                        placeholder="Re-enter your password"
+                        className="input-field text-sm font-semibold pr-12"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowSignupConfirmPassword(!showSignupConfirmPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                      >
+                        {showSignupConfirmPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-nest-navy mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={signupEmail}
-                    onChange={(e) => setSignupEmail(e.target.value)}
-                    placeholder="e.g. sweta@college.edu"
-                    className="input-field text-sm font-semibold"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-nest-navy mb-1">
-                    Access Level / Role
-                  </label>
-                  <select
-                    value={signupRole}
-                    onChange={(e) => setSignupRole(e.target.value)}
-                    className="input-field text-sm font-semibold"
-                  >
-                    <option value="student">Student / Learner</option>
-                    <option value="admin">Syllabus Admin</option>
-                  </select>
-                </div>
+                {loginError && (
+                  <p className="text-xs font-bold text-red-650 dark:text-red-400 flex items-center gap-1 mt-3">
+                    <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>{loginError}</span>
+                  </p>
+                )}
 
                 <button
                   type="submit"
-                  disabled={!signupName || !signupEmail || isLoading}
-                  className="w-full mt-4 btn-primary py-3 flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
+                  disabled={!signupName || !signupEmail || !signupPassword || !signupConfirmPassword || isLoading}
+                  className="w-full mt-4 btn-primary flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
                 >
-                  {isLoading ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <Sparkles className="w-4 h-4 text-nest-gold dark:text-nest-navy fill-current" />
-                      <span>Register & Launch Suite</span>
-                    </>
-                  )}
+                  {isLoading ? "Creating Account..." : "Create Account →"}
                 </button>
 
-                <div className="pt-2 text-center border-t border-nest-border dark:border-white/10">
-                  <button
-                    type="button"
-                    onClick={() => { setAuthMode('login'); setLoginError(''); }}
-                    className="text-xs font-bold text-nest-blue dark:text-nest-green hover:underline focus-visible:outline-none cursor-pointer"
-                  >
-                    Already have an account? Sign In
-                  </button>
+                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
+                  <p className="text-xs text-nest-gray font-medium">
+                    Already have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => { setAuthMode('login'); setLoginError(''); }}
+                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
+                    >
+                      Sign In
+                    </button>
+                  </p>
                 </div>
               </form>
             )}
@@ -299,7 +423,10 @@ export default function LoginScreen() {
       {/* Footer */}
       <footer className="w-full max-w-7xl mx-auto text-center z-20 pt-6">
         <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
-          StudyNest B.Tech Hub &copy; {new Date().getFullYear()} • Engineered for Academic Excellence
+          StudyNest B.Tech Hub · &copy; {new Date().getFullYear()}
+        </p>
+        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
+          Built for better learning.
         </p>
       </footer>
     </div>

@@ -66,7 +66,11 @@ function MainContent() {
       <div className="orb orb-2" />
       <div className="orb orb-3" />
       
-      <div className="grid-bg fixed inset-0 opacity-30" />
+      {!user ? (
+        <div className="login-bg fixed inset-0 opacity-90 dark:opacity-40" />
+      ) : (
+        <div className="grid-bg fixed inset-0 opacity-10" />
+      )}
       
       <AnimatePresence mode="wait">
         {!user ? (
