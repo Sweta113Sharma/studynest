@@ -140,7 +140,7 @@ export default function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-nest-cream text-nest-navy transition-colors">
+    <div className="min-h-screen bg-transparent text-nest-navy transition-colors">
       {/* 1. Persistent Sidebar (Desktop) + Slide Drawer (Mobile) */}
       <Sidebar
         onOpenSettings={() => setShowSettings(true)}

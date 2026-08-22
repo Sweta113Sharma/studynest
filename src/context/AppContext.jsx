@@ -679,6 +679,106 @@ export function AppProvider({ children }) {
     localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
   }
 
+  const addYoutubeLinkToUnit = (subjectId, unitTitle, video) => {
+    const existing = customSubjects.find(s => s.id === subjectId)
+    let updatedSubjects
+    if (existing) {
+      updatedSubjects = customSubjects.map(s => {
+        if (s.id === subjectId) {
+          return {
+            ...s,
+            units: s.units.map(u => {
+              if (u.title === unitTitle) {
+                return { ...u, youtube: [...(u.youtube || []), video] }
+              }
+              return u
+            })
+          }
+        }
+        return s
+      })
+    } else {
+      let staticSubject = null
+      Object.keys(semesters).forEach(branch => {
+        Object.keys(semesters[branch]).forEach(sem => {
+          const found = semesters[branch][sem].find(s => s.id === subjectId)
+          if (found) {
+            staticSubject = { ...found, branch, semester: parseInt(sem, 10) }
+          }
+        })
+      })
+      if (staticSubject) {
+        updatedSubjects = [
+          ...customSubjects,
+          {
+            ...staticSubject,
+            units: staticSubject.units.map(u => {
+              if (u.title === unitTitle) {
+                return { ...u, youtube: [...(u.youtube || []), video] }
+              }
+              return u
+            })
+          }
+        ]
+      } else {
+        console.warn("Subject not found for YouTube update:", subjectId)
+        return
+      }
+    }
+    setCustomSubjects(updatedSubjects)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
+    addXP(10, `Added video resource to ${unitTitle}`)
+  }
+
+  const deleteYoutubeLinkFromUnit = (subjectId, unitTitle, videoUrl) => {
+    const existing = customSubjects.find(s => s.id === subjectId)
+    let updatedSubjects
+    if (existing) {
+      updatedSubjects = customSubjects.map(s => {
+        if (s.id === subjectId) {
+          return {
+            ...s,
+            units: s.units.map(u => {
+              if (u.title === unitTitle) {
+                return { ...u, youtube: (u.youtube || []).filter(v => v.url !== videoUrl) }
+              }
+              return u
+            })
+          }
+        }
+        return s
+      })
+    } else {
+      let staticSubject = null
+      Object.keys(semesters).forEach(branch => {
+        Object.keys(semesters[branch]).forEach(sem => {
+          const found = semesters[branch][sem].find(s => s.id === subjectId)
+          if (found) {
+            staticSubject = { ...found, branch, semester: parseInt(sem, 10) }
+          }
+        })
+      })
+      if (staticSubject) {
+        updatedSubjects = [
+          ...customSubjects,
+          {
+            ...staticSubject,
+            units: staticSubject.units.map(u => {
+              if (u.title === unitTitle) {
+                return { ...u, youtube: (u.youtube || []).filter(v => v.url !== videoUrl) }
+              }
+              return u
+            })
+          }
+        ]
+      } else {
+        return
+      }
+    }
+    setCustomSubjects(updatedSubjects)
+    localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
+  }
+
   const value = {
     user,
     setUser,
@@ -731,6 +831,8 @@ export function AppProvider({ children }) {
     deleteCustomSubject,
     addCustomUnit,
     deleteCustomUnit,
+    addYoutubeLinkToUnit,
+    deleteYoutubeLinkFromUnit,
     focusHistory,
     logFocusSession,
     usersDb,
