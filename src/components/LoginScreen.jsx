@@ -28,13 +28,15 @@ const PRESET_USERS = [
 
 export default function LoginScreen() {
   const { handleLogin, darkMode, setDarkMode, usersDb, registerUser } = useApp()
-  const [authMode, setAuthMode] = useState('signup') // 'signup' or 'login'
-  
+
   // Custom Login States
   const [email, setEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [showLoginPassword, setShowLoginPassword] = useState(false)
   const [loginError, setLoginError] = useState('')
+
+  // Custom Signup States
+  const [signupError, setSignupError] = useState('')
 
   // Sign Up / Create Account States
   const [signupName, setSignupName] = useState('')
@@ -104,18 +106,17 @@ export default function LoginScreen() {
   const handleSignup = async (e) => {
     e.preventDefault()
     if (!signupName || !signupEmail || !signupPassword || !signupConfirmPassword) return
-    setLoginError('')
+    setSignupError('')
 
     if (signupPassword !== signupConfirmPassword) {
-      setLoginError("Passwords do not match!")
+      setSignupError("Passwords do not match!")
       return
     }
 
     const emailExists = PRESET_USERS.some(u => u.email.toLowerCase() === signupEmail.trim().toLowerCase()) ||
                         usersDb.some(u => u.email.toLowerCase() === signupEmail.trim().toLowerCase())
     if (emailExists) {
-      setLoginError("This email is already registered. Please sign in instead!")
-      setAuthMode('login')
+      setSignupError("This email is already registered. Try signing in directly!")
       setEmail(signupEmail)
       return
     }
@@ -162,7 +163,7 @@ export default function LoginScreen() {
       <main className="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
         {/* Hero Interactive Card Container */}
         <motion.div 
-          className="w-full max-w-[620px] mx-auto px-4 sm:px-0"
+          className="w-full max-w-5xl mx-auto px-4 sm:px-0"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -170,7 +171,7 @@ export default function LoginScreen() {
           <div className="glass-panel-morphism rounded-[24px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(7,59,58,0.04)] border border-nest-border/60 dark:border-white/10 relative overflow-hidden">
             
             {/* StudyNest Branding */}
-            <div className="flex flex-col items-center gap-1.5 mb-6 select-none">
+            <div className="flex flex-col items-center gap-1.5 mb-8 select-none">
               <div className="w-10 h-10 rounded-full bg-nest-light-blue dark:bg-nest-light-blue/20 border border-nest-border flex items-center justify-center p-0.5 shadow-sm">
                 <GraduationCap className="w-5 h-5 text-nest-green" />
               </div>
@@ -179,13 +180,14 @@ export default function LoginScreen() {
               </span>
             </div>
 
-            {authMode === 'login' ? (
-              /* SIGN IN / LOGIN VIEW */
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 divide-y md:divide-y-0 md:divide-x divide-nest-border/30 dark:divide-white/10">
+              
+              {/* LEFT COLUMN: SIGN IN / LOGIN */}
               <div className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
                   <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
-                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
+                    <h3 className="text-xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
+                    <p className="text-xs text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                   </div>
                   
                   <div className="space-y-4">
@@ -266,156 +268,132 @@ export default function LoginScreen() {
                     ))}
                   </div>
                 </div>
-
-                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
-                  <p className="text-xs text-nest-gray font-medium">
-                    New to StudyNest?{' '}
-                    <button
-                      type="button"
-                      onClick={() => { setAuthMode('signup'); setLoginError(''); }}
-                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
-                    >
-                      Create account
-                    </button>
-                  </p>
-                </div>
               </div>
-            ) : (
-              /* SIGN UP / REGISTER VIEW (DEFAULT) */
-              <form onSubmit={handleSignup} className="space-y-4 text-left">
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
-                  <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
-                </div>
 
-                <div className="space-y-4 text-left">
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={signupName}
-                      onChange={(e) => setSignupName(e.target.value)}
-                      placeholder="e.g. Sweta Sharma"
-                      className="input-field text-sm font-semibold"
-                    />
+              {/* RIGHT COLUMN: SIGN UP / REGISTER */}
+              <div className="space-y-6 md:pl-16 pt-10 md:pt-0">
+                <form onSubmit={handleSignup} className="space-y-4 text-left">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
+                    <p className="text-xs text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={signupEmail}
-                      onChange={(e) => setSignupEmail(e.target.value)}
-                      placeholder="e.g. sweta@college.edu"
-                      className="input-field text-sm font-semibold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
-                      Access Level / Role
-                    </label>
-                    <select
-                      value={signupRole}
-                      onChange={(e) => setSignupRole(e.target.value)}
-                      className="input-field text-sm font-semibold cursor-pointer"
-                    >
-                      <option value="student">Student / Learner</option>
-                      <option value="faculty">Faculty / Mentor</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
-                      Password
-                    </label>
-                    <div className="relative">
+                  <div className="space-y-4 text-left">
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Full Name
+                      </label>
                       <input
-                        type={showSignupPassword ? 'text' : 'password'}
+                        type="text"
                         required
-                        value={signupPassword}
-                        onChange={(e) => setSignupPassword(e.target.value)}
-                        placeholder="Enter your password"
-                        className="input-field text-sm font-semibold pr-12"
+                        value={signupName}
+                        onChange={(e) => setSignupName(e.target.value)}
+                        placeholder="e.g. Sweta Sharma"
+                        className="input-field text-sm font-semibold"
                       />
-                      <button
-                        type="button"
-                        onClick={() => setShowSignupPassword(!showSignupPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={signupEmail}
+                        onChange={(e) => setSignupEmail(e.target.value)}
+                        placeholder="e.g. sweta@college.edu"
+                        className="input-field text-sm font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Access Level / Role
+                      </label>
+                      <select
+                        value={signupRole}
+                        onChange={(e) => setSignupRole(e.target.value)}
+                        className="input-field text-sm font-semibold cursor-pointer"
                       >
-                        {showSignupPassword ? (
-                          <EyeOff className="w-5 h-5" />
-                        ) : (
-                          <Eye className="w-5 h-5" />
-                        )}
-                      </button>
+                        <option value="student">Student / Learner</option>
+                        <option value="faculty">Faculty / Mentor</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Password
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showSignupPassword ? 'text' : 'password'}
+                          required
+                          value={signupPassword}
+                          onChange={(e) => setSignupPassword(e.target.value)}
+                          placeholder="Enter your password"
+                          className="input-field text-sm font-semibold pr-12"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowSignupPassword(!showSignupPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                        >
+                          {showSignupPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-nest-navy mb-1.5">
+                        Confirm Password
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showSignupConfirmPassword ? 'text' : 'password'}
+                          required
+                          value={signupConfirmPassword}
+                          onChange={(e) => setSignupConfirmPassword(e.target.value)}
+                          placeholder="Re-enter your password"
+                          className="input-field text-sm font-semibold pr-12"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowSignupConfirmPassword(!showSignupConfirmPassword)}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
+                        >
+                          {showSignupConfirmPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-nest-navy mb-1.5">
-                      Confirm Password
-                    </label>
-                    <div className="relative">
-                      <input
-                        type={showSignupConfirmPassword ? 'text' : 'password'}
-                        required
-                        value={signupConfirmPassword}
-                        onChange={(e) => setSignupConfirmPassword(e.target.value)}
-                        placeholder="Re-enter your password"
-                        className="input-field text-sm font-semibold pr-12"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowSignupConfirmPassword(!showSignupConfirmPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-nest-gray hover:text-nest-navy transition-colors focus:outline-none cursor-pointer"
-                      >
-                        {showSignupConfirmPassword ? (
-                          <EyeOff className="w-5 h-5" />
-                        ) : (
-                          <Eye className="w-5 h-5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  {signupError && (
+                    <p className="text-xs font-bold text-red-650 dark:text-red-400 flex items-center gap-1 mt-3">
+                      <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>{signupError}</span>
+                    </p>
+                  )}
 
-                {loginError && (
-                  <p className="text-xs font-bold text-red-650 dark:text-red-400 flex items-center gap-1 mt-3">
-                    <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>{loginError}</span>
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={!signupName || !signupEmail || !signupPassword || !signupConfirmPassword || isLoading}
-                  className="w-full mt-4 btn-primary flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
-                >
-                  {isLoading ? "Creating Account..." : "Create Account →"}
-                </button>
-
-                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
-                  <p className="text-xs text-nest-gray font-medium">
-                    Already have an account?{' '}
-                    <button
-                      type="button"
-                      onClick={() => { setAuthMode('login'); setLoginError(''); }}
-                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
-                    >
-                      Sign In
-                    </button>
-                  </p>
-                </div>
-              </form>
-            )}
+                  <button
+                    type="submit"
+                    disabled={!signupName || !signupEmail || !signupPassword || !signupConfirmPassword || isLoading}
+                    className="w-full mt-4 btn-primary flex items-center justify-center gap-1.5 cursor-pointer shadow-md disabled:opacity-50"
+                  >
+                    {isLoading ? "Creating Account..." : "Create Account →"}
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </motion.div>
       </main>
