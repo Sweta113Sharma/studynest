@@ -28,6 +28,7 @@ const PRESET_USERS = [
 
 export default function LoginScreen() {
   const { handleLogin, darkMode, setDarkMode, usersDb, registerUser } = useApp()
+  const [authMode, setAuthMode] = useState('login') // 'login' or 'signup'
 
   // Custom Login States
   const [email, setEmail] = useState('')
@@ -118,6 +119,7 @@ export default function LoginScreen() {
     if (emailExists) {
       setSignupError("This email is already registered. Try signing in directly!")
       setEmail(signupEmail)
+      setAuthMode('login')
       return
     }
 
@@ -160,10 +162,10 @@ export default function LoginScreen() {
       </header>
 
       {/* Main Hero & Demo Section */}
-      <main className="w-full max-w-5xl mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
+      <main className="w-full max-w-[500px] mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">
         {/* Hero Interactive Card Container */}
         <motion.div 
-          className="w-full max-w-5xl mx-auto px-4 sm:px-0"
+          className="w-full max-w-[500px] mx-auto px-4 sm:px-0"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -171,7 +173,7 @@ export default function LoginScreen() {
           <div className="glass-panel-morphism rounded-[24px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(7,59,58,0.04)] border border-nest-border/60 dark:border-white/10 relative overflow-hidden">
             
             {/* StudyNest Branding */}
-            <div className="flex flex-col items-center gap-1.5 mb-8 select-none">
+            <div className="flex flex-col items-center gap-1.5 mb-6 select-none">
               <div className="w-10 h-10 rounded-full bg-nest-light-blue dark:bg-nest-light-blue/20 border border-nest-border flex items-center justify-center p-0.5 shadow-sm">
                 <GraduationCap className="w-5 h-5 text-nest-green" />
               </div>
@@ -180,14 +182,13 @@ export default function LoginScreen() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 divide-y md:divide-y-0 md:divide-x divide-nest-border/30 dark:divide-white/10">
-              
-              {/* LEFT COLUMN: SIGN IN / LOGIN */}
+            {authMode === 'login' ? (
+              /* LOG IN VIEW */
               <div className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
-                    <p className="text-xs text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
+                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
+                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                   </div>
                   
                   <div className="space-y-4">
@@ -268,14 +269,27 @@ export default function LoginScreen() {
                     ))}
                   </div>
                 </div>
-              </div>
 
-              {/* RIGHT COLUMN: SIGN UP / REGISTER */}
-              <div className="space-y-6 md:pl-16 pt-10 md:pt-0">
+                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
+                  <p className="text-xs text-nest-gray font-medium">
+                    Don't have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => { setAuthMode('signup'); setSignupError(''); }}
+                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
+                    >
+                      Create account
+                    </button>
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* SIGN UP / REGISTER VIEW */
+              <div className="space-y-6">
                 <form onSubmit={handleSignup} className="space-y-4 text-left">
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
-                    <p className="text-xs text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
+                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
+                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
                   </div>
 
                   <div className="space-y-4 text-left">
@@ -392,8 +406,21 @@ export default function LoginScreen() {
                     {isLoading ? "Creating Account..." : "Create Account →"}
                   </button>
                 </form>
+
+                <div className="pt-4 text-center border-t border-nest-border dark:border-white/10">
+                  <p className="text-xs text-nest-gray font-medium">
+                    Already have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => { setAuthMode('login'); setLoginError(''); }}
+                      className="font-bold text-nest-green hover:text-nest-navy hover:underline focus-visible:outline-none cursor-pointer transition-colors"
+                    >
+                      Sign In
+                    </button>
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </motion.div>
       </main>
