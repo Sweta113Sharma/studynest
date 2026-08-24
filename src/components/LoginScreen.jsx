@@ -186,11 +186,6 @@ export default function LoginScreen() {
               /* LOG IN VIEW */
               <div className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Sign in to your workspace</h3>
-                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
-                  </div>
-                  
                   <div className="space-y-4">
                     <div>
                       <label className="block text-xs font-bold text-nest-navy mb-1.5">
@@ -287,11 +282,6 @@ export default function LoginScreen() {
               /* SIGN UP / REGISTER VIEW */
               <div className="space-y-6">
                 <form onSubmit={handleSignup} className="space-y-4 text-left">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold text-nest-navy dark:text-white mb-1.5">Create your account</h3>
-                    <p className="text-sm text-nest-gray dark:text-[#a0af8c] font-medium">Your personalized academic workspace starts here.</p>
-                  </div>
-
                   <div className="space-y-4 text-left">
                     <div>
                       <label className="block text-xs font-bold text-nest-navy mb-1.5">
