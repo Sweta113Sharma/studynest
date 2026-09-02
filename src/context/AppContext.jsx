@@ -779,6 +779,69 @@ export function AppProvider({ children }) {
     localStorage.setItem('studynest_custom_subjects', JSON.stringify(updatedSubjects))
   }
 
+  // --- HOME/DASHBOARD ACTIVE SUBJECTS TRACKING ---
+  const [homeSubjects, setHomeSubjects] = useState(() => {
+    try {
+      const saved = localStorage.getItem('studynest_home_subjects')
+      if (saved) return JSON.parse(saved)
+    } catch {}
+    return [
+      {
+        id: 'sub-java',
+        name: 'Java Programming',
+        nextTopic: 'OOP Concepts & Polymorphism',
+        progress: 68,
+        color: '#3971b8'
+      },
+      {
+        id: 'sub-dbms',
+        name: 'DBMS',
+        nextTopic: 'Normalization',
+        progress: 45,
+        color: '#c8a415'
+      },
+      {
+        id: 'sub-dsa',
+        name: 'Data Structures',
+        nextTopic: 'Arrays & Linked Lists',
+        progress: 32,
+        color: '#5b6b2f'
+      }
+    ]
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('studynest_home_subjects', JSON.stringify(homeSubjects))
+    } catch (e) {
+      console.warn('Failed to persist home subjects:', e)
+    }
+  }, [homeSubjects])
+
+  const addHomeSubject = (subject) => {
+    const newSub = {
+      id: `home-sub-${Date.now()}`,
+      name: subject.name,
+      nextTopic: subject.nextTopic || 'General Study',
+      progress: parseInt(subject.progress) || 0,
+      color: subject.color || '#3971b8'
+    }
+    setHomeSubjects(prev => [...prev, newSub])
+    addXP(10, 'Tracked a new learning subject')
+  }
+
+  const deleteHomeSubject = (id) => {
+    setHomeSubjects(prev => prev.filter(s => s.id !== id))
+  }
+
+  const updateHomeSubjectProgress = (id, progress) => {
+    setHomeSubjects(prev => prev.map(s => s.id === id ? { ...s, progress: Math.min(100, Math.max(0, parseInt(progress) || 0)) } : s))
+  }
+
+  const updateHomeSubjectTopic = (id, nextTopic) => {
+    setHomeSubjects(prev => prev.map(s => s.id === id ? { ...s, nextTopic: nextTopic || 'General Study' } : s))
+  }
+
   const value = {
     user,
     setUser,
@@ -837,6 +900,12 @@ export function AppProvider({ children }) {
     logFocusSession,
     usersDb,
     registerUser,
+    // Home Active Subjects Tracking
+    homeSubjects,
+    addHomeSubject,
+    deleteHomeSubject,
+    updateHomeSubjectProgress,
+    updateHomeSubjectTopic,
     // Notes Workspace
     notes,
     addNote,

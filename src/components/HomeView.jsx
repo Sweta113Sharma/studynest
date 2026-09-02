@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   BookOpen,
   Clock,
@@ -14,7 +14,9 @@ import {
   Code2,
   Database,
   Network,
-  Plus
+  Plus,
+  X,
+  Trash2
 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import MascotOwl from './MascotOwl'
@@ -47,11 +49,63 @@ export default function HomeView() {
     tasks,
     toggleTask,
     addTask,
-    bookmarks
+    bookmarks,
+    homeSubjects,
+    addHomeSubject,
+    deleteHomeSubject,
+    updateHomeSubjectProgress,
+    updateHomeSubjectTopic,
+    semesters
   } = useApp()
 
   const [newTaskInput, setNewTaskInput] = useState('')
   const [showTaskInput, setShowTaskInput] = useState(false)
+
+  // Add Subject Modal States
+  const [isAddSubjectOpen, setIsAddSubjectOpen] = useState(false)
+  const [subjectToDelete, setSubjectToDelete] = useState(null)
+  const [customSubName, setCustomSubName] = useState('')
+  const [customSubTopic, setCustomSubTopic] = useState('')
+  const [customSubProgress, setCustomSubProgress] = useState(0)
+  const [customSubColor, setCustomSubColor] = useState('#3971b8')
+
+  // Get list of standard subjects for the user's active branch and year/semester
+  const getBranchSyllabusSubjects = () => {
+    if (!semesters) return []
+    const branchKey = (user?.branch || 'cse').toLowerCase()
+    const branchData = semesters[branchKey] || {}
+    const list = []
+    Object.keys(branchData).forEach(semNum => {
+      branchData[semNum].forEach(sub => {
+        if (!list.some(item => item.title === sub.title)) {
+          list.push(sub)
+        }
+      })
+    })
+    return list
+  }
+  const syllabusSubjects = getBranchSyllabusSubjects()
+
+  // Map home subjects with dynamic icons/classes
+  const mappedSubjects = (homeSubjects || []).map(sub => {
+    let Icon = BookOpen
+    let bgColor = 'bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800/40 dark:text-slate-350 dark:border-white/5'
+    if (sub.color === '#3971b8') {
+      Icon = Code2
+      bgColor = 'bg-nest-blue/10 text-nest-blue border border-nest-blue/20'
+    } else if (sub.color === '#c8a415') {
+      Icon = Database
+      bgColor = 'bg-nest-gold/25 text-[#735e07] dark:text-nest-gold border border-nest-gold/30'
+    } else if (sub.color === '#5b6b2f') {
+      Icon = Network
+      bgColor = 'bg-nest-green/25 text-[#4c5628] dark:text-nest-green border border-nest-green/35'
+    }
+    return {
+      ...sub,
+      icon: Icon,
+      bgColor
+    }
+  })
 
   // Calculate consecutive streak days
   const calculateStreak = () => {
@@ -86,36 +140,7 @@ export default function HomeView() {
     return 'Good Evening'
   }
 
-  // Active Subject Cards in "Continue Learning"
-  const continueSubjects = [
-    {
-      id: 'sub-java',
-      name: 'Java Programming',
-      nextTopic: 'OOP Concepts & Polymorphism',
-      progress: 68,
-      icon: Code2,
-      bgColor: 'bg-nest-blue/10 text-nest-blue border border-nest-blue/20',
-      color: '#3971b8'
-    },
-    {
-      id: 'sub-dbms',
-      name: 'DBMS',
-      nextTopic: 'Normalization',
-      progress: 45,
-      icon: Database,
-      bgColor: 'bg-nest-gold/25 text-[#735e07] dark:text-nest-gold border border-nest-gold/30',
-      color: '#c8a415'
-    },
-    {
-      id: 'sub-dsa',
-      name: 'Data Structures',
-      nextTopic: 'Arrays & Linked Lists',
-      progress: 32,
-      icon: Network,
-      bgColor: 'bg-nest-green/25 text-[#4c5628] dark:text-nest-green border border-nest-green/35',
-      color: '#5b6b2f'
-    }
-  ]
+  // continueSubjects was removed in favor of dynamic homeSubjects state
 
   const handleQuickAddTask = (e) => {
     e.preventDefault()
@@ -247,58 +272,147 @@ export default function HomeView() {
                 <BookOpen className="w-5 h-5 text-nest-blue" />
                 Continue Learning
               </h2>
-              <button
-                type="button"
-                onClick={() => navigateTo('subjects')}
-                className="text-xs font-bold text-nest-blue hover:underline flex items-center gap-0.5"
-              >
-                All Subjects <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsAddSubjectOpen(true)}
+                  className="px-2.5 py-1.5 rounded-lg bg-nest-light-blue dark:bg-nest-light-blue/20 hover:bg-nest-blue/20 text-nest-blue border border-nest-blue/20 text-xs font-black cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus className="w-3.5 h-3.5" /> Add Subject
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('subjects')}
+                  className="text-xs font-bold text-nest-blue hover:underline flex items-center gap-0.5"
+                >
+                  All Subjects <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              {continueSubjects.map((sub) => {
-                const Icon = sub.icon
-                return (
-                  <div
-                    key={sub.id}
-                    onClick={() => navigateTo('subjects')}
-                    className="p-4 bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 rounded-[20px] flex items-center justify-between gap-4 cursor-pointer hover:border-nest-blue/40 hover:shadow-md hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-250 group shadow-xs"
-                  >
-                    <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                      <div className={`w-9 h-9 rounded-xl ${sub.bgColor} flex items-center justify-center shrink-0 shadow-xs`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div className="truncate flex-1">
-                        <h3 className="font-display font-semibold text-sm sm:text-base text-nest-navy group-hover:text-nest-blue transition-colors truncate">
-                          {sub.name}
-                        </h3>
-                        <p className="text-xs text-nest-gray dark:text-slate-400 truncate mt-0.5">
-                          Next: {sub.nextTopic}
-                        </p>
-                      </div>
-                    </div>
+            {mappedSubjects.length === 0 ? (
+              <div className="p-8 bg-white/90 dark:bg-nest-dark-input/90 border border-dashed border-nest-border dark:border-nest-navy/60 rounded-[20px] text-center space-y-4 shadow-xs">
+                <div className="text-4xl select-none">📚</div>
+                <div className="space-y-1">
+                  <h3 className="font-display font-bold text-sm text-nest-navy dark:text-white">No active subjects tracked</h3>
+                  <p className="text-xs text-nest-gray dark:text-slate-400">Add a subject manually to begin tracking your study progress on the dashboard!</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsAddSubjectOpen(true)}
+                  className="px-4 py-2 rounded-xl bg-nest-blue hover:bg-nest-blue/90 text-white font-semibold text-xs cursor-pointer inline-flex items-center gap-1 shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" /> Add Your First Subject
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {mappedSubjects.map((sub) => {
+                  const Icon = sub.icon
+                  return (
+                    <div
+                      key={sub.id}
+                      className="relative overflow-hidden p-4 bg-white/90 dark:bg-nest-dark-input/90 border border-nest-border dark:border-nest-navy/60 rounded-[20px] flex items-center justify-between gap-4 group shadow-xs hover:border-nest-blue/40 hover:shadow-md transition-all duration-250"
+                    >
+                      {/* Premium Custom Confirm Overlay */}
+                      {subjectToDelete === sub.id && (
+                        <div className="absolute inset-0 bg-white/95 dark:bg-slate-900/95 rounded-[20px] flex items-center justify-between px-6 z-10">
+                          <span className="text-xs font-bold text-slate-700 dark:text-slate-350">
+                            Remove <strong>{sub.name}</strong> from tracking?
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                deleteHomeSubject(sub.id)
+                                setSubjectToDelete(null)
+                              }}
+                              className="px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-650 text-white font-bold text-xs cursor-pointer shadow-xs"
+                            >
+                              Yes, Remove
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setSubjectToDelete(null)
+                              }}
+                              className="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-750"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
 
-                     <div className="flex items-center gap-4 shrink-0 min-w-[120px]">
-                      <div className="flex-1 hidden sm:block">
-                        <div className="w-full h-1.5 bg-nest-light-green dark:bg-slate-800/60 border border-nest-border/50 dark:border-white/5 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full"
-                            style={{ width: `${sub.progress}%`, backgroundColor: sub.color }}
-                          />
+                      <div className="flex items-center gap-3.5 min-w-0 flex-1 cursor-pointer" onClick={() => navigateTo('subjects')}>
+                        <div className={`w-9 h-9 rounded-xl ${sub.bgColor} flex items-center justify-center shrink-0 shadow-xs`}>
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <div className="truncate flex-1">
+                          <h3 className="font-display font-semibold text-sm sm:text-base text-nest-navy group-hover:text-nest-blue transition-colors truncate">
+                            {sub.name}
+                          </h3>
+                          <p className="text-xs text-nest-gray dark:text-slate-400 truncate mt-0.5">
+                            Next: {sub.nextTopic}
+                          </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-nest-navy">
-                          {sub.progress}%
-                        </span>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-nest-blue transition-colors" />
+                      
+                      <div className="flex items-center gap-4 shrink-0">
+                        {/* Progress slider / indicator */}
+                        <div className="flex items-center gap-2">
+                          <div className="w-16 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden hidden sm:block">
+                            <div className="h-full rounded-full" style={{ width: `${sub.progress}%`, backgroundColor: sub.color }} />
+                          </div>
+                          <span className="text-xs font-bold text-nest-navy">{sub.progress}%</span>
+                        </div>
+
+                        {/* Inline Actions */}
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              const newTopic = prompt(`Enter current/next topic for ${sub.name}:`, sub.nextTopic)
+                              if (newTopic !== null) updateHomeSubjectTopic(sub.id, newTopic)
+                            }}
+                            className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-nest-gray hover:text-nest-blue transition-colors cursor-pointer text-xs"
+                            title="Edit Topic"
+                          >
+                            📝
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              const newProg = prompt(`Enter new progress for ${sub.name} (0-100):`, sub.progress)
+                              if (newProg !== null) updateHomeSubjectProgress(sub.id, newProg)
+                            }}
+                            className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-nest-gray hover:text-nest-blue transition-colors cursor-pointer text-xs"
+                            title="Edit Progress"
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSubjectToDelete(sub.id)
+                            }}
+                            className="p-1.5 rounded-lg hover:bg-red-500/10 text-nest-gray hover:text-red-500 transition-colors cursor-pointer"
+                            title="Delete Subject"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
-            </div>
+                  )
+                })}
+              </div>
+            )}
           </motion.section>
 
           {/* Knowledge Growth */}
@@ -340,18 +454,14 @@ export default function HomeView() {
 
               <div className="flex-1 w-full space-y-4">
                 <p className="text-xs font-semibold text-nest-gray dark:text-[#a0af8c]">
-                  3 subjects progressing this week:
+                  {(homeSubjects || []).length} subject{(homeSubjects || []).length === 1 ? '' : 's'} progressing this week:
                 </p>
                 
                 <div className="space-y-3">
-                  {[
-                    { name: 'Java Programming', progress: 68, color: '#3971b8' },
-                    { name: 'DBMS', progress: 45, color: '#c8a415' },
-                    { name: 'Data Structures', progress: 32, color: '#5b6b2f' }
-                  ].map((item, idx) => (
-                    <div key={idx} className="space-y-1">
+                  {(homeSubjects || []).map((item, idx) => (
+                    <div key={item.id || idx} className="space-y-1">
                       <div className="flex items-center justify-between text-xs font-semibold">
-                        <span className="text-nest-navy">{item.name}</span>
+                        <span className="text-nest-navy truncate max-w-[150px]">{item.name}</span>
                         <span className="text-nest-navy">{item.progress}%</span>
                       </div>
                       <div className="w-full h-1 bg-nest-light-green dark:bg-slate-800/40 rounded-full overflow-hidden">
@@ -359,6 +469,9 @@ export default function HomeView() {
                       </div>
                     </div>
                   ))}
+                  {(homeSubjects || []).length === 0 && (
+                    <p className="text-xs text-slate-500 text-center py-2">No active subjects tracked.</p>
+                  )}
                 </div>
 
                 <div className="pt-1">
@@ -505,6 +618,163 @@ export default function HomeView() {
         </motion.section>
 
       </div>
+
+      {/* Add Subject Modal */}
+      <AnimatePresence>
+        {isAddSubjectOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsAddSubjectOpen(false)}
+            />
+            <motion.div
+              className="fixed inset-x-4 top-[10%] bottom-[10%] md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md glass-card bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl z-50 overflow-hidden flex flex-col border border-slate-350 dark:border-white/15 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              role="dialog"
+            >
+              <div className="flex items-center justify-between p-5 border-b border-slate-200 dark:border-white/10">
+                <h3 className="text-lg font-display font-black text-slate-900 dark:text-white">Add Study Subject</h3>
+                <button
+                  type="button"
+                  onClick={() => setIsAddSubjectOpen(false)}
+                  className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-5 overflow-y-auto max-h-[70vh] custom-scrollbar">
+                {/* 1. Quick Select from Syllabus */}
+                {syllabusSubjects.length > 0 && (
+                  <div className="space-y-2">
+                    <label className="block text-xs font-bold text-nest-navy dark:text-[#a0af8c] uppercase tracking-wider">
+                      Quick Fill from Syllabus
+                    </label>
+                    <div className="flex flex-wrap gap-2 max-h-24 overflow-y-auto p-1 border border-slate-200 dark:border-white/5 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
+                      {syllabusSubjects.map(sub => (
+                        <button
+                          key={sub.id}
+                          type="button"
+                          onClick={() => {
+                            setCustomSubName(sub.title || sub.name)
+                            // Set a default color if matched
+                            if (sub.title.toLowerCase().includes('java')) setCustomSubColor('#3971b8')
+                            else if (sub.title.toLowerCase().includes('database') || sub.title.toLowerCase().includes('dbms')) setCustomSubColor('#c8a415')
+                            else if (sub.title.toLowerCase().includes('data structure') || sub.title.toLowerCase().includes('dsa')) setCustomSubColor('#5b6b2f')
+                          }}
+                          className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 hover:bg-nest-blue/15 hover:text-nest-blue border border-slate-200 dark:border-slate-750 text-[11px] font-semibold transition-colors cursor-pointer shrink-0"
+                        >
+                          {sub.title || sub.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. Custom Input Form */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    if (!customSubName.trim()) return
+                    addHomeSubject({
+                      name: customSubName.trim(),
+                      nextTopic: customSubTopic.trim() || 'General Study',
+                      progress: customSubProgress,
+                      color: customSubColor
+                    })
+                    // Reset
+                    setCustomSubName('')
+                    setCustomSubTopic('')
+                    setCustomSubProgress(0)
+                    setCustomSubColor('#3971b8')
+                    setIsAddSubjectOpen(false)
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy dark:text-[#a0af8c] mb-1.5 uppercase tracking-wider">
+                      Subject Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={customSubName}
+                      onChange={(e) => setCustomSubName(e.target.value)}
+                      placeholder="e.g. Compiler Design"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-250 dark:border-white/10 bg-white dark:bg-slate-850 text-sm font-semibold text-nest-navy dark:text-white focus:outline-none focus:border-nest-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy dark:text-[#a0af8c] mb-1.5 uppercase tracking-wider">
+                      Current / Next Topic
+                    </label>
+                    <input
+                      type="text"
+                      value={customSubTopic}
+                      onChange={(e) => setCustomSubTopic(e.target.value)}
+                      placeholder="e.g. Lexical Analysis"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-250 dark:border-white/10 bg-white dark:bg-slate-850 text-sm font-semibold text-nest-navy dark:text-white focus:outline-none focus:border-nest-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-xs font-bold text-nest-navy dark:text-[#a0af8c] mb-1.5 uppercase tracking-wider">
+                      <span>Initial Progress</span>
+                      <span>{customSubProgress}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={customSubProgress}
+                      onChange={(e) => setCustomSubProgress(parseInt(e.target.value))}
+                      className="w-full h-1.5 bg-slate-200 dark:bg-slate-850 rounded-lg appearance-none cursor-pointer accent-nest-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-nest-navy dark:text-[#a0af8c] mb-1.5 uppercase tracking-wider">
+                      Theme Color
+                    </label>
+                    <div className="flex gap-3">
+                      {[
+                        { color: '#3971b8', label: 'Blue' },
+                        { color: '#c8a415', label: 'Gold' },
+                        { color: '#5b6b2f', label: 'Green' },
+                        { color: '#e11d48', label: 'Rose' },
+                        { color: '#7c3aed', label: 'Purple' }
+                      ].map(item => (
+                        <button
+                          key={item.color}
+                          type="button"
+                          onClick={() => setCustomSubColor(item.color)}
+                          className={`w-7 h-7 rounded-full border-2 transition-transform cursor-pointer hover:scale-110 ${customSubColor === item.color ? 'border-nest-navy dark:border-white scale-110' : 'border-transparent'}`}
+                          style={{ backgroundColor: item.color }}
+                          title={item.label}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-xl bg-nest-blue hover:bg-nest-blue/95 text-white font-bold text-sm shadow-md cursor-pointer transition-colors mt-2"
+                  >
+                    Add Subject to Tracking
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
