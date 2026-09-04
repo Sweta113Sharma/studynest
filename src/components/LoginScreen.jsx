@@ -6,8 +6,7 @@ import {
   Sparkles, 
   ArrowRight, 
   ShieldCheck, 
-  Sun, 
-  Moon, 
+
   GraduationCap, 
   BookOpen, 
   Cpu,
@@ -27,7 +26,8 @@ const PRESET_USERS = [
 ]
 
 export default function LoginScreen() {
-  const { handleLogin, darkMode, setDarkMode, usersDb, registerUser } = useApp()
+  const { handleLogin, usersDb, registerUser } = useApp()
+
   const [authMode, setAuthMode] = useState('login') // 'login' or 'signup'
 
   // Custom Login States
@@ -142,24 +142,6 @@ export default function LoginScreen() {
   return (
     <div className="min-h-screen relative flex flex-col justify-between p-4 md:p-8 lg:p-12 selection:bg-nest-green/20">
 
-      {/* Navigation Header with Dark Mode Toggle */}
-      <header className="w-full max-w-7xl mx-auto flex items-center justify-end z-20 mb-6 sm:mb-8">
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center">
-          <button
-            type="button"
-            onClick={() => setDarkMode(!darkMode)}
-            className="glass-pill-badge p-2.5 rounded-full text-nest-navy hover:text-nest-blue dark:hover:text-nest-gold transition-all duration-200 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-nest-blue shadow-md cursor-pointer"
-            aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
-          >
-            {darkMode ? (
-              <Sun className="w-5 h-5 text-nest-gold" />
-            ) : (
-              <Moon className="w-5 h-5 text-nest-navy" />
-            )}
-          </button>
-        </div>
-      </header>
 
       {/* Main Hero & Demo Section */}
       <main className="w-full max-w-[500px] mx-auto flex-1 flex flex-col justify-center items-center z-10 py-6">

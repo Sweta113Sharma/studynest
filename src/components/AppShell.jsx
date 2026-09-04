@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Home,
-  Sun,
-  Moon,
+
   Settings,
   LogOut,
   ShieldCheck,
@@ -51,8 +50,7 @@ export default function AppShell() {
     user,
     currentView,
     setCurrentView,
-    darkMode,
-    setDarkMode,
+
     handleLogout,
     getGreeting,
     goHome,
@@ -193,15 +191,6 @@ export default function AppShell() {
               <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[#E52A7B] rounded-full" />
             </button>
 
-            {/* Dark Mode Toggle */}
-            <button
-              type="button"
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-xl text-nest-gray hover:bg-nest-light-blue/20 dark:hover:bg-nest-light-input transition-colors cursor-pointer"
-              aria-label={darkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
-            >
-              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-            </button>
 
             {/* Settings Button */}
             <button

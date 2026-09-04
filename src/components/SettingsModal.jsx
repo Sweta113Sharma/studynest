@@ -5,7 +5,8 @@ import { aiService } from '../services/aiService'
 import { useApp } from '../context/AppContext'
 
 export default function SettingsModal({ isOpen, onClose }) {
-  const { user, darkMode, setDarkMode } = useApp()
+  const { user } = useApp()
+
 
   const [activeTab, setActiveTab] = useState('account')
   const [apiKey, setApiKey] = useState('')
@@ -171,7 +172,6 @@ export default function SettingsModal({ isOpen, onClose }) {
                 {activeTab === 'appearance' && (
                   <div className="space-y-4">
                     {[
-                      { label: 'Dark Mode', desc: 'Toggle dark/light theme', value: darkMode, onChange: setDarkMode },
                       { label: 'Animations', desc: 'Smooth transitions and motion effects', value: animations, onChange: setAnimations },
                     ].map((item, i) => (
                       <motion.div

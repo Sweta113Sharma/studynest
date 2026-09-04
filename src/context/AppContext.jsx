@@ -23,13 +23,7 @@ export function AppProvider({ children }) {
   const [quizState, setQuizState] = useState({ currentIndex: 0, score: 0, selectedOption: null, completed: false })
   const [currentView, setCurrentView] = useState(user ? 'home' : 'login')
 
-  const [darkMode, setDarkMode] = useState(() => {
-    try {
-      return localStorage.getItem('studynest_darkmode') === 'true'
-    } catch {
-      return false
-    }
-  })
+
 
 
 
@@ -356,19 +350,7 @@ export function AppProvider({ children }) {
 
   const isPoppingState = useRef(false)
 
-  // Handle dark mode class application
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    try {
-      localStorage.setItem('studynest_darkmode', darkMode.toString())
-    } catch (e) {
-      console.warn('Unable to write darkmode to localStorage', e)
-    }
-  }, [darkMode])
+
 
 
 
@@ -861,8 +843,7 @@ export function AppProvider({ children }) {
     setQuizState,
     currentView,
     setCurrentView,
-    darkMode,
-    setDarkMode,
+
 
     branches,
     semesters: mergedSemesters,
