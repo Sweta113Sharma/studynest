@@ -154,12 +154,11 @@ export default function LoginScreen() {
         >
           <div className="glass-panel-morphism rounded-[24px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(7,59,58,0.04)] border border-nest-border/60 dark:border-white/10 relative overflow-hidden">
             
-            {/* StudyNest Branding */}
             <div className="flex flex-col items-center gap-1.5 mb-6 select-none">
-              <div className="w-10 h-10 rounded-full bg-nest-light-blue dark:bg-nest-light-blue/20 border border-nest-border flex items-center justify-center p-0.5 shadow-sm">
-                <GraduationCap className="w-5 h-5 text-nest-green" />
+              <div className="w-16 h-16 rounded-full overflow-hidden shadow-md flex-shrink-0">
+                <img src="/owl-logo.png" alt="StudyNest Logo" className="w-full h-full object-cover" />
               </div>
-              <span className="font-display font-semibold text-sm text-nest-navy dark:text-white tracking-tight">
+              <span className="font-display font-semibold text-sm text-nest-navy tracking-tight">
                 Study<span className="text-nest-green font-bold">Nest</span>
               </span>
             </div>

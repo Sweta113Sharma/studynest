@@ -104,8 +104,8 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         {/* Top Branding */}
         <div>
           <div className="p-5 flex items-center gap-3 border-b border-nest-border">
-            <div className="w-10 h-10 rounded-full bg-nest-light-blue dark:bg-nest-light-blue/20 border border-nest-blue/20 flex items-center justify-center p-0.5 shadow-sm overflow-hidden">
-              <MascotOwl state="default" size="sm" animate={false} />
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
+              <img src="/owl-logo.png" alt="StudyNest Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="font-display font-black text-lg text-nest-navy dark:text-white leading-tight tracking-tight flex items-center gap-1">
