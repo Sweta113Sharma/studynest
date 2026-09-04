@@ -164,7 +164,7 @@ export default function AppShell() {
 
             {/* Mobile Logo Title */}
             <div className="flex items-center gap-2 lg:hidden">
-              <img src="/owl-logo.png" alt="StudyNest" className="w-7 h-7 rounded-full object-cover" />
+              <img src={`${import.meta.env.BASE_URL}owl-logo.png`} alt="StudyNest" className="w-7 h-7 rounded-full object-cover" />
               <span className="font-display font-black text-base text-nest-navy">
                 Study<span className="text-nest-blue">Nest</span>
               </span>
@@ -172,7 +172,7 @@ export default function AppShell() {
 
             {/* Desktop Breadcrumb */}
             <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-nest-gray">
-              <img src="/owl-logo.png" alt="StudyNest" className="w-5 h-5 rounded-full object-cover" />
+              <img src={`${import.meta.env.BASE_URL}owl-logo.png`} alt="StudyNest" className="w-5 h-5 rounded-full object-cover" />
               <span className="font-bold text-nest-navy">StudyNest</span>
               <span className="text-slate-300">/</span>
               <span className="capitalize">{currentView === 'home' ? 'Home' : currentView.replace('-', ' ')}</span>

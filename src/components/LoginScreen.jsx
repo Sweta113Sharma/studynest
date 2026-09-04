@@ -156,7 +156,7 @@ export default function LoginScreen() {
             
             <div className="flex flex-col items-center gap-1.5 mb-6 select-none">
               <div className="w-16 h-16 rounded-full overflow-hidden shadow-md flex-shrink-0">
-                <img src="/owl-logo.png" alt="StudyNest Logo" className="w-full h-full object-cover" />
+                <img src={`${import.meta.env.BASE_URL}owl-logo.png`} alt="StudyNest Logo" className="w-full h-full object-cover" />
               </div>
               <span className="font-display font-semibold text-sm text-nest-navy tracking-tight">
                 Study<span className="text-nest-green font-bold">Nest</span>

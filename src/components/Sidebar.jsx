@@ -105,7 +105,7 @@ export default function Sidebar({ onOpenSettings, onOpenAI, isMobileOpen, setIsM
         <div>
           <div className="p-5 flex items-center gap-3 border-b border-nest-border">
             <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
-              <img src="/owl-logo.png" alt="StudyNest Logo" className="w-full h-full object-cover" />
+              <img src={`${import.meta.env.BASE_URL}owl-logo.png`} alt="StudyNest Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="font-display font-black text-lg text-nest-navy dark:text-white leading-tight tracking-tight flex items-center gap-1">
