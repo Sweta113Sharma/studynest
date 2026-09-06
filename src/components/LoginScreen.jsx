@@ -94,10 +94,15 @@ export default function LoginScreen() {
 
     const customUser = usersDb.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
     if (customUser) {
-      if (!customUser.password || customUser.password !== loginPassword) {
+      if (!customUser.password) {
+        setLoginError("This account has no password set. Please contact support.")
+        return
+      }
+      if (customUser.password.trim() !== loginPassword.trim()) {
         setLoginError("Incorrect password. Please try again!")
         return
       }
+
       setIsLoading(true)
       await new Promise(r => setTimeout(r, 500))
       handleLogin({
@@ -140,7 +145,7 @@ export default function LoginScreen() {
       email: signupEmail.trim().toLowerCase(),
       branch: signupBranch,
       role: signupRole,
-      password: signupPassword,
+      password: signupPassword.trim(),
       initials: signupName.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2)
     }
 
