@@ -555,8 +555,40 @@ export default function StudyTimer({ isFullPage = false }) {
 
   // ── FULL-PAGE MODE: full-width two-column layout ──
   if (isFullPage) {
+    const quirkyTags = [
+      { text: '🤫 Shhhh, it\'s study time', color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-600/40' },
+      { text: '🧠 Big brain mode: ON', color: 'bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-300 dark:border-violet-600/40' },
+      { text: '📵 Phone? Never heard of it', color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border-rose-300 dark:border-rose-600/40' },
+      { text: '☕ Fuelled by deadlines', color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-600/40' },
+      { text: '🔥 No cap, we're grinding', color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-300 dark:border-orange-600/40' },
+    ]
+
     return (
-      <div className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 overflow-hidden">
+      <div className="w-full space-y-4">
+
+        {/* Quirky Tags Row */}
+        <motion.div
+          className="flex flex-wrap gap-2"
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+        >
+          {quirkyTags.map((tag, i) => (
+            <motion.span
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: -10, scale: 0.85 },
+                visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 18 } }
+              }}
+              className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold border ${tag.color} cursor-default select-none tracking-wide`}
+            >
+              {tag.text}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        {/* Timer Card */}
+        <div className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 overflow-hidden">
 
         {/* Top bar */}
         <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-slate-100 dark:border-white/8">
@@ -799,6 +831,7 @@ export default function StudyTimer({ isFullPage = false }) {
           </div>
         </div>
       </div>
+    </div>
     )
   }
 
