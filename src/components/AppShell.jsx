@@ -115,18 +115,7 @@ export default function AppShell() {
         return <FlashcardsView key="flashcards" />
       case 'focus':
         return (
-          <div key="focus" className="max-w-3xl mx-auto py-4">
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center p-3 rounded-3xl bg-nest-cream dark:bg-slate-800 border border-nest-gold/40 mb-3">
-                <MascotOwl state="focus" size="lg" />
-              </div>
-              <h1 className="text-2xl font-display font-black text-nest-navy dark:text-white">
-                Quiet Study Nest
-              </h1>
-              <p className="text-xs sm:text-sm text-nest-gray dark:text-slate-400 mt-1">
-                Distraction-free focus timer with ambient soundscapes. Complete sessions to nourish your streak!
-              </p>
-            </div>
+          <div key="focus" className="w-full">
             <StudyTimer isFullPage={true} />
           </div>
         )

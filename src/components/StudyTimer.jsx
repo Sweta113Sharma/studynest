@@ -553,31 +553,251 @@ export default function StudyTimer({ isFullPage = false }) {
     </>
   )
 
-  // ── FULL-PAGE MODE: render as an inline card, no popup ──
+  // ── FULL-PAGE MODE: full-width two-column layout ──
   if (isFullPage) {
     return (
-      <div className="w-full max-w-lg mx-auto bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200 dark:border-white/10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-500/30">
+      <div className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 overflow-hidden">
+
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-slate-100 dark:border-white/8">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-2xl bg-amber-500/15 border border-amber-500/30">
               <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
             </div>
             <div>
-              <h3 className="font-display font-extrabold text-base text-slate-900 dark:text-white tracking-wide">Focus Timer</h3>
-              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Boost your study productivity</p>
+              <h2 className="font-display font-black text-lg text-slate-900 dark:text-white tracking-tight">Quiet Study Nest</h2>
+              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Distraction-free focus timer · complete sessions to build your streak</p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className="p-2 rounded-xl hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 transition-colors"
-            aria-label={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
-          >
-            {soundEnabled ? <Volume2 className="w-5 h-5 text-amber-600 dark:text-amber-400" /> : <VolumeX className="w-5 h-5 text-slate-500" />}
-          </button>
+          <div className="flex items-center gap-2">
+            {sessionsCompleted > 0 && (
+              <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-bold">
+                {sessionsCompleted} ⚡ today
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className="p-2 rounded-xl hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 transition-colors"
+              aria-label={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
+            >
+              {soundEnabled ? <Volume2 className="w-5 h-5 text-amber-600 dark:text-amber-400" /> : <VolumeX className="w-5 h-5 text-slate-500" />}
+            </button>
+          </div>
         </div>
-        {timerBody}
+
+        {/* Main two-column body */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/8">
+
+          {/* LEFT: Settings Panel */}
+          <div className="p-6 sm:p-8 space-y-6">
+
+            {/* Mode Tabs */}
+            <div>
+              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Timer Mode</p>
+              <div className="grid grid-cols-3 gap-1.5 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 text-xs font-bold">
+                {Object.keys(TIMER_MODES).map((key) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => switchMode(key)}
+                    className={`py-2 rounded-xl transition-all focus-visible:ring-2 focus-visible:ring-amber-500 ${
+                      mode === key
+                        ? 'bg-amber-600 text-white font-bold shadow-sm'
+                        : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {TIMER_MODES[key].label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Ambient Sound */}
+            {mode === 'focus' && (
+              <div>
+                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">🎧 Ambient Sound</p>
+                <div className="grid grid-cols-5 gap-1.5 text-[10px] font-bold">
+                  {[
+                    { id: 'none', label: 'Off' },
+                    { id: 'white', label: 'White' },
+                    { id: 'brown', label: 'Brown' },
+                    { id: 'rain', label: 'Rain' },
+                    { id: 'binaural', label: 'Binaural' }
+                  ].map(snd => (
+                    <button
+                      key={snd.id}
+                      type="button"
+                      onClick={() => { requestNotificationPermission(); setAmbientSound(snd.id); }}
+                      className={`py-2 rounded-xl transition-all focus-visible:ring-1 focus-visible:ring-amber-500 ${
+                        ambientSound === snd.id
+                          ? 'bg-amber-600 text-white shadow-sm'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/8 hover:border-amber-500/30'
+                      }`}
+                    >
+                      {snd.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Focus Minutes */}
+            {mode === 'focus' && (
+              <div>
+                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">⏱ Set Focus Duration</p>
+                <div className="flex items-center gap-2 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
+                    disabled={isRunning || customFocusMinutes <= 5}
+                    className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    max="300"
+                    value={customFocusMinutes}
+                    disabled={isRunning}
+                    onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
+                    className="flex-1 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl py-2 text-xl font-mono font-black text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                  <span className="text-sm text-slate-500 font-semibold">min</span>
+                  <button
+                    type="button"
+                    onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
+                    disabled={isRunning || customFocusMinutes >= 300}
+                    className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {PRESET_MINUTES.map((mins) => (
+                    <button
+                      key={mins}
+                      type="button"
+                      onClick={() => updateFocusMinutes(mins)}
+                      disabled={isRunning}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                        customFocusMinutes === mins
+                          ? 'bg-amber-600 text-white border border-amber-500 shadow-sm'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-white/10 hover:border-amber-400'
+                      }`}
+                    >
+                      {mins}m
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sessions stat */}
+            <div className="pt-2 border-t border-slate-100 dark:border-white/8">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-semibold text-slate-500 dark:text-slate-400">Completed today</span>
+                <span className="font-black text-amber-700 dark:text-amber-300 bg-amber-500/12 px-3 py-1 rounded-lg border border-amber-500/25">
+                  {sessionsCompleted} sessions · {sessionsCompleted * customFocusMinutes} min
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: Timer Circle + Controls */}
+          <div className="p-6 sm:p-8 flex flex-col items-center justify-center gap-8">
+
+            {showCompletionModal ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center space-y-5 w-full max-w-sm"
+              >
+                <div className="relative w-20 h-20 mx-auto flex items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-amber-700 shadow-xl text-4xl">
+                  <span>🎉</span>
+                </div>
+                <div>
+                  <h4 className="text-xl font-black text-slate-900 dark:text-white font-display">Focus Session Complete!</h4>
+                  <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
+                </div>
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={handleStartBreak}
+                    className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+                  >
+                    <Coffee className="w-4 h-4" /> Start 5-Min Short Break
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleKeepFocusGoing}
+                    className="w-full py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+                  >
+                    <Sparkles className="w-4 h-4" /> Keep Focus Going
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDismissCompletion}
+                    className="w-full py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm border border-slate-200 dark:border-white/10 transition-colors"
+                  >
+                    Done for Now
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <>
+                {/* Large Timer Ring */}
+                <div className="relative w-64 h-64 flex items-center justify-center">
+                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="44" className="stroke-slate-100 dark:stroke-slate-800" strokeWidth="5" fill="transparent" />
+                    <motion.circle
+                      cx="50" cy="50" r="44"
+                      stroke="#D97706"
+                      strokeWidth="5"
+                      strokeDasharray="276.46"
+                      strokeDashoffset={276.46 - (276.46 * progressPercent) / 100}
+                      strokeLinecap="round"
+                      fill="transparent"
+                      transition={{ duration: 0.5 }}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-5xl sm:text-6xl font-mono font-black text-slate-900 dark:text-white tabular-nums">
+                      {formatTime(timeLeft)}
+                    </span>
+                    <span className="mt-2 text-xs text-amber-700 dark:text-amber-300 font-bold capitalize flex items-center gap-1.5 bg-amber-500/15 px-3 py-1 rounded-full border border-amber-500/30">
+                      {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={resetTimer}
+                    className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15 shadow-sm flex items-center justify-center hover:rotate-180 transition-all hover:bg-amber-500/10"
+                    aria-label="Reset Timer"
+                  >
+                    <RotateCcw className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleTimer}
+                    className="px-10 py-4 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-black text-base flex items-center gap-2.5 shadow-lg hover:scale-105 active:scale-95 transition-all"
+                  >
+                    {isRunning ? (
+                      <><Pause className="w-5 h-5 fill-current" /> Pause</>
+                    ) : (
+                      <><Play className="w-5 h-5 fill-current" /> Start Focus</>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     )
   }
