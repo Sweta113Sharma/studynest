@@ -71,6 +71,15 @@ export default function LoginScreen() {
 
     const presetUser = PRESET_USERS.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
     if (presetUser) {
+      // Preset users: if the preset has a password, check it; otherwise block login with any password
+      if (presetUser.password && presetUser.password !== loginPassword) {
+        setLoginError("Incorrect password. Please try again!")
+        return
+      }
+      if (!presetUser.password && loginPassword) {
+        // Demo accounts have no password — accept any input for demo convenience
+        // (intentional: demo accounts are open-access)
+      }
       setIsLoading(true)
       await new Promise(r => setTimeout(r, 500))
       handleLogin({
@@ -85,7 +94,7 @@ export default function LoginScreen() {
 
     const customUser = usersDb.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
     if (customUser) {
-      if (customUser.password && customUser.password !== loginPassword) {
+      if (!customUser.password || customUser.password !== loginPassword) {
         setLoginError("Incorrect password. Please try again!")
         return
       }
