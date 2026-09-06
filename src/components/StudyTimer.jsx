@@ -556,11 +556,11 @@ export default function StudyTimer({ isFullPage = false }) {
   // ── FULL-PAGE MODE: full-width two-column layout ──
   if (isFullPage) {
     const quirkyTags = [
-      { text: '🤫 Shhhh, it\'s study time', color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-600/40' },
-      { text: '🧠 Big brain mode: ON', color: 'bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-300 dark:border-violet-600/40' },
-      { text: '📵 Phone? Never heard of it', color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border-rose-300 dark:border-rose-600/40' },
-      { text: '☕ Fuelled by deadlines', color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-600/40' },
-      { text: '🔥 No cap, we're grinding', color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-300 dark:border-orange-600/40' },
+      { text: "🤫 Shhhh, it's study time", color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-600/40' },
+      { text: "🧠 Big brain mode: ON", color: 'bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-300 dark:border-violet-600/40' },
+      { text: "📵 Phone? Never heard of it", color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border-rose-300 dark:border-rose-600/40' },
+      { text: "☕ Fuelled by deadlines", color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-600/40' },
+      { text: "🔥 No cap, we're grinding", color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-300 dark:border-orange-600/40' },
     ]
 
     return (
@@ -571,7 +571,10 @@ export default function StudyTimer({ isFullPage = false }) {
           className="flex flex-wrap gap-2"
           initial="hidden"
           animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+          variants={{
+            hidden: { opacity: 1 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.09, delayChildren: 0.05 } }
+          }}
         >
           {quirkyTags.map((tag, i) => (
             <motion.span
