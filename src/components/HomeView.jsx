@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   BookOpen,
@@ -60,6 +60,13 @@ export default function HomeView() {
 
   const [newTaskInput, setNewTaskInput] = useState('')
   const [showTaskInput, setShowTaskInput] = useState(false)
+
+  // Live clock
+  const [now, setNow] = useState(new Date())
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   // Add Subject Modal States
   const [isAddSubjectOpen, setIsAddSubjectOpen] = useState(false)
@@ -172,12 +179,21 @@ export default function HomeView() {
             Ready to build your knowledge nest today?
           </p>
         </div>
-        {/* Date Capsule Badge */}
-        <div className="flex items-center gap-2 self-start sm:self-center px-4 py-2 rounded-full bg-nest-light-green dark:bg-nest-dark-input/80 border border-nest-green/40 dark:border-nest-green/25 shadow-xs">
-          <Calendar className="w-4 h-4 text-nest-blue" />
-          <span className="text-xs font-bold text-nest-navy">
-            {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-          </span>
+        {/* Date + Live Clock Badge */}
+        <div className="flex items-center gap-3 self-start sm:self-center px-4 py-2.5 rounded-2xl bg-nest-light-green dark:bg-nest-dark-input/80 border border-nest-green/40 dark:border-nest-green/25 shadow-xs">
+          <div className="flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-nest-blue" />
+            <span className="text-xs font-bold text-nest-navy dark:text-[#a0af8c]">
+              {now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            </span>
+          </div>
+          <div className="w-px h-4 bg-nest-green/30" />
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-nest-green" />
+            <span className="text-xs font-black tabular-nums text-nest-navy dark:text-white tracking-wide">
+              {now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
+            </span>
+          </div>
         </div>
       </motion.div>
 
