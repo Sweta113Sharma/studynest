@@ -113,9 +113,20 @@ export function AppProvider({ children }) {
 
   const registerUser = (newProfile) => {
     setUsersDb(prev => {
-      const exists = prev.some(u => u.email.toLowerCase() === newProfile.email.toLowerCase())
-      if (exists) return prev
-      const updated = [...prev, newProfile]
+      const existingIndex = prev.findIndex(u => u.email.toLowerCase() === newProfile.email.toLowerCase())
+      let updated
+      if (existingIndex !== -1) {
+        // If the account exists but has no password, update it with the new profile (including password)
+        if (!prev[existingIndex].password) {
+          updated = [...prev]
+          updated[existingIndex] = { ...prev[existingIndex], ...newProfile }
+        } else {
+          // Account already fully registered — don't overwrite
+          return prev
+        }
+      } else {
+        updated = [...prev, newProfile]
+      }
       try {
         localStorage.setItem('studynest_users_db', JSON.stringify(updated))
       } catch (e) {

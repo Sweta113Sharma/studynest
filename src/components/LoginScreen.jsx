@@ -94,13 +94,13 @@ export default function LoginScreen() {
 
     const customUser = usersDb.find(u => u.email.toLowerCase() === email.trim().toLowerCase())
     if (customUser) {
-      if (!customUser.password) {
-        setLoginError("This account has no password set. Please contact support.")
-        return
-      }
-      if (customUser.password.trim() !== loginPassword.trim()) {
+      if (customUser.password && customUser.password.trim() !== loginPassword.trim()) {
         setLoginError("Incorrect password. Please try again!")
         return
+      }
+      // If account has no password (legacy/stale entry), allow login and save the password now
+      if (!customUser.password && loginPassword.trim()) {
+        registerUser({ ...customUser, password: loginPassword.trim() })
       }
 
       setIsLoading(true)
