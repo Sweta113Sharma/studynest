@@ -181,60 +181,6 @@ export default function HomeView() {
         </div>
       </motion.div>
 
-      {/* 2. Today's Study Goal Hero Card (Dominant Component) */}
-      <motion.section
-        variants={itemVariants}
-        className="w-full p-6 sm:p-8 rounded-[28px] bg-nest-navy text-white shadow-xl border border-nest-green/25 relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 group hover:border-nest-green/40 transition-all duration-300"
-        aria-label="Today's Study Goal"
-      >
-        {/* Abstract gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-nest-blue/15 via-nest-green/5 to-transparent pointer-events-none" />
-
-        <div className="relative z-10 space-y-4 max-w-lg">
-          <span className="text-[10px] font-bold text-nest-gold tracking-widest uppercase block">
-            Today's Study Goal
-          </span>
-
-          <div className="space-y-2">
-            <div className="flex items-baseline gap-2">
-              <span className="text-4xl sm:text-5xl font-black font-display text-nest-cream">72%</span>
-              <span className="text-xs sm:text-sm font-medium text-nest-green">Daily syllabus revision complete</span>
-            </div>
-
-            {/* Gold/Vanilla Progress Bar */}
-            <div className="w-full max-w-md h-2.5 bg-black/40 rounded-full overflow-hidden p-0.5 border border-white/10 shadow-[inset_0_1px_3px_rgba(0,0,0,0.5)]">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '72%' }}
-                transition={{ duration: 1, ease: 'easeOut' }}
-                className="h-full bg-gradient-to-r from-nest-gold to-nest-green rounded-full shadow-[0_0_8px_rgba(246,230,165,0.4)]"
-              />
-            </div>
-          </div>
-
-          <p className="text-xs sm:text-sm text-nest-cream/90 leading-relaxed font-normal">
-            You're on track to master <span className="font-bold text-nest-gold">OOP Polymorphism</span> and finish <span className="font-bold text-nest-gold">Unit 2</span>.
-          </p>
-
-          <div className="pt-1">
-            <button
-              type="button"
-              onClick={() => navigateTo('subjects')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-nest-gold hover:bg-nest-gold/90 text-nest-navy font-black text-xs sm:text-sm shadow-md hover:scale-102 active:scale-95 transition-all cursor-pointer"
-            >
-              Start Studying →
-            </button>
-          </div>
-        </div>
-
-        {/* Mascot Owl Illustration on Right */}
-        <div className="relative z-10 shrink-0 pointer-events-none hidden sm:block pr-4 transform group-hover:scale-105 transition-transform duration-300">
-          <MascotOwl state="reading" size="xl" />
-        </div>
-
-        {/* Background Ambient Glow */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-nest-green/15 rounded-full blur-3xl pointer-events-none" />
-      </motion.section>
 
       {/* 3. Today's Focus Strip (Option B) - Compact Low Profile */}
       <motion.div
