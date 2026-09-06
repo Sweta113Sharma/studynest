@@ -100,7 +100,7 @@ export default function SubjectsView() {
 
       <motion.header variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-col gap-3">
-          <h1 className="text-3xl md:text-4xl font-display font-black tracking-tight bg-gradient-to-r from-nest-navy via-nest-blue to-nest-green bg-clip-text text-transparent dark:from-white dark:via-nest-green dark:to-nest-gold leading-tight">
+          <h1 className="text-3xl md:text-4xl font-display font-black tracking-tight text-nest-navy dark:text-white leading-tight">
             {branchTitle === 'Engineering' ? 'Engineering' : `${branchTitle} Engineering`}
           </h1>
           <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-nest-green/15 border border-nest-green/30 text-nest-navy dark:text-nest-green text-xs font-bold tracking-wide uppercase">
