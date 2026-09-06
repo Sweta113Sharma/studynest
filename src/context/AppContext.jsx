@@ -216,14 +216,14 @@ export function AppProvider({ children }) {
   const [tasks, setTasks] = useState(() => {
     try {
       const saved = localStorage.getItem('studynest_study_tasks')
-      if (saved) return JSON.parse(saved)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        // Filter out the old hardcoded demo tasks so users start fresh
+        const legacyIds = new Set(['task-1', 'task-2', 'task-3', 'task-4'])
+        return parsed.filter(t => !legacyIds.has(t.id))
+      }
     } catch {}
-    return [
-      { id: 'task-1', text: 'Complete Java OOP notes revision', subject: 'Java Programming', priority: 'high', completed: false, dueDate: 'Today' },
-      { id: 'task-2', text: 'Practice DSA Tree Traversal quiz', subject: 'Data Structures', priority: 'medium', completed: false, dueDate: 'Tomorrow' },
-      { id: 'task-3', text: 'Solve Math Characteristic Equations unit 2', subject: 'Mathematics', priority: 'low', completed: true, dueDate: 'Completed' },
-      { id: 'task-4', text: 'Prepare DBMS Normalization cheat-sheet', subject: 'DBMS', priority: 'medium', completed: false, dueDate: 'In 2 days' }
-    ]
+    return []
   })
 
   useEffect(() => {
