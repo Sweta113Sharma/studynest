@@ -99,11 +99,14 @@ export default function SubjectsView() {
       </motion.button>
 
       <motion.header variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-display font-black text-slate-900 dark:text-white mb-1">
+        <div className="flex flex-col gap-3">
+          <h1 className="text-3xl md:text-4xl font-display font-black tracking-tight bg-gradient-to-r from-nest-navy via-nest-blue to-nest-green bg-clip-text text-transparent dark:from-white dark:via-nest-green dark:to-nest-gold leading-tight">
             {branchTitle === 'Engineering' ? 'Engineering' : `${branchTitle} Engineering`}
           </h1>
-          <p className="text-slate-700 dark:text-slate-300 text-sm font-semibold">Year {selectedYear}</p>
+          <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-nest-green/15 border border-nest-green/30 text-nest-navy dark:text-nest-green text-xs font-bold tracking-wide uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-nest-green inline-block"></span>
+            Year {selectedYear}
+          </span>
         </div>
 
         {/* Instant Search Bar */}
