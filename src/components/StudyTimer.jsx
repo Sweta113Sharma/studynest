@@ -553,288 +553,362 @@ export default function StudyTimer({ isFullPage = false }) {
     </>
   )
 
-  // ── FULL-PAGE MODE: full-width two-column layout ──
+  // ── COLOR THEMES — one picked randomly per mount ──
+  const FOCUS_THEMES = [
+    { name: 'Aurora',   bg: 'from-emerald-950 via-teal-900 to-cyan-950',   accent: '#34d399', accentRgb: '52,211,153',  btnBg: 'bg-emerald-500 hover:bg-emerald-600', pillBg: 'bg-emerald-500/15', pillBorder: 'border-emerald-500/30', pillText: 'text-emerald-300', cardBg: 'bg-emerald-950/60', borderColor: 'border-emerald-500/20', headlineColor: 'text-emerald-300', subText: 'text-emerald-200/70', tabActive: 'bg-emerald-500 text-white', tagBg: 'bg-emerald-500/12', tagText: 'text-emerald-300', tagBorder: 'border-emerald-500/25', completionGrad: 'from-emerald-500 to-emerald-700' },
+    { name: 'Sunset',   bg: 'from-orange-950 via-rose-950 to-red-950',     accent: '#fb923c', accentRgb: '251,146,60',  btnBg: 'bg-orange-500 hover:bg-orange-600',  pillBg: 'bg-orange-500/15',  pillBorder: 'border-orange-500/30',  pillText: 'text-orange-300',  cardBg: 'bg-orange-950/60',  borderColor: 'border-orange-500/20',  headlineColor: 'text-orange-300',  subText: 'text-orange-200/70',  tabActive: 'bg-orange-500 text-white',  tagBg: 'bg-orange-500/12',  tagText: 'text-orange-300',  tagBorder: 'border-orange-500/25',  completionGrad: 'from-orange-500 to-orange-700' },
+    { name: 'Cosmic',   bg: 'from-violet-950 via-purple-950 to-indigo-950', accent: '#a78bfa', accentRgb: '167,139,250', btnBg: 'bg-violet-500 hover:bg-violet-600',  pillBg: 'bg-violet-500/15',  pillBorder: 'border-violet-500/30',  pillText: 'text-violet-300',  cardBg: 'bg-violet-950/60',  borderColor: 'border-violet-500/20',  headlineColor: 'text-violet-300',  subText: 'text-violet-200/70',  tabActive: 'bg-violet-500 text-white',  tagBg: 'bg-violet-500/12',  tagText: 'text-violet-300',  tagBorder: 'border-violet-500/25',  completionGrad: 'from-violet-500 to-violet-700' },
+    { name: 'Ocean',    bg: 'from-blue-950 via-sky-950 to-cyan-950',       accent: '#38bdf8', accentRgb: '56,189,248',  btnBg: 'bg-sky-500 hover:bg-sky-600',       pillBg: 'bg-sky-500/15',     pillBorder: 'border-sky-500/30',     pillText: 'text-sky-300',     cardBg: 'bg-sky-950/60',     borderColor: 'border-sky-500/20',     headlineColor: 'text-sky-300',     subText: 'text-sky-200/70',     tabActive: 'bg-sky-500 text-white',     tagBg: 'bg-sky-500/12',     tagText: 'text-sky-300',     tagBorder: 'border-sky-500/25',     completionGrad: 'from-sky-500 to-sky-700' },
+    { name: 'Cherry',   bg: 'from-pink-950 via-rose-950 to-fuchsia-950',   accent: '#f472b6', accentRgb: '244,114,182', btnBg: 'bg-pink-500 hover:bg-pink-600',     pillBg: 'bg-pink-500/15',    pillBorder: 'border-pink-500/30',    pillText: 'text-pink-300',    cardBg: 'bg-pink-950/60',    borderColor: 'border-pink-500/20',    headlineColor: 'text-pink-300',    subText: 'text-pink-200/70',    tabActive: 'bg-pink-500 text-white',    tagBg: 'bg-pink-500/12',    tagText: 'text-pink-300',    tagBorder: 'border-pink-500/25',    completionGrad: 'from-pink-500 to-pink-700' },
+    { name: 'Mint',     bg: 'from-teal-950 via-emerald-950 to-green-950',  accent: '#2dd4bf', accentRgb: '45,212,191',  btnBg: 'bg-teal-500 hover:bg-teal-600',     pillBg: 'bg-teal-500/15',    pillBorder: 'border-teal-500/30',    pillText: 'text-teal-300',    cardBg: 'bg-teal-950/60',    borderColor: 'border-teal-500/20',    headlineColor: 'text-teal-300',    subText: 'text-teal-200/70',    tabActive: 'bg-teal-500 text-white',    tagBg: 'bg-teal-500/12',    tagText: 'text-teal-300',    tagBorder: 'border-teal-500/25',    completionGrad: 'from-teal-500 to-teal-700' },
+    { name: 'Amber',    bg: 'from-amber-950 via-yellow-950 to-orange-950', accent: '#fbbf24', accentRgb: '251,191,36',  btnBg: 'bg-amber-500 hover:bg-amber-600',   pillBg: 'bg-amber-500/15',   pillBorder: 'border-amber-500/30',   pillText: 'text-amber-300',   cardBg: 'bg-amber-950/60',   borderColor: 'border-amber-500/20',   headlineColor: 'text-amber-300',   subText: 'text-amber-200/70',   tabActive: 'bg-amber-500 text-white',   tagBg: 'bg-amber-500/12',   tagText: 'text-amber-300',   tagBorder: 'border-amber-500/25',   completionGrad: 'from-amber-500 to-amber-700' },
+    { name: 'Midnight', bg: 'from-slate-950 via-zinc-900 to-neutral-950',  accent: '#94a3b8', accentRgb: '148,163,184', btnBg: 'bg-slate-500 hover:bg-slate-600',   pillBg: 'bg-slate-500/15',   pillBorder: 'border-slate-400/30',   pillText: 'text-slate-300',   cardBg: 'bg-slate-900/80',   borderColor: 'border-slate-400/20',   headlineColor: 'text-slate-200',   subText: 'text-slate-400',       tabActive: 'bg-slate-500 text-white',   tagBg: 'bg-slate-500/12',   tagText: 'text-slate-300',   tagBorder: 'border-slate-400/25',   completionGrad: 'from-slate-500 to-slate-700' },
+  ]
+
+  // Pick a random theme once on mount
+  const [focusTheme] = useState(() => FOCUS_THEMES[Math.floor(Math.random() * FOCUS_THEMES.length)])
+
+  // ── QUIRKY LINES — pick a random subset each mount, reveal one by one ──
+  const ALL_QUIRKY_LINES = [
+    { emoji: "🤫", text: "Shhhh, it's study time." },
+    { emoji: "🧠", text: "Big brain mode: ON." },
+    { emoji: "📵", text: "Phone? Never heard of it." },
+    { emoji: "☕", text: "Fuelled by deadlines." },
+    { emoji: "🔥", text: "No cap, we're grinding." },
+    { emoji: "🦉", text: "The owl believes in you." },
+    { emoji: "💀", text: "Exams don't care. Neither do we." },
+    { emoji: "🚀", text: "Your future self said thanks." },
+    { emoji: "😤", text: "Distraction? Blocked. Focus? Locked." },
+    { emoji: "🎯", text: "One session at a time." },
+    { emoji: "⚡", text: "Charging up that GPA." },
+    { emoji: "🌙", text: "Late nights, big dreams." },
+    { emoji: "🎧", text: "Headphones on. World off." },
+    { emoji: "📚", text: "Stack those knowledge bricks." },
+    { emoji: "💡", text: "Every page counts." },
+    { emoji: "🏔️", text: "Climb that syllabus mountain." },
+    { emoji: "🔒", text: "Lock in. Zone in. Win." },
+    { emoji: "✨", text: "You're about to level up." },
+  ]
+
+  // Pick 3-5 random lines once on mount
+  const [selectedLines] = useState(() => {
+    const shuffled = [...ALL_QUIRKY_LINES].sort(() => Math.random() - 0.5)
+    const count = 3 + Math.floor(Math.random() * 3) // 3 to 5
+    return shuffled.slice(0, count)
+  })
+
+  // ── FULL-PAGE MODE: immersive themed layout ──
   if (isFullPage) {
-    const quirkyTags = [
-      { text: "🤫 Shhhh, it's study time", color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-600/40' },
-      { text: "🧠 Big brain mode: ON", color: 'bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 border-violet-300 dark:border-violet-600/40' },
-      { text: "📵 Phone? Never heard of it", color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border-rose-300 dark:border-rose-600/40' },
-      { text: "☕ Fuelled by deadlines", color: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-600/40' },
-      { text: "🔥 No cap, we're grinding", color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 border-orange-300 dark:border-orange-600/40' },
-    ]
+    const t = focusTheme
 
     return (
-      <div className="w-full space-y-4">
-
-        {/* Quirky Tags Row */}
-        <motion.div
-          className="flex flex-wrap gap-2"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 1 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.09, delayChildren: 0.05 } }
-          }}
-        >
-          {quirkyTags.map((tag, i) => (
-            <motion.span
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: -10, scale: 0.85 },
-                visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 260, damping: 18 } }
-              }}
-              className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold border ${tag.color} cursor-default select-none tracking-wide`}
-            >
-              {tag.text}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        {/* Timer Card */}
-        <div className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 overflow-hidden">
-
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-slate-100 dark:border-white/8">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-amber-500/15 border border-amber-500/30">
-              <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div>
-              <h2 className="font-display font-black text-lg text-slate-900 dark:text-white tracking-tight">Quiet Study Nest</h2>
-              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Distraction-free focus timer · complete sessions to build your streak</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {sessionsCompleted > 0 && (
-              <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs font-bold">
-                {sessionsCompleted} ⚡ today
-              </span>
-            )}
-            <button
-              type="button"
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className="p-2 rounded-xl hover:bg-amber-500/10 text-slate-700 dark:text-slate-300 transition-colors"
-              aria-label={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
-            >
-              {soundEnabled ? <Volume2 className="w-5 h-5 text-amber-600 dark:text-amber-400" /> : <VolumeX className="w-5 h-5 text-slate-500" />}
-            </button>
-          </div>
+      <div className={`w-full min-h-[calc(100vh-4rem)] bg-gradient-to-br ${t.bg} rounded-3xl relative overflow-hidden`}>
+        {/* Animated glow orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full blur-3xl animate-pulse" style={{ background: `radial-gradient(circle, rgba(${t.accentRgb},0.15) 0%, transparent 70%)` }} />
+          <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full blur-3xl animate-pulse" style={{ background: `radial-gradient(circle, rgba(${t.accentRgb},0.1) 0%, transparent 70%)`, animationDelay: '2s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-30" style={{ background: `radial-gradient(circle, rgba(${t.accentRgb},0.06) 0%, transparent 60%)` }} />
         </div>
 
-        {/* Main two-column body */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-white/8">
+        <div className="relative z-10 w-full space-y-6 p-6 sm:p-8">
 
-          {/* LEFT: Settings Panel */}
-          <div className="p-6 sm:p-8 space-y-6">
+          {/* Staggered Quirky Lines */}
+          <div className="text-center px-4 space-y-3 py-4">
+            {selectedLines.map((line, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{
+                  delay: 0.3 + idx * 0.5,
+                  duration: 0.7,
+                  type: 'spring',
+                  stiffness: 120,
+                  damping: 20,
+                }}
+                className={idx === 0 ? '' : 'mt-1'}
+              >
+                {idx === 0 ? (
+                  <>
+                    <div className="text-5xl sm:text-6xl mb-2">{line.emoji}</div>
+                    <h1 className={`text-3xl sm:text-4xl md:text-5xl font-black font-display ${t.headlineColor} tracking-tight leading-tight`}>
+                      {line.text}
+                    </h1>
+                  </>
+                ) : (
+                  <p className={`text-base sm:text-lg md:text-xl font-semibold ${t.subText} flex items-center justify-center gap-2`}>
+                    <span className="text-2xl">{line.emoji}</span>
+                    <span>{line.text}</span>
+                  </p>
+                )}
+              </motion.div>
+            ))}
 
-            {/* Mode Tabs */}
-            <div>
-              <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Timer Mode</p>
-              <div className="grid grid-cols-3 gap-1.5 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl border border-slate-200 dark:border-white/10 text-xs font-bold">
-                {Object.keys(TIMER_MODES).map((key) => (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => switchMode(key)}
-                    className={`py-2 rounded-xl transition-all focus-visible:ring-2 focus-visible:ring-amber-500 ${
-                      mode === key
-                        ? 'bg-amber-600 text-white font-bold shadow-sm'
-                        : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {TIMER_MODES[key].label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Ambient Sound */}
-            {mode === 'focus' && (
-              <div>
-                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">🎧 Ambient Sound</p>
-                <div className="grid grid-cols-5 gap-1.5 text-[10px] font-bold">
-                  {[
-                    { id: 'none', label: 'Off' },
-                    { id: 'white', label: 'White' },
-                    { id: 'brown', label: 'Brown' },
-                    { id: 'rain', label: 'Rain' },
-                    { id: 'binaural', label: 'Binaural' }
-                  ].map(snd => (
-                    <button
-                      key={snd.id}
-                      type="button"
-                      onClick={() => { requestNotificationPermission(); setAmbientSound(snd.id); }}
-                      className={`py-2 rounded-xl transition-all focus-visible:ring-1 focus-visible:ring-amber-500 ${
-                        ambientSound === snd.id
-                          ? 'bg-amber-600 text-white shadow-sm'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/8 hover:border-amber-500/30'
-                      }`}
-                    >
-                      {snd.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Focus Minutes */}
-            {mode === 'focus' && (
-              <div>
-                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">⏱ Set Focus Duration</p>
-                <div className="flex items-center gap-2 mb-3">
-                  <button
-                    type="button"
-                    onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
-                    disabled={isRunning || customFocusMinutes <= 5}
-                    className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <input
-                    type="number"
-                    min="1"
-                    max="300"
-                    value={customFocusMinutes}
-                    disabled={isRunning}
-                    onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
-                    className="flex-1 text-center bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-xl py-2 text-xl font-mono font-black text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  />
-                  <span className="text-sm text-slate-500 font-semibold">min</span>
-                  <button
-                    type="button"
-                    onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
-                    disabled={isRunning || customFocusMinutes >= 300}
-                    className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-500/30 flex items-center justify-center transition-all disabled:opacity-30"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {PRESET_MINUTES.map((mins) => (
-                    <button
-                      key={mins}
-                      type="button"
-                      onClick={() => updateFocusMinutes(mins)}
-                      disabled={isRunning}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
-                        customFocusMinutes === mins
-                          ? 'bg-amber-600 text-white border border-amber-500 shadow-sm'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-white/10 hover:border-amber-400'
-                      }`}
-                    >
-                      {mins}m
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Sessions stat */}
-            <div className="pt-2 border-t border-slate-100 dark:border-white/8">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-semibold text-slate-500 dark:text-slate-400">Completed today</span>
-                <span className="font-black text-amber-700 dark:text-amber-300 bg-amber-500/12 px-3 py-1 rounded-lg border border-amber-500/25">
-                  {sessionsCompleted} sessions · {sessionsCompleted * customFocusMinutes} min
-                </span>
-              </div>
-            </div>
+            {/* Theme badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 + selectedLines.length * 0.5, duration: 0.5 }}
+              className="pt-2"
+            >
+              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${t.pillBg} ${t.pillText} ${t.pillBorder} border`}>
+                ✦ {t.name} Theme
+              </span>
+            </motion.div>
           </div>
 
-          {/* RIGHT: Timer Circle + Controls */}
-          <div className="p-6 sm:p-8 flex flex-col items-center justify-center gap-8">
-
-            {showCompletionModal ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-5 w-full max-w-sm"
-              >
-                <div className="relative w-20 h-20 mx-auto flex items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-amber-700 shadow-xl text-4xl">
-                  <span>🎉</span>
+          {/* Timer Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6, type: 'spring' }}
+            className={`w-full ${t.cardBg} backdrop-blur-xl text-white rounded-3xl shadow-2xl border ${t.borderColor} overflow-hidden`}
+          >
+            {/* Top bar */}
+            <div className={`flex items-center justify-between px-6 sm:px-8 py-5 border-b ${t.borderColor}`}>
+              <div className="flex items-center gap-3">
+                <div className={`p-2.5 rounded-2xl ${t.pillBg} border ${t.pillBorder}`}>
+                  <Clock className={`w-5 h-5 ${t.pillText}`} />
                 </div>
                 <div>
-                  <h4 className="text-xl font-black text-slate-900 dark:text-white font-display">Focus Session Complete!</h4>
-                  <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
+                  <h2 className="font-display font-black text-lg text-white tracking-tight">Quiet Study Nest</h2>
+                  <p className="text-[11px] font-semibold text-white/50">Distraction-free focus timer · complete sessions to build your streak</p>
                 </div>
-                <div className="space-y-3">
-                  <button
-                    type="button"
-                    onClick={handleStartBreak}
-                    className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
-                  >
-                    <Coffee className="w-4 h-4" /> Start 5-Min Short Break
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleKeepFocusGoing}
-                    className="w-full py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
-                  >
-                    <Sparkles className="w-4 h-4" /> Keep Focus Going
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleDismissCompletion}
-                    className="w-full py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-sm border border-slate-200 dark:border-white/10 transition-colors"
-                  >
-                    Done for Now
-                  </button>
-                </div>
-              </motion.div>
-            ) : (
-              <>
-                {/* Large Timer Ring */}
-                <div className="relative w-64 h-64 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="44" className="stroke-slate-100 dark:stroke-slate-800" strokeWidth="5" fill="transparent" />
-                    <motion.circle
-                      cx="50" cy="50" r="44"
-                      stroke="#D97706"
-                      strokeWidth="5"
-                      strokeDasharray="276.46"
-                      strokeDashoffset={276.46 - (276.46 * progressPercent) / 100}
-                      strokeLinecap="round"
-                      fill="transparent"
-                      transition={{ duration: 0.5 }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-5xl sm:text-6xl font-mono font-black text-slate-900 dark:text-white tabular-nums">
-                      {formatTime(timeLeft)}
-                    </span>
-                    <span className="mt-2 text-xs text-amber-700 dark:text-amber-300 font-bold capitalize flex items-center gap-1.5 bg-amber-500/15 px-3 py-1 rounded-full border border-amber-500/30">
-                      {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
-                    </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {sessionsCompleted > 0 && (
+                  <span className={`px-3 py-1 rounded-full ${t.pillBg} border ${t.pillBorder} ${t.pillText} text-xs font-bold`}>
+                    {sessionsCompleted} ⚡ today
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setSoundEnabled(!soundEnabled)}
+                  className={`p-2 rounded-xl hover:${t.pillBg} text-white/60 transition-colors`}
+                  aria-label={soundEnabled ? 'Disable alert sound' : 'Enable alert sound'}
+                >
+                  {soundEnabled ? <Volume2 className={`w-5 h-5 ${t.pillText}`} /> : <VolumeX className="w-5 h-5 text-white/40" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Main two-column body */}
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x ${t.borderColor}`}>
+
+              {/* LEFT: Settings Panel */}
+              <div className="p-6 sm:p-8 space-y-6">
+
+                {/* Mode Tabs */}
+                <div>
+                  <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">Timer Mode</p>
+                  <div className={`grid grid-cols-3 gap-1.5 bg-white/5 p-1.5 rounded-2xl border ${t.borderColor} text-xs font-bold`}>
+                    {Object.keys(TIMER_MODES).map((key) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => switchMode(key)}
+                        className={`py-2 rounded-xl transition-all ${
+                          mode === key
+                            ? `${t.tabActive} font-bold shadow-sm`
+                            : 'text-white/60 hover:text-white'
+                        }`}
+                      >
+                        {TIMER_MODES[key].label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {/* Controls */}
-                <div className="flex items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={resetTimer}
-                    className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15 shadow-sm flex items-center justify-center hover:rotate-180 transition-all hover:bg-amber-500/10"
-                    aria-label="Reset Timer"
-                  >
-                    <RotateCcw className="w-5 h-5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={toggleTimer}
-                    className="px-10 py-4 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-black text-base flex items-center gap-2.5 shadow-lg hover:scale-105 active:scale-95 transition-all"
-                  >
-                    {isRunning ? (
-                      <><Pause className="w-5 h-5 fill-current" /> Pause</>
-                    ) : (
-                      <><Play className="w-5 h-5 fill-current" /> Start Focus</>
-                    )}
-                  </button>
+                {/* Ambient Sound */}
+                {mode === 'focus' && (
+                  <div>
+                    <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">🎧 Ambient Sound</p>
+                    <div className="grid grid-cols-5 gap-1.5 text-[10px] font-bold">
+                      {[
+                        { id: 'none', label: 'Off' },
+                        { id: 'white', label: 'White' },
+                        { id: 'brown', label: 'Brown' },
+                        { id: 'rain', label: 'Rain' },
+                        { id: 'binaural', label: 'Binaural' }
+                      ].map(snd => (
+                        <button
+                          key={snd.id}
+                          type="button"
+                          onClick={() => { requestNotificationPermission(); setAmbientSound(snd.id); }}
+                          className={`py-2 rounded-xl transition-all ${
+                            ambientSound === snd.id
+                              ? `${t.tabActive} shadow-sm`
+                              : `bg-white/5 text-white/60 border ${t.borderColor} hover:text-white`
+                          }`}
+                        >
+                          {snd.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Focus Minutes */}
+                {mode === 'focus' && (
+                  <div>
+                    <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">⏱ Set Focus Duration</p>
+                    <div className="flex items-center gap-2 mb-3">
+                      <button
+                        type="button"
+                        onClick={() => updateFocusMinutes(customFocusMinutes - 5)}
+                        disabled={isRunning || customFocusMinutes <= 5}
+                        className={`w-9 h-9 rounded-xl ${t.pillBg} ${t.pillText} font-bold border ${t.pillBorder} flex items-center justify-center transition-all disabled:opacity-30`}
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        max="300"
+                        value={customFocusMinutes}
+                        disabled={isRunning}
+                        onChange={(e) => updateFocusMinutes(parseInt(e.target.value) || 1)}
+                        className={`flex-1 text-center bg-white/5 border ${t.borderColor} rounded-xl py-2 text-xl font-mono font-black text-white focus:outline-none focus:ring-2`}
+                        style={{ '--tw-ring-color': t.accent }}
+                      />
+                      <span className="text-sm text-white/40 font-semibold">min</span>
+                      <button
+                        type="button"
+                        onClick={() => updateFocusMinutes(customFocusMinutes + 5)}
+                        disabled={isRunning || customFocusMinutes >= 300}
+                        className={`w-9 h-9 rounded-xl ${t.pillBg} ${t.pillText} font-bold border ${t.pillBorder} flex items-center justify-center transition-all disabled:opacity-30`}
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {PRESET_MINUTES.map((mins) => (
+                        <button
+                          key={mins}
+                          type="button"
+                          onClick={() => updateFocusMinutes(mins)}
+                          disabled={isRunning}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                            customFocusMinutes === mins
+                              ? `${t.tabActive} border border-transparent shadow-sm`
+                              : `bg-white/5 text-white/70 border ${t.borderColor} hover:text-white`
+                          }`}
+                        >
+                          {mins}m
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Sessions stat */}
+                <div className={`pt-2 border-t ${t.borderColor}`}>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-semibold text-white/40">Completed today</span>
+                    <span className={`font-black ${t.tagText} ${t.tagBg} px-3 py-1 rounded-lg border ${t.tagBorder}`}>
+                      {sessionsCompleted} sessions · {sessionsCompleted * customFocusMinutes} min
+                    </span>
+                  </div>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
+
+              {/* RIGHT: Timer Circle + Controls */}
+              <div className="p-6 sm:p-8 flex flex-col items-center justify-center gap-8">
+
+                {showCompletionModal ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center space-y-5 w-full max-w-sm"
+                  >
+                    <div className={`relative w-20 h-20 mx-auto flex items-center justify-center rounded-3xl bg-gradient-to-br ${t.completionGrad} shadow-xl text-4xl`}>
+                      <span>🎉</span>
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-black text-white font-display">Focus Session Complete!</h4>
+                      <p className="text-sm font-semibold text-white/50 mt-1">Great job! You stayed focused for {customFocusMinutes} minutes.</p>
+                    </div>
+                    <div className="space-y-3">
+                      <button
+                        type="button"
+                        onClick={handleStartBreak}
+                        className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+                      >
+                        <Coffee className="w-4 h-4" /> Start 5-Min Short Break
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleKeepFocusGoing}
+                        className={`w-full py-3.5 rounded-2xl ${t.btnBg} text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all`}
+                      >
+                        <Sparkles className="w-4 h-4" /> Keep Focus Going
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleDismissCompletion}
+                        className={`w-full py-3 rounded-2xl bg-white/10 text-white/70 font-bold text-sm border ${t.borderColor} transition-colors hover:bg-white/15`}
+                      >
+                        Done for Now
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <>
+                    {/* Large Timer Ring */}
+                    <div className="relative w-64 h-64 flex items-center justify-center">
+                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="44" className="stroke-white/10" strokeWidth="5" fill="transparent" />
+                        <motion.circle
+                          cx="50" cy="50" r="44"
+                          stroke={t.accent}
+                          strokeWidth="5"
+                          strokeDasharray="276.46"
+                          strokeDashoffset={276.46 - (276.46 * progressPercent) / 100}
+                          strokeLinecap="round"
+                          fill="transparent"
+                          transition={{ duration: 0.5 }}
+                          style={{ filter: `drop-shadow(0 0 8px rgba(${t.accentRgb},0.4))` }}
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="text-5xl sm:text-6xl font-mono font-black text-white tabular-nums">
+                          {formatTime(timeLeft)}
+                        </span>
+                        <span className={`mt-2 text-xs ${t.pillText} font-bold capitalize flex items-center gap-1.5 ${t.pillBg} px-3 py-1 rounded-full border ${t.pillBorder}`}>
+                          {mode === 'focus' ? `${customFocusMinutes} Min Focus` : TIMER_MODES[mode].label}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Controls */}
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={resetTimer}
+                        className={`w-12 h-12 rounded-2xl bg-white/10 text-white border ${t.borderColor} shadow-sm flex items-center justify-center hover:rotate-180 transition-all hover:bg-white/15`}
+                        aria-label="Reset Timer"
+                      >
+                        <RotateCcw className="w-5 h-5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={toggleTimer}
+                        className={`px-10 py-4 rounded-2xl ${t.btnBg} text-white font-black text-base flex items-center gap-2.5 shadow-lg hover:scale-105 active:scale-95 transition-all`}
+                      >
+                        {isRunning ? (
+                          <><Pause className="w-5 h-5 fill-current" /> Pause</>
+                        ) : (
+                          <><Play className="w-5 h-5 fill-current" /> Start Focus</>
+                        )}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </div>
     )
   }
 
