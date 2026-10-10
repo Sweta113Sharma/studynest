@@ -204,7 +204,8 @@ export default function FlashcardsView() {
 
       {/* 3D Flip Card Container */}
       <div 
-        className="perspective-1000 min-h-[320px] cursor-pointer" 
+        className="min-h-[320px] cursor-pointer" 
+        style={{ perspective: '1000px' }}
         onClick={handleFlip}
         role="button"
         tabIndex={0}
@@ -212,69 +213,74 @@ export default function FlashcardsView() {
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleFlip(); } }}
       >
         <motion.div
-          className="w-full h-full min-h-[320px] glass-card rounded-3xl p-8 flex flex-col justify-between relative shadow-2xl border border-slate-300 dark:border-white/10 hover:border-amber-500/40 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500"
+          className="w-full min-h-[320px] relative"
           animate={{ rotateY: isFlipped ? 180 : 0 }}
           transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20 }}
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front Side */}
-          {!isFlipped ? (
-            <div className="flex flex-col justify-between h-full">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300">
-                  Question / Concept
-                </span>
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                  <RotateCw className="w-3.5 h-3.5" /> Click to Flip
-                </span>
-              </div>
-
-              <div className="my-auto text-center py-6">
-                <h3 className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white leading-relaxed">
-                  {currentCard?.front}
-                </h3>
-              </div>
-
-              <div className="text-center text-xs font-semibold text-slate-700 dark:text-slate-300">
-                Tap card to reveal answer
-              </div>
+          <div 
+            className="absolute inset-0 glass-card rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-slate-300 hover:border-amber-500/40 transition-colors"
+            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20" style={{ color: '#92400e' }}>
+                Question / Concept
+              </span>
+              <span className="text-xs font-semibold flex items-center gap-1" style={{ color: '#334155' }}>
+                <RotateCw className="w-3.5 h-3.5" /> Click to Flip
+              </span>
             </div>
-          ) : (
-            /* Back Side */
-            <div className="flex flex-col justify-between h-full" style={{ transform: 'rotateY(180deg)' }}>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300">
-                  Answer & Explanation
-                </span>
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                  <RotateCw className="w-3.5 h-3.5" /> Click to Flip
-                </span>
-              </div>
 
-              <div className="my-auto py-6">
-                <p className="text-base md:text-lg text-slate-900 dark:text-white font-semibold leading-relaxed">
-                  {currentCard?.back}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-300 dark:border-white/10" onClick={(e) => e.stopPropagation()}>
-                <button
-                  type="button"
-                  onClick={() => handleResponse(false)}
-                  className="flex-1 py-2.5 rounded-xl glass-card border border-amber-500/40 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 font-bold text-xs transition-all flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-amber-500"
-                >
-                  <HelpCircle className="w-4 h-4" /> Need Practice
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleResponse(true)}
-                  className="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md focus-visible:ring-2 focus-visible:ring-amber-500"
-                >
-                  <CheckCircle2 className="w-4 h-4" /> Got It!
-                </button>
-              </div>
+            <div className="my-auto text-center py-6">
+              <h3 className="text-xl md:text-2xl font-display font-bold leading-relaxed" style={{ color: '#073B3A' }}>
+                {currentCard?.front}
+              </h3>
             </div>
-          )}
+
+            <div className="text-center text-xs font-semibold" style={{ color: '#475569' }}>
+              Tap card to reveal answer
+            </div>
+          </div>
+
+          {/* Back Side */}
+          <div 
+            className="absolute inset-0 glass-card rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-slate-300 hover:border-amber-500/40 transition-colors"
+            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20" style={{ color: '#92400e' }}>
+                Answer & Explanation
+              </span>
+              <span className="text-xs font-semibold flex items-center gap-1" style={{ color: '#334155' }}>
+                <RotateCw className="w-3.5 h-3.5" /> Click to Flip
+              </span>
+            </div>
+
+            <div className="my-auto py-6">
+              <p className="text-base md:text-lg font-semibold leading-relaxed" style={{ color: '#073B3A' }}>
+                {currentCard?.back}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-300" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => handleResponse(false)}
+                className="flex-1 py-2.5 rounded-xl glass-card border border-amber-500/40 hover:bg-amber-500/20 font-bold text-xs transition-all flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-amber-500"
+                style={{ color: '#92400e' }}
+              >
+                <HelpCircle className="w-4 h-4" /> Need Practice
+              </button>
+              <button
+                type="button"
+                onClick={() => handleResponse(true)}
+                className="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md focus-visible:ring-2 focus-visible:ring-amber-500"
+              >
+                <CheckCircle2 className="w-4 h-4" /> Got It!
+              </button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </motion.div>
